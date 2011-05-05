@@ -68,8 +68,7 @@ end
 desc "Compiles the app"
 task :compile => [:clean, :version] do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuValidation.sln', :clrversion => CLR_TOOLS_VERSION
-
-  copyOutputFiles "src/FubuFastPack/bin/#{COMPILE_TARGET}", "FubuValidation.{dll,pdb}", props[:stage]
+  copyOutputFiles "src/FubuValidation/bin/#{COMPILE_TARGET}", "Fubu*.{dll,pdb}", props[:stage]  
 end
 
 def copyOutputFiles(fromDir, filePattern, outDir)
@@ -87,10 +86,14 @@ task :unit_test => :compile do
   runner.executeTests ['FubuValidation.Tests', 'FubuMVC.Validation.Tests']
 end
 
-
+desc "ZIPs up the build results"
+zip :package do |zip|
+	zip.directories_to_zip = [props[:stage]]
+	zip.output_file = 'FubuValidation.zip'
+	zip.output_path = [props[:artifacts]]
+end
 
 desc "Build the nuget package"
 task :nuget do
-	sh "lib/nuget.exe pack packaging/nuget/fubumvc.nuspec -o #{props[:artifacts]} -Version #{build_number}"
-	sh "lib/nuget.exe pack packaging/nuget/fubumvc.fastpack.nuspec -o #{props[:artifacts]} -Version #{build_number}"
+	sh "lib/nuget.exe pack packaging/nuget/fubumvc.validation.nuspec -o #{props[:artifacts]} -Version #{build_number}"	
 end

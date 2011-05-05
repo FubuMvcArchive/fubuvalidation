@@ -33,19 +33,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FubuCore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FubuCore">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\fubu\FubuCore.dll</HintPath>
     </Reference>
-    <Reference Include="FubuLocalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FubuLocalization">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\fubu\FubuLocalization.dll</HintPath>
     </Reference>
-    <Reference Include="FubuMVC.Core, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FubuMVC.Core">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\fubu\FubuMVC.Core.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlTags, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="HtmlTags">
       <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>

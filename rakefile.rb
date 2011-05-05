@@ -41,7 +41,7 @@ assemblyinfo :version do |asm|
   asm.file_version = build_number
   asm.custom_attributes :AssemblyInformationalVersion => asm_version
   asm.copyright = COPYRIGHT
-  asm.output_file = COMMON_ASSEMBLY_INFO
+  asm.output_file = COMMON_ASSEMBLY_INFO 
 end
 
 desc "Prepares the working directory for a new build"

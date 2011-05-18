@@ -1,5 +1,6 @@
 COMPILE_TARGET = ENV['config'].nil? ? "debug" : ENV['config']
 require File.dirname(__FILE__) + "/build_support/BuildUtils.rb"
+require File.dirname(__FILE__) + "/build_support/nugs.rb"
 
 include FileTest
 require 'albacore'
@@ -11,11 +12,12 @@ COPYRIGHT = 'Copyright 2008-2011 Jeremy D. Miller, Josh Arnold, Joshua Flanagan,
 COMMON_ASSEMBLY_INFO = 'src/CommonAssemblyInfo.cs';
 CLR_TOOLS_VERSION = "v4.0.30319"
 
+ARTIFACTS = File.expand_path("artifacts")
 tc_build_number = ENV["BUILD_NUMBER"]
 build_revision = tc_build_number || Time.new.strftime('5%H%M')
-build_number = "#{BUILD_VERSION}.#{build_revision}"
+BUILD_NUMBER = "#{BUILD_VERSION}.#{build_revision}"
 
-props = { :stage => File.expand_path("build"), :artifacts => File.expand_path("artifacts") }
+props = { :stage => File.expand_path("build"), :artifacts => ARTIFACTS }
 
 desc "**Default**, compiles and runs tests"
 task :default => [:compile, :unit_test]
@@ -32,13 +34,13 @@ assemblyinfo :version do |asm|
   rescue
     commit = "git unavailable"
   end
-  puts "##teamcity[buildNumber '#{build_number}']" unless tc_build_number.nil?
-  puts "Version: #{build_number}" if tc_build_number.nil?
+  puts "##teamcity[buildNumber '#{BUILD_NUMBER}']" unless tc_build_number.nil?
+  puts "Version: #{BUILD_NUMBER}" if tc_build_number.nil?
   asm.trademark = commit
   asm.product_name = PRODUCT
-  asm.description = build_number
+  asm.description = BUILD_NUMBER
   asm.version = asm_version
-  asm.file_version = build_number
+  asm.file_version = BUILD_NUMBER
   asm.custom_attributes :AssemblyInformationalVersion => asm_version
   asm.copyright = COPYRIGHT
   asm.output_file = COMMON_ASSEMBLY_INFO 
@@ -95,5 +97,5 @@ end
 
 desc "Build the nuget package"
 task :nuget do
-	sh "lib/nuget.exe pack packaging/nuget/fubumvc.validation.nuspec -o #{props[:artifacts]} -Version #{build_number}"	
+	sh "lib/nuget.exe pack packaging/nuget/fubumvc.validation.nuspec -o #{props[:artifacts]} -Version #{BUILD_NUMBER}"	
 end

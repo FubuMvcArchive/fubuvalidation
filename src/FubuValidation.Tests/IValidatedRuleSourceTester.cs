@@ -1,4 +1,5 @@
-﻿using FubuCore;
+﻿using System.Linq;
+using FubuCore;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -18,11 +19,12 @@ namespace FubuValidation.Tests
         [Test]
         public void validator_should_call_through_to_validate_method()
         {
-            theValidator.Validate(new ValidatedClass{IsValid = true}).IsValid().ShouldBeTrue();
-            SpecificationExtensions.ShouldEqual((object) theValidator.Validate(new ValidatedClass{
-                                                                                                                        IsValid = false
-                                                                                                                    }).MessagesFor<ValidatedClass>(x => x.Name)
-                                                                                .Single().StringToken, ValidationKeys.REQUIRED);
+            theValidator.Validate(new ValidatedClass { IsValid = true }).IsValid().ShouldBeTrue();
+            theValidator.Validate(new ValidatedClass
+            {
+                IsValid = false
+            }).MessagesFor<ValidatedClass>(x => x.Name)
+                .Single().StringToken.ShouldEqual(ValidationKeys.REQUIRED);
         }
     }
 

@@ -1,10 +1,8 @@
-using FubuCore;
+﻿using FubuCore;
 using FubuTestingSupport;
-using FubuValidation;
 using NUnit.Framework;
-using System.Linq;
 
-namespace FubuMVC.Validation.Tests
+namespace FubuValidation.Tests
 {
     [TestFixture]
     public class IValidatedRuleSourceTester
@@ -21,10 +19,10 @@ namespace FubuMVC.Validation.Tests
         public void validator_should_call_through_to_validate_method()
         {
             theValidator.Validate(new ValidatedClass{IsValid = true}).IsValid().ShouldBeTrue();
-            theValidator.Validate(new ValidatedClass{
-                IsValid = false
-            }).MessagesFor<ValidatedClass>(x => x.Name)
-                .Single().StringToken.ShouldEqual(ValidationKeys.REQUIRED);
+            SpecificationExtensions.ShouldEqual((object) theValidator.Validate(new ValidatedClass{
+                                                                                                                        IsValid = false
+                                                                                                                    }).MessagesFor<ValidatedClass>(x => x.Name)
+                                                                                .Single().StringToken, ValidationKeys.REQUIRED);
         }
     }
 

@@ -76,6 +76,7 @@
     <Compile Include="Fields\LambdaFieldValidationSourceTester.cs" />
     <Compile Include="Fields\when_evaluating_the_collection_length_rule.cs" />
     <Compile Include="Fields\when_validating_required_fields.cs" />
+    <Compile Include="IValidatedRuleSourceTester.cs" />
     <Compile Include="Models\CompositeModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
     <Compile Include="Models\ModelWithNoAttributes.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Fields\when_validating_maximum_length.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ValidationContextTester.cs" />
     <Compile Include="ValidationRegistryTester.cs" />
   </ItemGroup>
   <ItemGroup>

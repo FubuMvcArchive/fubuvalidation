@@ -1,11 +1,10 @@
-using System;
+﻿using System;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 using FubuTestingSupport;
-using FubuValidation;
 using NUnit.Framework;
 
-namespace FubuMVC.Validation.Tests
+namespace FubuValidation.Tests
 {
     [TestFixture]
     public class ValidationContextTester

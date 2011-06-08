@@ -1,6 +1,8 @@
 COMPILE_TARGET = ENV['config'].nil? ? "debug" : ENV['config']
-require File.dirname(__FILE__) + "/build_support/BuildUtils.rb"
-require File.dirname(__FILE__) + "/build_support/nugs.rb"
+
+buildsupportfiles = Dir["#{File.dirname(__FILE__)}/buildsupport/*.rb"]
+raise "Run `git submodule update --init` to populate your buildsupport folder." unless buildsupportfiles.any?
+buildsupportfiles.each { |ext| load ext }
 
 include FileTest
 require 'albacore'
@@ -23,7 +25,7 @@ desc "**Default**, compiles and runs tests"
 task :default => [:compile, :unit_test]
 
 desc "Target used for the CI server"
-task :ci => [:default,:package,:nuget]
+task :ci => [:default,:package, "nuget:build"]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
@@ -95,7 +97,3 @@ zip :package do |zip|
 	zip.output_path = [props[:artifacts]]
 end
 
-desc "Build the nuget package"
-task :nuget do
-	sh "lib/nuget.exe pack packaging/nuget/fubumvc.validation.nuspec -o #{props[:artifacts]} -Version #{BUILD_NUMBER}"	
-end

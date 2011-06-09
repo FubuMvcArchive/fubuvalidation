@@ -15,6 +15,7 @@ COMMON_ASSEMBLY_INFO = 'src/CommonAssemblyInfo.cs';
 CLR_TOOLS_VERSION = "v4.0.30319"
 
 ARTIFACTS = File.expand_path("artifacts")
+@teamcity_build_id = "bt378"
 tc_build_number = ENV["BUILD_NUMBER"]
 build_revision = tc_build_number || Time.new.strftime('5%H%M')
 BUILD_NUMBER = "#{BUILD_VERSION}.#{build_revision}"
@@ -73,6 +74,7 @@ desc "Compiles the app"
 task :compile => [:clean, :version] do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuValidation.sln', :clrversion => CLR_TOOLS_VERSION
   copyOutputFiles "src/FubuValidation/bin/#{COMPILE_TARGET}", "Fubu*.{dll,pdb}", props[:stage]  
+  copyOutputFiles "src/FubuMVC.Validation/bin", "FubuMVC.Validation.{dll,pdb}", props[:stage]  
 end
 
 def copyOutputFiles(fromDir, filePattern, outDir)

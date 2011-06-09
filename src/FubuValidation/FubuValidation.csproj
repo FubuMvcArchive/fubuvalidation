@@ -32,20 +32,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FubuCore">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\fubu\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.1.21\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\fubu\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.1.21\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\..\lib\htmltags\HtmlTags.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\HtmlTags.1.0.0.23\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Common Service Locator\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -98,7 +94,9 @@
     <Compile Include="Validator.cs" />
     <Compile Include="ValidationRegistry.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

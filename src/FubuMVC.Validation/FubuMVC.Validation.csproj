@@ -79,6 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FubuContinuationFailurePolicy.cs" />
+    <Compile Include="FubuRegistryValidationExtensions.cs" />
+    <Compile Include="FubuValidationEngine.cs" />
+    <Compile Include="HtmlConventionExtensions.cs" />
     <Compile Include="IValidationFailureHandler.cs" />
     <Compile Include="IValidationFailurePolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,26 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 using FubuMVC.Core.Registration.ObjectGraph;
 
 namespace FubuMVC.Validation.Registration
 {
     public class ValidationFailureExpression
     {
-        private readonly ListDependency _policies;
+        private readonly IList<ObjectDef> _policies;
 
-        public ValidationFailureExpression(ListDependency policies)
+        public ValidationFailureExpression(IList<ObjectDef> policies)
         {
             _policies = policies;
         }
 
-        public ValidationFailureExpression Add<TPolicy>()
+        public ValidationFailureExpression ApplyPolicy<TPolicy>()
             where TPolicy : IValidationFailurePolicy, new()
         {
-            return Add(new TPolicy());
+            return ApplyPolicy(new TPolicy());
         }
 
-        public ValidationFailureExpression Add(IValidationFailurePolicy policy)
+        public ValidationFailureExpression ApplyPolicy(IValidationFailurePolicy policy)
         {
-            _policies.AddValue(policy);
+            _policies.Add(new ObjectDef
+                              {
+                                  Type = typeof(IValidationFailurePolicy),
+                                  Value = policy
+                              });
             return this;
         }
 
@@ -29,7 +34,7 @@ namespace FubuMVC.Validation.Registration
             return new ConfigureModelValidationFailureExpression(predicate, _policies);
         }
 
-        public ConfigureModelValidationFailureExpression IfModelTypeIs<T>()
+        public ConfigureModelValidationFailureExpression IfModelIs<T>()
             where T : class
         {
             return IfModelType(t => t.Equals(typeof (T)));

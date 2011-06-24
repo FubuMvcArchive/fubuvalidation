@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.ObjectGraph;
 
@@ -7,9 +8,9 @@ namespace FubuMVC.Validation.Registration
     public class ConfigureModelValidationFailureExpression
     {
         private readonly Func<Type, bool> _predicate;
-        private readonly ListDependency _policies;
+        private readonly IList<ObjectDef> _policies;
 
-        public ConfigureModelValidationFailureExpression(Func<Type, bool> predicate, ListDependency policies)
+        public ConfigureModelValidationFailureExpression(Func<Type, bool> predicate, IList<ObjectDef> policies)
         {
             _predicate = predicate;
             _policies = policies;
@@ -39,9 +40,11 @@ namespace FubuMVC.Validation.Registration
 
         private void buildPolicy(FubuContinuation continuation)
         {
-            var policy = _policies.AddType(typeof (FubuContinuationFailurePolicy));
+            var policy = new ObjectDef { Type = typeof(FubuContinuationFailurePolicy) };
             policy.DependencyByValue(typeof (Func<Type, bool>), _predicate);
             policy.DependencyByValue(typeof(FubuContinuation), continuation);
+
+            _policies.Add(policy);
         }
     }
 }

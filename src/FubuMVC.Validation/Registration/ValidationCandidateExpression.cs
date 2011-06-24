@@ -13,13 +13,13 @@ namespace FubuMVC.Validation.Registration
             _matcher = matcher;
         }
 
-        public ValidationCandidateExpression IncludeActionCalls(Expression<Func<ActionCall, bool>> filter)
+        public ValidationCandidateExpression Include(Expression<Func<ActionCall, bool>> filter)
         {
             _matcher.CallFilters.Includes += filter;
             return this;
         }
 
-        public ValidationCandidateExpression ExcludeActionCalls(Expression<Func<ActionCall, bool>> filter)
+        public ValidationCandidateExpression Exclude(Expression<Func<ActionCall, bool>> filter)
         {
             _matcher.CallFilters.Excludes += filter;
             return this;

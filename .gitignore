@@ -31,6 +31,8 @@ test.db
 
 *.userprefs
 *.pidb
+*.dotCover
+*mm_cache.bin
 test-results
 fubu-content
 spark.zip

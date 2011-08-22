@@ -1,5 +1,6 @@
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuValidation;
 
@@ -9,15 +10,22 @@ namespace FubuMVC.Validation
         where T : class
     {
         private readonly IFubuRequest _request;
+        private readonly ActionCall _target;
         private readonly IValidator _provider;
         private readonly IValidationFailureHandler _failureHandler;
 
-        public ValidationBehavior(IFubuRequest request, IValidator provider, IValidationFailureHandler failureHandler) 
+        public ValidationBehavior(IFubuRequest request, ActionCall target, IValidator provider, IValidationFailureHandler failureHandler)
             : base(PartialBehavior.Executes)
         {
             _request = request;
-            _failureHandler = failureHandler;
+            _target = target;
             _provider = provider;
+            _failureHandler = failureHandler;
+        }
+
+        public ActionCall Target
+        {
+            get { return _target; }
         }
 
         protected override DoNext performInvoke()
@@ -30,7 +38,8 @@ namespace FubuMVC.Validation
             }
 
             _request.Set(notification);
-            _failureHandler.Handle(typeof(T));
+            var context = new ValidationFailureContext(_target, notification, inputModel);
+            _failureHandler.Handle(context);
 
             return DoNext.Stop;
         }

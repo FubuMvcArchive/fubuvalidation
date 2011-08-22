@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
-using FubuValidation;
 using FubuTestingSupport;
+using FubuValidation;
 using NUnit.Framework;
 using StructureMap.AutoMocking;
 
@@ -12,6 +13,7 @@ namespace FubuMVC.Validation.Tests
     public class when_handling_validation_failure
     {
         private ValidationFailureHandler _handler;
+        private ValidationFailureContext _context;
         private List<IValidationFailurePolicy> _policies;
 
         [SetUp]
@@ -20,6 +22,7 @@ namespace FubuMVC.Validation.Tests
             var services = new RhinoAutoMocker<SampleInputModel>(MockMode.AAA);
             var request = services.Get<IFubuRequest>();
 
+            _context = new ValidationFailureContext(ActionCall.For<SampleInputModel>(m => m.Test("Hello")), Notification.Valid(), "Hello");
             _policies = new List<IValidationFailurePolicy>();
             _handler = new ValidationFailureHandler(_policies, request);
         }
@@ -28,7 +31,7 @@ namespace FubuMVC.Validation.Tests
         public void should_throw_validation_exception_if_no_policies_are_found()
         {
             Exception<FubuMVCValidationException>
-                .ShouldBeThrownBy(() => _handler.Handle(typeof(SampleInputModel)));
+                .ShouldBeThrownBy(() => _handler.Handle(_context));
         }
 
         [Test]
@@ -37,7 +40,7 @@ namespace FubuMVC.Validation.Tests
             _policies.Add(new SampleValidationFailurePolicy(() => { }));
             _policies.Add(new SampleValidationFailurePolicy(() => Assert.Fail("Invalid policy invoked")));
 
-            _handler.Handle(typeof(SampleInputModel));
+            _handler.Handle(_context);
         }
 
         public class SampleValidationFailurePolicy : IValidationFailurePolicy
@@ -49,12 +52,12 @@ namespace FubuMVC.Validation.Tests
                 _continuation = continuation;
             }
 
-            public bool Matches(Type modelType)
+            public bool Matches(ValidationFailureContext context)
             {
                 return true;
             }
 
-            public void Handle(Type modelType, Notification notification)
+            public void Handle(ValidationFailureContext context)
             {
                 _continuation();
             }

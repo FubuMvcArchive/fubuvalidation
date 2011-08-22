@@ -29,7 +29,7 @@ namespace FubuMVC.Validation.Registration
             return this;
         }
 
-        public ConfigureModelValidationFailureExpression IfModelType(Func<Type, bool> predicate)
+        public ConfigureModelValidationFailureExpression If(Func<ValidationFailureContext, bool> predicate)
         {
             return new ConfigureModelValidationFailureExpression(predicate, _policies);
         }
@@ -37,7 +37,7 @@ namespace FubuMVC.Validation.Registration
         public ConfigureModelValidationFailureExpression IfModelIs<T>()
             where T : class
         {
-            return IfModelType(t => t.Equals(typeof (T)));
+            return If(context => context.InputType().Equals(typeof (T)));
         }
     }
 }

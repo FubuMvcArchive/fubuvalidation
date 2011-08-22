@@ -1,34 +1,34 @@
 ﻿using System;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Runtime;
-using FubuValidation;
 
 namespace FubuMVC.Validation
 {
     public class FubuContinuationFailurePolicy : IValidationFailurePolicy
     {
-        private readonly Func<Type, bool> _predicate;
+        private readonly Func<ValidationFailureContext, bool> _predicate;
         private readonly IFubuRequest _request;
-        private readonly FubuContinuation _continuation;
+        private readonly IFubuContinuationResolver _continuationResolver;
         private readonly ContinuationHandler _handler;
 
-        public FubuContinuationFailurePolicy(Func<Type, bool> predicate, IFubuRequest request, 
-                                             FubuContinuation continuation, ContinuationHandler handler)
+        public FubuContinuationFailurePolicy(Func<ValidationFailureContext, bool> predicate, IFubuRequest request,
+                                             IFubuContinuationResolver continuationResolver, ContinuationHandler handler)
         {
             _predicate = predicate;
             _handler = handler;
-            _continuation = continuation;
+            _continuationResolver = continuationResolver;
             _request = request;
         }
 
-        public bool Matches(Type modelType)
+        public bool Matches(ValidationFailureContext context)
         {
-            return _predicate(modelType);
+            return _predicate(context);
         }
 
-        public void Handle(Type modelType, Notification notification)
+        public void Handle(ValidationFailureContext context)
         {
-            _request.Set(_continuation);
+            var continuation = _continuationResolver.Resolve(context);
+            _request.Set(continuation);
             _handler.Invoke();
         }
     }

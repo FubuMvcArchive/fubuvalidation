@@ -1,5 +1,6 @@
 using FubuLocalization;
 using FubuMVC.Core.Behaviors;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using FubuValidation;
@@ -11,8 +12,12 @@ namespace FubuMVC.Validation.Tests
     [TestFixture]
     public class when_validating_an_input_model : InteractionContext<ValidationBehavior<SampleInputModel>>
     {
+        private ActionCall _target;
+
         protected override void beforeEach()
         {
+            _target = ActionCall.For<SampleInputModel>(m => m.Test());
+            Container.Inject(_target);
             ClassUnderTest.InsideBehavior = MockFor<IActionBehavior>();
         }
 
@@ -54,8 +59,9 @@ namespace FubuMVC.Validation.Tests
             MockFor<IFubuRequest>()
                 .Expect(request => request.Set(notification));
 
+            var context = new ValidationFailureContext(_target, Notification.Valid(), null);
             MockFor<IValidationFailureHandler>()
-                .Expect(handler => handler.Handle(typeof(SampleInputModel)));
+                .Expect(handler => handler.Handle(context));
 
             ClassUnderTest
                 .Invoke();

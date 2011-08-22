@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace FubuMVC.Validation
+﻿namespace FubuMVC.Validation
 {
     public interface IValidationFailureHandler
     {
-        void Handle(Type modelType);
+        void Handle(ValidationFailureContext context);
     }
 }

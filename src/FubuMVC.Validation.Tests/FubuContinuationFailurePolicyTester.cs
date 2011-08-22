@@ -1,6 +1,7 @@
 using System;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.Urls;
 using FubuTestingSupport;
@@ -14,13 +15,17 @@ namespace FubuMVC.Validation.Tests
     public class FubuContinuationFailurePolicyTester : InteractionContext<FubuContinuationFailurePolicy>
     {
         private FubuContinuation _continuation;
+        private ValidationFailureContext _context;
+
         protected override void beforeEach()
         {
             _continuation = FubuContinuation.NextBehavior();
+            _context = new ValidationFailureContext(ActionCall.For<SampleInputModel>(m => m.Test(1)),
+                                                         Notification.Valid(), 1);
             Container
                 .Configure(x =>
                 {
-                    x.For<Func<Type, bool>>().Use(t => t == typeof(SampleInputModel));
+                    x.For<Func<ValidationFailureContext, bool>>().Use(ctx => ctx.InputType() == typeof(int));
                     x.For<FubuContinuation>().Use(_continuation);
 
                     // MockFor blowing up on ctor for ContinuationHandler otherwise
@@ -36,17 +41,22 @@ namespace FubuMVC.Validation.Tests
                                                              return handler;
                                                          });
                 });
+            MockFor<IFubuContinuationResolver>()
+                .Expect(r => r.Resolve(_context))
+                .Return(_continuation);
         }
 
         [Test]
         public void should_match_on_predicate()
         {
             ClassUnderTest
-                .Matches(typeof (SampleInputModel))
+                .Matches(_context)
                 .ShouldBeTrue();
 
+            var context = new ValidationFailureContext(ActionCall.For<SampleInputModel>(m => m.Test("Hello")), Notification.Valid(), "Hello");
+
             ClassUnderTest
-                .Matches(typeof(string))
+                .Matches(context)
                 .ShouldBeFalse();
         }
 
@@ -64,7 +74,7 @@ namespace FubuMVC.Validation.Tests
                 .Expect(b => b.Invoke());
 
             ClassUnderTest
-                .Handle(typeof(SampleInputModel), Notification.Valid());
+                .Handle(_context);
 
             VerifyCallsFor<IFubuRequest>();
             VerifyCallsFor<IActionBehavior>();

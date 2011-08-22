@@ -7,10 +7,10 @@ namespace FubuMVC.Validation.Registration
 {
     public class ConfigureModelValidationFailureExpression
     {
-        private readonly Func<Type, bool> _predicate;
+        private readonly Func<ValidationFailureContext, bool> _predicate;
         private readonly IList<ObjectDef> _policies;
 
-        public ConfigureModelValidationFailureExpression(Func<Type, bool> predicate, IList<ObjectDef> policies)
+        public ConfigureModelValidationFailureExpression(Func<ValidationFailureContext, bool> predicate, IList<ObjectDef> policies)
         {
             _predicate = predicate;
             _policies = policies;
@@ -38,12 +38,57 @@ namespace FubuMVC.Validation.Registration
             buildPolicy(FubuContinuation.TransferTo(target));
         }
 
+        public void RedirectBy<TDescriptor>()
+            where TDescriptor : class, IFubuContinuationModelDescriptor
+        {
+            RedirectBy<TDescriptor, FubuRequestInputModelResolver>();
+        }
+
+        public void RedirectBy<TDescriptor, TResolver>()
+            where TDescriptor : class, IFubuContinuationModelDescriptor
+            where TResolver : class, IInputModelResolver
+        {
+            buildPolicy<TDescriptor, TResolver>(FubuContinuation.RedirectTo);
+        }
+
+        public void TransferBy<TDescriptor>()
+            where TDescriptor : class, IFubuContinuationModelDescriptor
+        {
+            TransferBy<TDescriptor, FubuRequestInputModelResolver>();
+        }
+
+        public void TransferBy<TDescriptor, TResolver>()
+            where TDescriptor : class, IFubuContinuationModelDescriptor
+            where TResolver : class, IInputModelResolver
+        {
+            buildPolicy<TDescriptor, TResolver>(FubuContinuation.TransferTo);
+        }
+
         private void buildPolicy(FubuContinuation continuation)
         {
             var policy = new ObjectDef { Type = typeof(FubuContinuationFailurePolicy) };
-            policy.DependencyByValue(typeof (Func<Type, bool>), _predicate);
-            policy.DependencyByValue(typeof(FubuContinuation), continuation);
+            policy.DependencyByValue(typeof (Func<ValidationFailureContext, bool>), _predicate);
+            policy.DependencyByValue(typeof(IFubuContinuationResolver), new ConfiguredFubuContinuationResolver(continuation));
 
+            _policies.Add(policy);
+        }
+
+        private void buildPolicy<TDescriptor, TResolver>(Func<object, FubuContinuation> builder)
+            where TDescriptor : class, IFubuContinuationModelDescriptor
+            where TResolver : class, IInputModelResolver
+        {
+            var policy = new ObjectDef { Type = typeof(FubuContinuationFailurePolicy) };
+            policy.DependencyByValue(typeof(Func<ValidationFailureContext, bool>), _predicate);
+
+            var modelResolver = new ObjectDef {Type = typeof (FubuContinuationModelResolver)};
+            modelResolver.DependencyByType(typeof (IFubuContinuationModelDescriptor), typeof (TDescriptor));
+            modelResolver.DependencyByType(typeof (IInputModelResolver), typeof (TResolver));
+
+            var resolver = new ObjectDef {Type = typeof (FubuContinuationResolver)};
+            resolver.Dependency(typeof(IFubuContinuationModelResolver), modelResolver);
+            resolver.DependencyByValue(typeof(Func<object, FubuContinuation>), builder);
+
+            policy.Dependency(typeof(IFubuContinuationResolver), resolver);
             _policies.Add(policy);
         }
     }

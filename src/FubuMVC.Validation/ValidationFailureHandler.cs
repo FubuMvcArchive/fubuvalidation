@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core.Runtime;
 using FubuValidation;
@@ -17,16 +16,17 @@ namespace FubuMVC.Validation
             _request = request;
         }
 
-        public void Handle(Type modelType)
+        public void Handle(ValidationFailureContext context)
         {
             var notification = _request.Get<Notification>();
-            var policy = _policies.FirstOrDefault(p => p.Matches(modelType));
+            var modelType = context.InputType();
+            var policy = _policies.FirstOrDefault(p => p.Matches(context));
             if(policy == null)
             {
                 throw new FubuMVCValidationException(1001, notification, "No validation failure policy found for {0}", modelType.FullName);
             }
 
-            policy.Handle(modelType, notification);
+            policy.Handle(context);
         }
     }
 }

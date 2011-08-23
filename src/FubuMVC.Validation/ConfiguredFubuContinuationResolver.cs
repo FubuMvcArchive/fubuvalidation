@@ -11,7 +11,7 @@ namespace FubuMVC.Validation
             _continuation = continuation;
         }
 
-        public FubuContinuation Resolve(ValidationFailureContext context)
+        public FubuContinuation Resolve(ValidationFailure context)
         {
             return _continuation;
         }

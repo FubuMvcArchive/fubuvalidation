@@ -29,7 +29,7 @@ namespace FubuMVC.Validation.Registration
             return this;
         }
 
-        public ConfigureModelValidationFailureExpression If(Func<ValidationFailureContext, bool> predicate)
+        public ConfigureModelValidationFailureExpression If(Func<ValidationFailure, bool> predicate)
         {
             return new ConfigureModelValidationFailureExpression(predicate, _policies);
         }

@@ -4,6 +4,6 @@ namespace FubuMVC.Validation
 {
     public interface IFubuContinuationModelDescriptor
     {
-        Type DescribeModelFor(ValidationFailureContext context);
+        Type DescribeModelFor(ValidationFailure context);
     }
 }

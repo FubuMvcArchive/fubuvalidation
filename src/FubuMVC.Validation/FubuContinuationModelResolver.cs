@@ -11,7 +11,7 @@ namespace FubuMVC.Validation
             _modelResolver = modelResolver;
         }
 
-        public object ModelFor(ValidationFailureContext context)
+        public object ModelFor(ValidationFailure context)
         {
             var destinationType = _descriptor.DescribeModelFor(context);
             return _modelResolver.Resolve(destinationType, context.InputType(), context.InputModel);

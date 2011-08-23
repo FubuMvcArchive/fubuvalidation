@@ -16,7 +16,7 @@ namespace FubuMVC.Validation
             _request = request;
         }
 
-        public void Handle(ValidationFailureContext context)
+        public void Handle(ValidationFailure context)
         {
             var notification = _request.Get<Notification>();
             var modelType = context.InputType();

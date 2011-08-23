@@ -2,7 +2,7 @@
 {
     public interface IValidationFailurePolicy
     {
-        bool Matches(ValidationFailureContext context);
-        void Handle(ValidationFailureContext context);
+        bool Matches(ValidationFailure context);
+        void Handle(ValidationFailure context);
     }
 }

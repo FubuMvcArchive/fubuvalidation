@@ -30,9 +30,7 @@ namespace FubuMVC.Validation
                                   log.RecordCallStatus(call, "Wrapping {0} with Validation Behavior".ToFormat(call));
                               }
 
-                              var input = call.InputType();
-                              var behaviorType = typeof (ValidationBehavior<>).MakeGenericType(input);
-                              call.WrapWith(behaviorType);
+                              call.WrapWithValidation();
                           });
         }
     }

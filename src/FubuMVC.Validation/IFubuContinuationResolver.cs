@@ -4,6 +4,6 @@ namespace FubuMVC.Validation
 {
     public interface IFubuContinuationResolver
     {
-        FubuContinuation Resolve(ValidationFailureContext context);
+        FubuContinuation Resolve(ValidationFailure context);
     }
 }

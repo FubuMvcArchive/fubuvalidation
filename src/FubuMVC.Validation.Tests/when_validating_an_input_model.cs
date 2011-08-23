@@ -59,7 +59,7 @@ namespace FubuMVC.Validation.Tests
             MockFor<IFubuRequest>()
                 .Expect(request => request.Set(notification));
 
-            var context = new ValidationFailureContext(_target, Notification.Valid(), null);
+            var context = new ValidationFailure(_target, Notification.Valid(), null);
             MockFor<IValidationFailureHandler>()
                 .Expect(handler => handler.Handle(context));
 

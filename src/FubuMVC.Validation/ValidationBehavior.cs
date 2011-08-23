@@ -38,7 +38,7 @@ namespace FubuMVC.Validation
             }
 
             _request.Set(notification);
-            var context = new ValidationFailureContext(_target, notification, inputModel);
+            var context = new ValidationFailure(_target, notification, inputModel);
             _failureHandler.Handle(context);
 
             return DoNext.Stop;

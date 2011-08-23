@@ -13,7 +13,7 @@ namespace FubuMVC.Validation.Tests
     public class when_handling_validation_failure
     {
         private ValidationFailureHandler _handler;
-        private ValidationFailureContext _context;
+        private ValidationFailure _context;
         private List<IValidationFailurePolicy> _policies;
 
         [SetUp]
@@ -22,7 +22,7 @@ namespace FubuMVC.Validation.Tests
             var services = new RhinoAutoMocker<SampleInputModel>(MockMode.AAA);
             var request = services.Get<IFubuRequest>();
 
-            _context = new ValidationFailureContext(ActionCall.For<SampleInputModel>(m => m.Test("Hello")), Notification.Valid(), "Hello");
+            _context = new ValidationFailure(ActionCall.For<SampleInputModel>(m => m.Test("Hello")), Notification.Valid(), "Hello");
             _policies = new List<IValidationFailurePolicy>();
             _handler = new ValidationFailureHandler(_policies, request);
         }
@@ -52,12 +52,12 @@ namespace FubuMVC.Validation.Tests
                 _continuation = continuation;
             }
 
-            public bool Matches(ValidationFailureContext context)
+            public bool Matches(ValidationFailure context)
             {
                 return true;
             }
 
-            public void Handle(ValidationFailureContext context)
+            public void Handle(ValidationFailure context)
             {
                 _continuation();
             }

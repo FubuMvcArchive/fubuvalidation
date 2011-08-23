@@ -4,13 +4,13 @@ using FubuValidation;
 
 namespace FubuMVC.Validation
 {
-    public class ValidationFailureContext
+    public class ValidationFailure
     {
         private readonly ActionCall _target;
         private readonly Notification _notification;
         private readonly object _inputModel;
 
-        public ValidationFailureContext(ActionCall target, Notification notification, object inputModel)
+        public ValidationFailure(ActionCall target, Notification notification, object inputModel)
         {
             _target = target;
             _notification = notification;
@@ -32,20 +32,20 @@ namespace FubuMVC.Validation
             get { return _target; }
         }
 
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (ValidationFailureContext)) return false;
-            return Equals((ValidationFailureContext) obj);
-        }
-
         public Type InputType()
         {
             return _target.InputType();
         }
 
-        public bool Equals(ValidationFailureContext other)
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (ValidationFailure)) return false;
+            return Equals((ValidationFailure) obj);
+        }
+
+        public bool Equals(ValidationFailure other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;

@@ -78,6 +78,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionCallExtensions.cs" />
     <Compile Include="ConfiguredFubuContinuationResolver.cs" />
     <Compile Include="FubuContinuationFailurePolicy.cs" />
     <Compile Include="FubuContinuationModelResolver.cs" />
@@ -100,8 +101,9 @@
     <Compile Include="Registration\ValidationFailureExpression.cs" />
     <Compile Include="ValidationBehavior.cs" />
     <Compile Include="ValidationConvention.cs" />
-    <Compile Include="ValidationFailureContext.cs" />
+    <Compile Include="ValidationFailure.cs" />
     <Compile Include="ValidationFailureHandler.cs" />
+    <Compile Include="ValidationNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuValidation\FubuValidation.csproj">

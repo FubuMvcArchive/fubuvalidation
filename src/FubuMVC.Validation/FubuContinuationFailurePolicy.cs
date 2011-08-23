@@ -6,12 +6,12 @@ namespace FubuMVC.Validation
 {
     public class FubuContinuationFailurePolicy : IValidationFailurePolicy
     {
-        private readonly Func<ValidationFailureContext, bool> _predicate;
+        private readonly Func<ValidationFailure, bool> _predicate;
         private readonly IFubuRequest _request;
         private readonly IFubuContinuationResolver _continuationResolver;
         private readonly ContinuationHandler _handler;
 
-        public FubuContinuationFailurePolicy(Func<ValidationFailureContext, bool> predicate, IFubuRequest request,
+        public FubuContinuationFailurePolicy(Func<ValidationFailure, bool> predicate, IFubuRequest request,
                                              IFubuContinuationResolver continuationResolver, ContinuationHandler handler)
         {
             _predicate = predicate;
@@ -20,12 +20,12 @@ namespace FubuMVC.Validation
             _request = request;
         }
 
-        public bool Matches(ValidationFailureContext context)
+        public bool Matches(ValidationFailure context)
         {
             return _predicate(context);
         }
 
-        public void Handle(ValidationFailureContext context)
+        public void Handle(ValidationFailure context)
         {
             var continuation = _continuationResolver.Resolve(context);
             _request.Set(continuation);

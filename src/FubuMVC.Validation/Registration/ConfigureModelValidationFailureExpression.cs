@@ -7,10 +7,10 @@ namespace FubuMVC.Validation.Registration
 {
     public class ConfigureModelValidationFailureExpression
     {
-        private readonly Func<ValidationFailureContext, bool> _predicate;
+        private readonly Func<ValidationFailure, bool> _predicate;
         private readonly IList<ObjectDef> _policies;
 
-        public ConfigureModelValidationFailureExpression(Func<ValidationFailureContext, bool> predicate, IList<ObjectDef> policies)
+        public ConfigureModelValidationFailureExpression(Func<ValidationFailure, bool> predicate, IList<ObjectDef> policies)
         {
             _predicate = predicate;
             _policies = policies;
@@ -67,7 +67,7 @@ namespace FubuMVC.Validation.Registration
         private void buildPolicy(FubuContinuation continuation)
         {
             var policy = new ObjectDef { Type = typeof(FubuContinuationFailurePolicy) };
-            policy.DependencyByValue(typeof (Func<ValidationFailureContext, bool>), _predicate);
+            policy.DependencyByValue(typeof (Func<ValidationFailure, bool>), _predicate);
             policy.DependencyByValue(typeof(IFubuContinuationResolver), new ConfiguredFubuContinuationResolver(continuation));
 
             _policies.Add(policy);
@@ -78,7 +78,7 @@ namespace FubuMVC.Validation.Registration
             where TResolver : class, IInputModelResolver
         {
             var policy = new ObjectDef { Type = typeof(FubuContinuationFailurePolicy) };
-            policy.DependencyByValue(typeof(Func<ValidationFailureContext, bool>), _predicate);
+            policy.DependencyByValue(typeof(Func<ValidationFailure, bool>), _predicate);
 
             var modelResolver = new ObjectDef {Type = typeof (FubuContinuationModelResolver)};
             modelResolver.DependencyByType(typeof (IFubuContinuationModelDescriptor), typeof (TDescriptor));

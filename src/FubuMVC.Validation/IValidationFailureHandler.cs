@@ -2,6 +2,6 @@
 {
     public interface IValidationFailureHandler
     {
-        void Handle(ValidationFailureContext context);
+        void Handle(ValidationFailure context);
     }
 }

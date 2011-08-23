@@ -13,7 +13,7 @@ namespace FubuMVC.Validation.Tests
         [Test]
         public void should_resolve_model_through_input_model_resolver()
         {
-            var context = new ValidationFailureContext(ActionCall.For<SampleInputModel>(m => m.Test("Hello")),
+            var context = new ValidationFailure(ActionCall.For<SampleInputModel>(m => m.Test("Hello")),
                                                        Notification.Valid(), "Hello");
             var modelType = typeof (Guid);
             MockFor<IFubuContinuationModelDescriptor>()

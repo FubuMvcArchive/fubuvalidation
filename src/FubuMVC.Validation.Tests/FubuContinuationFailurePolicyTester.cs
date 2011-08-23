@@ -15,17 +15,17 @@ namespace FubuMVC.Validation.Tests
     public class FubuContinuationFailurePolicyTester : InteractionContext<FubuContinuationFailurePolicy>
     {
         private FubuContinuation _continuation;
-        private ValidationFailureContext _context;
+        private ValidationFailure _context;
 
         protected override void beforeEach()
         {
             _continuation = FubuContinuation.NextBehavior();
-            _context = new ValidationFailureContext(ActionCall.For<SampleInputModel>(m => m.Test(1)),
+            _context = new ValidationFailure(ActionCall.For<SampleInputModel>(m => m.Test(1)),
                                                          Notification.Valid(), 1);
             Container
                 .Configure(x =>
                 {
-                    x.For<Func<ValidationFailureContext, bool>>().Use(ctx => ctx.InputType() == typeof(int));
+                    x.For<Func<ValidationFailure, bool>>().Use(ctx => ctx.InputType() == typeof(int));
                     x.For<FubuContinuation>().Use(_continuation);
 
                     // MockFor blowing up on ctor for ContinuationHandler otherwise
@@ -53,7 +53,7 @@ namespace FubuMVC.Validation.Tests
                 .Matches(_context)
                 .ShouldBeTrue();
 
-            var context = new ValidationFailureContext(ActionCall.For<SampleInputModel>(m => m.Test("Hello")), Notification.Valid(), "Hello");
+            var context = new ValidationFailure(ActionCall.For<SampleInputModel>(m => m.Test("Hello")), Notification.Valid(), "Hello");
 
             ClassUnderTest
                 .Matches(context)

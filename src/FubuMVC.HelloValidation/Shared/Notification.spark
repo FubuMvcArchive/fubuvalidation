@@ -1,0 +1,7 @@
+<use master="" />
+<viewdata model="FubuValidation.Notification" />
+<ul if="Model.AllMessages.Any()" class="error-list">
+  <li each="var msg in Model.AllMessages">
+    ${msg}
+  </li>
+</ul>

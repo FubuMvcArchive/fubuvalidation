@@ -1,0 +1,20 @@
+<viewdata model="FubuMVC.HelloValidation.Handlers.Products.Create.CreateProductViewModel" />
+<content:title>Create Product</content:title>
+<ValidationErrors />
+<Form model="FubuMVC.HelloValidation.Handlers.Products.Create.CreateProductInputModel">
+  <fieldset>
+    <div class="row">
+      <LabelFor property="Name" />
+      <InputFor property="Name" />
+    </div>
+    <div class="row">
+      <LabelFor property="Price" />
+      <InputFor property="Price" />
+    </div>
+    <div class="row row-submit">
+      <button type="submit">
+        <span>Create</span>
+      </button>
+    </div>
+  </fieldset>
+</Form>

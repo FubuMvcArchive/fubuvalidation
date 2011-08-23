@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<bindings>
+  <element name="Form">
+    <start>this.FormFor&lt;@model&gt;()</start>
+    <end>this.EndForm()</end>
+  </element>
+  <element name="ValidationErrors">#this.Partial&lt;FubuValidation.Notification&gt;();</element>
+  <element name="LabelFor">this.LabelFor(m =&gt; m.@property)</element>
+  <element name="InputFor">this.InputFor(m =&gt; m.@property)</element>
+</bindings>

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Validation", "FubuM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Validation.Tests", "FubuMVC.Validation.Tests\FubuMVC.Validation.Tests.csproj", "{1207D3CC-1F4B-40AC-8926-E0669DED7A4B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.HelloValidation", "FubuMVC.HelloValidation\FubuMVC.HelloValidation.csproj", "{42250192-9665-47BC-895B-940EB8869916}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +88,21 @@ Global
 		{1207D3CC-1F4B-40AC-8926-E0669DED7A4B}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1207D3CC-1F4B-40AC-8926-E0669DED7A4B}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{1207D3CC-1F4B-40AC-8926-E0669DED7A4B}.Retail|x86.ActiveCfg = Release|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Release|x86.ActiveCfg = Release|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{42250192-9665-47BC-895B-940EB8869916}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,4 @@
 ﻿using System;
-using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Runtime;
 
 namespace FubuMVC.Validation
@@ -9,10 +8,10 @@ namespace FubuMVC.Validation
         private readonly Func<ValidationFailure, bool> _predicate;
         private readonly IFubuRequest _request;
         private readonly IFubuContinuationResolver _continuationResolver;
-        private readonly ContinuationHandler _handler;
+        private readonly IValidationContinuationHandler _handler;
 
         public FubuContinuationFailurePolicy(Func<ValidationFailure, bool> predicate, IFubuRequest request,
-                                             IFubuContinuationResolver continuationResolver, ContinuationHandler handler)
+                                             IFubuContinuationResolver continuationResolver, IValidationContinuationHandler handler)
         {
             _predicate = predicate;
             _handler = handler;
@@ -29,7 +28,7 @@ namespace FubuMVC.Validation
         {
             var continuation = _continuationResolver.Resolve(context);
             _request.Set(continuation);
-            _handler.Invoke();
+            _handler.Handle();
         }
     }
 }

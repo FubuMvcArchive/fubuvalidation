@@ -1,9 +1,7 @@
 using System;
-using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Core.Urls;
 using FubuTestingSupport;
 using FubuValidation;
 using NUnit.Framework;
@@ -27,20 +25,8 @@ namespace FubuMVC.Validation.Tests
                 {
                     x.For<Func<ValidationFailure, bool>>().Use(ctx => ctx.InputType() == typeof(int));
                     x.For<FubuContinuation>().Use(_continuation);
-
-                    // MockFor blowing up on ctor for ContinuationHandler otherwise
-                    x.For<ContinuationHandler>().Use(ctx =>
-                                                         {
-                                                             var handler =
-                                                                 new ContinuationHandler(
-                                                                     ctx.GetInstance<IUrlRegistry>(),
-                                                                     ctx.GetInstance<IOutputWriter>(),
-                                                                     ctx.GetInstance<IFubuRequest>(),
-                                                                     ctx.GetInstance<IPartialFactory>());
-                                                             handler.InsideBehavior = ctx.GetInstance<IActionBehavior>();
-                                                             return handler;
-                                                         });
                 });
+
             MockFor<IFubuContinuationResolver>()
                 .Expect(r => r.Resolve(_context))
                 .Return(_continuation);
@@ -64,20 +50,16 @@ namespace FubuMVC.Validation.Tests
         public void should_invoke_continuation_handler()
         {
             MockFor<IFubuRequest>()
-                .Expect(r => r.Get<FubuContinuation>())
-                .Return(_continuation);
-
-            MockFor<IFubuRequest>()
                 .Expect(r => r.Set(_continuation));
 
-            MockFor<IActionBehavior>()
-                .Expect(b => b.Invoke());
+            MockFor<IValidationContinuationHandler>()
+                .Expect(handler => handler.Handle());
 
             ClassUnderTest
                 .Handle(_context);
 
             VerifyCallsFor<IFubuRequest>();
-            VerifyCallsFor<IActionBehavior>();
+            VerifyCallsFor<IValidationContinuationHandler>();
         }
     }
 }

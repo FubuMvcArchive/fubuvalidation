@@ -1,0 +1,12 @@
+<viewdata model="FubuMVC.HelloValidation.Handlers.Products.ProductsListViewModel" />
+<content:title>Products</content:title>
+<if condition="Model.Any()">
+  <ul>
+    <li each="var product in Model.Products">
+      <h3>${product.Name}</h3>
+    </li>
+  </ul>
+</if>
+<else>
+  <span>No products yet.</span>
+</else>

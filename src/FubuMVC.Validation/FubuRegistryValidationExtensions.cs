@@ -14,7 +14,7 @@ namespace FubuMVC.Validation
 
         public static void Validation(this FubuRegistry registry, Action<FubuValidationEngine> configure)
         {
-            registry.Validation(ValidationRegistry.BasicRegistry(), validation => { });
+            registry.Validation(ValidationRegistry.BasicRegistry(), configure);
         }
 
         public static void Validation<TRegistry>(this FubuRegistry registry)

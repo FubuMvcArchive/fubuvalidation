@@ -78,6 +78,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="ActionCallExtensions.cs" />
     <Compile Include="ConfiguredFubuContinuationResolver.cs" />
     <Compile Include="ValidationContinuationHandler.cs" />
@@ -94,7 +97,6 @@
     <Compile Include="IInputModelResolver.cs" />
     <Compile Include="IValidationFailureHandler.cs" />
     <Compile Include="IValidationFailurePolicy.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FubuMVCValidationException.cs" />
     <Compile Include="Registration\ConfigureModelValidationFailureExpression.cs" />
     <Compile Include="Registration\ValidationCallMatcher.cs" />

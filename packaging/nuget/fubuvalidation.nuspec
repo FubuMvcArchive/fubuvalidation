@@ -3,14 +3,14 @@
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>FubuValidation</id>
     <version>0.0</version>
-    <authors>Chad Myers, Jeremy D. Miller, Joshua Flanagan</authors>
-    <owners>Joshua Flanagan</owners>
+    <authors>Joshua Arnold, Jeremy D. Miller, et al.</authors>
+    <owners>Joshua Arnold, Jeremy D. Miller</owners>
     <licenseUrl>https://raw.github.com/DarthFubuMVC/fubuvalidation/master/license.txt</licenseUrl>
     <projectUrl>http://fubumvc.com</projectUrl>
     <iconUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/doc/logo/FubuMVC_Logo_package_icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>FubuValidation - have validation your way, whatever way that happens to be</description>
-    <tags>fubumvc mvc nhibernate</tags>
+    <tags>fubu validation fubumvc conventional</tags>
     <dependencies>
       <dependency id="fubulocalization" />
       <dependency id="htmltags" />

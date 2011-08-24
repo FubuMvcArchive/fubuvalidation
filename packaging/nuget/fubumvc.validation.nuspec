@@ -3,14 +3,14 @@
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>FubuMVC.Validation</id>
     <version>0.0</version>
-    <authors>Chad Myers, Jeremy D. Miller, Joshua Flanagan</authors>
-    <owners>Joshua Flanagan</owners>
+    <authors>Joshua Arnold, et al.</authors>
+    <owners>Joshua Arnold</owners>
     <licenseUrl>https://raw.github.com/DarthFubuMVC/fubuvalidation/master/license.txt</licenseUrl>
     <projectUrl>http://fubumvc.com</projectUrl>
     <iconUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/doc/logo/FubuMVC_Logo_package_icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A FubuMVC implementation of FubuValidation</description>
-    <tags>fubumvc mvc nhibernate</tags>
+    <tags>fubumvc mvc fubu validation conventional</tags>
     <dependencies>
       <dependency id="fubumvc.references" />
       <dependency id="fubuvalidation" />

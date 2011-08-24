@@ -90,10 +90,12 @@
     <Compile Include="FubuContinuationFailurePolicyTester.cs" />
     <Compile Include="FubuContinuationModelResolverTester.cs" />
     <Compile Include="FubuRequestInputModelResolverTester.cs" />
+    <Compile Include="FubuValidationEngineTester.cs" />
     <Compile Include="LambdaFubuContinuationModelResolverTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleInputModel.cs" />
     <Compile Include="when_handling_validation_failure.cs" />
+    <Compile Include="when_resolving_the_appropriate_continuation.cs" />
     <Compile Include="when_validating_an_input_model.cs" />
   </ItemGroup>
   <ItemGroup>

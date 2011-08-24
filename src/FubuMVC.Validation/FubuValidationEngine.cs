@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using FubuCore.Reflection;
 using FubuMVC.Core;
-using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.ObjectGraph;
 using FubuMVC.Validation.Registration;
 using FubuValidation;
@@ -40,7 +39,7 @@ namespace FubuMVC.Validation
                                   x.AddService<IValidationSource>(new FieldRuleSource(rulesRegistry));
                                   x.SetServiceIfNone<IFieldRulesRegistry>(rulesRegistry);
                                   x.SetServiceIfNone<IValidator, Validator>();
-                                  x.SetServiceIfNone<IValidationContinuationHandler, ValidationContinuationDirector>();
+                                  x.SetServiceIfNone<IValidationContinuationHandler, ValidationContinuationHandler>();
 
                                   x.SetServiceIfNone<IValidationFailureHandler, ValidationFailureHandler>();
                                   _validationPolicies

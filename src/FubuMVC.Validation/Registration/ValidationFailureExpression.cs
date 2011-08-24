@@ -23,7 +23,6 @@ namespace FubuMVC.Validation.Registration
         {
             _policies.Add(new ObjectDef
                               {
-                                  Type = typeof(IValidationFailurePolicy),
                                   Value = policy
                               });
             return this;

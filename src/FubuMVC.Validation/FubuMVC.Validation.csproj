@@ -80,7 +80,7 @@
   <ItemGroup>
     <Compile Include="ActionCallExtensions.cs" />
     <Compile Include="ConfiguredFubuContinuationResolver.cs" />
-    <Compile Include="ValidationContinuationDirector.cs" />
+    <Compile Include="ValidationContinuationHandler.cs" />
     <Compile Include="FubuContinuationFailurePolicy.cs" />
     <Compile Include="FubuContinuationModelResolver.cs" />
     <Compile Include="FubuContinuationResolver.cs" />

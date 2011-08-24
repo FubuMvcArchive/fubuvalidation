@@ -11,14 +11,14 @@ namespace FubuMVC.Validation
         void Handle();
     }
 
-    public class ValidationContinuationDirector : IContinuationDirector, IValidationContinuationHandler
+    public class ValidationContinuationHandler : IContinuationDirector, IValidationContinuationHandler
     {
         private readonly IPartialFactory _factory;
         private readonly IUrlRegistry _registry;
         private readonly IFubuRequest _request;
         private readonly IOutputWriter _writer;
 
-        public ValidationContinuationDirector(IUrlRegistry registry, IOutputWriter writer, IFubuRequest request,
+        public ValidationContinuationHandler(IUrlRegistry registry, IOutputWriter writer, IFubuRequest request,
             IPartialFactory factory)
         {
             _registry = registry;

@@ -89,7 +89,7 @@ task :test => [:unit_test]
 desc "Runs unit tests"
 task :unit_test => :compile do
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
-  runner.executeTests ['FubuValidation.Tests', 'FubuMVC.Validation.Tests']
+  runner.executeTests ['FubuValidation.Tests', 'FubuMVC.Validation.Tests', 'FubuValidation.FluentValidation.Tests']
 end
 
 desc "ZIPs up the build results"

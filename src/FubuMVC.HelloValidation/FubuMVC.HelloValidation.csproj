@@ -36,6 +36,9 @@
     <Reference Include="Bottles">
       <HintPath>..\packages\Bottles.0.9.0.50940\lib\Bottles.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.3.1.0.0\lib\Net40\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore.0.9.1.37\lib\FubuCore.dll</HintPath>
     </Reference>
@@ -98,6 +101,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FluentProductValidator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -130,6 +134,10 @@
     <ProjectReference Include="..\FubuMVC.Validation\FubuMVC.Validation.csproj">
       <Project>{1D14C442-9F90-4B28-B4F9-79CD6E1B6E40}</Project>
       <Name>FubuMVC.Validation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuValidation.FluentValidation\FubuValidation.FluentValidation.csproj">
+      <Project>{FB76B010-6675-43B1-9127-4743F58C1816}</Project>
+      <Name>FubuValidation.FluentValidation</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuValidation\FubuValidation.csproj">
       <Project>{D100D12E-9818-4578-B25E-C1EDA3477820}</Project>

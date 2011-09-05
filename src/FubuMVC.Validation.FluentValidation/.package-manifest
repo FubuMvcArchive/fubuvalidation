@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Role>module</Role>
+  <Name>FubuMVC.Validation.FluentValidation</Name>
+  <assembly>FluentValidation</assembly>
+  <assembly>FubuValidation.FluentValidation</assembly>
+  <assembly>FubuMVC.Validation.FluentValidation</assembly>
+  <DataFileSet Include="*.*">
+    <DeepSearch>true</DeepSearch>
+  </DataFileSet>
+  <ContentFileSet Include="Shared/*.spark;Shared/*.xml;Content/*.*;*.config;Endpoints/*.spark">
+    <DeepSearch>true</DeepSearch>
+  </ContentFileSet>
+</package>

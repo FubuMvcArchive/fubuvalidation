@@ -41,10 +41,10 @@
       <HintPath>..\packages\FubuLocalization.0.9.1.39\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.References.0.9.1.543\lib\FubuMVC.Core.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.References.0.9.1.544\lib\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.StructureMap">
-      <HintPath>..\packages\FubuMVC.References.0.9.1.543\lib\FubuMVC.StructureMap.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.References.0.9.1.544\lib\FubuMVC.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport.0.9.1.39\lib\FubuTestingSupport.dll</HintPath>

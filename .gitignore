@@ -19,16 +19,13 @@ _ReSharper.*
 .fubu-alias
 .fubu-includes
 .fubu-manifest
-
 src/FubuMVC.5.1.ReSharper
 editor.htm
 testEditor.css
 TestResult.xml
 history.xml
-
 pak*.zip
 test.db
-
 *.userprefs
 *.pidb
 *.dotCover
@@ -36,5 +33,5 @@ test.db
 test-results
 fubu-content
 spark.zip
-
 deployment/bottles/*.zip
+src/packages

@@ -6,8 +6,8 @@
     <authors>Joshua Arnold, et al.</authors>
     <owners>Joshua Arnold</owners>
     <licenseUrl>https://raw.github.com/DarthFubuMVC/fubuvalidation/master/license.txt</licenseUrl>
-    <projectUrl>http://fubumvc.com</projectUrl>
-    <iconUrl>https://github.com/DarthFubuMVC/fubumvc/raw/master/doc/logo/FubuMVC_Logo_package_icon.png</iconUrl>
+    <projectUrl>http://validation.fubu-project.org</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuValidation_256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A FubuMVC implementation of FubuValidation</description>
     <tags>fubumvc mvc fubu validation conventional</tags>

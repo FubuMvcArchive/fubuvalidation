@@ -1,5 +1,4 @@
-﻿using FubuMVC.Conventions;
-using FubuMVC.Core;
+﻿using FubuMVC.Core;
 using FubuMVC.HelloValidation.Handlers;
 using FubuMVC.HelloValidation.Handlers.Products;
 using FubuMVC.Spark;
@@ -14,8 +13,7 @@ namespace FubuMVC.HelloValidation
         {
             IncludeDiagnostics(true);
 
-            this
-                .ApplyHandlerConventions<HandlersMarker>();
+            ApplyHandlerConventions<HandlersMarker>();
 
             Routes
                 .HomeIs<GetHandler>(h => h.Execute(new ProductsListRequestModel()));

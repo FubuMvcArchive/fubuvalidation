@@ -13,7 +13,7 @@ namespace FubuValidation
 
         public RuleRegistrationExpression Require(params Expression<Func<T, object>>[] properties)
         {
-            var accessors = properties.Select(x => ReflectionExtensions.ToAccessor<T>(x));
+            var accessors = properties.Select(x => x.ToAccessor());
             var expression = new RuleRegistrationExpression(a => new RequiredFieldRule(), accessors);
 
             _rules.Add(expression);

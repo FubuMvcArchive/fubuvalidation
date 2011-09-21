@@ -27,6 +27,11 @@ namespace FubuValidation
             configure(this);
         }
 
+        public static ValidationRegistry BasicRegistry()
+        {
+            return new ValidationRegistry(x => x.FieldSource<AttributeFieldValidationSource>());
+        }
+
         public LambdaFieldValidationSource Required
         {
             get { return ApplyRule<RequiredFieldRule>(); }

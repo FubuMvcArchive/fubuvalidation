@@ -33,9 +33,7 @@ namespace FubuValidation.Fields
 
         public FieldRulesRegistry(IEnumerable<IFieldValidationSource> sources, ITypeDescriptorCache typeDescriptors)
         {
-            _sources = new List<IFieldValidationSource>(sources){
-                new AttributeFieldValidationSource()
-            };
+            _sources = new List<IFieldValidationSource>(sources);
 
             _typeDescriptors = typeDescriptors;
             _typeRules.OnMissing = findRules;

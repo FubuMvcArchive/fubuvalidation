@@ -37,10 +37,13 @@ namespace FubuMVC.Validation.Tests
         [Test]
         public void should_invoke_first_policy_that_is_matched()
         {
-            _policies.Add(new SampleValidationFailurePolicy(() => { }));
+            bool firstPolicyInvoked = false;
+            _policies.Add(new SampleValidationFailurePolicy(() => { firstPolicyInvoked = true;  }));
             _policies.Add(new SampleValidationFailurePolicy(() => Assert.Fail("Invalid policy invoked")));
 
             _handler.Handle(_context);
+
+            firstPolicyInvoked.ShouldBeTrue();
         }
 
         public class SampleValidationFailurePolicy : IValidationFailurePolicy

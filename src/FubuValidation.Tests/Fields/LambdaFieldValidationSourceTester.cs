@@ -32,7 +32,7 @@ namespace FubuValidation.Tests.Fields
         {
             theSource = new LambdaFieldValidationSource(new RequiredFieldRule());
 
-            Exception<FubuValidationException>.ShouldBeThrownBy(() => TypeExtensions.As<IFieldValidationSource>(theSource).Validate())
+            Exception<FubuValidationException>.ShouldBeThrownBy(() => theSource.As<IFieldValidationSource>().Validate())
                 .Message.ShouldEqual("Missing filter on validation convention");
         }
 

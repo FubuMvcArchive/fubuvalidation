@@ -15,7 +15,7 @@ namespace FubuMVC.Validation
         private readonly ValidationCallMatcher _callMatcher = new ValidationCallMatcher();
 
         public FubuValidationEngine()
-            : this(ValidationRegistry.BasicRegistry())
+            : this(new ValidationRegistry())
         {   
         }
 

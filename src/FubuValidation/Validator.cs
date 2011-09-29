@@ -42,7 +42,7 @@ namespace FubuValidation
         public static IValidator BasicValidator()
         {
             return new Validator(new TypeResolver(), new IValidationSource[]{
-                new FieldRuleSource(new FieldRulesRegistry(new IFieldValidationSource[0], new TypeDescriptorCache()))
+                new FieldRuleSource(new FieldRulesRegistry(new IFieldValidationSource[]{new AttributeFieldValidationSource() }, new TypeDescriptorCache()))
             });
         }
 

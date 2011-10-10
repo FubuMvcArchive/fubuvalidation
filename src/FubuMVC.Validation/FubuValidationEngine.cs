@@ -40,6 +40,7 @@ namespace FubuMVC.Validation
                                   x.SetServiceIfNone<IFieldRulesRegistry>(rulesRegistry);
                                   x.SetServiceIfNone<IValidator, Validator>();
                                   x.SetServiceIfNone<IValidationContinuationHandler, ValidationContinuationHandler>();
+                                  x.SetServiceIfNone<IFieldValidationQuery, FieldValidationQuery>();
 
                                   x.SetServiceIfNone<IValidationFailureHandler, ValidationFailureHandler>();
                                   _validationPolicies

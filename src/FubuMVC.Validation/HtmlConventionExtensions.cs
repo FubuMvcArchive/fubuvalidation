@@ -25,11 +25,9 @@ namespace FubuMVC.Validation
         {
             tags
                 .Always
-                .Modify((request, tag) =>
-                            {
-                                var registry = request.Get<IFieldRulesRegistry>();
-                                registry.ForRule<TRule>(request.Accessor, rule => continuation(rule, request, tag));
-                            });
+                .Modify((request, tag) => request
+                                              .Get<IFieldValidationQuery>()
+                                              .ForRule<TRule>(request.Accessor, rule => continuation(rule, request, tag)));
 
             return tags;
         }

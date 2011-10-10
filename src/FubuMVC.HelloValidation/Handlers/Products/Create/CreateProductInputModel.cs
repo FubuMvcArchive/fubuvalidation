@@ -7,5 +7,14 @@ namespace FubuMVC.HelloValidation.Handlers.Products.Create
         [Required]
         public string Name { get; set; }
         public double Price { get; set; }
+
+        [ContinueValidation]
+        public Hanging Hanging { get; set; }
+    }
+
+    public class Hanging
+    {
+        [Required]
+        public string Fruit { get; set; }
     }
 }

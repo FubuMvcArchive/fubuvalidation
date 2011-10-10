@@ -11,6 +11,10 @@
       <LabelFor property="Price" />
       <InputFor property="Price" />
     </div>
+    <div class="row">
+      <LabelFor property="Hanging.Fruit"/>
+      <InputFor property="Hanging.Fruit"/>
+    </div>
     <div class="row row-submit">
       <button type="submit">
         <span>Create</span>

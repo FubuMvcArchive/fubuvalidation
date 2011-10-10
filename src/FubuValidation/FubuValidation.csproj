@@ -71,6 +71,7 @@
     <Compile Include="Fields\GreaterOrEqualToZeroRule.cs" />
     <Compile Include="Fields\GreaterThanZeroRule.cs" />
     <Compile Include="Fields\IFieldRulesRegistry.cs" />
+    <Compile Include="Fields\IFieldValidationQuery.cs" />
     <Compile Include="Fields\IFieldValidationRule.cs" />
     <Compile Include="Fields\IFieldValidationSource.cs" />
     <Compile Include="Fields\MaximumLengthRule.cs" />

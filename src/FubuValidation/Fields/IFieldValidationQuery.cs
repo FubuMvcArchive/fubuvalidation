@@ -36,21 +36,24 @@ namespace FubuValidation.Fields
                 return _registry.RulesFor(accessor.OwnerType).RulesFor(accessor);
             }
 
-            var prop = chain.InnerProperty;
-            var accessors = new List<Accessor>();
-
-            chain
-                .ValueGetters
-                .OfType<PropertyValueGetter>()
-                .Take(chain.ValueGetters.Length - 1)
-                .Each(p => accessors.Add(new SingleProperty(p.PropertyInfo)));
-
-            if(accessors.Any(a => !HasRule<ContinuationFieldRule>(a)))
+            if(chainHasValidationContinuedProperties(chain))
             {
-                return new IFieldValidationRule[0];
+                var prop = chain.InnerProperty;
+                return _registry.RulesFor(prop.ReflectedType).RulesFor(new SingleProperty(prop));
             }
 
-            return _registry.RulesFor(prop.ReflectedType).RulesFor(new SingleProperty(prop));
+            return new IFieldValidationRule[0];
+        }
+
+        private bool chainHasValidationContinuedProperties(PropertyChain chain)
+        {
+            var propertyValueGetters = chain.ValueGetters.OfType<PropertyValueGetter>().ToArray();
+
+            var accessors = propertyValueGetters
+                .Take(propertyValueGetters.Length - 1)
+                .Select(p => new SingleProperty(p.PropertyInfo));
+
+            return accessors.All(HasRule<ContinuationFieldRule>);
         }
 
         public bool HasRule<T>(Accessor accessor) where T : IFieldValidationRule

@@ -20,6 +20,7 @@ namespace FubuValidation.Tests
                                     {
                                         x.For<ITypeResolver>().Use<TypeResolver>();
                                         x.For<IValidationSource>().Add(ctx => ctx.GetInstance<UniquePropertySource>());
+                                        x.For<IValidationQuery>().Use<ValidationQuery>();
                                     });
         }
 

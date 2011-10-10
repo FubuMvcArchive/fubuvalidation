@@ -1,22 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
-using FubuCore.Reflection;
-using FubuValidation.Fields;
 
 namespace FubuValidation
 {
     public class Validator : IValidator
     {
-        private readonly IList<IValidationSource> _sources;
         private readonly ITypeResolver _typeResolver;
+        private readonly IValidationQuery _validationQuery;
 
-        public Validator(ITypeResolver typeResolver, IEnumerable<IValidationSource> sources)
+        public Validator(ITypeResolver typeResolver, IValidationQuery validationQuery)
         {
             _typeResolver = typeResolver;
-            _sources = new List<IValidationSource>(sources){
-                new SelfValidatingClassRuleSource()
-            };
+            _validationQuery = validationQuery;
         }
 
         public Notification Validate(object target)
@@ -35,15 +31,14 @@ namespace FubuValidation
                 Resolver = _typeResolver
             };
 
-            _sources.SelectMany(x => x.RulesFor(validatedType))
+            _validationQuery
+                .RulesFor(validatedType)
                 .Each(rule => rule.Validate(context));
         }
 
         public static IValidator BasicValidator()
         {
-            return new Validator(new TypeResolver(), new IValidationSource[]{
-                new FieldRuleSource(new FieldRulesRegistry(new IFieldValidationSource[]{new AttributeFieldValidationSource() }, new TypeDescriptorCache()))
-            });
+            return new Validator(new TypeResolver(), ValidationQuery.BasicQuery());
         }
 
         public static Notification ValidateObject(object target)

@@ -13,7 +13,7 @@ namespace FubuValidation.Tests
         [SetUp]
         public void SetUp()
         {
-            theValidator = new Validator(new TypeResolver(), new IValidationSource[0]);
+            theValidator = new Validator(new TypeResolver(), new ValidationQuery(new IValidationSource[0]));
         }
 
         [Test]

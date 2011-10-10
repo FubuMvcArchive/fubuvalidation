@@ -99,6 +99,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ValidationContextTester.cs" />
+    <Compile Include="ValidationQueryTester.cs" />
     <Compile Include="ValidationRegistryTester.cs" />
   </ItemGroup>
   <ItemGroup>

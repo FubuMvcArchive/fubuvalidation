@@ -85,6 +85,7 @@
     <Compile Include="Models\ModelWithNoAttributes.cs" />
     <Compile Include="Models\AddressModel.cs" />
     <Compile Include="Models\SimpleModel.cs" />
+    <Compile Include="Models\SiteModel.cs" />
     <Compile Include="NotificationMessageTester.cs" />
     <Compile Include="NotificationTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

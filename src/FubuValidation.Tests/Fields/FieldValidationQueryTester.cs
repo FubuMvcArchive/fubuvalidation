@@ -44,10 +44,26 @@ namespace FubuValidation.Tests.Fields
         }
 
         [Test]
-        public void should_respect_continue_validation_rules_for_ancillary_objects()
+        public void should_continue_and_find_rules_for_nested__continued_ancillary_objects()
+        {
+            _query
+                .RulesFor<UserModel>(m => m.Site.Contact.FirstName)
+                .ShouldHaveCount(1);
+        }
+
+        [Test]
+        public void should_not_get_rules_for_ancillary_objects_without_a_continue_validation()
         {
             _query
                 .RulesFor<CompositeModel>(m => m.RestrictedContact.FirstName)
+                .ShouldHaveCount(0);
+        }
+
+        [Test]
+        public void should_not_get_rules_for_nested_ancillary_objects_without_a_continue_validation()
+        {
+            _query
+                .RulesFor<UserModel>(m => m.Site.AlternateContact.FirstName)
                 .ShouldHaveCount(0);
         }
 

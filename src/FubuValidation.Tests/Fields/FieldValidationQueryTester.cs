@@ -44,6 +44,14 @@ namespace FubuValidation.Tests.Fields
         }
 
         [Test]
+        public void should_respect_continue_validation_rules_for_ancillary_objects()
+        {
+            _query
+                .RulesFor<CompositeModel>(m => m.RestrictedContact.FirstName)
+                .ShouldHaveCount(0);
+        }
+
+        [Test]
         public void should_call_continuation_for_rules()
         {
             var found = false;

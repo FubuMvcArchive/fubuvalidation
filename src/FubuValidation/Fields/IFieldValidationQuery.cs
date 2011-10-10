@@ -37,6 +37,19 @@ namespace FubuValidation.Fields
             }
 
             var prop = chain.InnerProperty;
+            var accessors = new List<Accessor>();
+
+            chain
+                .ValueGetters
+                .OfType<PropertyValueGetter>()
+                .Take(chain.ValueGetters.Length - 1)
+                .Each(p => accessors.Add(new SingleProperty(p.PropertyInfo)));
+
+            if(accessors.Any(a => !HasRule<ContinuationFieldRule>(a)))
+            {
+                return new IFieldValidationRule[0];
+            }
+
             return _registry.RulesFor(prop.ReflectedType).RulesFor(new SingleProperty(prop));
         }
 

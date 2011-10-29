@@ -14,9 +14,15 @@ namespace FubuMVC.Validation.Registration
         }
 
         public ValidationFailureExpression ApplyPolicy<TPolicy>()
-            where TPolicy : IValidationFailurePolicy, new()
+            where TPolicy : class, IValidationFailurePolicy
         {
-            return ApplyPolicy(new TPolicy());
+            return ApplyPolicy(typeof(TPolicy));
+        }
+
+        public ValidationFailureExpression ApplyPolicy(Type policyType)
+        {
+            _policies.Fill(new ObjectDef(policyType));
+            return this;
         }
 
         public ValidationFailureExpression ApplyPolicy(IValidationFailurePolicy policy)

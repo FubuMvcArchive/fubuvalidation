@@ -90,6 +90,7 @@
     <Compile Include="FubuValidationEngineTester.cs" />
     <Compile Include="LambdaFubuContinuationModelResolverTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registration\ValidationFailureExpressionTester.cs" />
     <Compile Include="SampleInputModel.cs" />
     <Compile Include="when_handling_validation_failure.cs" />
     <Compile Include="when_resolving_the_appropriate_continuation.cs" />

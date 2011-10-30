@@ -99,7 +99,7 @@ namespace FubuMVC.Validation.Tests
             _graph
                 .Services
                 .ServicesFor<IValidationFailurePolicy>()
-                .ShouldHaveCount(1);
+                .ShouldHaveCount(2);
         }
 
         [Test]

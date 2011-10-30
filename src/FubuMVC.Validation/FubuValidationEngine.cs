@@ -22,6 +22,14 @@ namespace FubuMVC.Validation
         public FubuValidationEngine(ValidationRegistry validationRegistry)
         {
             _validationRegistry = validationRegistry;
+
+            setDefaults();
+        }
+
+        private void setDefaults()
+        {
+            Failures
+                .ApplyPolicy<AjaxContinuationFailurePolicy>();
         }
 
         public ValidationCandidateExpression Actions { get { return new ValidationCandidateExpression(_callMatcher); }}
@@ -42,6 +50,10 @@ namespace FubuMVC.Validation
                                   x.SetServiceIfNone<IValidationQuery, ValidationQuery>();
                                   x.SetServiceIfNone<IValidationContinuationHandler, ValidationContinuationHandler>();
                                   x.SetServiceIfNone<IFieldValidationQuery, FieldValidationQuery>();
+
+                                  x.SetServiceIfNone<IAjaxContinuationResolver, AjaxContinuationResolver>();
+                                  x.SetServiceIfNone<IAjaxContinuationActivator, AjaxContinuationActivator>();
+                                  x.AddService<IAjaxContinuationDecorator, StandardAjaxContinuationDecorator>();
 
                                   x.SetServiceIfNone<IValidationFailureHandler, ValidationFailureHandler>();
                                   _validationPolicies

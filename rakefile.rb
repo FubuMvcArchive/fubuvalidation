@@ -73,7 +73,7 @@ end
 desc "Compiles the app"
 task :compile => [:restore_if_missing, :clean, :version] do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuValidation.sln', :clrversion => CLR_TOOLS_VERSION
-  copyOutputFiles "src/FubuValidation/bin/#{COMPILE_TARGET}", "Fubu*.{dll,pdb}", props[:stage]  
+  copyOutputFiles "src/FubuValidation.StructureMap/bin/#{COMPILE_TARGET}", "Fubu*.{dll,pdb}", props[:stage]  
   copyOutputFiles "src/FubuMVC.Validation/bin", "FubuMVC.Validation.{dll,pdb}", props[:stage]  
 end
 

@@ -18,6 +18,5 @@
   </metadata>
   <files>
     <file src="..\..\build\FubuMVC.Validation.*" target="lib" />
-    <file src="..\..\src\FubuMVC.Validation\**\*.cs" target="src" />
   </files>
 </package>

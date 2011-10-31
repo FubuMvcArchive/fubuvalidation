@@ -1,7 +1,6 @@
 ﻿using System;
 using FubuCore;
 using FubuMVC.Core;
-using FubuValidation;
 
 namespace FubuMVC.Validation
 {
@@ -14,24 +13,7 @@ namespace FubuMVC.Validation
 
         public static void Validation(this FubuRegistry registry, Action<FubuValidationEngine> configure)
         {
-            registry.Validation(ValidationRegistry.BasicRegistry(), configure);
-        }
-
-        public static void Validation<TRegistry>(this FubuRegistry registry)
-            where TRegistry : ValidationRegistry, new()
-        {
-            registry.Validation(new TRegistry(), validation => { });
-        }
-
-        public static void Validation<TRegistry>(this FubuRegistry registry, Action<FubuValidationEngine> configure)
-            where TRegistry : ValidationRegistry, new()
-        {
-            registry.Validation(new TRegistry(), configure);
-        }
-
-        public static void Validation(this FubuRegistry registry, ValidationRegistry validationRegistry, Action<FubuValidationEngine> configure)
-        {
-            var engine = new FubuValidationEngine(validationRegistry);
+            var engine = new FubuValidationEngine();
             configure(engine);
             engine
                 .As<IFubuRegistryExtension>()

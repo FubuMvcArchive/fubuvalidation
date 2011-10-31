@@ -2,6 +2,8 @@
 using System.Web.Routing;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
+using FubuValidation.StructureMap;
+using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.HelloValidation
 {
@@ -11,12 +13,22 @@ namespace FubuMVC.HelloValidation
         {
             FubuApplication
                 .For<HelloValidationFubuRegistry>()
-                .StructureMapObjectFactory(configure => configure.Scan(s =>
-                                                                           {
-                                                                               s.TheCallingAssembly();
-                                                                               s.WithDefaultConventions();
-                                                                           }))
+                .StructureMapObjectFactory(configure => configure.AddRegistry<HelloValidationRegistry>())
                 .Bootstrap(RouteTable.Routes);
+        }
+    }
+
+    public class HelloValidationRegistry : Registry
+    {
+        public HelloValidationRegistry()
+        {
+            Scan(x =>
+                     {
+                         x.TheCallingAssembly();
+                         x.WithDefaultConventions();
+                     });
+
+            this.FubuValidation();
         }
     }
 }

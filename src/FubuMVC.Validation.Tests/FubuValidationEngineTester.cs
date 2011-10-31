@@ -42,36 +42,6 @@ namespace FubuMVC.Validation.Tests
                         .BuildGraph();
         }
 
-        [Test]
-        public void should_register_field_source()
-        {
-            _graph
-                .Services
-                .ServicesFor<IValidationSource>()
-                .First()
-                .Value
-                .ShouldBeOfType<FieldRuleSource>();
-        }
-
-        [Test]
-        public void should_register_field_rules_registry()
-        {
-            _graph
-                .Services
-                .DefaultServiceFor<IFieldRulesRegistry>()
-                .Value
-                .ShouldBeOfType<FieldRulesRegistry>();
-        }
-
-        [Test]
-        public void should_register_validator()
-        {
-            _graph
-                .Services
-                .DefaultServiceFor<IValidator>()
-                .Type
-                .ShouldEqual(typeof (Validator));
-        }
 
         [Test]
         public void should_register_validation_continuation_handler()

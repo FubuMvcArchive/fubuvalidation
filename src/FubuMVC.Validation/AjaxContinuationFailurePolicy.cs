@@ -28,7 +28,7 @@ namespace FubuMVC.Validation
         public void Handle(ValidationFailure context)
         {
             var continuation = _continuationResolver.Resolve(context.Notification);
-            _writer.Write(continuation);
+            _writer.Write(continuation.ToDictionary(), MimeType.Json.ToString());
         }
     }
 }

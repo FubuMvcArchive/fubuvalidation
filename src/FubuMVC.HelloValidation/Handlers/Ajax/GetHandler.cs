@@ -7,7 +7,11 @@ namespace FubuMVC.HelloValidation.Handlers.Ajax
     {
         public AjaxContinuation Execute(SomeInputModel input)
         {
-            return new AjaxContinuation();
+            // something happened and it was successful
+            return new AjaxContinuation
+                       {
+                           Success = true
+                       };
         }
     }
 

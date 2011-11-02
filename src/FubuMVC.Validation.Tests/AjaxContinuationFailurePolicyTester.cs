@@ -43,7 +43,7 @@ namespace FubuMVC.Validation.Tests
                 .Return(continuation);
 
             MockFor<IJsonWriter>()
-                .Expect(w => w.Write(continuation));
+                .Expect(w => w.Write(continuation.ToDictionary(), MimeType.Json.ToString()));
 
             ClassUnderTest
                 .Handle(failure);

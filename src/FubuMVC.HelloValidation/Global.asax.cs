@@ -14,7 +14,7 @@ namespace FubuMVC.HelloValidation
             FubuApplication
                 .For<HelloValidationFubuRegistry>()
                 .StructureMapObjectFactory(configure => configure.AddRegistry<HelloValidationRegistry>())
-                .Bootstrap(RouteTable.Routes);
+                .Bootstrap();
         }
     }
 

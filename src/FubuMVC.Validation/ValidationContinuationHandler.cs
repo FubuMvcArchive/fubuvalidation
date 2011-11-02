@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
@@ -64,6 +65,11 @@ namespace FubuMVC.Validation
             _factory
                 .BuildPartial(call)
                 .InvokePartial();
+        }
+
+        public void EndWithStatusCode(HttpStatusCode code)
+        {
+            // no-op
         }
 
         public void Handle()

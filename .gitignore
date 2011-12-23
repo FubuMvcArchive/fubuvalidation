@@ -35,3 +35,4 @@ fubu-content
 spark.zip
 deployment/bottles/*.zip
 src/packages
+results

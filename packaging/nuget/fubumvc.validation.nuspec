@@ -12,8 +12,8 @@
     <description>A FubuMVC implementation of FubuValidation</description>
     <tags>fubumvc mvc fubu validation conventional</tags>
     <dependencies>
-      <dependency id="fubumvc.references" />
-      <dependency id="fubuvalidation" />
+      <dependency id="FubuMVC.References" />
+      <dependency id="FubuValidation" />
     </dependencies>
   </metadata>
   <files>

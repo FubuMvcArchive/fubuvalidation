@@ -12,8 +12,8 @@
     <description>FubuValidation - have validation your way, whatever way that happens to be</description>
     <tags>fubu validation fubumvc conventional</tags>
     <dependencies>
-      <dependency id="fubulocalization" />
-      <dependency id="htmltags" />
+      <dependency id="FubuLocalization" />
+      <dependency id="HtmlTags" />
     </dependencies>
   </metadata>
   <files>

@@ -72,5 +72,25 @@ namespace FubuMVC.Validation.Tests
             MockFor<IActionBehavior>()
                 .AssertWasNotCalled(inner => inner.Invoke());
         }
+
+        [Test]
+        public void should_add_model_binding_errors()
+        {
+            var input = new SampleInputModel();
+            var notification = new Notification(typeof(SampleInputModel));
+
+            MockFor<IValidator>()
+                .Expect(provider => provider.Validate(input))
+                .Return(notification);
+
+            MockFor<IFubuRequest>()
+                .Expect(request => request.Get<SampleInputModel>())
+                .Return(input);
+
+            ClassUnderTest.Invoke();
+
+            MockFor<IModelBindingErrors>().AssertWasCalled(x => x.AddAnyErrors<SampleInputModel>(notification));
+        }
+
     }
 }

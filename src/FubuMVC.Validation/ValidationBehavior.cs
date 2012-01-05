@@ -1,3 +1,4 @@
+using System;
 using FubuMVC.Core;
 using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Registration.Nodes;
@@ -9,18 +10,20 @@ namespace FubuMVC.Validation
     public class ValidationBehavior<T> : BasicBehavior
         where T : class
     {
+        private readonly IValidationFailureHandler _failureHandler;
+        private readonly IModelBindingErrors _modelBindingErrors;
+        private readonly IValidator _provider;
         private readonly IFubuRequest _request;
         private readonly ActionCall _target;
-        private readonly IValidator _provider;
-        private readonly IValidationFailureHandler _failureHandler;
 
-        public ValidationBehavior(IFubuRequest request, ActionCall target, IValidator provider, IValidationFailureHandler failureHandler)
+        public ValidationBehavior(IFubuRequest request, ActionCall target, IValidator provider, IValidationFailureHandler failureHandler, IModelBindingErrors modelBindingErrors)
             : base(PartialBehavior.Executes)
         {
             _request = request;
             _target = target;
             _provider = provider;
             _failureHandler = failureHandler;
+            _modelBindingErrors = modelBindingErrors;
         }
 
         public ActionCall Target
@@ -32,7 +35,12 @@ namespace FubuMVC.Validation
         {
             var inputModel = _request.Get<T>();
             var notification = _provider.Validate(inputModel);
-            if(notification.IsValid())
+
+
+            _modelBindingErrors.AddAnyErrors<T>(notification);
+
+
+            if (notification.IsValid())
             {
                 return DoNext.Continue;
             }

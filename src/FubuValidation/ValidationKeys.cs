@@ -4,8 +4,11 @@ using FubuValidation.Fields;
 
 namespace FubuValidation
 {
+    // TODO -- convert to the latest FubuLocalization smarts
     public class ValidationKeys : StringToken
     {
+        public static readonly ValidationKeys INVALID_FORMAT = new ValidationKeys("INVALID_FORMAT", "Data is formatted incorrectly");
+
         public static readonly StringToken REQUIRED = new ValidationKeys("REQUIRED", "Required Field");
 
         public static readonly StringToken COLLECTION_LENGTH 

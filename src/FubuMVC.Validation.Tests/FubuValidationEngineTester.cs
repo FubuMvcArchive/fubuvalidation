@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuTestingSupport;
-using FubuValidation;
-using FubuValidation.Fields;
 using NUnit.Framework;
 
 namespace FubuMVC.Validation.Tests
@@ -13,73 +12,39 @@ namespace FubuMVC.Validation.Tests
     [TestFixture]
     public class when_bootstrapping_validation
     {
-        private BehaviorGraph _graph;
+        #region Setup/Teardown
 
         [SetUp]
         public void setup_with_defaults()
         {
             _graph = new FubuRegistry(registry =>
-                                          {
-                                              registry
-                                                  .Applies
-                                                  .ToThisAssembly();
+            {
+                registry
+                    .Applies
+                    .ToThisAssembly();
 
-                                              registry
-                                                  .Actions
-                                                  .FindWith<SampleActionSource>();
+                registry
+                    .Actions
+                    .FindWith<SampleActionSource>();
 
-                                              registry.Validation(validation =>
-                                                                      {
-                                                                          validation
-                                                                              .Actions
-                                                                              .Include(call => call.HasInput);
+                registry.Validation(validation =>
+                {
+                    validation
+                        .Actions
+                        .Include(call => call.HasInput);
 
-                                                                          validation
-                                                                              .Failures
-                                                                              .ApplyPolicy<SampleFailurePolicy>();
-                                                                      });
-                                          })
-                        .BuildGraph();
+                    validation
+                        .Failures
+                        .ApplyPolicy<SampleFailurePolicy>();
+                });
+            })
+                .BuildGraph();
         }
 
+        #endregion
 
-        [Test]
-        public void should_register_validation_continuation_handler()
-        {
-            _graph
-                .Services
-                .DefaultServiceFor<IValidationContinuationHandler>()
-                .Type
-                .ShouldEqual(typeof(ValidationContinuationHandler));
-        }
+        private BehaviorGraph _graph;
 
-        [Test]
-        public void should_register_validation_failure_handler()
-        {
-            _graph
-                .Services
-                .DefaultServiceFor<IValidationFailureHandler>()
-                .Type
-                .ShouldEqual(typeof(ValidationFailureHandler));
-        }
-
-        [Test]
-        public void should_register_policies()
-        {
-            _graph
-                .Services
-                .ServicesFor<IValidationFailurePolicy>()
-                .ShouldHaveCount(2);
-        }
-
-        [Test]
-        public void should_apply_behavior_to_actions_matching_predicate()
-        {
-            _graph
-                .Behaviors
-                .Where(chain => chain.OfType<ValidationNode>().Any())
-                .ShouldHaveCount(1);
-        }
 
         public class SampleActionSource : IActionSource
         {
@@ -94,13 +59,63 @@ namespace FubuMVC.Validation.Tests
         {
             public bool Matches(ValidationFailure context)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
 
             public void Handle(ValidationFailure context)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
+        }
+
+
+
+        [Test]
+        public void should_apply_behavior_to_actions_matching_predicate()
+        {
+            _graph
+                .Behaviors
+                .Where(chain => chain.OfType<ValidationNode>().Any())
+                .ShouldHaveCount(1);
+        }
+
+        [Test]
+        public void should_register_policies()
+        {
+            _graph
+                .Services
+                .ServicesFor<IValidationFailurePolicy>()
+                .ShouldHaveCount(2);
+        }
+
+        [Test]
+        public void should_register_validation_continuation_handler()
+        {
+            _graph
+                .Services
+                .DefaultServiceFor<IValidationContinuationHandler>()
+                .Type
+                .ShouldEqual(typeof (ValidationContinuationHandler));
+        }
+
+        [Test]
+        public void should_register_the_default_model_binding_errors()
+        {
+            _graph
+                .Services
+                .DefaultServiceFor<IModelBindingErrors>()
+                .Type
+                .ShouldEqual(typeof(ModelBindingErrors));
+        }
+
+        [Test]
+        public void should_register_validation_failure_handler()
+        {
+            _graph
+                .Services
+                .DefaultServiceFor<IValidationFailureHandler>()
+                .Type
+                .ShouldEqual(typeof (ValidationFailureHandler));
         }
     }
 }

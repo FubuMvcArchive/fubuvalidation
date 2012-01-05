@@ -20,7 +20,7 @@ namespace FubuMVC.Validation
         {
             var notification = _request.Get<Notification>();
             var modelType = context.InputType();
-            var policy = _policies.FirstOrDefault(p => p.Matches(context));
+            var policy = _policies.LastOrDefault(p => p.Matches(context));
             if(policy == null)
             {
                 throw new FubuMVCValidationException(1001, notification, "No validation failure policy found for {0}", modelType.FullName);

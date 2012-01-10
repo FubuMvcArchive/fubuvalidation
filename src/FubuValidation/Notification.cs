@@ -15,14 +15,16 @@ namespace FubuValidation
         {
         }
 
-        public ValidationError(string field, string message)
+        public ValidationError(string field, string label, string message)
         {
             this.field = field;
             this.message = message;
+            this.label = label;
         }
 
         public string field { get; set; }
         public string message { get; set; }
+        public string label { get; set; }
     }
 
     [Serializable]

@@ -47,5 +47,19 @@ namespace FubuValidation.Tests.Fields
             theRule.ValidateProperty(theModel, x => x.Address1).AllMessages.Any().ShouldBeFalse();
         }
 
+        [Test]
+        public void end_to_end()
+        {
+            var registry = new FieldRulesRegistry(new IFieldValidationSource[] {new AttributeFieldValidationSource()}, new TypeDescriptorCache());
+            var validator = new Validator(new TypeResolver(), new ValidationQuery(new IValidationSource[] { new FieldRuleSource(registry) }));
+
+            theModel.PostalCode = "123456";
+            validator
+                .Validate(theModel)
+                .MessagesFor<AddressModel>(x => x.PostalCode)
+                .Single()
+                .GetMessage()
+                .ShouldEqual("Maximum length exceeded. Must be less than or equal to 5");
+        }
     }
 }

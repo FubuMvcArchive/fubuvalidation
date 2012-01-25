@@ -11,7 +11,7 @@
         public string StateOrProvince { get; set; }
         [Required]
         public string Country { get; set; }
-        [Required]
+        [Required, MaximumStringLength(5)]
         public string PostalCode { get; set; }
     }
 }

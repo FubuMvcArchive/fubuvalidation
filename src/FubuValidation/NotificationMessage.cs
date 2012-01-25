@@ -71,7 +71,7 @@ namespace FubuValidation
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
-            return Equals(other.GetMessage(), GetMessage()) && Accessors.IsEqualTo(other.Accessors);
+            return Equals(other.StringToken, StringToken) && Accessors.IsEqualTo(other.Accessors);
         }
 
         public override int GetHashCode()

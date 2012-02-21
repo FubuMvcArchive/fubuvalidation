@@ -1,0 +1,24 @@
+<form id="test" action="/test" method="post">
+	<ul class="validation-summary" style="display:none;"></ul>
+	<fieldset>
+		<div class="col">
+			<label for="FirstName">First Name *</label>
+			<div class="input">
+				<input type="text" title="First Name is required" id="FirstName" name="FirstName" class="required" />
+			</div>
+		</div>
+		<div class="col">
+			<label for="LastName">Last Name</label>
+			<div class="input">
+				<input type="text" title="Last Name is required" id="LastName" name="LastName" />
+			</div>
+		</div>
+		<div class="col">
+			<label for="LookupProperty">Lookup Property *</label>
+			<div class="input">
+				<input type="hidden" id="LookupProperty" name="LookupProperty" title="LookupProperty is required" class="lookup required" value="" />
+				<input type="text" name="LookupPropertyValue" id="LookupPropertyValue" class="autocomplete required" title="LookupProperty is required" />
+			</div>
+		</div>
+	</fieldset>
+</form>

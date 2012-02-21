@@ -117,7 +117,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".package-manifest" />
+    <Content Include="content\scripts\fubuvalidation.js" />
+    <Content Include="content\scripts\lib\amplify.core.min.js" />
+    <Content Include="content\scripts\lib\jquery-1.6.2.js" />
+    <Content Include="content\scripts\lib\jquery.continuations.js" />
+    <Content Include="content\scripts\lib\jquery.form.js" />
+    <Content Include="content\scripts\lib\json2.js" />
+    <Content Include="content\scripts\lib\sinon-1.2.0.js" />
+    <Content Include="content\scripts\lib\underscore-min.js" />
+    <Content Include="content\scripts\specs\fubuvalidation.fixture.html" />
+    <Content Include="content\scripts\specs\fubuvalidation.spec.js" />
     <Content Include="packages.config" />
+    <Content Include="validation.script.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

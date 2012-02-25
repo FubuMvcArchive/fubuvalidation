@@ -110,6 +110,10 @@ task :run_jasmine do
 end
 
 def self.serenity(args)
+  if Platform.is_nix
+    puts "Skipping Serentiy. Not currently supported on *nix based systems."
+    return
+  end
   serenity = Platform.runtime(Nuget.tool("Serenity", "SerenityRunner.exe"))
   sh "#{serenity} #{args}"
 end

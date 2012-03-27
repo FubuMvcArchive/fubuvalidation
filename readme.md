@@ -50,3 +50,14 @@ If you do not have ruby:
 
   * type: `echo // > src\CommonAssemblyInfo.cs`
 1. open src\FubuValidation.sln with Visual Studio and Build the solution
+
+## Building FubuValidation
+
+1. If you do not have Ruby installed, get the latest version and install it.  For Windows, you can find it at [RubyInstaller](http://rubyinstaller.org/)
+1. After Ruby is installed, in the root directory, run `InstallGems.bat`
+1. If that succeeds, in the root directory, run `rake`
+	1. If prompted, run `git submodule update --init` to populate your buildsupport folder.
+	1. Rerun rake
+1. At this point, the project should have all NuGet packages pulled down, been built and tested. 
+
+You are now ready to launch FubuValidation.sln

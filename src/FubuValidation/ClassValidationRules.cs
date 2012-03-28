@@ -96,6 +96,11 @@ namespace FubuValidation
                 return register(new MaximumLengthRule(length));
             }
 
+            public FieldValidationExpression MinimumLength(int length)
+            {
+                return register(new MinimumLengthRule(length));
+            }
+
             public FieldValidationExpression GreaterThanZero()
             {
                 return register(new GreaterThanZeroRule());

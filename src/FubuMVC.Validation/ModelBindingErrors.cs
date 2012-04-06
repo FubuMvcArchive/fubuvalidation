@@ -24,7 +24,7 @@ namespace FubuMVC.Validation
             var problems = _request.ProblemsFor<T>();
             problems.Each(problem =>
             {
-                problem.Properties.Each(prop => notification.RegisterMessage((PropertyInfo) prop, ValidationKeys.INVALID_FORMAT));
+                notification.RegisterMessage(problem.Property, ValidationKeys.INVALID_FORMAT);
             });
         }
     }

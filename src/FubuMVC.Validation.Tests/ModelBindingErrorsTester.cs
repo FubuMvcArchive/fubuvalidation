@@ -33,8 +33,8 @@ namespace FubuMVC.Validation.Tests
 
         private IEnumerable<ConvertProblem> problems()
         {
-            yield return new ConvertProblem{Properties = new []{ReflectionHelper.GetProperty<ValidationTarget>(x => x.Number)}};
-            yield return new ConvertProblem{Properties = new []{ReflectionHelper.GetProperty<ValidationTarget>(x => x.Time)}};
+            yield return new ConvertProblem{Property = ReflectionHelper.GetProperty<ValidationTarget>(x => x.Number)};
+            yield return new ConvertProblem{Property = ReflectionHelper.GetProperty<ValidationTarget>(x => x.Time)};
         }
 
         public class ValidationTarget

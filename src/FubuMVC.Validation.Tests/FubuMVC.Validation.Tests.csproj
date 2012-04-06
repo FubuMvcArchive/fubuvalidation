@@ -32,49 +32,46 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.197\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\FubuCore.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuKayak">
-      <HintPath>..\packages\FubuKayak.0.9.3.740\lib\net40\FubuKayak.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\FubuKayak.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\FubuMVC.Core.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.OwinHost">
-      <HintPath>..\packages\FubuKayak.0.9.3.740\lib\net40\FubuMVC.OwinHost.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\FubuMVC.OwinHost.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.StructureMap">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\FubuMVC.StructureMap.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\FubuMVC.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
-      <HintPath>..\packages\FubuTestingSupport.0.9.4.114\lib\FubuTestingSupport.dll</HintPath>
+      <HintPath>..\packages\FubuTestingSupport.0.9.8.129\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
     <Reference Include="Gate">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\Gate.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\Gate.dll</HintPath>
     </Reference>
     <Reference Include="Gate.Kayak">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\Gate.Kayak.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\Gate.Kayak.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.0.0.55\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\Ionic.Zip.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Kayak">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\Kayak.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\Kayak.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\nunit.framework.dll</HintPath>
@@ -89,16 +86,16 @@
       <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="Serenity">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\Serenity.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\Serenity.dll</HintPath>
     </Reference>
     <Reference Include="SerenityRunner">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\SerenityRunner.exe</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\SerenityRunner.exe</HintPath>
     </Reference>
     <Reference Include="StoryTeller">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\StoryTeller.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\StoryTeller.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\StructureMap.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap.AutoMocking">
       <HintPath>..\packages\structuremap.automocking.2.6.3\lib\StructureMap.AutoMocking.dll</HintPath>
@@ -111,7 +108,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WebDriver">
-      <HintPath>..\packages\Serenity.0.9.3.740\lib\net40\WebDriver.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\WebDriver.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

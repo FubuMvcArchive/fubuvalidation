@@ -32,28 +32,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.224\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.8.130\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuKayak">
-      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\FubuKayak.dll</HintPath>
+      <HintPath>..\packages\FubuKayak.0.9.5.817\lib\net40\FubuKayak.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\FubuMVC.Core.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.References.0.9.5.817\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.OwinHost">
-      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\FubuMVC.OwinHost.dll</HintPath>
+      <HintPath>..\packages\FubuKayak.0.9.5.817\lib\net40\FubuMVC.OwinHost.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.StructureMap">
-      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\FubuMVC.StructureMap.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.References.0.9.5.817\lib\net40\FubuMVC.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
-      <HintPath>..\packages\FubuTestingSupport.0.9.8.129\lib\FubuTestingSupport.dll</HintPath>
+      <HintPath>..\packages\FubuTestingSupport.0.9.8.130\lib\FubuTestingSupport.dll</HintPath>
     </Reference>
     <Reference Include="Gate">
       <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\Gate.dll</HintPath>
@@ -85,8 +85,11 @@
     <Reference Include="Rhino.Mocks">
       <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
     </Reference>
+    <Reference Include="Selenium.WebDriverBackedSelenium">
+      <HintPath>..\packages\Serenity.0.9.5.817\lib\net40\Selenium.WebDriverBackedSelenium.dll</HintPath>
+    </Reference>
     <Reference Include="Serenity">
-      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\Serenity.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.817\lib\net40\Serenity.dll</HintPath>
     </Reference>
     <Reference Include="SerenityRunner">
       <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\SerenityRunner.exe</HintPath>
@@ -108,7 +111,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WebDriver">
-      <HintPath>..\packages\Serenity.0.9.5.804\lib\net40\WebDriver.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.5.817\lib\net40\WebDriver.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

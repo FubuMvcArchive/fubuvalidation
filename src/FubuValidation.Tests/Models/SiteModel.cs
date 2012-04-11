@@ -7,6 +7,9 @@ namespace FubuValidation.Tests.Models
 
         [ContinueValidation]
         public SiteModel Site { get; set; }
+        
+        [MinimumStringLength(10)]
+        public string Password { get; set; }
     }
 
     public class SiteModel

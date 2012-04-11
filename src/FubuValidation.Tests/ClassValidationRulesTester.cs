@@ -113,6 +113,26 @@ namespace FubuValidation.Tests
             nameRules.Any(x => x is RequiredFieldRule).ShouldBeTrue();
             nameRules.ShouldContain(new MaximumLengthRule(10));
         }
+
+        [Test]
+        public void register_minimum_length()
+        {
+            theRules.Property(x => x.Name).MinimumLength(10);
+            rulesFor(x => x.Name).Single().ShouldBeOfType<MinimumLengthRule>()
+                .Length.ShouldEqual(10);
+
+        }
+
+        [Test]
+        public void register_minimum_length_conditionally()
+        {
+            Func<ClassValidationRulesTarget, bool> filter = x => x.Country == "Canada";
+            theRules.Property(x => x.Name).MinimumLength(10).If(filter);
+            rulesFor(x => x.Name).Single().ShouldBeOfType<ConditionalFieldRule<ClassValidationRulesTarget>>()
+                .Inner
+                .ShouldBeOfType<MinimumLengthRule>()
+                .Length.ShouldEqual(10);
+        }
     }
 
     public class ClassValidationRulesTarget

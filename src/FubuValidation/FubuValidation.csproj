@@ -72,6 +72,7 @@
     <Compile Include="Fields\IFieldValidationRule.cs" />
     <Compile Include="Fields\IFieldValidationSource.cs" />
     <Compile Include="Fields\MaximumLengthRule.cs" />
+    <Compile Include="Fields\MinimumLengthRule.cs" />
     <Compile Include="Fields\RequiredFieldRule.cs" />
     <Compile Include="Fields\LambdaFieldValidationSource.cs" />
     <Compile Include="FubuValidationException.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="IValidationSource.cs" />
     <Compile Include="IValidator.cs" />
     <Compile Include="MaximumStringLengthAttribute.cs" />
+    <Compile Include="MinimumStringLengthAttribute.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="NotificationMessage.cs" />
     <Compile Include="TemplateExtensions.cs" />

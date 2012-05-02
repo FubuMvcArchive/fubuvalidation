@@ -1,5 +1,8 @@
 <form id="test" action="/test" method="post">
-	<ul class="validation-summary" style="display:none;"></ul>
+    <div class="alert-message block-message validation-container" style="display:none;">
+        <p>There are errors with the information you provided.</p>
+        <ul class="validation-summary"></ul>
+    </div>
 	<fieldset>
 		<div class="col">
 			<label for="FirstName">First Name *</label>

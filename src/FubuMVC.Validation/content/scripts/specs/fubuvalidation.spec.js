@@ -69,9 +69,9 @@ describe('Default validation handler integrated tests', function () {
 	
 	it('should show validation summary', function() {
 		process();
-		expect($('#test > .validation-summary').is(':visible')).toEqual(true);
+		expect($('#test > .validation-container').is(':visible')).toEqual(true);
 	});
-	
+
 	it('should only highlight fields with errors', function() {
 		process();
 		expect($('#FirstName', '#test').hasClass('error')).toEqual(true);
@@ -84,7 +84,7 @@ describe('Default validation handler integrated tests', function () {
 		theContinuation.errors.length = 0;
 		process();
 		
-		expect($('#test > .validation-summary').is(':visible')).toEqual(false);
+		expect($('#test > .validation-container').is(':visible')).toEqual(false);
 	});
 	
 	it('should unhighlight fields when validation succeeds', function() {
@@ -102,7 +102,7 @@ describe('Default validation handler integrated tests', function () {
 		var token = $.fubuvalidation.defaultHandler.generateToken(error);
 		var found = false;
 		
-		$('#test > .validation-summary > li').each(function() {
+		$('#test > .validation-container > .validation-summary > li').each(function() {
 			if($('a', this).html() == token) {
 				found = true;
 			}
@@ -158,7 +158,7 @@ describe('jquery.continuations and fubuvalidation.js integration tests', functio
 			var token = $.fubuvalidation.defaultHandler.generateToken(error);
 			var found = false;
 			
-			$('#test > .validation-summary > li').each(function() {
+			$('#test > .validation-container > .validation-summary > li').each(function() {
 				if($('a', this).html() == token) {
 					found = true;
 				}
@@ -176,8 +176,8 @@ describe('jquery.continuations and fubuvalidation.js integration tests', functio
 		waits(500);
 		
 		runs(function() {
-			expect($('#test > .validation-summary').is(':visible')).toEqual(false);
-			expect($('#test > .validation-summary > li').size()).toEqual(0);
+			expect($('#test > .validation-container').is(':visible')).toEqual(false);
+			expect($('#test > .validation-container > .validation-summary > li').size()).toEqual(0);
 			
 			expect($('#FirstName', '#test').hasClass('error')).toEqual(false);
 		});

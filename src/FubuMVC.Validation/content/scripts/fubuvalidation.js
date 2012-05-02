@@ -1,4 +1,4 @@
-﻿// fubuvalidation.js v0.2.4
+﻿// fubuvalidation.js v0.3.5
 //
 // Copyright (C)2011 Joshua Arnold
 // Distributed under Apache License, Version 2.0
@@ -16,7 +16,7 @@
         matches: function (context) { return true; },
         reset: function (context) {
             var self = this;
-            context.container.html('');
+            context.container.find('.validation-summary').html('');
             context.container.hide();
 
             $('.error', context.form).each(function () {
@@ -25,8 +25,9 @@
         },
         process: function (context) {
             var self = this;
-            var container = $('.validation-summary', context.form);
+            var container = $('.validation-container', context.form);
             context.container = container;
+            context.summary = container.find('ul.validation-summary');
             this.reset(context);
 
             if (context.errors.length == 0) {
@@ -43,7 +44,7 @@
         append: function (context, error) {
             var found = false;
             context
-				.container
+				.summary
                 .find("li[data-field='" + error.field + "']")
                 .each(function () {
                     if (found) return;
@@ -60,9 +61,9 @@
                     token: self.generateToken(error)
                 }));
                 token.find('a').click(function () {
-                    self.findElement(context, error.field).focus();
+                    $.fubuvalidation.findElement(context, error.field).focus();
                 });
-                context.container.append(token);
+                context.summary.append(token);
             }
         },
         generateToken: function (error) {
@@ -164,7 +165,7 @@
     $.fn.resetForm = function () {
         var context = {
             form: $(this),
-            container: $('.validation-summary', $(this))
+            container: $('.validation-container', $(this))
         };
         $.fubuvalidation.defaultHandler.reset(context);
         reset.call(this);

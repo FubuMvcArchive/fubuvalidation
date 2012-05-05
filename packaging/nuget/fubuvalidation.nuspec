@@ -14,7 +14,7 @@
     <dependencies>
       <dependency id="FubuLocalization" />
       <dependency id="HtmlTags" />
-      <dependency id="FubuCore" version="0.9.9.139" />
+      <dependency id="FubuCore" version="0.9.9.151" />
     </dependencies>
   </metadata>
   <files>

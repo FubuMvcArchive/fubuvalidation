@@ -22,7 +22,7 @@ namespace FubuMVC.HelloValidation
             
             Views
                 .TryToAttachWithDefaultConventions()
-                .RegisterActionLessViews(t => t.ViewModelType == typeof(Notification));
+                .RegisterActionLessViews(t => t.ViewModel == typeof(Notification));
 
             this.Validation(validation =>
                                 {

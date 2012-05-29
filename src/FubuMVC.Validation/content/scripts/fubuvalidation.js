@@ -58,6 +58,7 @@
                 var self = this;
                 var token = $(_.template('<li data-field="{{ label }}"><a href="javascript:void(0);">{{ token }}</a></li>', {
                     field: error.field,
+                    label: error.label,
                     token: self.generateToken(error)
                 }));
                 token.find('a').click(function () {

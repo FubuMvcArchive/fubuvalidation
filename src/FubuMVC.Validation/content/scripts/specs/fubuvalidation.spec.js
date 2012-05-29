@@ -6,6 +6,7 @@
 			success: false,
 			errors: [{
 				field: 'FirstName',
+                label: 'FirstName',
 				message: 'First Name is required'
 			}]
 		};
@@ -47,6 +48,7 @@ describe('fubuvalidation module tests', function() {
 		var continuation = ObjectMother.continuation();
 		continuation.errors.push({
 			field: 'LookupProperty',
+            label: 'LookupProperty',
 			message: 'LookupProperty is required'
 		});
 		

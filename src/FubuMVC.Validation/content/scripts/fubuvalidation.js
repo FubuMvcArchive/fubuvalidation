@@ -1,4 +1,4 @@
-﻿// fubuvalidation.js v0.3.5
+﻿// fubuvalidation.js v0.4.6
 //
 // Copyright (C)2011 Joshua Arnold
 // Distributed under Apache License, Version 2.0
@@ -56,7 +56,7 @@
 
             if (!found) {
                 var self = this;
-                var token = $(_.template('<li data-field="{{ field }}"><a href="javascript:void(0);">{{ token }}</a></li>', {
+                var token = $(_.template('<li data-field="{{ label }}"><a href="javascript:void(0);">{{ token }}</a></li>', {
                     field: error.field,
                     token: self.generateToken(error)
                 }));
@@ -67,7 +67,7 @@
             }
         },
         generateToken: function (error) {
-            return _.template('{{ field }} - {{ message }}', error);
+            return _.template('{{ label }} - {{ message }}', error);
         },
         highlight: function (error) {
             if (error.element) {

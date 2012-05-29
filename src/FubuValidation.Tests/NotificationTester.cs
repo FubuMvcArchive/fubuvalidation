@@ -1,3 +1,4 @@
+using System.Globalization;
 using FubuCore.Reflection;
 using FubuLocalization;
 using FubuTestingSupport;
@@ -85,6 +86,18 @@ namespace FubuValidation.Tests
             error.message.ShouldEqual("test1");
             error.field.ShouldBeEmpty();
         }
+
+		[Test]
+		public void to_validation_error_with_localization()
+		{
+			LocalizationManager.Stub();
+
+			var notification = new Notification();
+			notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test1", "test1"));
+			
+			var errors = notification.ToValidationErrors();
+			errors.First().label.ShouldEqual("en-US_Something");
+		}
 
         [Test]
         public void to_validation_error_if_multiple_accessors_match_a_message()

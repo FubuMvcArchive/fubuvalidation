@@ -16,15 +16,23 @@ namespace FubuValidation
         }
 
         public ValidationError(string field, string message)
+			: this(field, field, message)
         {
-            this.field = field;
-            this.message = message;
+            
         }
+
+		public ValidationError(string field, string label, string message)
+		{
+			this.field = field;
+			this.label = label;
+			this.message = message;
+		}
 
         public string field { get; set; }
         public string message { get; set; }
+    	public string label { get; set; }
 
-        public bool Equals(ValidationError other)
+    	public bool Equals(ValidationError other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;

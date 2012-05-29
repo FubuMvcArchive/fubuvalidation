@@ -16,6 +16,7 @@ namespace FubuMVC.Core.Ajax
                                 .Add(new AjaxError
                                 {
                                     field = e.field,
+									label = e.label,
                                     message = e.message
                                 }));
 

@@ -103,7 +103,7 @@ namespace FubuValidation
             var message = GetMessage();
             if (_accessors.Any())
             {
-                return _accessors.Select(a => new ValidationError(a.Name, message));
+                return _accessors.Select(a => new ValidationError(a.Name, a.ToHeader(), message));
             }
 
             return new ValidationError[]{new ValidationError(string.Empty, message)};

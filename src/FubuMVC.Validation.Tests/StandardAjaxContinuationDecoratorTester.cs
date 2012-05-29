@@ -1,3 +1,4 @@
+using System.Globalization;
 using FubuLocalization;
 using FubuMVC.Core.Ajax;
 using FubuTestingSupport;
@@ -15,6 +16,8 @@ namespace FubuMVC.Validation.Tests
         [SetUp]
         public void before_each()
         {
+			LocalizationManager.Stub();
+
             _notification = new Notification(typeof(SampleInputModel));
             _decorator = new StandardAjaxContinuationDecorator();
 
@@ -37,6 +40,14 @@ namespace FubuMVC.Validation.Tests
                 .Errors
                 .ShouldContain(e => e.field.Equals("Field"));
         }
+
+		[Test]
+		public void sets_the_label()
+		{
+			continuation()
+				.Errors
+				.ShouldContain(e => e.label.Equals("en-US_Field"));
+		}
 
         [Test]
         public void should_set_messages_for_errors()

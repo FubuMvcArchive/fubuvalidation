@@ -1,4 +1,4 @@
-﻿// fubuvalidation.js v0.4.6
+﻿// fubuvalidation.js v0.5.7
 //
 // Copyright (C)2011 Joshua Arnold
 // Distributed under Apache License, Version 2.0
@@ -120,9 +120,10 @@
             finders.push(finder);
             return this;
         },
-        findElement: function (context, key) {
+        findElement: function (context, key, error) {
             var searchContext = {
                 key: key,
+                error: error,
                 form: context.form
             };
 
@@ -137,7 +138,7 @@
             var self = this;
             this.eachError(continuation, function (e) {
                 if (!e.element) {
-                    e.element = self.findElement(continuation, e.field);
+                    e.element = self.findElement(continuation, e.field, e);
                 }
             });
 
@@ -160,6 +161,8 @@
     module.init();
 
     $.fubuvalidation = module;
+    // export the class for extension
+    $.fubuvalidation.defaultHandlerClass = defaultHandler;
     $.fubuvalidation.defaultHandler = theDefault;
 
     var reset = $.fn.resetForm;

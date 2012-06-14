@@ -9,6 +9,8 @@ using NUnit.Framework;
 
 namespace FubuMVC.Validation.Tests
 {
+
+
     [TestFixture]
     public class when_bootstrapping_validation
     {
@@ -17,7 +19,7 @@ namespace FubuMVC.Validation.Tests
         [SetUp]
         public void setup_with_defaults()
         {
-            _graph = new FubuRegistry(registry =>
+            _graph = BehaviorGraph.BuildFrom(registry =>
             {
                 registry
                     .Applies
@@ -26,6 +28,7 @@ namespace FubuMVC.Validation.Tests
                 registry
                     .Actions
                     .FindWith<SampleActionSource>();
+
 
                 registry.Validation(validation =>
                 {
@@ -37,8 +40,9 @@ namespace FubuMVC.Validation.Tests
                         .Failures
                         .ApplyPolicy<SampleFailurePolicy>();
                 });
-            })
-                .BuildGraph();
+
+
+            });
         }
 
         #endregion

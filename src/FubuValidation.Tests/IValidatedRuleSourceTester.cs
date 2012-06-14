@@ -2,6 +2,7 @@
 using FubuCore;
 using FubuTestingSupport;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuValidation.Tests
 {
@@ -13,7 +14,7 @@ namespace FubuValidation.Tests
         [SetUp]
         public void SetUp()
         {
-            theValidator = new Validator(new TypeResolver(), new ValidationQuery(new IValidationSource[0]));
+            theValidator = new Validator(new TypeResolver(), new ValidationQuery(new IValidationSource[0]), MockRepository.GenerateMock<IServiceLocator>());
         }
 
         [Test]

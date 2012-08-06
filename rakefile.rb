@@ -110,12 +110,12 @@ end
 
 desc "Opens the Serenity Jasmine Runner in interactive mode"
 task :open_jasmine do
-	serenity "jasmine interactive src/serenity.txt"
+	serenity "jasmine interactive src/serenity.txt -b Firefox"
 end
 
 desc "Runs the Jasmine tests"
 task :run_jasmine do
-	serenity "jasmine run src/serenity.txt"
+	serenity "jasmine run src/serenity.txt -b Firefox"
 end
 
 def self.serenity(args)

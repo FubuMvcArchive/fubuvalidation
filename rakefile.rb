@@ -35,7 +35,7 @@ desc "**Default**, compiles and runs tests"
 task :default => [:compile, :unit_test, :run_jasmine]
 
 desc "Target used for the CI server"
-task :ci => [:update_all_dependencies, :default, :history, :package]
+task :ci => [:update_all_dependencies, :compile, :unit_test, :history, :package]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
@@ -110,12 +110,12 @@ end
 
 desc "Opens the Serenity Jasmine Runner in interactive mode"
 task :open_jasmine do
-	serenity "jasmine interactive src/serenity.txt -b Chrome"
+	serenity "jasmine interactive src/serenity.txt -b Firefox"
 end
 
 desc "Runs the Jasmine tests"
 task :run_jasmine do
-	serenity "jasmine run src/serenity.txt -b Chrome"
+	serenity "jasmine run src/serenity.txt -b Firefox"
 end
 
 def self.serenity(args)

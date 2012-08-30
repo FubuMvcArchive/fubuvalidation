@@ -137,7 +137,7 @@
         toValidationContext: function (continuation) {
             var self = this;
             this.eachError(continuation, function (e) {
-                if (!e.element) {
+                if (!e.element && e.field) {
                     e.element = self.findElement(continuation, e.field, e);
                 }
             });

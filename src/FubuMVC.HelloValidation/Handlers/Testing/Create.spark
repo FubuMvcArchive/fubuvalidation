@@ -1,0 +1,22 @@
+<viewdata model="FubuMVC.HelloValidation.Handlers.Testing.TestItem" />
+<content:title>Create Item</content:title>
+<content:head>
+  <Script src="testing.js" />
+</content:head>
+<Form model="FubuMVC.HelloValidation.Handlers.Testing.TestItem">
+  <fieldset>
+    <div class="row">
+      <LabelFor property="Name" />
+      <InputFor property="Name" />
+    </div>
+    <div class="row">
+      <LabelFor property="Description" />
+      <InputFor property="Description" />
+    </div>
+    <div class="row row-submit">
+      <button type="submit">
+        <span>Create</span>
+      </button>
+    </div>
+  </fieldset>
+</Form>

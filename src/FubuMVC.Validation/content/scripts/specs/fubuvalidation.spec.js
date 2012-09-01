@@ -134,65 +134,65 @@ describe('Default validation handler integrated tests', function () {
 	});
 });
 
-describe('jquery.continuations and fubuvalidation.js integration tests', function() {
-	var server;
+describe('jquery.continuations and fubuvalidation.js integration tests', function () {
+    var server;
     beforeEach(function () {
         server = sinon.fakeServer.create();
-		$.fubuvalidation.reset();
+        $.fubuvalidation.reset();
     });
     afterEach(function () {
         server.restore();
     });
-	
-	it('should renders errors then clear previous errors when validation succeeds', function() {
-		var theContinuation = ObjectMother.continuation();
-		var continuation = function() { 
-			var c = $.extend({}, theContinuation);
-			c.form = null;
-			return JSON.stringify(c) 
-		};
-		amplify.subscribe('AjaxStarted', function(request) {
-			server.respondWith([200,
-				{ 'Content-Type': 'application/json', 'X-Correlation-Id': request.correlationId}, continuation()
+
+    it('should render errors then clear previous errors when validation succeeds', function () {
+        var theContinuation = ObjectMother.continuation();
+        var continuation = function () {
+            var c = $.extend({}, theContinuation);
+            c.form = null;
+            return JSON.stringify(c);
+        };
+        $.continuations.bind('AjaxStarted', function (request) {
+            server.respondWith([200,
+				{ 'Content-Type': 'application/json', 'X-Correlation-Id': request.correlationId }, continuation()
 			]);
-		});
-		
-		runs(function () {
+        });
+
+        runs(function () {
             $('#test').correlatedSubmit();
-			server.respond();
+            server.respond();
         });
 
         waits(500);
 
         runs(function () {
             expect($('#FirstName', '#test').hasClass('error')).toEqual(true);
-			
-			var error = theContinuation.errors[0];
-			var token = $.fubuvalidation.defaultHandler.generateToken(error);
-			var found = false;
-			
-			$('#test > .validation-container > .validation-summary > li').each(function() {
-				if($('a', this).html() == token) {
-					found = true;
-				}
-			});
-			
-			expect(found).toEqual(true);
-			
-			theContinuation.errors = null; // make sure we can handle the absence of errors
-			theContinuation.success = true;
-			
-			$('#test').correlatedSubmit();
-			server.respond();
+
+            var error = theContinuation.errors[0];
+            var token = $.fubuvalidation.defaultHandler.generateToken(error);
+            var found = false;
+
+            $('#test > .validation-container > .validation-summary > li').each(function () {
+                if ($('a', this).html() == token) {
+                    found = true;
+                }
+            });
+
+            expect(found).toEqual(true);
+
+            theContinuation.errors = null; // make sure we can handle the absence of errors
+            theContinuation.success = true;
+
+            $('#test').correlatedSubmit();
+            server.respond();
         });
-		
-		waits(500);
-		
-		runs(function() {
-			expect($('#test > .validation-container').is(':visible')).toEqual(false);
-			expect($('#test > .validation-container > .validation-summary > li').size()).toEqual(0);
-			
-			expect($('#FirstName', '#test').hasClass('error')).toEqual(false);
-		});
-	});
+
+        waits(500);
+
+        runs(function () {
+            expect($('#test > .validation-container').is(':visible')).toEqual(false);
+            expect($('#test > .validation-container > .validation-summary > li').size()).toEqual(0);
+
+            expect($('#FirstName', '#test').hasClass('error')).toEqual(false);
+        });
+    });
 });

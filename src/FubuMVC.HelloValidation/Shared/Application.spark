@@ -1,4 +1,5 @@
-﻿<html>
+﻿<use namespace="FubuMVC.Core" />
+<html>
   <head>
     <title><use content="title">Default Title</use></title>
     <use content="head" />
@@ -13,5 +14,6 @@
     <div id="footer">
       <use content="footer" />
     </div>
+    <Scripts />
   </body>
 </html>

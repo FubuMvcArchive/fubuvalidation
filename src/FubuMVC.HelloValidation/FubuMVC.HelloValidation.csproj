@@ -34,29 +34,29 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.343\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.345\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.9.177\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.9.178\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.75\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.5.76\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.References.0.9.8.1122\lib\net40\FubuMVC.Core.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.References.0.9.8.1127\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Spark">
-      <HintPath>..\packages\FubuMVC.Spark.0.9.8.1122\lib\net40\FubuMVC.Spark.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Spark.0.9.8.1127\lib\net40\FubuMVC.Spark.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.StructureMap">
-      <HintPath>..\packages\FubuMVC.References.0.9.8.1122\lib\net40\FubuMVC.StructureMap.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.References.0.9.8.1127\lib\net40\FubuMVC.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.101\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.1.0.102\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Spark">
-      <HintPath>..\packages\Spark.1.6\lib\NET40\Spark.dll</HintPath>
+      <HintPath>..\packages\Spark.1.7.2.0\lib\NET40\Spark.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
@@ -78,6 +78,13 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="content\scripts\fubuvalidation.js" />
+    <Content Include="content\scripts\jquery-1.7.min.js" />
+    <Content Include="content\scripts\jquery.continuations.forms.js" />
+    <Content Include="content\scripts\jquery.continuations.js" />
+    <Content Include="content\scripts\jquery.form.js" />
+    <Content Include="content\scripts\testing.js" />
+    <Content Include="content\scripts\underscore-min.js" />
     <Content Include="Global.asax" />
     <Content Include="Shared\bindings.xml" />
     <Content Include="Web.config" />
@@ -105,18 +112,30 @@
     <Compile Include="Handlers\Products\Product.cs" />
     <Compile Include="Handlers\Products\ProductsListRequestModel.cs" />
     <Compile Include="Handlers\Products\ProductsRepository.cs" />
+    <Compile Include="Handlers\Testing\GetHandler.cs" />
+    <Compile Include="Handlers\Testing\PostHandler.cs" />
+    <Compile Include="Handlers\Testing\TestItem.cs" />
     <Compile Include="HelloValidationFubuRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="Handlers\Products\Create\Create.spark" />
-    <None Include="Handlers\Products\List.spark" />
+    <None Include="Handlers\Products\List.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Handlers\Testing\Create.spark" />
     <None Include="Shared\Application.spark" />
     <None Include="Shared\_global.spark" />
     <None Include="Shared\Notification.spark" />
+    <Content Include="validation.script.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Validation\FubuMVC.Validation.csproj">
@@ -139,12 +158,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>10494</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/hellovalidation</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

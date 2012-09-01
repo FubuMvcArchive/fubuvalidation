@@ -1,9 +1,10 @@
-﻿using FubuMVC.Core;
+﻿using System.Linq;
+using FubuMVC.Core;
+using FubuMVC.Core.Registration.Conventions;
+using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.HelloValidation.Handlers;
 using FubuMVC.HelloValidation.Handlers.Products;
-using FubuMVC.Spark;
 using FubuMVC.Validation;
-using FubuValidation;
 
 namespace FubuMVC.HelloValidation
 {
@@ -11,26 +12,19 @@ namespace FubuMVC.HelloValidation
     {
         public HelloValidationFubuRegistry()
         {
-            IncludeDiagnostics(true);
-
-            ApplyHandlerConventions<HandlersMarker>();
+            Import<HandlerConvention>(x => x.MarkerType<HandlersMarker>());
 
             Routes
                 .HomeIs<GetHandler>(h => h.Execute(new ProductsListRequestModel()));
 
-            this.UseSpark();
-            
             Views
-                .TryToAttachWithDefaultConventions()
-                .RegisterActionLessViews(t => t.ViewModel == typeof(Notification));
+                .TryToAttachWithDefaultConventions();
 
             this.Validation(validation =>
                                 {
-                                    // Include all action calls that: 1) have input and 2) whose input models contain the string "Input"
-                                    // We use a convention in this sample that models for POST ActionCalls contain "Input"
                                     validation
                                         .Actions
-                                        .Include(call => call.HasInput && call.InputType().Name.Contains("Input"));
+                                        .Include(call => call.IsHttpPost());
 
                                     // This DSL reads as follows...
                                     // When handling failures:
@@ -46,6 +40,25 @@ namespace FubuMVC.HelloValidation
                                     // In the event that you have complex binding, you may want to do an object mapping call here
                                     // Either by hand (that is, specific to your types) or via AutoMapper or something
                                 });
+        }
+    }
+
+    public static class FubuSemanticExtensions
+    {
+        public static bool IsHttpPost(this BehaviorChain chain)
+        {
+            var route = chain.Route;
+            if (route == null)
+            {
+                return false;
+            }
+
+            return route.AllowedHttpMethods.Any(c => c.ToLower() == "post");
+        }
+
+        public static bool IsHttpPost(this ActionCall call)
+        {
+            return call.ParentChain().IsHttpPost();
         }
     }
 }

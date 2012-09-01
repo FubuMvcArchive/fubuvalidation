@@ -39,3 +39,4 @@ results
 chromedriver.log
 bottles.cmd
 fubu.cmd
+*.DotSettings.user

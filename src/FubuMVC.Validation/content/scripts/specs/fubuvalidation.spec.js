@@ -56,6 +56,17 @@ describe('fubuvalidation module tests', function() {
 		
 		expect(context.element.attr('id')).toEqual('LookupPropertyValue');
 	});
+	
+	it('handles empty fields', function() {
+		var continuation = ObjectMother.continuation();
+		continuation.errors.push({
+			field: '',
+			label: '',
+			message: 'LookupProperty is required'
+		});
+		
+		$.fubuvalidation.process(continuation);
+	});
 });
 
 describe('Default validation handler integrated tests', function () {

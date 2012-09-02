@@ -19,7 +19,7 @@ _ReSharper.*
 .fubu-alias
 .fubu-includes
 .fubu-manifest
-src/FubuMVC.5.1.ReSharper
+src/*.ReSharper
 editor.htm
 testEditor.css
 TestResult.xml
@@ -40,3 +40,13 @@ chromedriver.log
 bottles.cmd
 fubu.cmd
 *.DotSettings.user
+.bottle-alias
+storyteller.cmd
+run_st.cmd
+results
+Controls
+External
+testEditor.css
+Core
+editor.htm
+history.xml

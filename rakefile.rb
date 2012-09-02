@@ -32,10 +32,10 @@ BUILD_NUMBER = "#{BUILD_VERSION}.#{build_revision}"
 props = { :stage => File.expand_path("build"), :artifacts => ARTIFACTS }
 
 desc "**Default**, compiles and runs tests"
-task :default => [:compile, :unit_test, :run_jasmine]
+task :default => [:compile, :unit_test, :virtual_dir, :run_jasmine]
 
 desc "Target used for the CI server"
-task :ci => [:update_all_dependencies, :compile, :unit_test, :history, :package]
+task :ci => [:update_all_dependencies, :compile, :virtual_dir, :unit_test, :storyteller_ci, :history, :package]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
@@ -78,9 +78,13 @@ def waitfor(&block)
   raise 'waitfor timeout expired' if checks > 10
 end
 
+desc "Sets up the Bottles/Fubu aliases"
+task :aliases => [:restore_if_missing] do
+	bottles 'alias hellovalidation src/FubuMVC.HelloValidation'
+end 
 
 desc "Compiles the app"
-task :compile => [:restore_if_missing, :clean, :version] do
+task :compile => [:restore_if_missing, :clean, :aliases, :version] do
   MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuValidation.sln', :clrversion => CLR_TOOLS_VERSION
   copyOutputFiles "src/FubuValidation.StructureMap/bin/#{COMPILE_TARGET}", "Fubu*.{dll,pdb}", props[:stage]  
   copyOutputFiles "src/FubuMVC.Validation/bin", "FubuMVC.Validation.{dll,pdb}", props[:stage]  
@@ -90,6 +94,11 @@ def copyOutputFiles(fromDir, filePattern, outDir)
   Dir.glob(File.join(fromDir, filePattern)){|file| 		
 	copy(file, outDir) if File.file?(file)
   } 
+end
+
+desc "Restarts the app"
+task :restart do
+	fubu "restart hellovalidation"
 end
 
 desc "Runs unit tests"
@@ -108,6 +117,23 @@ zip :package do |zip|
 	zip.output_path = [props[:artifacts]]
 end
 
+desc "Set up the virtual directories"
+task :virtual_dir => [:compile] do
+  dir = File.expand_path("src/FubuMVC.HelloValidation")
+  fubu("createvdir #{dir} hellovalidation")
+end
+
+desc "Runs the StoryTeller UI"
+task :run_st => [:restore_if_missing] do
+  st = Platform.runtime(Nuget.tool("Storyteller", "StorytellerUI.exe"))
+  sh st 
+end
+
+desc "Runs all StoryTeller tests"
+task :storyteller_ci => [:restart] do
+	storyteller "src/FubuMVC.Validation.StoryTeller/hellovalidation.xml results/Storyteller.html"
+end
+
 desc "Opens the Serenity Jasmine Runner in interactive mode"
 task :open_jasmine do
 	serenity "jasmine interactive src/serenity.txt -b Firefox"
@@ -118,6 +144,11 @@ task :run_jasmine do
 	serenity "jasmine run src/serenity.txt -b Firefox"
 end
 
+def self.fubu(args)
+  fubu = Platform.runtime(Nuget.tool("FubuMVC.References", "fubu.exe"))
+  sh "#{fubu} #{args}" 
+end
+
 def self.serenity(args)
   if Platform.is_nix
     puts "Skipping Serentiy. Not currently supported on *nix based systems."
@@ -125,4 +156,14 @@ def self.serenity(args)
   end
   serenity = Platform.runtime(Nuget.tool("Serenity", "SerenityRunner.exe"))
   sh "#{serenity} #{args}"
+end
+
+def self.storyteller(args)
+st = Platform.runtime(Nuget.tool("Storyteller", "StorytellerRunner.exe")) 
+sh "#{st} #{args}"
+end
+
+def self.bottles(args)
+  bottles = Platform.runtime(Nuget.tool("Bottles", "BottleRunner.exe"))
+  sh "#{bottles} #{args}"
 end

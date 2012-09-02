@@ -1,16 +1,18 @@
 using System.Collections.Generic;
 using FubuMVC.Core;
+using FubuMVC.Core.Registration.Conventions;
 using FubuMVC.Core.Registration.ObjectGraph;
+using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Validation.Registration;
 
 namespace FubuMVC.Validation
 {
-    public class FubuValidationEngine : IFubuRegistryExtension
+    public class FubuValidation : IFubuRegistryExtension
     {
         private readonly ValidationCallMatcher _callMatcher = new ValidationCallMatcher();
         private readonly IList<ObjectDef> _validationPolicies = new List<ObjectDef>();
 
-        public FubuValidationEngine()
+        public FubuValidation()
         {
             setDefaults();
         }
@@ -40,6 +42,14 @@ namespace FubuMVC.Validation
                 _validationPolicies
                     .Each(policy => x.AddService(typeof (IValidationFailurePolicy), policy));
             });
+
+            registry
+                .Policies
+                .Add(new ReorderBehaviorsPolicy
+                         {
+                             WhatMustBeBefore = node => node is ValidationNode,
+                             WhatMustBeAfter = node => node is OutputNode
+                         });
 
             registry
                 .ApplyConvention(new ValidationConvention(_callMatcher.CallFilters.Matches));

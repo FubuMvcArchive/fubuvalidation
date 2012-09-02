@@ -14,7 +14,7 @@
       <InputFor property="Description" />
     </div>
     <div class="row row-submit">
-      <button type="submit">
+      <button type="submit" id="Create">
         <span>Create</span>
       </button>
     </div>

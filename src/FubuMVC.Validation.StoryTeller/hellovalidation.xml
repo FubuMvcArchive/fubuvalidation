@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<Project xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Options>
+    <FileTemplate>using NUnit.Framework;
+using StoryTeller.Execution;
+
+namespace StoryTellerTestHarness
+{
+    [TestFixture, Explicit]
+    public class Template
+    {
+        private ProjectTestRunner runner;
+
+        [TestFixtureSetUp]
+        public void SetupRunner()
+        {
+            runner = new ProjectTestRunner(@"$PROJECT_FILE$");
+        }
+
+$METHODS$
+
+        [TestFixtureTearDown]
+        public void TeardownRunner()
+        {
+            runner.Dispose();
+        }
+    }
+}</FileTemplate>
+    <MethodTemplate>        [Test]
+        public void $CLEAN_TEST_NAME$()
+        {
+            runner.RunAndAssertTest("$TEST_PATH$");
+        }</MethodTemplate>
+    <TargetFile>StoryTellerDebug.cs</TargetFile>
+  </Options>
+  <Workspaces />
+  <BinaryFolder>bin\debug</BinaryFolder>
+  <NumberOfTestRetries>0</NumberOfTestRetries>
+  <TestFolder>Tests</TestFolder>
+  <FileName>C:\code\fubuvalidation\src\FubuMVC.Validation.Storyteller\hellovalidation.xml</FileName>
+  <TimeoutInSeconds>120</TimeoutInSeconds>
+  <SystemTypeName>FubuMVC.Validation.StoryTeller.ValidationSystem,FubuMVC.Validation.StoryTeller</SystemTypeName>
+  <ConfigurationFileName>Web.config</ConfigurationFileName>
+  <Name>HelloValidation</Name>
+</Project>

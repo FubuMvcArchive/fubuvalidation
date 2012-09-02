@@ -11,10 +11,19 @@ namespace FubuMVC.HelloValidation
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            FubuApplication
-                .For<HelloValidationFubuRegistry>()
-                .StructureMapObjectFactory(configure => configure.AddRegistry<HelloValidationRegistry>())
+            new HelloValidationApplication()
+                .BuildApplication()
                 .Bootstrap();
+        }
+    }
+
+    public class HelloValidationApplication : IApplicationSource
+    {
+        public FubuApplication BuildApplication()
+        {
+            return FubuApplication
+                .For<HelloValidationFubuRegistry>()
+                .StructureMapObjectFactory(configure => configure.AddRegistry<HelloValidationRegistry>());
         }
     }
 

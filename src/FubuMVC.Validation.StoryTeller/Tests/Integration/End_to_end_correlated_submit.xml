@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Test name="End to end correlated submit" lifecycle="Regression">
+  <Validation>
+    <EnterName isStep="True" Name="BLANK" />
+    <ClickSubmit isStep="True" />
+    <VerifyMessages isStep="True">
+      <rows>
+        <row isStep="True" Property="en-US_Name" Message="en-US_Name - Required Field" />
+      </rows>
+    </VerifyMessages>
+  </Validation>
+</Test>

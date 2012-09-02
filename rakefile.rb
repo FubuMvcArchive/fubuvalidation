@@ -85,9 +85,13 @@ end
 
 desc "Compiles the app"
 task :compile => [:restore_if_missing, :clean, :aliases, :version] do
-  MSBuildRunner.compile :compilemode => COMPILE_TARGET, :solutionfile => 'src/FubuValidation.sln', :clrversion => CLR_TOOLS_VERSION
+  compileSolution COMPILE_TARGET
   copyOutputFiles "src/FubuValidation.StructureMap/bin/#{COMPILE_TARGET}", "Fubu*.{dll,pdb}", props[:stage]  
   copyOutputFiles "src/FubuMVC.Validation/bin", "FubuMVC.Validation.{dll,pdb}", props[:stage]  
+end
+
+def compileSolution(target)
+  MSBuildRunner.compile :compilemode => target, :solutionfile => 'src/FubuValidation.sln', :clrversion => CLR_TOOLS_VERSION
 end
 
 def copyOutputFiles(fromDir, filePattern, outDir)
@@ -131,6 +135,8 @@ end
 
 desc "Runs all StoryTeller tests"
 task :storyteller_ci => [:restart] do
+    # Force the debug compilation so ST plays nice
+	compileSolution "Debug"
 	storyteller "src/FubuMVC.Validation.StoryTeller/hellovalidation.xml results/Storyteller.html"
 end
 

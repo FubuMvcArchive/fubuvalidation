@@ -48,7 +48,7 @@ namespace FubuMVC.Validation.Registration
             where TDescriptor : class, IFubuContinuationModelDescriptor
             where TResolver : class, IInputModelResolver
         {
-            buildPolicy<TDescriptor, TResolver>(FubuContinuation.RedirectTo);
+            buildPolicy<TDescriptor, TResolver>(o => FubuContinuation.RedirectTo(o));
         }
 
         public void TransferBy<TDescriptor>()
@@ -61,7 +61,7 @@ namespace FubuMVC.Validation.Registration
             where TDescriptor : class, IFubuContinuationModelDescriptor
             where TResolver : class, IInputModelResolver
         {
-            buildPolicy<TDescriptor, TResolver>(FubuContinuation.TransferTo);
+            buildPolicy<TDescriptor, TResolver>(o => FubuContinuation.TransferTo(o));
         }
 
         private void buildPolicy(FubuContinuation continuation)

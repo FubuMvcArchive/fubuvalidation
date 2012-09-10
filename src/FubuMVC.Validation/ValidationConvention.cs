@@ -24,12 +24,6 @@ namespace FubuMVC.Validation
                 .Where(call => _predicate(call))
                 .Each(call =>
                           {
-                              var log = graph.Observer;
-                              if(log.IsRecording)
-                              {
-                                  log.RecordCallStatus(call, "Wrapping {0} with Validation Behavior".ToFormat(call));
-                              }
-
                               call.WrapWithValidation();
                           });
         }

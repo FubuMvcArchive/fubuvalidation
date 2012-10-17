@@ -35,7 +35,7 @@ desc "**Default**, compiles and runs tests"
 task :default => [:compile, :unit_test, :run_jasmine]
 
 desc "Target used for the CI server"
-task :ci => [:update_all_dependencies, :compile, :unit_test, :storyteller_ci, :history, :package]
+task :ci => [:update_all_dependencies, :compile, :unit_test, :history, :package]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
@@ -120,13 +120,6 @@ desc "Runs the StoryTeller UI"
 task :run_st => [:restore_if_missing] do
   st = Platform.runtime(Nuget.tool("Storyteller", "StorytellerUI.exe"))
   sh st 
-end
-
-desc "Runs all StoryTeller tests"
-task :storyteller_ci do
-    # Force the debug compilation so ST plays nice
-	compileSolution "Debug"
-	storyteller "src/FubuMVC.Validation.StoryTeller/hellovalidation.xml results/Storyteller.html"
 end
 
 desc "Opens the Serenity Jasmine Runner in interactive mode"

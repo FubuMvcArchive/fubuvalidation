@@ -32,46 +32,32 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.349\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.376\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.3.0.0.4001\lib\net40-client\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.9.179\lib\FubuCore.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuKayak">
-      <HintPath>..\packages\FubuKayak.0.9.8.1142\lib\net40\FubuKayak.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.9.192\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.77\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.5.85\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.References.0.9.8.1142\lib\net40\FubuMVC.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.OwinHost">
-      <HintPath>..\packages\FubuKayak.0.9.8.1142\lib\net40\FubuMVC.OwinHost.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.0.9.8.1220\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.StructureMap">
-      <HintPath>..\packages\FubuMVC.References.0.9.8.1142\lib\net40\FubuMVC.StructureMap.dll</HintPath>
-    </Reference>
-    <Reference Include="Gate">
-      <HintPath>..\packages\Gate.0.1.4\lib\Gate.dll</HintPath>
-    </Reference>
-    <Reference Include="Gate.Kayak">
-      <HintPath>..\packages\Gate.Kayak.0.1.4\lib\Gate.Kayak.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.StructureMap.0.9.8.1214\lib\net40\FubuMVC.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.103\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.2.0.121\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
-    <Reference Include="Kayak">
-      <HintPath>..\packages\Kayak.0.7.2\lib\Kayak.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.9\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin.Startup">
       <HintPath>..\packages\Owin.Startup.0.4\lib\net40\Owin.Startup.dll</HintPath>
@@ -80,13 +66,13 @@
       <HintPath>..\packages\Selenium.WebDriverBackedSelenium.2.25.1\lib\net40\Selenium.WebDriverBackedSelenium.dll</HintPath>
     </Reference>
     <Reference Include="Serenity">
-      <HintPath>..\packages\Serenity.0.9.8.47\lib\net40\Serenity.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.8.64\lib\net40\Serenity.dll</HintPath>
     </Reference>
     <Reference Include="StoryTeller">
       <HintPath>..\packages\Storyteller.1.1.0.510\lib\net40\StoryTeller.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
-      <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
+      <HintPath>..\packages\structuremap.2.6.4.65\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -113,7 +99,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="HelloValidationApplication.application.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

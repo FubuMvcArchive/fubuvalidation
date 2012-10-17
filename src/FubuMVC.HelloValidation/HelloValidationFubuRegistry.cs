@@ -17,9 +17,6 @@ namespace FubuMVC.HelloValidation
             Routes
                 .HomeIs<GetHandler>(h => h.Execute(new ProductsListRequestModel()));
 
-            Views
-                .TryToAttachWithDefaultConventions();
-
             this.Validation(validation =>
                                 {
                                     validation

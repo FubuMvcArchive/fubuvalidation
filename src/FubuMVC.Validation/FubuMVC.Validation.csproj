@@ -34,26 +34,32 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.349\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.376\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.9.179\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.9.192\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.77\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.5.85\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.References.0.9.8.1142\lib\net40\FubuMVC.Core.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.0.9.8.1220\lib\net40\FubuMVC.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuMVC.Core.UI">
+      <HintPath>..\packages\FubuMVC.Core.UI.0.9.9.18\lib\net40\FubuMVC.Core.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuMVC.Core.View">
+      <HintPath>..\packages\FubuMVC.Core.View.0.9.9.13\lib\net40\FubuMVC.Core.View.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.StructureMap">
-      <HintPath>..\packages\FubuMVC.References.0.9.8.1142\lib\net40\FubuMVC.StructureMap.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.StructureMap.0.9.8.1214\lib\net40\FubuMVC.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.103\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.2.0.121\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="StructureMap">
-      <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
+      <HintPath>..\packages\structuremap.2.6.4.65\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -88,7 +94,6 @@
     <Compile Include="FubuRegistryValidationExtensions.cs" />
     <Compile Include="FubuRequestInputModelResolver.cs" />
     <Compile Include="FubuValidation.cs" />
-    <Compile Include="HtmlConventionExtensions.cs" />
     <Compile Include="IFubuContinuationModelDescriptor.cs" />
     <Compile Include="IFubuContinuationModelResolver.cs" />
     <Compile Include="IFubuContinuationResolver.cs" />
@@ -129,6 +134,7 @@
     <Content Include="validation.script.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

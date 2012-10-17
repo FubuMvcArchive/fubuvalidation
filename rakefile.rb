@@ -32,10 +32,10 @@ BUILD_NUMBER = "#{BUILD_VERSION}.#{build_revision}"
 props = { :stage => File.expand_path("build"), :artifacts => ARTIFACTS }
 
 desc "**Default**, compiles and runs tests"
-task :default => [:compile, :unit_test, :virtual_dir, :run_jasmine]
+task :default => [:compile, :unit_test, :run_jasmine]
 
 desc "Target used for the CI server"
-task :ci => [:update_all_dependencies, :compile, :virtual_dir, :unit_test, :storyteller_ci, :history, :package]
+task :ci => [:update_all_dependencies, :compile, :unit_test, :storyteller_ci, :history, :package]
 
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
@@ -119,12 +119,6 @@ zip :package do |zip|
 	zip.directories_to_zip = [props[:stage]]
 	zip.output_file = 'FubuValidation.zip'
 	zip.output_path = [props[:artifacts]]
-end
-
-desc "Set up the virtual directories"
-task :virtual_dir => [:compile] do
-  dir = File.expand_path("src/FubuMVC.HelloValidation")
-  fubu("createvdir #{dir} hellovalidation")
 end
 
 desc "Runs the StoryTeller UI"

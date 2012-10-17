@@ -13,7 +13,7 @@
     <RootNamespace>FubuMVC.HelloValidation</RootNamespace>
     <AssemblyName>FubuMVC.HelloValidation</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,32 +34,33 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.0.9.1.349\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.0.9.1.376\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.0.9.9.179\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.0.9.9.192\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.77\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.5.85\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.References.0.9.8.1142\lib\net40\FubuMVC.Core.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.0.9.8.1220\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Spark">
-      <HintPath>..\packages\FubuMVC.Spark.0.9.8.1142\lib\net40\FubuMVC.Spark.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Spark.0.9.9.17\lib\net40\FubuMVC.Spark.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.StructureMap">
-      <HintPath>..\packages\FubuMVC.References.0.9.8.1142\lib\net40\FubuMVC.StructureMap.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.StructureMap.0.9.8.1214\lib\net40\FubuMVC.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.1.0.103\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.2.0.121\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Spark">
-      <HintPath>..\packages\Spark.1.7.3.0\lib\NET40\Spark.dll</HintPath>
+      <HintPath>..\packages\Spark.1.7.4.0\lib\NET40\Spark.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
+    <Reference Include="StructureMap, Version=2.6.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\structuremap.2.6.4.65\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -158,7 +159,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>10494</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

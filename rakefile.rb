@@ -100,11 +100,6 @@ def copyOutputFiles(fromDir, filePattern, outDir)
   } 
 end
 
-desc "Restarts the app"
-task :restart do
-	fubu "restart hellovalidation"
-end
-
 desc "Runs unit tests"
 task :test => [:unit_test]
 
@@ -128,7 +123,7 @@ task :run_st => [:restore_if_missing] do
 end
 
 desc "Runs all StoryTeller tests"
-task :storyteller_ci => [:restart] do
+task :storyteller_ci do
     # Force the debug compilation so ST plays nice
 	compileSolution "Debug"
 	storyteller "src/FubuMVC.Validation.StoryTeller/hellovalidation.xml results/Storyteller.html"

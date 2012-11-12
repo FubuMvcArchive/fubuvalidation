@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
@@ -21,10 +22,6 @@ namespace FubuMVC.Validation.Tests
         {
             _graph = BehaviorGraph.BuildFrom(registry =>
             {
-                registry
-                    .Applies
-                    .ToThisAssembly();
-
                 registry
                     .Actions
                     .FindWith<SampleActionSource>();
@@ -52,7 +49,7 @@ namespace FubuMVC.Validation.Tests
 
         public class SampleActionSource : IActionSource
         {
-            public IEnumerable<ActionCall> FindActions(TypePool types)
+            public IEnumerable<ActionCall> FindActions(Assembly assembly)
             {
                 yield return ActionCall.For<SampleInputModel>(m => m.Test());
                 yield return ActionCall.For<SampleInputModel>(m => m.Test("Hello"));

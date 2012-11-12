@@ -52,7 +52,7 @@ namespace FubuMVC.Validation
                          });
 
             registry
-                .ApplyConvention(new ValidationConvention(_callMatcher.CallFilters.Matches));
+                .Policies.Add(new ValidationConvention(_callMatcher.CallFilters.Matches));
         }
 
         private void setDefaults()

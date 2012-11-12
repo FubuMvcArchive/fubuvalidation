@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Validation
 {
+    [ConfigurationType(ConfigurationType.InjectNodes)]
     public class ValidationConvention : IConfigurationAction
     {
         private readonly Func<ActionCall, bool> _predicate;
@@ -22,10 +24,7 @@ namespace FubuMVC.Validation
             graph
                 .Actions()
                 .Where(call => _predicate(call))
-                .Each(call =>
-                          {
-                              call.WrapWithValidation();
-                          });
+                .Each(call => call.WrapWithValidation());
         }
     }
 }

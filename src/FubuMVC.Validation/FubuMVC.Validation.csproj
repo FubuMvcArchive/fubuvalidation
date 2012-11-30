@@ -34,33 +34,30 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.1.0.0.416\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.1.0.0.425\lib\Bottles.dll</HintPath>
     </Reference>
-    <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.1.0.0.212\lib\FubuCore.dll</HintPath>
+    <Reference Include="FubuCore, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FubuCore.1.0.0.216\lib\FubuCore.dll</HintPath>
     </Reference>
-    <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.110\lib\FubuLocalization.dll</HintPath>
+    <Reference Include="FubuLocalization, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FubuLocalization.0.9.5.113\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.Core.0.9.9.1306\lib\net40\FubuMVC.Core.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.0.9.9.1323\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core.UI">
-      <HintPath>..\packages\FubuMVC.Core.UI.0.9.9.73\lib\net40\FubuMVC.Core.UI.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.UI.0.9.9.85\lib\net40\FubuMVC.Core.UI.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core.View">
-      <HintPath>..\packages\FubuMVC.Core.View.0.9.9.67\lib\net40\FubuMVC.Core.View.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.View.0.9.9.76\lib\net40\FubuMVC.Core.View.dll</HintPath>
     </Reference>
-    <Reference Include="FubuMVC.StructureMap">
-      <HintPath>..\packages\FubuMVC.StructureMap.0.9.9.1306\lib\net40\FubuMVC.StructureMap.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.2.0.133\lib\4.0\HtmlTags.dll</HintPath>
+    <Reference Include="HtmlTags, Version=1.2.0.136, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\HtmlTags.1.2.0.136\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="StructureMap">
-      <HintPath>..\packages\structuremap.2.6.4.65\lib\net40\StructureMap.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
@@ -76,40 +73,14 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ActionCallExtensions.cs" />
-    <Compile Include="AjaxContinuationActivator.cs" />
-    <Compile Include="AjaxContinuationFailurePolicy.cs" />
+    <Compile Include="AjaxValidation.cs" />
     <Compile Include="AjaxContinuationResolver.cs" />
-    <Compile Include="AjaxExtensions.cs" />
-    <Compile Include="ConfiguredFubuContinuationResolver.cs" />
-    <Compile Include="IAjaxContinuationActivator.cs" />
-    <Compile Include="IAjaxContinuationDecorator.cs" />
-    <Compile Include="IAjaxContinuationResolver.cs" />
+    <Compile Include="AjaxValidationActionFilter.cs" />
+    <Compile Include="ValidationFilter.cs" />
     <Compile Include="ModelBindingErrors.cs" />
-    <Compile Include="StandardAjaxContinuationDecorator.cs" />
-    <Compile Include="ValidationContinuationHandler.cs" />
-    <Compile Include="FubuContinuationFailurePolicy.cs" />
-    <Compile Include="FubuContinuationModelResolver.cs" />
-    <Compile Include="FubuContinuationResolver.cs" />
-    <Compile Include="FubuRegistryValidationExtensions.cs" />
-    <Compile Include="FubuRequestInputModelResolver.cs" />
     <Compile Include="FubuValidation.cs" />
-    <Compile Include="IFubuContinuationModelDescriptor.cs" />
-    <Compile Include="IFubuContinuationModelResolver.cs" />
-    <Compile Include="IFubuContinuationResolver.cs" />
-    <Compile Include="IInputModelResolver.cs" />
-    <Compile Include="IValidationFailureHandler.cs" />
-    <Compile Include="IValidationFailurePolicy.cs" />
-    <Compile Include="FubuMVCValidationException.cs" />
-    <Compile Include="Registration\ConfigureModelValidationFailureExpression.cs" />
-    <Compile Include="Registration\ValidationCallMatcher.cs" />
-    <Compile Include="Registration\ValidationCandidateExpression.cs" />
-    <Compile Include="Registration\ValidationFailureExpression.cs" />
-    <Compile Include="ValidationBehavior.cs" />
-    <Compile Include="ValidationConvention.cs" />
-    <Compile Include="ValidationFailure.cs" />
-    <Compile Include="ValidationFailureHandler.cs" />
-    <Compile Include="ValidationNode.cs" />
+    <Compile Include="ValidationActionFilter.cs" />
+    <Compile Include="ValidationSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuValidation\FubuValidation.csproj">
@@ -130,11 +101,12 @@
     <Content Include="content\scripts\lib\underscore-min.js" />
     <Content Include="content\scripts\specs\fubuvalidation.fixture.html" />
     <Content Include="content\scripts\specs\fubuvalidation.spec.js" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="validation.script.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

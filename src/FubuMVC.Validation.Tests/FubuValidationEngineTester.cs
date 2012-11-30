@@ -27,16 +27,7 @@ namespace FubuMVC.Validation.Tests
                     .FindWith<SampleActionSource>();
 
 
-                registry.Validation(validation =>
-                {
-                    validation
-                        .Actions
-                        .Include(call => call.HasInput);
-
-                    validation
-                        .Failures
-                        .ApplyPolicy<SampleFailurePolicy>();
-                });
+                registry.Import<FubuValidation>();
 
 
             });
@@ -56,49 +47,6 @@ namespace FubuMVC.Validation.Tests
             }
         }
 
-        public class SampleFailurePolicy : IValidationFailurePolicy
-        {
-            public bool Matches(ValidationFailure context)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void Handle(ValidationFailure context)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-
-
-        [Test]
-        public void should_apply_behavior_to_actions_matching_predicate()
-        {
-            _graph
-                .Behaviors
-                .Where(chain => chain.OfType<ValidationNode>().Any())
-                .ShouldHaveCount(1);
-        }
-
-        [Test]
-        public void should_register_policies()
-        {
-            _graph
-                .Services
-                .ServicesFor<IValidationFailurePolicy>()
-                .ShouldHaveCount(2);
-        }
-
-        [Test]
-        public void should_register_validation_continuation_handler()
-        {
-            _graph
-                .Services
-                .DefaultServiceFor<IValidationContinuationHandler>()
-                .Type
-                .ShouldEqual(typeof (ValidationContinuationHandler));
-        }
-
         [Test]
         public void should_register_the_default_model_binding_errors()
         {
@@ -107,16 +55,6 @@ namespace FubuMVC.Validation.Tests
                 .DefaultServiceFor<IModelBindingErrors>()
                 .Type
                 .ShouldEqual(typeof(ModelBindingErrors));
-        }
-
-        [Test]
-        public void should_register_validation_failure_handler()
-        {
-            _graph
-                .Services
-                .DefaultServiceFor<IValidationFailureHandler>()
-                .Type
-                .ShouldEqual(typeof (ValidationFailureHandler));
         }
     }
 }

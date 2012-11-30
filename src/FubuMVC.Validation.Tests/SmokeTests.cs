@@ -21,7 +21,7 @@ namespace FubuMVC.Validation.Tests
         {
             registry.Actions.IncludeType<AjaxContinuationIntegrationEndpoint>();
             registry.Routes.HomeIs<AjaxContinuationIntegrationEndpoint>(x => x.get_continuation(null));
-            registry.Import<FubuValidation>(x => x.Actions.Include(call => true));
+            registry.Import<FubuValidation>();
         }
 
         private AjaxContinuation theContinuation

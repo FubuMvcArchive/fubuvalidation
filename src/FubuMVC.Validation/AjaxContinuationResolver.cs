@@ -4,25 +4,32 @@ using FubuValidation;
 
 namespace FubuMVC.Validation
 {
-    public class AjaxContinuationResolver : IAjaxContinuationResolver
+    public interface IAjaxContinuationResolver
     {
-        private readonly IAjaxContinuationActivator _activator;
+        AjaxContinuation Resolve(Notification notification);
+    }
+
+    public interface IAjaxContinuationDecorator
+    {
+        AjaxContinuation Enrich(AjaxContinuation continuation, Notification notification);
+    }
+
+     public class AjaxContinuationResolver : IAjaxContinuationResolver
+    {
         private readonly IEnumerable<IAjaxContinuationDecorator> _decorators;
 
-        public AjaxContinuationResolver(IAjaxContinuationActivator activator, IEnumerable<IAjaxContinuationDecorator> decorators)
+        public AjaxContinuationResolver(IEnumerable<IAjaxContinuationDecorator> decorators)
         {
-            _activator = activator;
             _decorators = decorators;
         }
 
         public AjaxContinuation Resolve(Notification notification)
         {
-            var continuation = _activator.Activate(notification);
-            _decorators
-                .Each(d =>
-                          {
-                              continuation = d.Enrich(continuation, notification);
-                          });
+            var continuation = AjaxValidation.BuildContinuation(notification);
+            _decorators.Each(d =>
+            {
+                continuation = d.Enrich(continuation, notification);
+            });
 
             return continuation;
         }

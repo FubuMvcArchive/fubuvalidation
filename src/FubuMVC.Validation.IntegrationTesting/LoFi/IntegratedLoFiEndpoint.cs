@@ -4,11 +4,12 @@ namespace FubuMVC.Validation.IntegrationTesting.LoFi
 {
     public class IntegratedLoFiEndpoint
     {
+        public const string GET = "Input data";
         public const string SUCCESS = "Success";
 
         public string get_lofi(LoFiInput input)
         {
-            return "Input data";
+            return GET;
         }
 
         public string post_lofi(LoFiInput input)

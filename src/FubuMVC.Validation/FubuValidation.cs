@@ -10,15 +10,10 @@ namespace FubuMVC.Validation
             {
                 x.SetServiceIfNone<IAjaxContinuationResolver, AjaxContinuationResolver>();
                 x.SetServiceIfNone<IModelBindingErrors, ModelBindingErrors>();
+                x.SetServiceIfNone(typeof (IValidationFilter<>), typeof (ValidationFilter<>));
             });
 
-            /*registry
-                .Policies
-                .Add(new ReorderBehaviorsPolicy
-                         {
-                             WhatMustBeBefore = node => node is ValidationNode,
-                             WhatMustBeAfter = node => node is OutputNode
-                         });*/
+            registry.Policies.Add<ValidationConvention>();
         }
     }
 }

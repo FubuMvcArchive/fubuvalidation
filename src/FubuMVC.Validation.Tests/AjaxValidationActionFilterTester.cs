@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using FubuLocalization;
 using FubuMVC.Core.Ajax;
+using FubuMVC.Core.Behaviors;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
@@ -11,7 +12,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Validation.Tests
 {
     [TestFixture]
-    public class AjaxValidationActionFilterTester : InteractionContext<AjaxValidationActionFilter<SampleInputModel>>
+    public class AjaxValidationBehaviorTester : InteractionContext<AjaxValidationBehavior<SampleInputModel>>
     {
         private SampleInputModel theInput;
         private Notification theNotification;
@@ -23,32 +24,26 @@ namespace FubuMVC.Validation.Tests
             theNotification = new Notification();
             theAjaxContinuation = new AjaxContinuation();
 
+            ClassUnderTest.InsideBehavior = MockFor<IActionBehavior>();
+            MockFor<IFubuRequest>().Stub(x => x.Get<SampleInputModel>()).Return(theInput);
             MockFor<IValidationFilter<SampleInputModel>>().Stub(x => x.Validate(theInput)).Return(theNotification);
             MockFor<IAjaxContinuationResolver>().Stub(x => x.Resolve(theNotification)).Return(theAjaxContinuation);
         }
 
-        private FubuContinuation theContinuation { get { return ClassUnderTest.Validate(theInput); } }
-
         [Test]
         public void continues_to_next_behavior_when_validation_succeeds()
         {
-            theContinuation.AssertWasContinuedToNextBehavior();
-        }
-
-        [Test]
-        public void ends_with_500_when_validation_fails()
-        {
-            theNotification.RegisterMessage(StringToken.FromKeyString("Test"));
-            theContinuation.AssertWasEndedWithStatusCode(HttpStatusCode.InternalServerError);
+            ClassUnderTest.Invoke();
+            MockFor<IActionBehavior>().AssertWasCalled(x => x.Invoke());
         }
 
         [Test]
         public void writes_the_ajax_continuation_when_validation_fails()
         {
             theNotification.RegisterMessage(StringToken.FromKeyString("Test"));
-            ClassUnderTest.Validate(theInput);
+            ClassUnderTest.Invoke();
 
-            MockFor<IJsonWriter>().AssertWasCalled(x => x.Write(theAjaxContinuation.ToDictionary(), MimeType.Json.Value));
+            MockFor<IAjaxValidationFailureHandler>().AssertWasCalled(x => x.Handle(theNotification));
         }
     }
 }

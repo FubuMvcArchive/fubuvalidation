@@ -1,60 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using FubuMVC.Core;
-using FubuMVC.Core.Registration;
-using FubuMVC.Core.Registration.Nodes;
+﻿using FubuMVC.Core.Registration;
 using FubuTestingSupport;
 using NUnit.Framework;
 
 namespace FubuMVC.Validation.Tests
 {
-
-
     [TestFixture]
-    public class when_bootstrapping_validation
+    public class default_validation_services
     {
-        #region Setup/Teardown
+        private BehaviorGraph theBehaviorGraph;
 
         [SetUp]
-        public void setup_with_defaults()
+        public void SetUp()
         {
-            _graph = BehaviorGraph.BuildFrom(registry =>
-            {
-                registry
-                    .Actions
-                    .FindWith<SampleActionSource>();
-
-
-                registry.Import<FubuValidation>();
-
-
-            });
+            theBehaviorGraph = BehaviorGraph.BuildFrom(registry => registry.Import<FubuMvcValidation>());
         }
 
-        #endregion
-
-        private BehaviorGraph _graph;
-
-
-        public class SampleActionSource : IActionSource
+        private void theDefaultServiceIs<TPlugin, TConcrete>()
         {
-            public IEnumerable<ActionCall> FindActions(Assembly assembly)
-            {
-                yield return ActionCall.For<SampleInputModel>(m => m.Test());
-                yield return ActionCall.For<SampleInputModel>(m => m.Test("Hello"));
-            }
+            theBehaviorGraph
+                .Services
+                .DefaultServiceFor<TPlugin>()
+                .Type
+                .ShouldEqual(typeof(TConcrete));
         }
 
         [Test]
-        public void should_register_the_default_model_binding_errors()
+        public void registers_the_default_model_binding_errors()
         {
-            _graph
+            theDefaultServiceIs<IModelBindingErrors, ModelBindingErrors>();
+        }
+
+        [Test]
+        public void registers_the_default_AjaxContinuationResolver()
+        {
+            theDefaultServiceIs<IAjaxContinuationResolver, AjaxContinuationResolver>();
+        }
+
+        [Test]
+        public void registers_the_default_AjaxValidationFailureHandler()
+        {
+            theDefaultServiceIs<IAjaxValidationFailureHandler, AjaxValidationFailureHandler>();
+        }
+
+        [Test]
+        public void registers_the_default_validation_filter()
+        {
+            theBehaviorGraph
                 .Services
-                .DefaultServiceFor<IModelBindingErrors>()
+                .DefaultServiceFor(typeof (IValidationFilter<>))
                 .Type
-                .ShouldEqual(typeof(ModelBindingErrors));
+                .ShouldEqual(typeof (ValidationFilter<>));
         }
     }
 }

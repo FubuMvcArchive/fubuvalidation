@@ -21,17 +21,18 @@ namespace FubuMVC.Validation.IntegrationTesting.Ajax
         protected override void configure(Core.FubuRegistry registry)
         {
             registry.Actions.IncludeType<IntegratedAjaxEndpoint>();
-            registry.Import<FubuValidation>();
+            registry.Import<FubuMvcValidation>();
         }
 
-        private AjaxContinuation theContinuation
+        private JsonResponse theContinuation
         {
             get
             {
                 var response = endpoints.PostJson(theRequest);
+
                 try
                 {
-                    return response.ReadAsJson<AjaxContinuation>();
+                    return response.ReadAsJson<JsonResponse>();
                 }
                 catch
                 {
@@ -46,17 +47,23 @@ namespace FubuMVC.Validation.IntegrationTesting.Ajax
         public void validation_passes()
         {
             theRequest.Name = "Josh";
-            theContinuation.Success.ShouldBeTrue();
+            theContinuation.success.ShouldBeTrue();
         }
 
         [Test]
         public void validation_error_for_name()
         {
             theRequest.Name = null;
-            var errors = theContinuation.Errors;
+            var errors = theContinuation.errors;
 
             errors.ShouldHaveCount(1);
             errors.Any(x => x.field == ReflectionHelper.GetAccessor<AjaxRequest>(r => r.Name).Name).ShouldBeTrue();
+        }
+
+        public class JsonResponse
+        {
+            public bool success { get; set; }
+            public AjaxError[] errors { get; set; }
         }
     }
 }

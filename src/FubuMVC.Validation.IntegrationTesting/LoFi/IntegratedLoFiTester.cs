@@ -1,11 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using FubuCore;
-using FubuCore.Reflection;
-using FubuMVC.Core;
-using FubuMVC.Core.Endpoints;
+﻿using FubuMVC.Core.Endpoints;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -25,7 +18,7 @@ namespace FubuMVC.Validation.IntegrationTesting.LoFi
         protected override void configure(Core.FubuRegistry registry)
         {
             registry.Actions.IncludeType<IntegratedLoFiEndpoint>();
-            registry.Import<FubuValidation>();
+            registry.Import<FubuMvcValidation>();
         }
 
         private HttpResponse theResponse

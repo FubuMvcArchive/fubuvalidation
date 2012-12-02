@@ -35,8 +35,7 @@ namespace FubuMVC.Validation.Tests
             ValidationConvention.ApplyValidation(call);
 
             var nodes = chain.ToArray();
-            var filter = nodes[0].As<ActionFilter>();
-            filter.HandlerType.ShouldEqual(typeof(AjaxValidationActionFilter<SampleAjaxModel>));
+            nodes[0].ShouldBeOfType<AjaxValidationNode>();
         }
     }
 }

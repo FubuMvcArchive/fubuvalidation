@@ -2,7 +2,7 @@ using FubuMVC.Core;
 
 namespace FubuMVC.Validation
 {
-    public class FubuValidation : IFubuRegistryExtension
+    public class FubuMvcValidation : IFubuRegistryExtension
     {
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
@@ -10,6 +10,7 @@ namespace FubuMVC.Validation
             {
                 x.SetServiceIfNone<IAjaxContinuationResolver, AjaxContinuationResolver>();
                 x.SetServiceIfNone<IModelBindingErrors, ModelBindingErrors>();
+                x.SetServiceIfNone<IAjaxValidationFailureHandler, AjaxValidationFailureHandler>();
                 x.SetServiceIfNone(typeof (IValidationFilter<>), typeof (ValidationFilter<>));
             });
 

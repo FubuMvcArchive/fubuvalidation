@@ -33,7 +33,7 @@ namespace FubuMVC.Validation.Tests
             var registry = new FubuRegistry(x =>
                                             {
                                                 x.Actions.IncludeType<CompositeChainFilterEndpoint>();
-                                                x.Import<FubuValidation>();
+                                                x.Import<FubuMvcValidation>();
                                             });
 
             var graph = BehaviorGraph.BuildFrom(registry);

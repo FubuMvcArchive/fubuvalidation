@@ -24,37 +24,30 @@ namespace FubuMVC.Validation
 
         public static void ApplyValidation(ActionCall call)
         {
-            IValidationFilterBuilder builder;
-            if(call.HasOutput && call.OutputType().CanBeCastTo<AjaxContinuation>())
+            BehaviorNode node;
+            if(call.ResourceType().CanBeCastTo<AjaxContinuation>())
             {
-                builder = typeof (AjaxValidationFilterBuilder<>).CloseAndBuildAs<IValidationFilterBuilder>(call.InputType());
+                node = new AjaxValidationNode(call);
             }
             else
             {
-                builder = typeof (LoFiValidationFilterBuilder<>).CloseAndBuildAs<IValidationFilterBuilder>(call.InputType());
+                var builder = typeof (LoFiValidationNodeBuilder<>).CloseAndBuildAs<IValidationNodeBuilder>(call.InputType());
+                node = builder.BuildNode();
             }
 
-            call.AddBefore(builder.FilterFor(call));
+            call.AddBefore(node);
         }
 
-        public interface IValidationFilterBuilder
+        public interface IValidationNodeBuilder
         {
-            ActionFilter FilterFor(ActionCall call);
+            BehaviorNode BuildNode();
         }
 
-        public class LoFiValidationFilterBuilder<T> : IValidationFilterBuilder where T : class
+        public class LoFiValidationNodeBuilder<T> : IValidationNodeBuilder where T : class
         {
-            public ActionFilter FilterFor(ActionCall call)
+            public BehaviorNode BuildNode()
             {
                 return ActionFilter.For<ValidationActionFilter<T>>(x => x.Validate(null));
-            }
-        }
-
-        public class AjaxValidationFilterBuilder<T> : IValidationFilterBuilder where T : class
-        {
-            public ActionFilter FilterFor(ActionCall call)
-            {
-                return ActionFilter.For<AjaxValidationActionFilter<T>>(x => x.Validate(null));
             }
         }
     }

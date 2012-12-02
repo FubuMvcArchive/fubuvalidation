@@ -19,10 +19,11 @@ You can clone our repo and build from scratch, or you can use our NuGet packages
 
 ## Using FubuMVC.Validation
 
-While we recommend that you take a look at our sample project in this repository, you can bootstrap validation for your application through your FubuRegistry using our convenient extension methods:
+By default, FubuMVC.Validation will be automatically be applied once it is installed. The default policy is to make any chains matching the following criteria validated:
 
-	this.Validation(validation => {
-	});
+1. Any route that responds to an HTTP POST
+1. Any chain that returns an AjaxContinuation
+
 
 ## Why does `git status` show that all of my files are modified?
 

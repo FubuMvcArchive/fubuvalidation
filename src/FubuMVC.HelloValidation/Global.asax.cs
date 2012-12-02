@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Routing;
+using Bottles;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
 using FubuValidation.StructureMap;
@@ -14,6 +15,8 @@ namespace FubuMVC.HelloValidation
             new HelloValidationApplication()
                 .BuildApplication()
                 .Bootstrap();
+
+            PackageRegistry.AssertNoFailures();
         }
     }
 

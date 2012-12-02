@@ -1,18 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FubuMVC.HelloValidation.Handlers.Products
+namespace FubuMVC.HelloValidation.Products
 {
-    public class GetHandler
+    public class ProductListingEndpoint
     {
         private readonly IProductsRepository _repository;
 
-        public GetHandler(IProductsRepository repository)
+        public ProductListingEndpoint(IProductsRepository repository)
         {
             _repository = repository;
         }
 
-        public ProductsListViewModel Execute(ProductsListRequestModel request)
+        public ProductsListViewModel get_products_list(ProductsListRequestModel request)
         {
             return new ProductsListViewModel
                        {

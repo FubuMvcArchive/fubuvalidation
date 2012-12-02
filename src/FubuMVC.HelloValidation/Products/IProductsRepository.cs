@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace FubuMVC.HelloValidation.Handlers.Products
+namespace FubuMVC.HelloValidation.Products
 {
     public interface IProductsRepository
     {

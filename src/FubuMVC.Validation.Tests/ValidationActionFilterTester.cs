@@ -1,5 +1,6 @@
 ﻿using FubuLocalization;
 using FubuMVC.Core.Continuations;
+using FubuMVC.Core.Runtime;
 using FubuTestingSupport;
 using FubuValidation;
 using NUnit.Framework;
@@ -33,6 +34,14 @@ namespace FubuMVC.Validation.Tests
         {
             theNotification.RegisterMessage(StringToken.FromKeyString("Test"));
             theContinuation.AssertWasTransferedTo(theTarget, "GET");
+        }
+
+        [Test]
+        public void sets_the_notification_in_the_request()
+        {
+            theNotification.RegisterMessage(StringToken.FromKeyString("Test"));
+            ClassUnderTest.Validate(theTarget);
+            MockFor<IFubuRequest>().AssertWasCalled(x => x.Set(theNotification));
         }
     }
 

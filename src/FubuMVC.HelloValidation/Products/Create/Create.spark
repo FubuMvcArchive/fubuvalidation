@@ -1,6 +1,7 @@
-<viewdata model="FubuMVC.HelloValidation.Handlers.Products.Create.CreateProductViewModel" />
+<viewdata model="FubuMVC.HelloValidation.Products.Create.CreateProductInputModel" />
 <content:title>Create Product</content:title>
-<Form model="FubuMVC.HelloValidation.Handlers.Products.Create.CreateProductInputModel">
+<ValidationErrors />
+<Form model="FubuMVC.HelloValidation.Products.Create.CreateProductInputModel">
   <fieldset>
     <div class="row">
       <LabelFor property="Name" />

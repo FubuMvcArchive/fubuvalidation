@@ -1,2 +1,3 @@
 ﻿<use namespace="System.Linq" />
 <use namespace="FubuMVC.HelloValidation" />
+<use namespace="FubuMVC.Core.Assets" />

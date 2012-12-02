@@ -1,9 +1,9 @@
-<viewdata model="FubuMVC.HelloValidation.Handlers.Testing.TestItem" />
+<viewdata model="FubuMVC.HelloValidation.Ajax.TestItem" />
 <content:title>Create Item</content:title>
 <content:head>
   <Script src="testing.js" />
 </content:head>
-<Form model="FubuMVC.HelloValidation.Handlers.Testing.TestItem">
+<Form model="FubuMVC.HelloValidation.Ajax.TestItem">
   <fieldset>
     <div class="row">
       <LabelFor property="Name" />

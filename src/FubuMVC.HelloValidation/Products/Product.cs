@@ -1,4 +1,4 @@
-namespace FubuMVC.HelloValidation.Handlers.Products
+namespace FubuMVC.HelloValidation.Products
 {
     public class Product
     {

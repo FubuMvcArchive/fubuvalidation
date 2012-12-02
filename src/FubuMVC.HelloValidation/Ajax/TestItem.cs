@@ -1,6 +1,6 @@
 ﻿using FubuValidation;
 
-namespace FubuMVC.HelloValidation.Handlers.Testing
+namespace FubuMVC.HelloValidation.Ajax
 {
     public class TestItem
     {

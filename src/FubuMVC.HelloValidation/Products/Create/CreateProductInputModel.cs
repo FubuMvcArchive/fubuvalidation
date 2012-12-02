@@ -1,6 +1,6 @@
 using FubuValidation;
 
-namespace FubuMVC.HelloValidation.Handlers.Products.Create
+namespace FubuMVC.HelloValidation.Products.Create
 {
     public class CreateProductInputModel
     {

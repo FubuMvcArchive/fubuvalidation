@@ -80,6 +80,7 @@
     <Compile Include="CompositeChainFilter.cs" />
     <Compile Include="DefaultValidationChainFilter.cs" />
     <Compile Include="HasInputType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidationConvention.cs" />
     <Compile Include="ValidationFilter.cs" />
     <Compile Include="ModelBindingErrors.cs" />

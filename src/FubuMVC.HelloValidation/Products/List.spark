@@ -1,4 +1,4 @@
-<viewdata model="FubuMVC.HelloValidation.Handlers.Products.ProductsListViewModel" />
+<viewdata model="FubuMVC.HelloValidation.Products.ProductsListViewModel" />
 <content:title>Products</content:title>
 <if condition="Model.Any()">
   <ul>

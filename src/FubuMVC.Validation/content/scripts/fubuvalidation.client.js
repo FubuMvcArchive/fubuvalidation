@@ -20,13 +20,14 @@
             return messages;
         },
 
-        registerMessage: function (field, message, element) {
+        registerMessage: function (field, token, element, context) {
+            context = context || {};
             var messages = this.messagesFor(field);
-            messages.push({ field: field, message: message, element: element });
+            messages.push({ field: field, token: token, element: element, context: context });
         },
 
         allMessages: function () {
-            messages = [];
+            var messages = [];
 
             for (var key in this.messages) {
                 var values = this.messages[key];
@@ -45,6 +46,17 @@
         toContinuation: function () {
             var continuation = new $.continuations.continuation();
             continuation.success = this.isValid();
+
+            var messages = this.allMessages();
+            for (var i = 0; i < messages.length; i++) {
+                var message = messages[i];
+                continuation.errors.push({
+                    field: message.field,
+                    label: message.field, // TODO -- maybe do a localization trick here
+                    message: _.template(message.token.toString(), message.context)
+                });
+            }
+
             return continuation;
         }
     };
@@ -78,8 +90,11 @@
     };
 
     ValidationContext.prototype = {
+        pushTemplateContext: function (context) {
+            this.templateContext = context;
+        },
         registerMessage: function (message) {
-            this.notification.registerMessage(this.target.fieldName, message, this.target.element);
+            this.notification.registerMessage(this.target.fieldName, message, this.target.element, this.templateContext);
         }
     };
 

@@ -18,11 +18,11 @@
     defineToken('Email', 'Please enter a valid email address.');
     defineToken('Date', 'Please enter a valid date (e.g., 01/01/2012).');
     defineToken('Number', 'Please enter a valid number.');
-    defineToken('MinLength', 'Please enter at least {length} characters.');
-    defineToken('MaxLength', 'Please enter no more than {length} characters.');
-    defineToken('RangeLenth', 'Please enter a value between {min} and {max} characters.');
-    defineToken('Min', 'Please enter a value less than or equal to {bounds}.');
-    defineToken('Max', 'Please enter a value greater than or equal to {bounds}.');
+    defineToken('MinLength', 'Please enter at least {{length}} characters.');
+    defineToken('MaxLength', 'Please enter no more than {{length}} characters.');
+    defineToken('RangeLenth', 'Please enter a value between {{min}} and {{max}} characters.');
+    defineToken('Min', 'Please enter a value less than or equal to {{bounds}}.');
+    defineToken('Max', 'Please enter a value greater than or equal to {{bounds}}.');
 
 
     function MinLengthRule(length) {

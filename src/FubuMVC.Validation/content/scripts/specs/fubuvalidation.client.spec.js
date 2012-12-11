@@ -1,57 +1,80 @@
-describe('ValidationNotificationTester', function() {
+describe('ValidationNotificationTester', function () {
     var theNotification = null;
 
-    beforeEach(function() {
-       theNotification = new $.fubuvalidation.Notification();
+    beforeEach(function () {
+        theNotification = new $.fubuvalidation.Notification();
+        $.fubuvalidation.localizer.clearCache();
     });
 
-    it('the message collection is empty for an unknown field', function() {
-       expect(theNotification.messagesFor('blah')).toEqual([]);
+    it('the message collection is empty for an unknown field', function () {
+        expect(theNotification.messagesFor('blah')).toEqual([]);
     });
 
-    it('registers the message', function() {
-        var theMessage = { field: 'Test', message: 'User-friendly message', element: '123' };
+    it('registers the message', function () {
+        var theContext = { id: '234' };
+        var theMessage = { field: 'Test', token: 'User-friendly message', element: '123', context: theContext };
+        theNotification.registerMessage('Test', 'User-friendly message', '123', theContext);
+
+        expect(theNotification.messagesFor('Test')).toEqual([theMessage]);
+    });
+
+    it('registers an empty context by default', function() {
+        var theMessage = { field: 'Test', token: 'User-friendly message', element: '123', context: {} };
         theNotification.registerMessage('Test', 'User-friendly message', '123');
 
         expect(theNotification.messagesFor('Test')).toEqual([theMessage]);
     });
 
-    it('gathers all messages', function() {
-        var m1 = { field: 'Test 1', message: 'User-friendly message', element: '123' };
-        var m2 = { field: 'Test 2', message: 'User-friendly message', element: '123' };
+    it('gathers all messages', function () {
+        var m1 = { field: 'Test 1', token: 'User-friendly message', element: '123', context: {} };
+        var m2 = { field: 'Test 2', token: 'User-friendly message', element: '123', context: {} };
 
-        theNotification.registerMessage(m1.field, m1.message, m1.element);
-        theNotification.registerMessage(m2.field, m2.message, m2.element);
+        theNotification.registerMessage(m1.field, m1.token, m1.element);
+        theNotification.registerMessage(m2.field, m2.token, m2.element);
 
         expect(theNotification.allMessages()).toEqual([m1, m2]);
     });
 
-    it('is valid', function() {
+    it('is valid', function () {
         expect(theNotification.isValid()).toEqual(true);
     });
 
-    it('is valid (negative)', function() {
+    it('is valid (negative)', function () {
         theNotification.registerMessage('test', '', '');
         expect(theNotification.isValid()).toEqual(false);
     });
 });
 
-describe('Transforming ValidationNotification to an AjaxContinuation', function () {
+describe('Transforming a ValidationNotification to an AjaxContinuation', function () {
     var theNotification = null;
 
     beforeEach(function () {
         theNotification = new $.fubuvalidation.Notification();
+        $.fubuvalidation.localizer.clearCache();
     });
 
     it('sets the success flag', function () {
         expect(theNotification.toContinuation().success).toEqual(true);
 
-        theNotification.registerMessage($.fubuvalidation.ValidationKeys.Required);
+        theNotification.registerMessage('Test', $.fubuvalidation.ValidationKeys.Required);
         expect(theNotification.toContinuation().success).toEqual(false);
     });
 
-    // TODO -- gotta check the messages
-    
+    it('renders the message', function () {
+        expect(new $.continuations.continuation().errors.length).toEqual(0);
+        var token = new $.fubuvalidation.StringToken('Test', '{{Property}} is required');
+        theNotification.registerMessage('Test', token, null, { Property: 'The Value' });
+
+        var theContinuation = theNotification.toContinuation();
+        var theError = theContinuation.errors[0];
+
+        expect(theContinuation.errors.length).toEqual(1);
+
+        expect(theError.field).toEqual('Test');
+        expect(theError.label).toEqual('Test');
+        expect(theError.message).toEqual('The Value is required');
+    });
+
 });
 
 describe('ValidationTargetTester', function() {
@@ -72,6 +95,37 @@ describe('ValidationTargetTester', function() {
         var theElement = $('<input type="text" value="test-test-test" />');
         var theTarget = new $.fubuvalidation.Target.forElement(theElement);
         expect(theTarget.value()).toEqual('test-test-test');
+    });
+});
+
+describe('ValidationContextTester', function () {
+    var theContext = null;
+    var theTarget = null;
+    var theRule = null;
+    var theMessage = null;
+    var theElement = null;
+
+    beforeEach(function () {
+        theElement = $('<input type="text" name="Test" value="Value" />');
+        theTarget = $.fubuvalidation.Target.forElement(theElement);
+        theContext = new $.fubuvalidation.Context(theTarget);
+        theRule = $.fubuvalidation.Rules.Required;
+
+        theContext.pushTemplateContext(theRule);
+        theContext.registerMessage($.fubuvalidation.ValidationKeys.Required);
+
+        var messages = theContext.notification.messagesFor('Test');
+        expect(messages.length).toEqual(1);
+
+        theMessage = messages[0];
+    });
+
+    it('uses the target element', function () {
+        expect(theMessage.element).toEqual(theElement);
+    });
+
+    it('uses the template context', function () {
+        expect(theMessage.context).toEqual(theRule);
     });
 });
 

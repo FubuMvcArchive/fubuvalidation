@@ -4,10 +4,10 @@
         this.defaultValue = defaultValue;
     }
 
-    StringToken.prototype.toString = function() {
+    StringToken.prototype.toString = function () {
         return validation.localizer.valueFor(this);
     };
-    
+
     function LocalizationManager() {
         this.cache = {};
     }
@@ -22,6 +22,9 @@
             }
 
             return value;
+        },
+        clearCache: function () {
+            this.cache = {};
         }
     };
 

@@ -1,11 +1,11 @@
-﻿(function (validation) {
+﻿(function () {
     function StringToken(key, defaultValue) {
         this.key = key;
         this.defaultValue = defaultValue;
     }
 
     StringToken.prototype.toString = function () {
-        return validation.localizer.valueFor(this);
+        return $.fubuvalidation.localizer.valueFor(this);
     };
 
     function LocalizationManager() {
@@ -28,10 +28,13 @@
         }
     };
 
-    validation.StringToken = StringToken;
-    validation.LocalizationManager = LocalizationManager;
+    $.extend(true, $, {
+        'fubuvalidation': {
+            'StringToken': StringToken,
+            'LocalizationManager': LocalizationManager,
 
-    // singleton scope
-    validation.localizer = new LocalizationManager();
-
+            // singleton scope
+            'localizer': new LocalizationManager()
+        }
+    })
 } (jQuery.fubuvalidation));

@@ -1,14 +1,14 @@
 function RuleHarness(rule) {
     this.rule = rule;
     this.element = $('<input type="text" name="Test" />');
-    this.target = $.fubuvalidation.Target.forElement(this.element);
-    this.context = new $.fubuvalidation.Context(this.target);
+    this.target = $.fubuvalidation.Core.Target.forElement(this.element);
+    this.context = new $.fubuvalidation.Core.Context(this.target);
 }
 
 RuleHarness.prototype = {
     messagesFor: function (value) {
         this.element.val(value);
-        this.context.notification = new $.fubuvalidation.Notification();
+        this.context.notification = new $.fubuvalidation.Core.Notification();
         this.rule.validate(this.context);
 
         return this.context.notification.messagesFor(this.element.attr('name'));

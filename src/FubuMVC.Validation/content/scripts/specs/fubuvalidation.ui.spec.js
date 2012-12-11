@@ -15,7 +15,7 @@
 
 describe('fubuvalidation module tests', function() {
 	beforeEach(function() {
-		$.fubuvalidation.reset();
+		$.fubuvalidation.ui.reset();
 	});
 	it('should invoke the last registered handler', function() {
 		var invoked = false;
@@ -24,8 +24,8 @@ describe('fubuvalidation module tests', function() {
 			process: function(context) { invoked = true; }
 		};
 		
-		$.fubuvalidation.registerHandler(myHandler);
-		$.fubuvalidation.process(ObjectMother.continuation());
+		$.fubuvalidation.ui.registerHandler(myHandler);
+		$.fubuvalidation.ui.process(ObjectMother.continuation());
 		
 		expect(invoked).toEqual(true);
 	});
@@ -44,7 +44,7 @@ describe('fubuvalidation module tests', function() {
 			context = searchContext;
 		};
 		
-		$.fubuvalidation.findElementsWith(myFinder);
+		$.fubuvalidation.ui.findElementsWith(myFinder);
 		var continuation = ObjectMother.continuation();
 		continuation.errors.push({
 			field: 'LookupProperty',
@@ -52,7 +52,7 @@ describe('fubuvalidation module tests', function() {
 			message: 'LookupProperty is required'
 		});
 		
-		$.fubuvalidation.process(continuation);
+		$.fubuvalidation.ui.process(continuation);
 		
 		expect(context.element.attr('id')).toEqual('LookupPropertyValue');
 	});
@@ -65,7 +65,7 @@ describe('fubuvalidation module tests', function() {
 			message: 'LookupProperty is required'
 		});
 		
-		$.fubuvalidation.process(continuation);
+		$.fubuvalidation.ui.process(continuation);
 	});
 });
 
@@ -73,10 +73,10 @@ describe('Default validation handler integrated tests', function () {
 	var theContinuation;
 	var process;
 	beforeEach(function() {
-		$.fubuvalidation.reset();
+		$.fubuvalidation.ui.reset();
 		theContinuation = ObjectMother.continuation();
 		process = function() {
-			$.fubuvalidation.process(theContinuation);
+			$.fubuvalidation.ui.process(theContinuation);
 		};
 	});
 	
@@ -112,7 +112,7 @@ describe('Default validation handler integrated tests', function () {
 	it('should render messages in summary', function() {
 		process();
 		var error = theContinuation.errors[0];
-		var token = $.fubuvalidation.defaultHandler.generateToken(error);
+		var token = $.fubuvalidation.ui.defaultHandler.generateToken(error);
 		var found = false;
 		
 		$('#test > .validation-container > .validation-summary > li').each(function() {
@@ -138,7 +138,7 @@ describe('jquery.continuations and fubuvalidation.js integration tests', functio
     var server;
     beforeEach(function () {
         server = sinon.fakeServer.create();
-        $.fubuvalidation.reset();
+        $.fubuvalidation.ui.reset();
     });
     afterEach(function () {
         server.restore();
@@ -168,7 +168,7 @@ describe('jquery.continuations and fubuvalidation.js integration tests', functio
             expect($('#FirstName', '#test').hasClass('error')).toEqual(true);
 
             var error = theContinuation.errors[0];
-            var token = $.fubuvalidation.defaultHandler.generateToken(error);
+            var token = $.fubuvalidation.ui.defaultHandler.generateToken(error);
             var found = false;
 
             $('#test > .validation-container > .validation-summary > li').each(function () {

@@ -84,9 +84,9 @@
         return target;
     };
 
-    function ValidationContext(target) {
+    function ValidationContext(target, notification) {
         this.target = target;
-        this.notification = new ValidationNotification();
+        this.notification = notification || new ValidationNotification();
     };
 
     ValidationContext.prototype = {
@@ -98,7 +98,7 @@
         }
     };
 
-    function ValidationProvider(sources) {
+    function Validator(sources) {
         this.sources = sources || [];
 
         var self = this;
@@ -113,10 +113,32 @@
         });
     };
 
-    ValidationProvider.prototype = {
+    Validator.prototype = {
         registerSource: function (source) {
             this.sources.push(source);
+        },
+        validate: function (target) {
+            var notification = new ValidationNotification();
+            var context = new ValidationContext(target, notification);
+            var rules = this.rulesFor(target);
+
+            _.each(rules, function (rule) {
+                context.pushTemplateContext(rule);
+                rule.validate(context);
+            });
+
+            return notification;
         }
+    };
+
+    Validator.basic = function () {
+        var validationSources = [];
+        for (var key in sources) {
+            validationSources.push(sources[key]);
+        }
+
+        return new Validator(validationSources);
+
     };
 
     function CssValidationAliasRegistry() {
@@ -179,6 +201,10 @@
         }
     };
 
+    CssValidationRuleSource.basic = function () {
+        return new CssValidationRuleSource(new CssValidationAliasRegistry());
+    };
+
     function rulesForData(target, data, continuation) {
         var rules = [];
 
@@ -190,7 +216,7 @@
         return rules;
     };
 
-    defineSource('CssRules', CssValidationRuleSource);
+    defineSource('CssRules', CssValidationRuleSource.basic());
     defineSource('MinLength', {
         rulesFor: function (target) {
             return rulesForData(target, 'minlength', function (value) {
@@ -232,18 +258,15 @@
         }
     });
 
-
-    validation.Context = ValidationContext;
-    validation.Notification = ValidationNotification;
-    validation.Provider = ValidationProvider;
-    validation.Target = ValidationTarget;
-    validation.CssAliasRegistry = CssValidationAliasRegistry;
-    validation.Sources = sources;
+    $.extend(true, validation, {
+        'Core': {
+            'Context': ValidationContext,
+            'Notification': ValidationNotification,
+            'Validator': Validator,
+            'Target': ValidationTarget,
+            'CssAliasRegistry': CssValidationAliasRegistry
+        },
+        'Sources': sources
+    });
 
 } (jQuery, jQuery.fubuvalidation));
-
-(function ($) {
-    $.fn.validate = function() {
-        
-    };
-}(jQuery));

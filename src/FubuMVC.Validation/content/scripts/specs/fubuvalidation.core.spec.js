@@ -2,7 +2,7 @@ describe('ValidationNotificationTester', function () {
     var theNotification = null;
 
     beforeEach(function () {
-        theNotification = new $.fubuvalidation.Notification();
+        theNotification = new $.fubuvalidation.Core.Notification();
         $.fubuvalidation.localizer.clearCache();
     });
 
@@ -49,7 +49,7 @@ describe('Transforming a ValidationNotification to an AjaxContinuation', functio
     var theNotification = null;
 
     beforeEach(function () {
-        theNotification = new $.fubuvalidation.Notification();
+        theNotification = new $.fubuvalidation.Core.Notification();
         $.fubuvalidation.localizer.clearCache();
     });
 
@@ -80,20 +80,20 @@ describe('Transforming a ValidationNotification to an AjaxContinuation', functio
 describe('ValidationTargetTester', function() {
     it('gets the value passed in', function() {
        var theValue = '123';
-       var theTarget = new $.fubuvalidation.Target('field', theValue);
+       var theTarget = new $.fubuvalidation.Core.Target('field', theValue);
 
         expect(theTarget.value()).toEqual(theValue);
     });
 
     it('uses the name of the element', function() {
         var theElement = $('<input type="text" value="test-test-test" name="Tester" />');
-        var theTarget = new $.fubuvalidation.Target.forElement(theElement);
+        var theTarget = new $.fubuvalidation.Core.Target.forElement(theElement);
         expect(theTarget.fieldName).toEqual('Tester');
     });
 
     it('uses the element for the value when specified', function() {
         var theElement = $('<input type="text" value="test-test-test" />');
-        var theTarget = new $.fubuvalidation.Target.forElement(theElement);
+        var theTarget = new $.fubuvalidation.Core.Target.forElement(theElement);
         expect(theTarget.value()).toEqual('test-test-test');
     });
 });
@@ -107,8 +107,8 @@ describe('ValidationContextTester', function () {
 
     beforeEach(function () {
         theElement = $('<input type="text" name="Test" value="Value" />');
-        theTarget = $.fubuvalidation.Target.forElement(theElement);
-        theContext = new $.fubuvalidation.Context(theTarget);
+        theTarget = $.fubuvalidation.Core.Target.forElement(theElement);
+        theContext = new $.fubuvalidation.Core.Context(theTarget);
         theRule = $.fubuvalidation.Rules.Required;
 
         theContext.pushTemplateContext(theRule);
@@ -133,7 +133,7 @@ describe('CssValidationAliasRegistryTester', function () {
     var theRegistry = null;
 
     beforeEach(function () {
-        theRegistry = new $.fubuvalidation.CssAliasRegistry();
+        theRegistry = new $.fubuvalidation.Core.CssAliasRegistry();
     });
 
     it('defaults to null for an unknown key', function () {
@@ -150,47 +150,29 @@ describe('CssValidationAliasRegistryTester', function () {
 describe('CssValidationRuleSourceTester', function () {
     var theSource = null;
     var theElement = null;
-    var theRegistry = null;
-    var theEmailRule = null;
-    var theRequiredRule = null;
-    var theTarget = null;
 
     beforeEach(function () {
         theElement = $('<input type="text" name="Email" class="email required input-large" />');
-        theEmailRule = 'email rule';
-        theRequiredRule = 'required rule';
-
-        theRegistry = new $.fubuvalidation.CssAliasRegistry();
-        theRegistry.registerRule('email', theEmailRule);
-        theRegistry.registerRule('required', theRequiredRule);
-
-        theSource = new $.fubuvalidation.Sources.CssRules(theRegistry);
-
-        theTarget = new $.fubuvalidation.Target.forElement(theElement);
+        theSource = $.fubuvalidation.Sources.CssRules;
     });
 
     it('parses the classes', function () {
         expect(theSource.classesFor(theElement)).toEqual(['email', 'required', 'input-large']);
     });
-
-    it('finds the registered rules', function () {
-        var theRules = theSource.rulesFor(theTarget);
-        expect(theRules).toEqual([theEmailRule, theRequiredRule]);
-    });
 });
 
-describe('ValidationProviderTest', function() {
-    var theProvider = null;
+describe('ValidatorTests', function() {
+    var theValidator = null;
 
     beforeEach(function() {
-       theProvider = new $.fubuvalidation.Provider();
+       theValidator = new $.fubuvalidation.Core.Validator();
     });
 
     it('registers the validation source', function() {
        var theSource = function() { return '123';};
-        theProvider.registerSource(theSource);
+        theValidator.registerSource(theSource);
 
-        expect(theProvider.sources).toEqual([theSource]);
+        expect(theValidator.sources).toEqual([theSource]);
     });
 
     it('aggregates the rules for a target', function() {
@@ -200,24 +182,65 @@ describe('ValidationProviderTest', function() {
         var src1 = { rulesFor: function() { return [r1]; } };
         var src2 = { rulesFor: function() { return [r2]; } };
 
-        theProvider.registerSource(src1);
-        theProvider.registerSource(src2);
+        theValidator.registerSource(src1);
+        theValidator.registerSource(src2);
 
-        expect(theProvider.rulesFor({})).toEqual([r1, r2]);
+        expect(theValidator.rulesFor({})).toEqual([r1, r2]);
     })
 });
 
+describe('when validating a target', function () {
+    var theValidator = null;
+    var r1 = null;
+    var r2 = null;
+    var theTarget = null;
+    var theTemplateContexts = null;
+
+
+    beforeEach(function () {
+        theTemplateContexts = [];
+        var setContext = function (context) {
+            theTemplateContexts.push(context.templateContext);
+        };
+
+        r1 = { id: 'r1', validate: sinon.spy(setContext) };
+        r2 = { id: 'r2', validate: sinon.spy(setContext) };
+
+        var theSource = {
+            rulesFor: function () {
+                return [r1, r2];
+            }
+        };
+
+        theTarget = $.fubuvalidation.Core.Target.forElement($('<input type="text" name="Test" />'));
+
+        theValidator = new $.fubuvalidation.Core.Validator([theSource]);
+        theValidator.validate(theTarget);
+    });
+
+    it('invokes each rule', function () {
+        expect(r1.validate.called).toEqual(true);
+        expect(r1.validate.getCall(0).args[0].target).toEqual(theTarget);
+
+        expect(r2.validate.called).toEqual(true);
+        expect(r2.validate.getCall(0).args[0].target).toEqual(theTarget);
+    });
+
+    it('pushes the template context for each rule', function () {
+        expect(theTemplateContexts[0]).toEqual(r1);
+        expect(theTemplateContexts[1]).toEqual(r2);
+    });
+});
+
 describe('Integrated CssValidationRuleSource Tests', function () {
-    var theRegistry = null;
     var theSource = null;
     var ruleFor = null;
 
     beforeEach(function () {
-        theRegistry = new $.fubuvalidation.CssAliasRegistry();
-        theSource = new $.fubuvalidation.Sources.CssRules(theRegistry);
+        theSource = $.fubuvalidation.Sources.CssRules;
 
         ruleFor = function (element, continuation) {
-            var target = $.fubuvalidation.Target.forElement(element);
+            var target = $.fubuvalidation.Core.Target.forElement(element);
             var rules = theSource.rulesFor(target);
 
             expect(rules.length).toEqual(1);
@@ -260,7 +283,7 @@ describe('MinLengthSourceTester', function () {
         theSource = $.fubuvalidation.Sources.MinLength;
 
         rulesFor = function (element) {
-            var target = $.fubuvalidation.Target.forElement(element);
+            var target = $.fubuvalidation.Core.Target.forElement(element);
             return theSource.rulesFor(target);
         };
 
@@ -294,7 +317,7 @@ describe('MaxLengthSourceTester', function () {
         theSource = $.fubuvalidation.Sources.MaxLength;
 
         rulesFor = function (element) {
-            var target = $.fubuvalidation.Target.forElement(element);
+            var target = $.fubuvalidation.Core.Target.forElement(element);
             return theSource.rulesFor(target);
         };
 
@@ -328,7 +351,7 @@ describe('RangeLengthSourceTester', function () {
         theSource = $.fubuvalidation.Sources.RangeLength;
 
         rulesFor = function (element) {
-            var target = $.fubuvalidation.Target.forElement(element);
+            var target = $.fubuvalidation.Core.Target.forElement(element);
             return theSource.rulesFor(target);
         };
 
@@ -363,7 +386,7 @@ describe('MinSourceTester', function () {
         theSource = $.fubuvalidation.Sources.Min;
 
         rulesFor = function (element) {
-            var target = $.fubuvalidation.Target.forElement(element);
+            var target = $.fubuvalidation.Core.Target.forElement(element);
             return theSource.rulesFor(target);
         };
 
@@ -397,7 +420,7 @@ describe('MaxSourceTester', function () {
         theSource = $.fubuvalidation.Sources.Max;
 
         rulesFor = function (element) {
-            var target = $.fubuvalidation.Target.forElement(element);
+            var target = $.fubuvalidation.Core.Target.forElement(element);
             return theSource.rulesFor(target);
         };
 
@@ -419,5 +442,43 @@ describe('MaxSourceTester', function () {
     it('no rule if max data does not exist', function () {
         var rules = rulesFor($('<input type="text" name="Test" />'));
         expect(rules.length).toEqual(0);
+    });
+});
+
+describe('Integrated Validator Tests', function () {
+    var theValidator = null;
+    var notificationFor = null;
+
+    beforeEach(function () {
+        theValidator = $.fubuvalidation.Core.Validator.basic();
+
+        notificationFor = function (element) {
+            var target = $.fubuvalidation.Core.Target.forElement(element);
+            return theValidator.validate(target);
+        }
+    });
+
+    it('required with message', function () {
+        var theNotification = notificationFor($('<input type="text" name="Test" class="required" />'));
+        expect(theNotification.messagesFor('Test').length).toEqual(1);
+    });
+});
+
+describe('Integrated Continuation Tests', function() {
+    var theValidator = null;
+    var continuationFor = null;
+
+    beforeEach(function () {
+        theValidator = $.fubuvalidation.Core.Validator.basic();
+
+        continuationFor = function (element) {
+            var target = $.fubuvalidation.Core.Target.forElement(element);
+            return theValidator.validate(target).toContinuation();
+        }
+    });
+
+    it('required with rendered message', function () {
+        var theContinuation = continuationFor($('<input type="text" name="Test" class="required" />'));
+        expect(theContinuation.errors[0].message).toEqual($.fubuvalidation.ValidationKeys.Required.toString());
     });
 });

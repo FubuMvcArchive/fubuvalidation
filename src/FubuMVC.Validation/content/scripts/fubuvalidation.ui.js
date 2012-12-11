@@ -36,7 +36,7 @@
 
             container.show();
 
-            $.fubuvalidation.eachError(context, function (error) {
+            $.fubuvalidation.ui.eachError(context, function (error) {
                 self.append(context, error);
                 self.highlight(error);
             });
@@ -62,7 +62,7 @@
                     token: self.generateToken(error)
                 }));
                 token.find('a').click(function () {
-                    $.fubuvalidation.findElement(context, error.field).focus();
+                    $.fubuvalidation.ui.findElement(context, error.field).focus();
                 });
                 context.summary.append(token);
             }
@@ -79,10 +79,12 @@
             element.removeClass('error');
         }
     };
-    // This instance is registered by default and made public via $.fubuvalidation.defaultHandler
+    // This instance is registered by default and made public via $.fubuvalidation.ui.defaultHandler
     var theDefault = new defaultHandler();
 
-    var validation = function () { };
+    var validation = function () {
+        this.init();
+    };
     validation.prototype = {
         init: function () {
             this.setupDefaults();
@@ -158,12 +160,10 @@
     };
 
     var module = new validation();
-    module.init();
+    module.defaultHandler = theDefault;
+    module.defaultHandlerClass = defaultHandler;
 
-    $.fubuvalidation = module;
-    // export the class for extension
-    $.fubuvalidation.defaultHandlerClass = defaultHandler;
-    $.fubuvalidation.defaultHandler = theDefault;
+    $.extend(true, $, { 'fubuvalidation': { 'ui': module} });
 
     var reset = $.fn.resetForm;
     $.fn.resetForm = function () {
@@ -171,21 +171,21 @@
             form: $(this),
             container: $('.validation-container', $(this))
         };
-        $.fubuvalidation.defaultHandler.reset(context);
+        $.fubuvalidation.ui.defaultHandler.reset(context);
         reset.call(this);
     };
 
     $.continuations.applyPolicy({
         matches: function (continuation) {
-            return continuation.matchOnProperty('form', function(form) {
-				return form.size() != 0;
-			});
+            return continuation.matchOnProperty('form', function (form) {
+                return form.size() != 0;
+            });
         },
         execute: function (continuation) {
             if (!continuation.errors) {
                 continuation.errors = [];
             }
-            $.fubuvalidation.process(continuation);
+            $.fubuvalidation.ui.process(continuation);
         }
     });
 } (jQuery));

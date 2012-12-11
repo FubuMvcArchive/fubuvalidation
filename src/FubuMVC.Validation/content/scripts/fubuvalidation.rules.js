@@ -1,6 +1,6 @@
-(function ($, validation) {
+(function ($, StringToken) {
     var rules = {};
-    var keys = {};
+    var validationKeys = {};
 
     var define = function (key, rule) {
         rules[key] = rule;
@@ -11,7 +11,7 @@
     };
 
     var defineToken = function (key, value) {
-        keys[key] = new validation.StringToken(key, value);
+        validationKeys[key] = new StringToken(key, value);
     };
 
     defineToken('Required', 'This field is required.');
@@ -33,7 +33,7 @@
         validate: function (context) {
             var value = context.target.value();
             if (value.length < this.length) {
-                context.registerMessage(validation.ValidationKeys.MinLength);
+                context.registerMessage(validationKeys.MinLength);
             }
         }
     };
@@ -46,7 +46,7 @@
         validate: function (context) {
             var value = context.target.value();
             if (value.length > this.length) {
-                context.registerMessage(validation.ValidationKeys.MaxLength);
+                context.registerMessage(validationKeys.MaxLength);
             }
         }
     };
@@ -62,7 +62,7 @@
             var length = value.length;
 
             if (this.min > length || this.max < length) {
-                context.registerMessage(validation.ValidationKeys.RangeLength);
+                context.registerMessage(validationKeys.RangeLength);
             }
         }
     };
@@ -75,7 +75,7 @@
         validate: function (context) {
             var value = context.target.value();
             if (value < this.bounds) {
-                context.registerMessage(validation.ValidationKeys.Min);
+                context.registerMessage(validationKeys.Min);
             }
         }
     };
@@ -88,7 +88,7 @@
         validate: function (context) {
             var value = context.target.value();
             if (value > this.bounds) {
-                context.registerMessage(validation.ValidationKeys.Max);
+                context.registerMessage(validationKeys.Max);
             }
         }
     };
@@ -96,14 +96,14 @@
     defineLambda('Required', function (context) {
         var value = context.target.value();
         if (value.length == 0) {
-            context.registerMessage(validation.ValidationKeys.Required);
+            context.registerMessage(validationKeys.Required);
         }
     });
 
     var emailExpression = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/
     defineLambda('Email', function (context) {
         if (!emailExpression.test(context.target.value())) {
-            context.registerMessage(validation.ValidationKeys.Email);
+            context.registerMessage(validationKeys.Email);
         }
     });
 
@@ -112,7 +112,7 @@
         var date = new Date(value);
 
         if (/Invalid|NaN/.test(date.toString())) {
-            context.registerMessage(validation.ValidationKeys.Date);
+            context.registerMessage(validationKeys.Date);
         }
     });
 
@@ -120,7 +120,7 @@
         var value = context.target.value();
         var valid = /^\d+$/.test(value);
         if (!valid) {
-            context.registerMessage(validation.ValidationKeys.Number);
+            context.registerMessage(validationKeys.Number);
         }
     });
 
@@ -130,9 +130,11 @@
     define('Min', MinRule);
     define('Max', MaxRule);
 
-    $.extend(true, validation, {
-        "Rules": rules,
-        'ValidationKeys': keys
+    $.extend(true, $, {
+        'fubuvalidation': {
+            "Rules": rules,
+            'ValidationKeys': validationKeys
+        }
     });
 
-} (jQuery, jQuery.fubuvalidation));
+} (jQuery, jQuery.fubuvalidation.StringToken));

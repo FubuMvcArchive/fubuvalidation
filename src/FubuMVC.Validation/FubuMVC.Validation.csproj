@@ -94,9 +94,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".package-manifest" />
-    <Content Include="content\scripts\fubuvalidation.client.js" />
-    <Content Include="content\scripts\fubuvalidation.client.rules.js" />
-    <Content Include="content\scripts\fubuvalidation.js" />
+    <Content Include="content\scripts\fubuvalidation.core.js" />
+    <Content Include="content\scripts\fubuvalidation.plugin.js" />
+    <Content Include="content\scripts\fubuvalidation.rules.js" />
+    <Content Include="content\scripts\fubuvalidation.ui.js" />
     <Content Include="content\scripts\fubuvalidation.localization.js" />
     <Content Include="content\scripts\lib\jquery-1.7.min.js" />
     <Content Include="content\scripts\lib\jquery.continuations.forms.js" />
@@ -105,10 +106,10 @@
     <Content Include="content\scripts\lib\sinon-1.2.0.js" />
     <Content Include="content\scripts\lib\underscore-min.js" />
     <Content Include="content\scripts\specs\fubuvalidation.localization.spec.js" />
-    <Content Include="content\scripts\specs\fubuvalidation.client.rules.spec.js" />
-    <Content Include="content\scripts\specs\fubuvalidation.client.spec.js" />
-    <Content Include="content\scripts\specs\fubuvalidation.fixture.html" />
-    <Content Include="content\scripts\specs\fubuvalidation.spec.js" />
+    <Content Include="content\scripts\specs\fubuvalidation.rules.spec.js" />
+    <Content Include="content\scripts\specs\fubuvalidation.core.spec.js" />
+    <Content Include="content\scripts\specs\fubuvalidation.ui.fixture.html" />
+    <Content Include="content\scripts\specs\fubuvalidation.ui.spec.js" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

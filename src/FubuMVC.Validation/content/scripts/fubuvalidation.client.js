@@ -1,4 +1,10 @@
 (function ($, validation) {
+    var sources = {};
+    var defineSource = function (key, source) {
+        sources[key] = source;
+    };
+
+
     function ValidationNotification() {
         this.messages = {};
     };
@@ -34,6 +40,12 @@
 
         isValid: function () {
             return this.allMessages().length == 0;
+        },
+
+        toContinuation: function () {
+            var continuation = new $.continuations.continuation();
+            continuation.success = this.isValid();
+            return continuation;
         }
     };
 
@@ -44,10 +56,12 @@
 
     ValidationTarget.prototype = {
         value: function () {
+            var value = this.rawValue;
             if (typeof (this.element) != 'undefined') {
-                return $(this.element).val();
+                value = $(this.element).val();
             }
-            return this.rawValue;
+
+            return $.trim(value);
         }
     };
 
@@ -71,29 +85,36 @@
 
     function ValidationProvider(sources) {
         this.sources = sources || [];
-    };
 
-    ValidationProvider.prototype = {
-        registerSource: function (source) {
-            this.sources.push(source);
-        },
-        rulesFor: function (target) {
+        var self = this;
+        this.rulesFor = _.memoize(function (target) {
             var rules = [];
-            _.each(this.sources, function (src) {
+            _.each(self.sources, function (src) {
                 var targetRules = src.rulesFor(target);
                 rules = rules.concat(targetRules);
             });
 
             return rules;
+        });
+    };
+
+    ValidationProvider.prototype = {
+        registerSource: function (source) {
+            this.sources.push(source);
         }
     };
 
-    function ValidationRuleRegistry() {
+    function CssValidationAliasRegistry() {
         this.rules = {};
+        this.registerDefaults();
     };
 
-    ValidationRuleRegistry.prototype = {
+    CssValidationAliasRegistry.prototype = {
         registerDefaults: function () {
+            this.registerRule('required', validation.Rules.Required);
+            this.registerRule('email', validation.Rules.Email);
+            this.registerRule('date', validation.Rules.Date);
+            this.registerRule('number', validation.Rules.Number);
         },
 
         ruleFor: function (alias, target) {
@@ -143,14 +164,71 @@
         }
     };
 
+    function rulesForData(target, data, continuation) {
+        var rules = [];
+
+        var value = target.element.data(data);
+        if (typeof (value) != 'undefined') {
+            rules.push(continuation(value));
+        }
+
+        return rules;
+    };
+
+    defineSource('CssRules', CssValidationRuleSource);
+    defineSource('MinLength', {
+        rulesFor: function (target) {
+            return rulesForData(target, 'minlength', function (value) {
+                return new validation.Rules.MinLength(value);
+            });
+        }
+    });
+    defineSource('MaxLength', {
+        rulesFor: function (target) {
+            var rules = [];
+
+            var value = target.element.attr('maxlength');
+            if (typeof (value) != 'undefined') {
+                rules.push(new validation.Rules.MaxLength(parseInt(value)));
+            }
+
+            return rules;
+        }
+    });
+    defineSource('RangeLength', {
+        rulesFor: function (target) {
+            return rulesForData(target, 'rangelength', function (value) {
+                return new validation.Rules.RangeLength(value.min, value.max);
+            });
+        }
+    });
+    defineSource('Min', {
+        rulesFor: function (target) {
+            return rulesForData(target, 'min', function (value) {
+                return new validation.Rules.Min(value);
+            });
+        }
+    });
+    defineSource('Max', {
+        rulesFor: function (target) {
+            return rulesForData(target, 'max', function (value) {
+                return new validation.Rules.Max(value);
+            });
+        }
+    });
+
 
     validation.Context = ValidationContext;
     validation.Notification = ValidationNotification;
     validation.Provider = ValidationProvider;
     validation.Target = ValidationTarget;
-    validation.RuleRegistry = ValidationRuleRegistry;
-
-    validation.Sources = {};
-    validation.Sources.CssRules = CssValidationRuleSource;
+    validation.CssAliasRegistry = CssValidationAliasRegistry;
+    validation.Sources = sources;
 
 } (jQuery, jQuery.fubuvalidation));
+
+(function ($) {
+    $.fn.validate = function() {
+        
+    };
+}(jQuery));

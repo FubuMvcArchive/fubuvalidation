@@ -24,7 +24,6 @@ ValidationHarness.prototype = {
         this.form.resetForm();
         this.server.restore();
         $.fubuvalidation.ui.reset();
-        $.continuations.reset();
     }
 };
 

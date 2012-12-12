@@ -138,11 +138,10 @@ describe('jquery.continuations and fubuvalidation.js integration tests', functio
     var server;
     beforeEach(function () {
         server = sinon.fakeServer.create();
-        $.fubuvalidation.ui.reset();
+        $('#test').resetForm();
     });
     afterEach(function () {
         server.restore();
-        $.continuations.reset();
     });
 
     it('should render errors then clear previous errors when validation succeeds', function () {

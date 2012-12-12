@@ -142,6 +142,7 @@ describe('jquery.continuations and fubuvalidation.js integration tests', functio
     });
     afterEach(function () {
         server.restore();
+        $.continuations.reset();
     });
 
     it('should render errors then clear previous errors when validation succeeds', function () {

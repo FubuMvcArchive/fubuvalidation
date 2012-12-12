@@ -117,8 +117,8 @@
         registerSource: function (source) {
             this.sources.push(source);
         },
-        validate: function (target) {
-            var notification = new ValidationNotification();
+        validate: function (target, notification) {
+            notification = notification || new ValidationNotification();
             var context = new ValidationContext(target, notification);
             var rules = this.rulesFor(target);
 

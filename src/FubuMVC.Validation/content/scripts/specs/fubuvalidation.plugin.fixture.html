@@ -1,0 +1,23 @@
+<form id="EndToEnd" action="/test" method="post">
+    <div class="alert-message block-message validation-container" style="display:none;">
+        <p>There are errors with the information you provided.</p>
+        <ul class="validation-summary"></ul>
+    </div>
+	<fieldset>
+		<div class="col">
+			<label for="Name">Name *</label>
+			<div class="input">
+			    <input type="text" id="Name" name="Name" class="required" />
+			</div>
+		</div>
+	    <div class="col">
+	        <label for="Email">Email</label>
+	        <div class="input">
+	            <input type="text" id="Email" name="Email" class="email" />
+	        </div>
+	    </div>
+	    <div class="form-actions">
+	        <input type="submit" value="Submit" />
+	    </div>
+	</fieldset>
+</form>

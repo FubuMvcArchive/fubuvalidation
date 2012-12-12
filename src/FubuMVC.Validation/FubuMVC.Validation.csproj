@@ -105,7 +105,9 @@
     <Content Include="content\scripts\lib\jquery.form.js" />
     <Content Include="content\scripts\lib\sinon-1.2.0.js" />
     <Content Include="content\scripts\lib\underscore-min.js" />
+    <Content Include="content\scripts\specs\fubuvalidation.plugin.fixture.html" />
     <Content Include="content\scripts\specs\fubuvalidation.localization.spec.js" />
+    <Content Include="content\scripts\specs\fubuvalidation.plugin.spec.js" />
     <Content Include="content\scripts\specs\fubuvalidation.rules.spec.js" />
     <Content Include="content\scripts\specs\fubuvalidation.core.spec.js" />
     <Content Include="content\scripts\specs\fubuvalidation.ui.fixture.html" />

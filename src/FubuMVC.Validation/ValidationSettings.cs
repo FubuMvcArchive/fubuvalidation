@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
 
@@ -14,6 +15,11 @@ namespace FubuMVC.Validation
     {
         private readonly IList<IChainFilter> _filters = new List<IChainFilter>();
 
+        public ValidationSettings()
+        {
+            FailAjaxRequestsWith(HttpStatusCode.BadRequest);
+        }
+
         public ChainPredicate Where
         {
             get
@@ -23,6 +29,13 @@ namespace FubuMVC.Validation
                 
                 return predicate;
             }
+        }
+
+        public HttpStatusCode StatusCode { get; private set; }
+
+        public void FailAjaxRequestsWith(HttpStatusCode statusCode)
+        {
+            StatusCode = statusCode;
         }
 
         private IChainFilter createFilter()

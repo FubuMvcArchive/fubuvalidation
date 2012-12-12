@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Net;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
@@ -80,6 +81,12 @@ namespace FubuMVC.Validation.Tests
         {
             theSettings.Where.ChainMatches(x => x.InputType() != typeof (SampleAjaxModel));
             matches(x => x.post_json_model(null)).ShouldBeFalse();
+        }
+
+        [Test]
+        public void defaults_status_code_to_BadRequest()
+        {
+            theSettings.StatusCode.ShouldEqual(HttpStatusCode.BadRequest);
         }
     }
 

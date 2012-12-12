@@ -13,11 +13,17 @@ namespace FubuMVC.Validation.Tests
     {
         private AjaxContinuation theAjaxContinuation;
         private Notification theNotification;
+        private ValidationSettings theSettings;
 
         protected override void beforeEach()
         {
             theNotification = new Notification();
             theAjaxContinuation = new AjaxContinuation();
+
+            theSettings = new ValidationSettings();
+            theSettings.FailAjaxRequestsWith(HttpStatusCode.SeeOther);
+
+            Services.Inject(theSettings);
 
             MockFor<IAjaxContinuationResolver>().Stub(x => x.Resolve(theNotification)).Return(theAjaxContinuation);
             ClassUnderTest.Handle(theNotification);
@@ -26,7 +32,7 @@ namespace FubuMVC.Validation.Tests
         [Test]
         public void writes_bad_request_status_code()
         {
-            MockFor<IOutputWriter>().AssertWasCalled(x => x.WriteResponseCode(HttpStatusCode.BadRequest));
+            MockFor<IOutputWriter>().AssertWasCalled(x => x.WriteResponseCode(theSettings.StatusCode));
         }
 
         [Test]

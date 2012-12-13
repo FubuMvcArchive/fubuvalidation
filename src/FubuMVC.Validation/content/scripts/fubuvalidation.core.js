@@ -53,7 +53,8 @@
                 continuation.errors.push({
                     field: message.field,
                     label: message.field, // TODO -- maybe do a localization trick here
-                    message: _.template(message.token.toString(), message.context)
+                    message: _.template(message.token.toString(), message.context),
+                    element: message.element
                 });
             }
 

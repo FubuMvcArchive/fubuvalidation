@@ -60,6 +60,14 @@ describe('Transforming a ValidationNotification to an AjaxContinuation', functio
         expect(theNotification.toContinuation().success).toEqual(false);
     });
 
+    it('sets the element on the error', function () {
+        var theElement = $('<input type="text" name="Test" />');
+        theNotification.registerMessage('field', $.fubuvalidation.ValidationKeys.Required, theElement);
+
+        var theContinuation = theNotification.toContinuation();
+        expect(theContinuation.errors[0].element).toEqual(theElement);
+    });
+
     it('renders the message', function () {
         expect(new $.continuations.continuation().errors.length).toEqual(0);
         var token = new $.fubuvalidation.StringToken('Test', '{{Property}} is required');

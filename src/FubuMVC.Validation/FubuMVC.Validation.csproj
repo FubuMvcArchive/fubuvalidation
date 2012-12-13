@@ -99,12 +99,9 @@
     <Content Include="content\scripts\fubuvalidation.rules.js" />
     <Content Include="content\scripts\fubuvalidation.ui.js" />
     <Content Include="content\scripts\fubuvalidation.localization.js" />
-    <Content Include="content\scripts\lib\jquery-1.7.min.js" />
-    <Content Include="content\scripts\lib\jquery.continuations.forms.js" />
-    <Content Include="content\scripts\lib\jquery.continuations.js" />
-    <Content Include="content\scripts\lib\jquery.form.js" />
-    <Content Include="content\scripts\lib\sinon-1.2.0.js" />
-    <Content Include="content\scripts\lib\underscore-min.js" />
+    <Content Include="content\scripts\jquery.continuations.forms.js" />
+    <Content Include="content\scripts\jquery.continuations.js" />
+    <Content Include="content\scripts\jquery.form.js" />
     <Content Include="content\scripts\specs\fubuvalidation.plugin.fixture.html" />
     <Content Include="content\scripts\specs\fubuvalidation.localization.spec.js" />
     <Content Include="content\scripts\specs\fubuvalidation.plugin.spec.js" />
@@ -115,7 +112,7 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="validation.script.config">
+    <Content Include="validation.asset.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
@@ -148,4 +145,13 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <EmbeddedResource Include="pak-WebContent.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="pak-Data.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="pak-Config.zip" />
+  </ItemGroup>
 </Project>

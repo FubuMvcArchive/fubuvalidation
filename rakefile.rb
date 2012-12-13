@@ -85,6 +85,7 @@ end
 
 desc "Compiles the app"
 task :compile => [:restore_if_missing, :clean, :aliases, :version] do
+  bottles("assembly-pak src/FubuMVC.Validation")
   compileSolution COMPILE_TARGET
   copyOutputFiles "src/FubuValidation.StructureMap/bin/#{COMPILE_TARGET}", "Fubu*.{dll,pdb}", props[:stage]  
   copyOutputFiles "src/FubuMVC.Validation/bin", "FubuMVC.Validation.{dll,pdb}", props[:stage]  

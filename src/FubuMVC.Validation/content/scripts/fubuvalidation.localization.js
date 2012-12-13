@@ -1,4 +1,6 @@
 ﻿(function () {
+    _.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
+    
     function StringToken(key, defaultValue) {
         this.key = key;
         this.defaultValue = defaultValue;

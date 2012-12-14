@@ -11,7 +11,7 @@ namespace FubuValidation
         private readonly IValidator _provider;
         private readonly object _target;
         private ITypeResolver _resolver;
-
+        private IServiceLocator _serviceLocator;
         public ValidationContext(IValidator provider, Notification notification, object target)
         {
             if (target == null) throw new ArgumentNullException("target");
@@ -44,6 +44,13 @@ namespace FubuValidation
             get { return _resolver ?? new TypeResolver(); }
             set { _resolver = value; }
         }
+
+        public IServiceLocator Services
+        {
+            get { return _serviceLocator ?? new InMemoryServiceLocator(); }
+            set { _serviceLocator = value; }
+        }
+
 
         public T GetFieldValue<T>(Accessor accessor)
         {

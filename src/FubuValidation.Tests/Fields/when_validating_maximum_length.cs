@@ -5,6 +5,7 @@ using FubuTestingSupport;
 using FubuValidation.Fields;
 using FubuValidation.Tests.Models;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuValidation.Tests.Fields
 {
@@ -51,7 +52,7 @@ namespace FubuValidation.Tests.Fields
         public void end_to_end()
         {
             var registry = new FieldRulesRegistry(new IFieldValidationSource[] {new AttributeFieldValidationSource()}, new TypeDescriptorCache());
-            var validator = new Validator(new TypeResolver(), new ValidationQuery(new IValidationSource[] { new FieldRuleSource(registry) }));
+            var validator = new Validator(new TypeResolver(), new ValidationQuery(new IValidationSource[] { new FieldRuleSource(registry) }), MockRepository.GenerateMock<IServiceLocator>());
 
             theModel.PostalCode = "123456";
             validator

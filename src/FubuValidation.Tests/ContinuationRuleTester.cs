@@ -5,6 +5,7 @@ using FubuTestingSupport;
 using FubuValidation.Fields;
 using FubuValidation.Tests.Models;
 using NUnit.Framework;
+using Rhino.Mocks;
 
 namespace FubuValidation.Tests
 {
@@ -17,7 +18,7 @@ namespace FubuValidation.Tests
         public void SetUp()
         {
             var fieldRegistry = new FieldRulesRegistry(new[] { new AttributeFieldValidationSource() }, new TypeDescriptorCache());
-            _provider = new Validator(new TypeResolver(), new ValidationQuery(new IValidationSource[] { new FieldRuleSource(fieldRegistry) }));
+            _provider = new Validator(new TypeResolver(), new ValidationQuery(new IValidationSource[] { new FieldRuleSource(fieldRegistry) }), MockRepository.GenerateMock<IServiceLocator>());
         }
 
         [Test]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using FubuCore;
 using FubuCore.Reflection;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -41,7 +42,27 @@ namespace FubuValidation.Tests
             get<int>(x => x.Number).ShouldEqual(25);
         }
 
+        [Test]
+        public void services_defaults_to_in_memory()
+        {
+            theContext.ServiceLocator.ShouldBeOfType<InMemoryServiceLocator>();
+        }
 
+        [Test]
+        public void gets_the_service()
+        {
+            var theServices = new InMemoryServiceLocator();
+            var theService = new TestService();
+            theServices.Add(theService);
+
+            theContext.ServiceLocator = theServices;
+
+            theContext.Service<TestService>().ShouldBeTheSameAs(theService);
+        }
+
+        public class TestService
+        {
+        }
     }
 
     public class ValidationContextTarget

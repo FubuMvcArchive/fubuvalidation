@@ -1,4 +1,5 @@
-﻿using FubuTestingSupport;
+﻿using FubuCore;
+using FubuTestingSupport;
 using FubuValidation.Fields;
 using NUnit.Framework;
 using StructureMap;
@@ -14,7 +15,11 @@ namespace FubuValidation.StructureMap.Tests
         [SetUp]
         public void before_each()
         {
-            _container = new Container(x => x.AddRegistry<ValidationTestRegistry>());
+            _container = new Container(x =>
+                                       {
+                                           x.For<IServiceLocator>().Use<InMemoryServiceLocator>();
+                                           x.AddRegistry<ValidationTestRegistry>();
+                                       });
         }
 
         [Test]

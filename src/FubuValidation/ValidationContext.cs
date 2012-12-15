@@ -11,6 +11,7 @@ namespace FubuValidation
         private readonly IValidator _provider;
         private readonly object _target;
         private ITypeResolver _resolver;
+        private IServiceLocator _services;
 
         public ValidationContext(IValidator provider, Notification notification, object target)
         {
@@ -45,6 +46,20 @@ namespace FubuValidation
             set { _resolver = value; }
         }
 
+        public IServiceLocator ServiceLocator
+        {
+            get
+            {
+                if(_services == null)
+                {
+                    _services = new InMemoryServiceLocator();
+                }
+
+                return _services;
+            }
+            set { _services = value; }
+        }
+
         public T GetFieldValue<T>(Accessor accessor)
         {
             var rawValue = accessor.GetValue(_target);
@@ -60,10 +75,13 @@ namespace FubuValidation
             var childTarget = accessor.GetValue(_target);
             if (childTarget == null) return;
 
-
-
             var childNotification = Provider.Validate(childTarget);
             Notification.AddChild(accessor, childNotification);
+        }
+
+        public T Service<T>()
+        {
+            return ServiceLocator.GetInstance<T>();
         }
     }
 }

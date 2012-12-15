@@ -8,12 +8,12 @@ namespace FubuValidation.Tests
     [TestFixture]
     public class IValidatedRuleSourceTester
     {
-        private Validator theValidator;
+        private IValidator theValidator;
 
         [SetUp]
         public void SetUp()
         {
-            theValidator = new Validator(new TypeResolver(), new ValidationQuery(new IValidationSource[0]));
+            theValidator = Validator.BasicValidator();
         }
 
         [Test]

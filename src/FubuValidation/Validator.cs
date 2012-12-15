@@ -8,11 +8,13 @@ namespace FubuValidation
     {
         private readonly ITypeResolver _typeResolver;
         private readonly IValidationQuery _validationQuery;
+        private readonly IServiceLocator _services;
 
-        public Validator(ITypeResolver typeResolver, IValidationQuery validationQuery)
+        public Validator(ITypeResolver typeResolver, IValidationQuery validationQuery, IServiceLocator services)
         {
             _typeResolver = typeResolver;
             _validationQuery = validationQuery;
+            _services = services;
         }
 
         public Notification Validate(object target)
@@ -26,9 +28,10 @@ namespace FubuValidation
         public void Validate(object target, Notification notification)
         {
             var validatedType = _typeResolver.ResolveType(target);
-            var context = new ValidationContext(this, notification, target){
+            var context = new ValidationContext(this, notification, target) {
                 TargetType = validatedType,
-                Resolver = _typeResolver
+                Resolver = _typeResolver,
+                ServiceLocator = _services
             };
 
             _validationQuery
@@ -38,7 +41,7 @@ namespace FubuValidation
 
         public static IValidator BasicValidator()
         {
-            return new Validator(new TypeResolver(), ValidationQuery.BasicQuery());
+            return new Validator(new TypeResolver(), ValidationQuery.BasicQuery(), new InMemoryServiceLocator());
         }
 
         public static Notification ValidateObject(object target)

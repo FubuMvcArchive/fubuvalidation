@@ -7,13 +7,13 @@ namespace FubuValidation
     public class Validator : IValidator
     {
         private readonly ITypeResolver _typeResolver;
-        private readonly IValidationQuery _validationQuery;
+        private readonly ValidationGraph _graph;
         private readonly IServiceLocator _services;
 
-        public Validator(ITypeResolver typeResolver, IValidationQuery validationQuery, IServiceLocator services)
+        public Validator(ITypeResolver typeResolver, ValidationGraph graph, IServiceLocator services)
         {
             _typeResolver = typeResolver;
-            _validationQuery = validationQuery;
+            _graph = graph;
             _services = services;
         }
 
@@ -34,14 +34,12 @@ namespace FubuValidation
                 ServiceLocator = _services
             };
 
-            _validationQuery
-                .RulesFor(validatedType)
-                .Each(rule => rule.Validate(context));
+            _graph.PlanFor(validatedType).Execute(context);
         }
 
         public static IValidator BasicValidator()
         {
-            return new Validator(new TypeResolver(), ValidationQuery.BasicQuery(), new InMemoryServiceLocator());
+            return new Validator(new TypeResolver(), ValidationGraph.BasicGraph(), new InMemoryServiceLocator());
         }
 
         public static Notification ValidateObject(object target)

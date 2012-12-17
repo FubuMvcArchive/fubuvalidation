@@ -83,5 +83,18 @@ namespace FubuValidation
         {
             return ServiceLocator.GetInstance<T>();
         }
+
+        /// <summary>
+        /// Mostly used for testing.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static ValidationContext For(object target)
+        {
+            var provider = Validator.BasicValidator();
+            var notification = new Notification(target.GetType());
+
+            return new ValidationContext(provider, notification, target);
+        }
     }
 }

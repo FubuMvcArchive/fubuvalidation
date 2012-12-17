@@ -50,8 +50,7 @@ namespace FubuValidation.Tests.Fields
         [Test]
         public void end_to_end()
         {
-            var registry = new FieldRulesRegistry(new IFieldValidationSource[] {new AttributeFieldValidationSource()}, new TypeDescriptorCache());
-            var validator = new Validator(new TypeResolver(), new ValidationQuery(new IValidationSource[] { new FieldRuleSource(registry) }), new InMemoryServiceLocator());
+            var validator = Validator.BasicValidator();
 
             theModel.PostalCode = "123456";
             validator

@@ -50,6 +50,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="FubuValidationRegistry.cs" />
     <Compile Include="ValidationBootstrapExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

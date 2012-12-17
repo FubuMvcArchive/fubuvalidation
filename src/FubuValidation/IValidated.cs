@@ -26,5 +26,10 @@ namespace FubuValidation
                 yield return new SelfValidatingClassRule();
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is SelfValidatingClassRuleSource;
+        }
     }
 }

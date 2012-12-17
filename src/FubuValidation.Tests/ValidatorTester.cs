@@ -1,33 +1,28 @@
-﻿using System;
-using FubuCore;
+﻿using FubuCore;
 using FubuTestingSupport;
 using FubuValidation.Tests.Models;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace FubuValidation.Tests
 {
     [TestFixture]
     public class ValidatorTester : InteractionContext<Validator>
     {
-        private Type theType;
         private SimpleModel theModel;
         private RecordingValidationRule theRecordingRule;
         private ValidationContext theContext;
+        private ValidationGraph theGraph;
 
         protected override void beforeEach()
         {
             theModel = new SimpleModel();
-            theType = typeof (ContactModel);
             theRecordingRule = new RecordingValidationRule();
 
-            MockFor<ITypeResolver>()
-                .Stub(x => x.ResolveType(theModel))
-                .Return(theType);
+            var theSource = ConfiguredValidationSource.For(theModel.GetType(), theRecordingRule);
+            theGraph = ValidationGraph.For(theSource);
 
-            MockFor<IValidationQuery>()
-                .Stub(x => x.RulesFor(theType))
-                .Return(new IValidationRule[] {theRecordingRule});
+            Services.Inject<ITypeResolver>(new TypeResolver());
+            Services.Inject(theGraph);
 
             ClassUnderTest.Validate(theModel);
 
@@ -37,7 +32,7 @@ namespace FubuValidation.Tests
         [Test]
         public void sets_the_target_type()
         {
-            theContext.TargetType.ShouldEqual(theType);
+            theContext.TargetType.ShouldEqual(theModel.GetType());
         }
 
         [Test]

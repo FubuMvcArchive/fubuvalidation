@@ -11,7 +11,7 @@ namespace FubuValidation.Tests
     {
         private ValidationScenario(ScenarioDefinition definition)
         {
-            var validator = new Validator(new TypeResolver(), definition.Query(), definition.Services);
+            var validator = new Validator(new TypeResolver(), definition.Graph(), definition.Services);
 
             Model = definition.Model;
             Notification = validator.Validate(Model);
@@ -34,15 +34,17 @@ namespace FubuValidation.Tests
             private readonly IList<IValidationRule> _rules = new List<IValidationRule>();
             private readonly IList<IValidationSource> _sources;
             private readonly InMemoryServiceLocator _services = new InMemoryServiceLocator();
-            private readonly IList<IFieldValidationRule> _fieldRules = new List<IFieldValidationRule>(); 
+            private readonly IList<IFieldValidationRule> _fieldRules = new List<IFieldValidationRule>();
+            private readonly IFieldRulesRegistry _fieldRegistry;
+
 
             public ScenarioDefinition()
             {
-                _sources = new List<IValidationSource> { new PassThruValidationSource(_rules) };
+                _sources = new List<IValidationSource> { new ConfiguredValidationSource(_rules) };
 
                 var fieldSource = new PassThruFieldValidationSource(_fieldRules);
-                var registry = new FieldRulesRegistry(new IFieldValidationSource[] { fieldSource } , new TypeDescriptorCache());
-                _sources.Add(new FieldRuleSource(registry));
+                _fieldRegistry = new FieldRulesRegistry(new IFieldValidationSource[] { fieldSource }, new TypeDescriptorCache());
+                _sources.Add(new FieldRuleSource(_fieldRegistry));
             }
 
             public T Model { get; set; }
@@ -75,24 +77,9 @@ namespace FubuValidation.Tests
                 _fieldRules.Add(rule);
             }
 
-            public IValidationQuery Query()
+            public ValidationGraph Graph()
             {
-                return new ValidationQuery(_sources);
-            }
-        }
-
-        public class PassThruValidationSource : IValidationSource
-        {
-            private readonly IEnumerable<IValidationRule> _rules;
-
-            public PassThruValidationSource(IEnumerable<IValidationRule> rules)
-            {
-                _rules = rules;
-            }
-
-            public IEnumerable<IValidationRule> RulesFor(Type type)
-            {
-                return _rules;
+                return new ValidationGraph(_fieldRegistry, _sources);
             }
         }
 
@@ -113,6 +100,48 @@ namespace FubuValidation.Tests
             public void Validate()
             {
             }
+        }
+    }
+
+    public class ConfiguredValidationSource : IValidationSource
+    {
+        private readonly Func<Type, bool> _predicate; 
+        private readonly IEnumerable<IValidationRule> _rules;
+
+        public ConfiguredValidationSource(IEnumerable<IValidationRule> rules)
+            : this(type => true, rules)
+        {
+        }
+
+        public ConfiguredValidationSource(Func<Type, bool> predicate, IEnumerable<IValidationRule> rules)
+        {
+            _predicate = predicate;
+            _rules = rules;
+        }
+
+        public IEnumerable<IValidationRule> RulesFor(Type type)
+        {
+            if(_predicate(type))
+            {
+                return _rules;
+            }
+
+            return new IValidationRule[0];
+        }
+
+        public static ConfiguredValidationSource For(params IValidationRule[] rules)
+        {
+            return new ConfiguredValidationSource(rules);
+        }
+
+        public static ConfiguredValidationSource For(Type type, params IValidationRule[] rules)
+        {
+            return new ConfiguredValidationSource(x => x == type, rules);
+        }
+
+        public static ConfiguredValidationSource For(Func<Type, bool> predicate, params IValidationRule[] rules)
+        {
+            return new ConfiguredValidationSource(predicate, rules);
         }
     }
 }

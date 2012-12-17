@@ -62,6 +62,7 @@
     <Compile Include="Fields\ClassFieldValidationRules.cs" />
     <Compile Include="Fields\CollectionLengthRule.cs" />
     <Compile Include="Fields\ContinuationFieldRule.cs" />
+    <Compile Include="Fields\FieldRuleSource.cs" />
     <Compile Include="Fields\FieldRulesRegistry.cs" />
     <Compile Include="Fields\FieldValidationAttribute.cs" />
     <Compile Include="Fields\FieldValidationRuleExtensions.cs" />
@@ -87,9 +88,11 @@
     <Compile Include="TemplateExtensions.cs" />
     <Compile Include="ValidationContext.cs" />
     <Compile Include="RequiredAttribute.cs" />
+    <Compile Include="ValidationGraph.cs" />
     <Compile Include="ValidationKeys.cs" />
     <Compile Include="ValidationAttribute.cs" />
-    <Compile Include="IValidationQuery.cs" />
+    <Compile Include="ValidationPlan.cs" />
+    <Compile Include="ValidationStep.cs" />
     <Compile Include="Validator.cs" />
     <Compile Include="ValidationRegistry.cs" />
   </ItemGroup>

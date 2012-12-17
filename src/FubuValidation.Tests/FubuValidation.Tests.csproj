@@ -97,9 +97,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ValidationContextTester.cs" />
-    <Compile Include="ValidationQueryTester.cs" />
+    <Compile Include="ValidationGraphTester.cs" />
+    <Compile Include="ValidationPlanTester.cs" />
     <Compile Include="ValidationRegistryTester.cs" />
     <Compile Include="ValidationScenario.cs" />
+    <Compile Include="ValidationStepTester.cs" />
     <Compile Include="ValidatorTester.cs" />
   </ItemGroup>
   <ItemGroup>

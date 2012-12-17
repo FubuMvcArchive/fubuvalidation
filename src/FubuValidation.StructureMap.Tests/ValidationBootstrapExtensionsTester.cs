@@ -51,7 +51,7 @@ namespace FubuValidation.StructureMap.Tests
         public void should_register_validation_query()
         {
             _container
-                .GetInstance<IValidationQuery>()
+                .GetInstance<ValidationGraph>()
                 .ShouldNotBeNull();
         }
 

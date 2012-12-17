@@ -16,8 +16,7 @@ namespace FubuValidation.Tests
         [SetUp]
         public void SetUp()
         {
-            var fieldRegistry = new FieldRulesRegistry(new[] { new AttributeFieldValidationSource() }, new TypeDescriptorCache());
-            _provider = new Validator(new TypeResolver(), new ValidationQuery(new IValidationSource[] { new FieldRuleSource(fieldRegistry) }), new InMemoryServiceLocator());
+            _provider = Validator.BasicValidator();
         }
 
         [Test]

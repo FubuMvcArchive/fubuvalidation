@@ -47,7 +47,11 @@ namespace FubuValidation
             return new ValidationGraph(FieldRulesRegistry.BasicRegistry(), new IValidationSource[0]);
         }
 
-        // Useful for testing
+        /// <summary>
+        /// Mostly used for testing. Sets up a ValidationGraph for a given source.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static ValidationGraph For(IValidationSource source)
         {
             return new ValidationGraph(FieldRulesRegistry.BasicRegistry(), new[] { source });

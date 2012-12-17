@@ -1,5 +1,4 @@
-﻿using System;
-using FubuCore.Reflection;
+﻿using FubuCore.Reflection;
 
 namespace FubuValidation.Fields
 {

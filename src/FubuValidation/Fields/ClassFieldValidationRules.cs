@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuCore.Util;
 
 namespace FubuValidation.Fields
 {
-    public class ClassFieldValidationRules : IValidationRule
+    public class ClassFieldValidationRules : IValidationRule, DescribesItself
     {
         private readonly Cache<Accessor, IList<IFieldValidationRule>> _rules =
             new Cache<Accessor, IList<IFieldValidationRule>>(a => new List<IFieldValidationRule>());
@@ -45,6 +46,13 @@ namespace FubuValidation.Fields
         public void ForRule<T>(Accessor accessor, Action<T> continuation) where T : IFieldValidationRule
         {
             _rules[accessor].OfType<T>().Each(continuation);
+        }
+
+        public void Describe(Description description)
+        {
+            var list = description.AddList("FieldRules", _rules.SelectMany(x => x));
+            list.Label = "Field Validation Rules";
+            list.IsOrderDependent = true;
         }
     }
 }

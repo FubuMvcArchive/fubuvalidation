@@ -3,7 +3,10 @@ using System.Diagnostics;
 using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
+using FubuCore.Reflection;
 using FubuTestingSupport;
+using FubuValidation.Fields;
+using FubuValidation.Tests.Models;
 using NUnit.Framework;
 using Rhino.Mocks;
 
@@ -29,7 +32,7 @@ namespace FubuValidation.Tests
         [SetUp]
         public void SetUp()
         {
-            theModel = new object();
+            theModel = new ContactModel();
             theType = theModel.GetType();
 
             r1 = MockRepository.GenerateStub<IValidationRule>();
@@ -63,6 +66,12 @@ namespace FubuValidation.Tests
 
             r1.AssertWasCalled(x => x.Validate(theContext));
             r2.AssertWasCalled(x => x.Validate(theContext));
+        }
+
+        [Test]
+        public void builds_up_the_field_rules()
+        {
+            thePlan.FieldRules.HasRule<RequiredFieldRule>(ReflectionHelper.GetAccessor<ContactModel>(x => x.FirstName)).ShouldBeTrue();
         }
     }
 

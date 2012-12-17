@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuValidation.Fields;
 
-namespace FubuValidation.Tests
+namespace FubuValidation
 {
     public class ValidationScenario<T>
     {
@@ -103,6 +103,9 @@ namespace FubuValidation.Tests
         }
     }
 
+    /// <summary>
+    /// Used for testing only
+    /// </summary>
     public class ConfiguredValidationSource : IValidationSource
     {
         private readonly Func<Type, bool> _predicate; 

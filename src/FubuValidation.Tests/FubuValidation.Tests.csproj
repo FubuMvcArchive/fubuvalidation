@@ -75,7 +75,7 @@
     <Compile Include="Fields\FieldValidationQueryTester.cs" />
     <Compile Include="Fields\LambdaFieldValidationSourceTester.cs" />
     <Compile Include="Fields\when_evaluating_the_collection_length_rule.cs" />
-    <Compile Include="Fields\when_validating_required_fields.cs" />
+    <Compile Include="Fields\RequiredFieldRuleTester.cs" />
     <Compile Include="IValidatedRuleSourceTester.cs" />
     <Compile Include="Models\CompositeModel.cs" />
     <Compile Include="Models\ContactModel.cs" />
@@ -100,7 +100,6 @@
     <Compile Include="ValidationGraphTester.cs" />
     <Compile Include="ValidationPlanTester.cs" />
     <Compile Include="ValidationRegistryTester.cs" />
-    <Compile Include="ValidationScenario.cs" />
     <Compile Include="ValidationStepTester.cs" />
     <Compile Include="ValidatorTester.cs" />
   </ItemGroup>

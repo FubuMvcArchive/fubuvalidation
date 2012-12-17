@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FubuCore;
+using FubuCore.Descriptions;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -25,6 +27,29 @@ namespace FubuValidation.Tests
                 IsValid = false
             }).MessagesFor<ValidatedClass>(x => x.Name)
                 .Single().StringToken.ShouldEqual(ValidationKeys.REQUIRED);
+        }
+    }
+
+    [TestFixture]
+    public class when_building_the_description_for_a_self_validating_class_rule
+    {
+        private Type theType;
+        private SelfValidatingClassRule theRule;
+        private Description theDescription;
+
+        [SetUp]
+        public void SetUp()
+        {
+            theType = typeof (ValidatedClass);
+            theRule = new SelfValidatingClassRule(theType);
+
+            theDescription = Description.For(theRule);
+        }
+
+        [Test]
+        public void sets_the_short_description()
+        {
+            theDescription.ShortDescription.ShouldEqual("Self Validating Rule: {0}.Validate".ToFormat(theType.Name));
         }
     }
 

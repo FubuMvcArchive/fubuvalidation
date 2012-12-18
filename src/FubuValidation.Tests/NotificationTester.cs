@@ -87,17 +87,17 @@ namespace FubuValidation.Tests
             error.field.ShouldBeEmpty();
         }
 
-		[Test]
-		public void to_validation_error_with_localization()
-		{
-			LocalizationManager.Stub();
+        [Test]
+        public void to_validation_error_with_localization()
+        {
+            LocalizationManager.Stub();
 
-			var notification = new Notification();
-			notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test1", "test1"));
-			
-			var errors = notification.ToValidationErrors();
-			errors.First().label.ShouldEqual("en-US_Something");
-		}
+            var notification = new Notification();
+            notification.RegisterMessage<EntityToValidate>(e => e.Something, StringToken.FromKeyString("test1", "test1"));
+
+            var errors = notification.ToValidationErrors();
+            errors.First().label.ShouldEqual("en-US_Something");
+        }
 
         [Test]
         public void to_validation_error_if_multiple_accessors_match_a_message()
@@ -126,13 +126,24 @@ namespace FubuValidation.Tests
             child.RegisterMessage<ContactModel>(x => x.FirstName, ValidationKeys.REQUIRED);
             child.RegisterMessage<ContactModel>(x => x.LastName, ValidationKeys.REQUIRED);
 
-            var notification = new Notification(typeof (CompositeModel));
+            var notification = new Notification(typeof(CompositeModel));
             var property = ReflectionHelper.GetAccessor<CompositeModel>(x => x.Contact);
 
             notification.AddChild(property, child);
 
             notification.MessagesFor<CompositeModel>(x => x.Contact.FirstName).Single().StringToken.ShouldEqual(ValidationKeys.REQUIRED);
             notification.MessagesFor<CompositeModel>(x => x.Contact.LastName).Single().StringToken.ShouldEqual(ValidationKeys.REQUIRED);
+        }
+
+        [Test]
+        public void registering_a_message_adds_the_default_field_template_value()
+        {
+            var accessor = ReflectionHelper.GetAccessor<EntityToValidate>(x => x.Something);
+            var notification = new Notification();
+            notification.RegisterMessage(accessor, new NotificationMessage(StringToken.FromKeyString("Test", "{field}")));
+
+            var message = notification.MessagesFor(accessor).Single();
+            message.GetMessage().ShouldEqual(LocalizationManager.GetText(accessor.InnerProperty));
         }
 
         #region Nested Type: EntityToValidate

@@ -17,7 +17,7 @@ namespace FubuValidation.Fields
             var enumerable = accessor.GetValue(context.Target) as System.Collections.IEnumerable;
             if (enumerable == null || enumerable.Count() != _length)
             {
-                context.Notification.RegisterMessage(accessor, ValidationKeys.COLLECTION_LENGTH).AddSubstitution(LENGTH, _length.ToString());
+                context.Notification.RegisterMessage(accessor, ValidationKeys.COLLECTION_LENGTH, TemplateValue.For(LENGTH, _length));
             }
         }
 

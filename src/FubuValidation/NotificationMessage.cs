@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using FubuCore;
 using FubuCore.Reflection;
 using FubuLocalization;
 
@@ -12,27 +10,16 @@ namespace FubuValidation
     public class NotificationMessage
     {
         private readonly List<Accessor> _accessors = new List<Accessor>();
-        private readonly Dictionary<string, string> _messageSubstitutions;
+        private readonly Template _template;
         private readonly Lazy<string> _message;
 
-        private NotificationMessage(StringToken stringToken, Dictionary<string, string> messageSubstitutions)
+        public NotificationMessage(StringToken stringToken, params TemplateValue[] values)
         {
-            _messageSubstitutions = messageSubstitutions;
             StringToken = stringToken;
-            _message = new Lazy<string>(() =>
-            {
-                var localizedMessage = StringToken.ToString();
-                return TemplateParser.Parse(localizedMessage, _messageSubstitutions);
-            });
+
+            _template = new Template(stringToken, values);
+            _message = new Lazy<string>(() => _template.Render());
         }
-
-        public NotificationMessage(StringToken stringToken) : this(stringToken, new Dictionary<string, string>())
-        {
-
-        }
-
-
-
 
 
         public StringToken StringToken { get; private set; }
@@ -54,7 +41,12 @@ namespace FubuValidation
 
         public NotificationMessage AddSubstitution(string key, string value)
         {
-            _messageSubstitutions.Fill(key, value);
+            return AddSubstitution(TemplateValue.For(key, value));
+        }
+
+        public NotificationMessage AddSubstitution(TemplateValue value)
+        {
+            _template.Values.Add(value);
             return this;
         }
 
@@ -62,8 +54,8 @@ namespace FubuValidation
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (NotificationMessage)) return false;
-            return Equals((NotificationMessage) obj);
+            if (obj.GetType() != typeof(NotificationMessage)) return false;
+            return Equals((NotificationMessage)obj);
         }
 
         public bool Equals(NotificationMessage other)
@@ -71,7 +63,7 @@ namespace FubuValidation
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
-            return Equals(other.StringToken, StringToken) && Accessors.IsEqualTo(other.Accessors);
+            return _template.Equals(other._template) && Accessors.IsEqualTo(other.Accessors);
         }
 
         public override int GetHashCode()
@@ -79,7 +71,7 @@ namespace FubuValidation
             unchecked
             {
                 var result = (Accessors != null ? Accessors.GetHashCode() : 0);
-                result = (result*397) ^ (GetMessage() != null ? GetMessage().GetHashCode() : 0);
+                result = (result * 397) ^ (GetMessage() != null ? GetMessage().GetHashCode() : 0);
                 return result;
             }
         }
@@ -92,7 +84,7 @@ namespace FubuValidation
         public NotificationMessage Prepend(Accessor accessor)
         {
             var prependedAccessors = _accessors.Select(x => x.Prepend(accessor)).ToList();
-            var message = new NotificationMessage(StringToken, _messageSubstitutions);
+            var message = new NotificationMessage(StringToken, _template.Values.ToArray());
             message._accessors.AddRange(prependedAccessors);
 
             return message;
@@ -106,7 +98,7 @@ namespace FubuValidation
                 return _accessors.Select(a => new ValidationError(a.Name, a.ToHeader(), message));
             }
 
-            return new ValidationError[]{new ValidationError(string.Empty, message)};
+            return new[] { new ValidationError(string.Empty, message) };
         }
     }
 }

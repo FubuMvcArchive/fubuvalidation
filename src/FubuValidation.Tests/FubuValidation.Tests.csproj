@@ -96,6 +96,7 @@
     <Compile Include="Fields\when_validating_maximum_length.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TemplateValueTester.cs" />
     <Compile Include="ValidationContextTester.cs" />
     <Compile Include="ValidationGraphTester.cs" />
     <Compile Include="ValidationPlanTester.cs" />

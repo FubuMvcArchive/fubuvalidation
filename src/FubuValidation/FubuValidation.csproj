@@ -86,8 +86,10 @@
     <Compile Include="Notification.cs" />
     <Compile Include="NotificationMessage.cs" />
     <Compile Include="TemplateExtensions.cs" />
+    <Compile Include="TemplateValue.cs" />
     <Compile Include="ValidationContext.cs" />
     <Compile Include="RequiredAttribute.cs" />
+    <Compile Include="ValidationError.cs" />
     <Compile Include="ValidationGraph.cs" />
     <Compile Include="ValidationKeys.cs" />
     <Compile Include="ValidationAttribute.cs" />

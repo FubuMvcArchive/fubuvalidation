@@ -42,6 +42,32 @@ namespace FubuValidation.Tests
             prepended.Accessors.Select(x => x.Name).ShouldHaveTheSameElementsAs("ContactFirstName", "ContactLastName");
             prepended.StringToken.ShouldEqual(ValidationKeys.REQUIRED);
         }
+
+        [Test]
+        public void equality_check()
+        {
+            var token = StringToken.FromKeyString("Test", "1...2...3");
+            var v1 = TemplateValue.For("FirstName", "Joel");
+            var v2 = TemplateValue.For("LastName", "Arnold");
+
+            var message1 = new NotificationMessage(token, v1, v2);
+            var message2 = new NotificationMessage(token, v1, v2);
+
+            message1.ShouldEqual(message2);
+        }
+
+        [Test]
+        public void equality_check_negative()
+        {
+            var token = StringToken.FromKeyString("Test", "1...2...3");
+            var v1 = TemplateValue.For("FirstName", "Joel");
+            var v2 = TemplateValue.For("LastName", "Arnold");
+
+            var message1 = new NotificationMessage(token, v1, v2);
+            var message2 = new NotificationMessage(token, v1);
+
+            message1.ShouldNotEqual(message2);
+        }
     }
 
 

@@ -22,8 +22,7 @@ namespace FubuValidation.Fields
             var rawValue = accessor.GetValue(context.Target);
             if (rawValue != null && rawValue.ToString().Length > Length)
             {
-                context.Notification.RegisterMessage(accessor, ValidationKeys.MAX_LENGTH)
-                    .AddSubstitution(LENGTH, _length.ToString());
+                context.Notification.RegisterMessage(accessor, ValidationKeys.MAX_LENGTH, TemplateValue.For(LENGTH, _length));
             }
         }
 

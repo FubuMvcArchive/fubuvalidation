@@ -3,68 +3,16 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using FubuCore.Reflection;
-using FubuCore.Util;
 using FubuLocalization;
 using System.Linq;
 
 namespace FubuValidation
 {
-    public class ValidationError
-    {
-        public ValidationError()
-        {
-        }
-
-        public ValidationError(string field, string message)
-			: this(field, field, message)
-        {
-            
-        }
-
-		public ValidationError(string field, string label, string message)
-		{
-			this.field = field;
-			this.label = label;
-			this.message = message;
-		}
-
-        public string field { get; set; }
-        public string message { get; set; }
-    	public string label { get; set; }
-
-    	public bool Equals(ValidationError other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Equals(other.field, field) && Equals(other.message, message);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (ValidationError)) return false;
-            return Equals((ValidationError) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return ((field != null ? field.GetHashCode() : 0)*397) ^ (message != null ? message.GetHashCode() : 0);
-            }
-        }
-
-        public override string ToString()
-        {
-            return string.Format("field: {0}, message: {1}", field, message);
-        }
-    }
-
     [Serializable]
     public class Notification
     {
         private readonly IList<NotificationMessage> _messages = new List<NotificationMessage>();
+        public const string FIELD = "field";
 
         public Notification()
         {
@@ -88,27 +36,29 @@ namespace FubuValidation
             get { return _messages; }
         }
 
-        public NotificationMessage RegisterMessage<T>(Expression<Func<T, object>> property, StringToken message)
+        public NotificationMessage RegisterMessage<T>(Expression<Func<T, object>> property, StringToken message, params TemplateValue[] values)
         {
-            return RegisterMessage(property.ToAccessor(), message);
+            return RegisterMessage(property.ToAccessor(), message, values);
         }
 
-        public NotificationMessage RegisterMessage(Accessor accessor, StringToken notificationMessage)
+        public NotificationMessage RegisterMessage(Accessor accessor, StringToken notificationMessage, params TemplateValue[] values)
         {
-            var message = new NotificationMessage(notificationMessage);
+            var message = new NotificationMessage(notificationMessage, values);
             RegisterMessage(accessor, message);
 
             return message;
         }
 
-        public NotificationMessage RegisterMessage(PropertyInfo property, StringToken notificationMessage)
+        public NotificationMessage RegisterMessage(PropertyInfo property, StringToken notificationMessage, params TemplateValue[] values)
         {
-            return RegisterMessage(new SingleProperty(property), notificationMessage);
+            return RegisterMessage(new SingleProperty(property), notificationMessage, values);
         }
 
         public void RegisterMessage(Accessor accessor, NotificationMessage notificationMessage)
         {
             notificationMessage.AddAccessor(accessor);
+            notificationMessage.AddSubstitution(TemplateValue.For(FIELD, LocalizationManager.GetText(accessor.InnerProperty)));
+            
             _messages.Fill(notificationMessage);
         }
 

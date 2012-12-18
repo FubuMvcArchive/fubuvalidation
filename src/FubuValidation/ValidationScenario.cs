@@ -44,7 +44,6 @@ namespace FubuValidation
 
                 var fieldSource = new PassThruFieldValidationSource(_fieldRules);
                 _fieldRegistry = new FieldRulesRegistry(new IFieldValidationSource[] { fieldSource }, new TypeDescriptorCache());
-                _sources.Add(new FieldRuleSource(_fieldRegistry));
             }
 
             public T Model { get; set; }

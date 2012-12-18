@@ -42,8 +42,8 @@ namespace FubuValidation.Tests.Fields
         public void registers_message_if_string_value_is_empty()
         {
             theTarget.Address1 = "";
-            theNotification.MessagesFor<AddressModel>(x => x.Address1).Single().StringToken.ShouldEqual(
-                    ValidationKeys.REQUIRED);
+            var messages = theNotification.MessagesFor<AddressModel>(x => x.Address1);
+            messages.Single().StringToken.ShouldEqual(ValidationKeys.REQUIRED);
         }
 
         [Test]

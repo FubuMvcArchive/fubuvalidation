@@ -10,7 +10,7 @@ namespace FubuValidation.Fields
 
             if (rawValue == null || string.Empty.Equals(rawValue))
             {
-                context.Notification.RegisterMessage(accessor, ValidationKeys.REQUIRED);
+                context.Notification.RegisterMessage(accessor, ValidationKeys.Required);
             }
         }
 

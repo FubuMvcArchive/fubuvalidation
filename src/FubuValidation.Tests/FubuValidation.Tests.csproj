@@ -74,6 +74,7 @@
     <Compile Include="Fields\FieldAccessRuleRegistryTester.cs" />
     <Compile Include="Fields\FieldValidationQueryTester.cs" />
     <Compile Include="Fields\LambdaFieldValidationSourceTester.cs" />
+    <Compile Include="Fields\MinimumLengthRuleTester.cs" />
     <Compile Include="Fields\when_evaluating_the_collection_length_rule.cs" />
     <Compile Include="Fields\RequiredFieldRuleTester.cs" />
     <Compile Include="IValidatedRuleSourceTester.cs" />
@@ -93,7 +94,7 @@
     <Compile Include="Fields\when_evaluating_greater_than_zero_rule.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Fields\when_validating_maximum_length.cs">
+    <Compile Include="Fields\MaximumLengthRuleTester.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TemplateValueTester.cs" />

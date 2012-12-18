@@ -90,7 +90,7 @@ namespace FubuValidation
         public static Notification Invalid()
         {
             var notification = new Notification();
-            notification.RegisterMessage(ValidationKeys.REQUIRED);
+            notification.RegisterMessage(ValidationKeys.Required);
 
             return notification;
         }

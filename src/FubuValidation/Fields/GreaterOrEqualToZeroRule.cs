@@ -13,7 +13,7 @@ namespace FubuValidation.Fields
                 var value = Convert.ToDouble(rawValue);
                 if (value < 0)
                 {
-                    context.Notification.RegisterMessage(accessor, ValidationKeys.GREATER_OR_EQUAL_TO_ZERO);
+                    context.Notification.RegisterMessage(accessor, ValidationKeys.GreaterThanOrEqualToZero);
                 }
             }
         }

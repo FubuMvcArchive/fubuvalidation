@@ -123,16 +123,16 @@ namespace FubuValidation.Tests
         public void add_child()
         {
             var child = new Notification();
-            child.RegisterMessage<ContactModel>(x => x.FirstName, ValidationKeys.REQUIRED);
-            child.RegisterMessage<ContactModel>(x => x.LastName, ValidationKeys.REQUIRED);
+            child.RegisterMessage<ContactModel>(x => x.FirstName, ValidationKeys.Required);
+            child.RegisterMessage<ContactModel>(x => x.LastName, ValidationKeys.Required);
 
             var notification = new Notification(typeof(CompositeModel));
             var property = ReflectionHelper.GetAccessor<CompositeModel>(x => x.Contact);
 
             notification.AddChild(property, child);
 
-            notification.MessagesFor<CompositeModel>(x => x.Contact.FirstName).Single().StringToken.ShouldEqual(ValidationKeys.REQUIRED);
-            notification.MessagesFor<CompositeModel>(x => x.Contact.LastName).Single().StringToken.ShouldEqual(ValidationKeys.REQUIRED);
+            notification.MessagesFor<CompositeModel>(x => x.Contact.FirstName).Single().StringToken.ShouldEqual(ValidationKeys.Required);
+            notification.MessagesFor<CompositeModel>(x => x.Contact.LastName).Single().StringToken.ShouldEqual(ValidationKeys.Required);
         }
 
         [Test]

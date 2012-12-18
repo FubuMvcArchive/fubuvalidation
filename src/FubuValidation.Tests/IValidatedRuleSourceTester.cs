@@ -26,7 +26,7 @@ namespace FubuValidation.Tests
             {
                 IsValid = false
             }).MessagesFor<ValidatedClass>(x => x.Name)
-                .Single().StringToken.ShouldEqual(ValidationKeys.REQUIRED);
+                .Single().StringToken.ShouldEqual(ValidationKeys.Required);
         }
     }
 
@@ -59,7 +59,7 @@ namespace FubuValidation.Tests
         {
             if (!IsValid)
             {
-                context.Notification.RegisterMessage<ValidatedClass>(x => x.Name, ValidationKeys.REQUIRED);
+                context.Notification.RegisterMessage<ValidatedClass>(x => x.Name, ValidationKeys.Required);
             }
         }
 

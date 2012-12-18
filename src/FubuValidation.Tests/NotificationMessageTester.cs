@@ -30,7 +30,7 @@ namespace FubuValidation.Tests
         [Test]
         public void prepend_property()
         {
-            var message = new NotificationMessage(ValidationKeys.REQUIRED);
+            var message = new NotificationMessage(ValidationKeys.Required);
             message.AddAccessor(ReflectionHelper.GetAccessor<ContactModel>(x => x.FirstName));
             message.AddAccessor(ReflectionHelper.GetAccessor<ContactModel>(x => x.LastName));
 
@@ -40,7 +40,7 @@ namespace FubuValidation.Tests
 
             prepended.ShouldNotBeTheSameAs(message);
             prepended.Accessors.Select(x => x.Name).ShouldHaveTheSameElementsAs("ContactFirstName", "ContactLastName");
-            prepended.StringToken.ShouldEqual(ValidationKeys.REQUIRED);
+            prepended.StringToken.ShouldEqual(ValidationKeys.Required);
         }
 
         [Test]

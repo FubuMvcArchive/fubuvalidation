@@ -1,13 +1,13 @@
-﻿using FubuCore.Reflection;
+using FubuCore.Reflection;
 
 namespace FubuValidation.Fields
 {
-    public class MaximumLengthRule : IFieldValidationRule
+    public class MinimumLengthRule : IFieldValidationRule
     {
         public static readonly string LENGTH = "length";
         private readonly int _length;
 
-        public MaximumLengthRule(int length)
+        public MinimumLengthRule(int length)
         {
             _length = length;
         }
@@ -19,14 +19,14 @@ namespace FubuValidation.Fields
 
         public void Validate(Accessor accessor, ValidationContext context)
         {
-            var rawValue = accessor.GetValue(context.Target);
-            if (rawValue != null && rawValue.ToString().Length > Length)
+            var value = context.GetFieldValue<string>(accessor);
+            if (value != null && value.Length < Length)
             {
-                context.Notification.RegisterMessage(accessor, ValidationKeys.MaxLength, TemplateValue.For(LENGTH, _length));
+                context.Notification.RegisterMessage(accessor, ValidationKeys.MinLength, TemplateValue.For(LENGTH, _length));
             }
         }
 
-        public bool Equals(MaximumLengthRule other)
+        public bool Equals(MinimumLengthRule other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -37,8 +37,8 @@ namespace FubuValidation.Fields
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (MaximumLengthRule)) return false;
-            return Equals((MaximumLengthRule) obj);
+            if (obj.GetType() != typeof(MinimumLengthRule)) return false;
+            return Equals((MinimumLengthRule)obj);
         }
 
         public override int GetHashCode()

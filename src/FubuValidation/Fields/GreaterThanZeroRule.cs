@@ -13,7 +13,7 @@ namespace FubuValidation.Fields
             var value = Convert.ToDecimal(rawValue);
             if (value <= 0)
             {
-                context.Notification.RegisterMessage(accessor, ValidationKeys.GREATER_THAN_ZERO);
+                context.Notification.RegisterMessage(accessor, ValidationKeys.GreaterThanZero);
             }
         }
 

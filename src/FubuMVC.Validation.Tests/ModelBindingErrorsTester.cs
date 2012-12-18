@@ -23,8 +23,8 @@ namespace FubuMVC.Validation.Tests
 
             ClassUnderTest.AddAnyErrors<ValidationTarget>(notification);
 
-            notification.MessagesFor<ValidationTarget>(x => x.Number).Single().StringToken.ShouldEqual(ValidationKeys.INVALID_FORMAT);
-            notification.MessagesFor<ValidationTarget>(x => x.Time).Single().StringToken.ShouldEqual(ValidationKeys.INVALID_FORMAT);
+            notification.MessagesFor<ValidationTarget>(x => x.Number).Single().StringToken.ShouldEqual(ValidationKeys.InvalidFormat);
+            notification.MessagesFor<ValidationTarget>(x => x.Time).Single().StringToken.ShouldEqual(ValidationKeys.InvalidFormat);
             
             notification.MessagesFor<ValidationTarget>(x => x.Other)
                 .Any().ShouldBeFalse();

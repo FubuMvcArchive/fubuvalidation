@@ -23,7 +23,7 @@ namespace FubuMVC.Validation
             var problems = _request.ProblemsFor<T>();
             problems.Each(problem =>
             {
-                notification.RegisterMessage(problem.Property, ValidationKeys.INVALID_FORMAT);
+                notification.RegisterMessage(problem.Property, ValidationKeys.InvalidFormat);
             });
         }
     }

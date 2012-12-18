@@ -63,6 +63,8 @@ namespace FubuValidation
         public T GetFieldValue<T>(Accessor accessor)
         {
             var rawValue = accessor.GetValue(_target);
+            
+            if (rawValue == null) return default(T);
             if (rawValue.GetType() == typeof (T)) return (T) rawValue;
 
             var converter = TypeDescriptor.GetConverter(typeof (T));

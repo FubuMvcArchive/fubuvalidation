@@ -43,14 +43,14 @@ namespace FubuValidation.Tests.Fields
         {
             theTarget.Address1 = "";
             var messages = theNotification.MessagesFor<AddressModel>(x => x.Address1);
-            messages.Single().StringToken.ShouldEqual(ValidationKeys.REQUIRED);
+            messages.Single().StringToken.ShouldEqual(ValidationKeys.Required);
         }
 
         [Test]
         public void registers_message_if_value_is_null()
         {
             theTarget.Address1 = null;
-            theNotification.MessagesFor<AddressModel>(x => x.Address1).Single().StringToken.ShouldEqual(ValidationKeys.REQUIRED);
+            theNotification.MessagesFor<AddressModel>(x => x.Address1).Single().StringToken.ShouldEqual(ValidationKeys.Required);
         }
     }
 }

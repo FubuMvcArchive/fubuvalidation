@@ -70,7 +70,7 @@ namespace FubuValidation.Tests
                 
                 if (userService.ExistsByUsername(username))
                 {
-                    var token = new ValidationKeys("UNIQUE_USER", "Username {0} is already in use.".ToFormat(FIELD.AsTemplateField()));
+                    var token = new ValidationKeys("Username {0} is already in use.".ToFormat(FIELD.AsTemplateField()));
                     var msg = new NotificationMessage(token);
                     msg.AddSubstitution(FIELD, username);
 

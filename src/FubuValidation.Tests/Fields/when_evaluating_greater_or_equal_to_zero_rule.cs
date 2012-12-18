@@ -26,7 +26,7 @@ namespace FubuValidation.Tests.Fields
             theModel.GreaterOrEqualToZero = -1;
             theRule.ValidateProperty(theModel, x => x.GreaterOrEqualToZero)
                 .MessagesFor<SimpleModel>(x => x.GreaterOrEqualToZero).Select(x => x.StringToken)
-                .ShouldHaveTheSameElementsAs(ValidationKeys.GREATER_OR_EQUAL_TO_ZERO);
+                .ShouldHaveTheSameElementsAs(ValidationKeys.GreaterThanOrEqualToZero);
         }
 
         [Test]

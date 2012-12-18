@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Reflection;
 using FubuValidation.Fields;
 
 namespace FubuValidation
 {
-    public class MaximumStringLengthAttribute : FieldValidationAttribute
+    public class MinimumStringLengthAttribute : FieldValidationAttribute
     {
         private readonly int _length;
 
-        public MaximumStringLengthAttribute(int length)
+        public MinimumStringLengthAttribute(int length)
         {
             _length = length;
         }
@@ -20,7 +20,7 @@ namespace FubuValidation
 
         public override IEnumerable<IFieldValidationRule> RulesFor(PropertyInfo property)
         {
-            yield return new MaximumLengthRule(_length);
+            yield return new MinimumLengthRule(_length);
         }
     }
 }

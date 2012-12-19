@@ -1,3 +1,4 @@
+using Bottles;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
@@ -13,6 +14,7 @@ namespace FubuMVC.Validation
         {
             registry.Services<FubuValidationServiceRegistry>();
             registry.Services<FubuMvcValidationServices>();
+            registry.Actions.IncludeType<ValidateFieldEndpoint>();
 
             registry.Policies.Add<ValidationConvention>();
         }
@@ -25,7 +27,11 @@ namespace FubuMVC.Validation
             SetServiceIfNone<IAjaxContinuationResolver, AjaxContinuationResolver>();
             SetServiceIfNone<IModelBindingErrors, ModelBindingErrors>();
             SetServiceIfNone<IAjaxValidationFailureHandler, AjaxValidationFailureHandler>();
+            SetServiceIfNone<IValidationTargetResolver, ValidationTargetResolver>();
+            SetServiceIfNone<IRuleRunner, RuleRunner>();
             SetServiceIfNone(typeof(IValidationFilter<>), typeof(ValidationFilter<>));
+
+            AddService<IActivator, RemoteRuleGraphActivator>();
         }
     }
 

@@ -137,9 +137,12 @@
     <Compile Include="HasInputTypeTester.cs" />
     <Compile Include="ModelBindingErrorsTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoteRuleGraphActivatorTester.cs" />
     <Compile Include="Remote\RemoteFieldRuleTester.cs" />
     <Compile Include="Remote\RemoteRuleGraphTester.cs" />
+    <Compile Include="Remote\RuleRunnerTester.cs" />
     <Compile Include="Remote\ValidateFieldEndpointTester.cs" />
+    <Compile Include="Remote\ValidationTargetResolverTester.cs" />
     <Compile Include="SampleInputModel.cs" />
     <Compile Include="AjaxValidationTester.cs" />
     <Compile Include="ValidationActionFilterTester.cs" />

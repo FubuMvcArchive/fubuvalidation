@@ -58,12 +58,12 @@ namespace FubuMVC.Validation.IntegrationTesting.Ajax
 
             errors.ShouldHaveCount(1);
             errors.Any(x => x.field == ReflectionHelper.GetAccessor<AjaxRequest>(r => r.Name).Name).ShouldBeTrue();
-        }
+        }  
+    }
 
-        public class JsonResponse
-        {
-            public bool success { get; set; }
-            public AjaxError[] errors { get; set; }
-        }
+    public class JsonResponse
+    {
+        public bool success { get; set; }
+        public AjaxError[] errors { get; set; }
     }
 }

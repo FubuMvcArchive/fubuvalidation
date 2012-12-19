@@ -28,13 +28,20 @@ namespace FubuValidation
         public void Validate(object target, Notification notification)
         {
             var validatedType = _typeResolver.ResolveType(target);
-            var context = new ValidationContext(this, notification, target) {
+            var context = ContextFor(target, notification);
+
+            _graph.PlanFor(validatedType).Execute(context);
+        }
+
+        public ValidationContext ContextFor(object target, Notification notification)
+        {
+            var validatedType = _typeResolver.ResolveType(target);
+            return new ValidationContext(this, notification, target)
+            {
                 TargetType = validatedType,
                 Resolver = _typeResolver,
                 ServiceLocator = _services
             };
-
-            _graph.PlanFor(validatedType).Execute(context);
         }
 
         public static IValidator BasicValidator()

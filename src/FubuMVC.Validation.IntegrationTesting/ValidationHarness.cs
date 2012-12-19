@@ -14,5 +14,10 @@ namespace FubuMVC.Validation.IntegrationTesting
         }
 
         public IUrlRegistry Urls { get { return theContainer.GetInstance<IUrlRegistry>(); } }
+
+        public T Get<T>()
+        {
+            return theContainer.GetInstance<T>();
+        }
     }
 }

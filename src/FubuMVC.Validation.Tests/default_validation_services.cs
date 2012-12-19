@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Registration;
+﻿using Bottles;
+using FubuMVC.Core.Registration;
 using FubuMVC.Validation.Remote;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -61,6 +62,24 @@ namespace FubuMVC.Validation.Tests
                 .DefaultServiceFor<RemoteRuleGraph>()
                 .IsSingleton
                 .ShouldBeTrue();
+        }
+
+        [Test]
+        public void registers_the_default_validation_target_resolver()
+        {
+            theDefaultServiceIs<IValidationTargetResolver, ValidationTargetResolver>();
+        }
+
+        [Test]
+        public void registers_the_default_rule_runner()
+        {
+            theDefaultServiceIs<IRuleRunner, RuleRunner>();
+        }
+
+        [Test]
+        public void registers_the_remote_rule_graph_activator()
+        {
+            theBehaviorGraph.Services.ServicesFor<IActivator>().ShouldContain(def => def.Type == typeof(RemoteRuleGraphActivator));
         }
     }
 }

@@ -4,5 +4,7 @@ namespace FubuValidation
     {
         Notification Validate(object target);
         void Validate(object target, Notification notification);
+
+        ValidationContext ContextFor(object target, Notification notification);
     }
 }

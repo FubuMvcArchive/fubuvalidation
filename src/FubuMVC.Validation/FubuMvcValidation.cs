@@ -1,6 +1,7 @@
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Validation.Remote;
 using FubuValidation;
 using FubuValidation.Fields;
 
@@ -37,6 +38,7 @@ namespace FubuMVC.Validation
 
             setSingleton<ValidationGraph, ValidationGraph>();
             setSingleton<IFieldRulesRegistry, FieldRulesRegistry>();
+            setSingleton<RemoteRuleGraph, RemoteRuleGraph>();
         }
 
         private void setSingleton<TPlugin, TConcrete>()

@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core.Registration;
+using FubuMVC.Validation.Remote;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -50,6 +51,16 @@ namespace FubuMVC.Validation.Tests
                 .DefaultServiceFor(typeof (IValidationFilter<>))
                 .Type
                 .ShouldEqual(typeof (ValidationFilter<>));
+        }
+
+        [Test]
+        public void registers_the_remote_rule_graph_as_singleton()
+        {
+            theBehaviorGraph
+                .Services
+                .DefaultServiceFor<RemoteRuleGraph>()
+                .IsSingleton
+                .ShouldBeTrue();
         }
     }
 }

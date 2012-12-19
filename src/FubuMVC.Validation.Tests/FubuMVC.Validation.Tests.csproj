@@ -132,11 +132,14 @@
     <Compile Include="AjaxValidationFailureHandlerTester.cs" />
     <Compile Include="AssemblyNeedsTheFubuModuleAttribute.cs" />
     <Compile Include="CompositeChainFilterTester.cs" />
-    <Compile Include="FubuValidationEngineTester.cs" />
+    <Compile Include="default_validation_services.cs" />
     <Compile Include="FubuValidationServiceRegistryTester.cs" />
     <Compile Include="HasInputTypeTester.cs" />
     <Compile Include="ModelBindingErrorsTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Remote\RemoteFieldRuleTester.cs" />
+    <Compile Include="Remote\RemoteRuleGraphTester.cs" />
+    <Compile Include="Remote\ValidateFieldEndpointTester.cs" />
     <Compile Include="SampleInputModel.cs" />
     <Compile Include="AjaxValidationTester.cs" />
     <Compile Include="ValidationActionFilterTester.cs" />

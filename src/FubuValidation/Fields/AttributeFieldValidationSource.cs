@@ -18,5 +18,10 @@ namespace FubuValidation.Fields
         {
             
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is AttributeFieldValidationSource;
+        }
     }
 }

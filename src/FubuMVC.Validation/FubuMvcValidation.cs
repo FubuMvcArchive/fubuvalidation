@@ -1,4 +1,8 @@
+using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Registration;
+using FubuValidation;
+using FubuValidation.Fields;
 
 namespace FubuMVC.Validation
 {
@@ -6,15 +10,39 @@ namespace FubuMVC.Validation
     {
         void IFubuRegistryExtension.Configure(FubuRegistry registry)
         {
-            registry.Services(x =>
-            {
-                x.SetServiceIfNone<IAjaxContinuationResolver, AjaxContinuationResolver>();
-                x.SetServiceIfNone<IModelBindingErrors, ModelBindingErrors>();
-                x.SetServiceIfNone<IAjaxValidationFailureHandler, AjaxValidationFailureHandler>();
-                x.SetServiceIfNone(typeof (IValidationFilter<>), typeof (ValidationFilter<>));
-            });
+            registry.Services<FubuValidationServiceRegistry>();
+            registry.Services<FubuMvcValidationServices>();
 
             registry.Policies.Add<ValidationConvention>();
+        }
+    }
+
+    public class FubuMvcValidationServices : ServiceRegistry
+    {
+        public FubuMvcValidationServices()
+        {
+            SetServiceIfNone<IAjaxContinuationResolver, AjaxContinuationResolver>();
+            SetServiceIfNone<IModelBindingErrors, ModelBindingErrors>();
+            SetServiceIfNone<IAjaxValidationFailureHandler, AjaxValidationFailureHandler>();
+            SetServiceIfNone(typeof(IValidationFilter<>), typeof(ValidationFilter<>));
+        }
+    }
+
+    public class FubuValidationServiceRegistry : ServiceRegistry
+    {
+        public FubuValidationServiceRegistry()
+        {
+            SetServiceIfNone<ITypeResolver, TypeResolver>();
+            SetServiceIfNone<IValidator, Validator>();
+
+            setSingleton<ValidationGraph, ValidationGraph>();
+            setSingleton<IFieldRulesRegistry, FieldRulesRegistry>();
+        }
+
+        private void setSingleton<TPlugin, TConcrete>()
+        {
+            var def = SetServiceIfNone(typeof(TPlugin), typeof(TConcrete));
+            def.IsSingleton = true;
         }
     }
 }

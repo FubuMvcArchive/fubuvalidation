@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Web.Routing;
 using Bottles;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
-using FubuValidation.StructureMap;
 using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.HelloValidation
@@ -39,8 +37,6 @@ namespace FubuMVC.HelloValidation
                          x.TheCallingAssembly();
                          x.WithDefaultConventions();
                      });
-
-            this.FubuValidation();
         }
     }
 }

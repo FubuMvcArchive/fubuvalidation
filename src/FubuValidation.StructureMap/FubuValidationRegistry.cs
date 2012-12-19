@@ -14,8 +14,9 @@ namespace FubuValidation.StructureMap
             For<IValidationSource>().Add<FieldRuleSource>();
 
             ForSingletonOf<ITypeDescriptorCache>().Use<TypeDescriptorCache>();
-            ForSingletonOf<IFieldRulesRegistry>().Add<FieldRulesRegistry>();
+
             ForSingletonOf<ValidationGraph>();
+            ForSingletonOf<IFieldRulesRegistry>().Add<FieldRulesRegistry>();
             ForSingletonOf<IFieldValidationQuery>().Use<FieldValidationQuery>();
 
             For<IFieldValidationSource>().Add<AttributeFieldValidationSource>();

@@ -9,17 +9,23 @@ namespace FubuValidation.Fields
 {
     public class FieldRulesRegistry : IFieldRulesRegistry
     {
-        private readonly IList<IFieldValidationSource> _sources;
-        private readonly ITypeDescriptorCache _typeDescriptors;
+        private readonly IList<IFieldValidationSource> _sources = new List<IFieldValidationSource>();
+        private readonly ITypeDescriptorCache _properties;
 
-        private readonly Cache<Type, ClassFieldValidationRules> _typeRules =
-            new Cache<Type, ClassFieldValidationRules>();
+        private readonly Cache<Type, ClassFieldValidationRules> _typeRules = new Cache<Type, ClassFieldValidationRules>();
 
-        public FieldRulesRegistry(IEnumerable<IFieldValidationSource> sources, ITypeDescriptorCache typeDescriptors)
+        private FieldRulesRegistry(ITypeDescriptorCache properties)
         {
-            _sources = new List<IFieldValidationSource>(sources);
+            _properties = properties;
+            _typeRules.OnMissing = findRules;
+        }
 
-            _typeDescriptors = typeDescriptors;
+        public FieldRulesRegistry(IEnumerable<IFieldValidationSource> sources, ITypeDescriptorCache properties)
+        {
+            _sources.Fill(new AttributeFieldValidationSource());
+            _sources.Fill(sources);
+
+            _properties = properties;
             _typeRules.OnMissing = findRules;
         }
 
@@ -27,7 +33,7 @@ namespace FubuValidation.Fields
         {
             var classRules = new ClassFieldValidationRules();
 
-            _typeDescriptors.ForEachProperty(type, property =>
+            _properties.ForEachProperty(type, property =>
             {
                 var accessor = new SingleProperty(property);
                 var rules = _sources.SelectMany(x => x.RulesFor(property)).Distinct();
@@ -81,7 +87,20 @@ namespace FubuValidation.Fields
 
         public static FieldRulesRegistry BasicRegistry()
         {
-            return new FieldRulesRegistry(new IFieldValidationSource[] { new AttributeFieldValidationSource() }, new TypeDescriptorCache());
+            return new FieldRulesRegistry(new IFieldValidationSource[0], new TypeDescriptorCache());
+        }
+
+        /// <summary>
+        /// Mostly used for testing to avoid the default setup and start with an empty slate.
+        /// </summary>
+        /// <param name="sources"></param>
+        /// <returns></returns>
+        public static FieldRulesRegistry Explicit(IEnumerable<IFieldValidationSource> sources)
+        {
+            var registry = new FieldRulesRegistry(new TypeDescriptorCache());
+            registry._sources.Fill(sources);
+
+            return registry;
         }
     }
 }

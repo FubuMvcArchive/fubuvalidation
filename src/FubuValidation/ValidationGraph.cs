@@ -9,10 +9,12 @@ namespace FubuValidation
     {
         private readonly IList<IValidationSource> _sources = new List<IValidationSource>();
         private readonly IFieldValidationQuery _fieldQuery;
+        private readonly IFieldRulesRegistry _fieldRegistry;
         private readonly Cache<Type, ValidationPlan> _plans; 
 
         public ValidationGraph(IFieldRulesRegistry fieldRegistry, IEnumerable<IValidationSource> sources)
         {
+            _fieldRegistry = fieldRegistry;
             _fieldQuery = new FieldValidationQuery(fieldRegistry);
 
             _sources.Fill(new FieldRuleSource(fieldRegistry));
@@ -27,9 +29,14 @@ namespace FubuValidation
             get { return _sources; }
         }
 
-        public IFieldValidationQuery Fields
+        public IFieldRulesRegistry Fields
         {
-            get { return _fieldQuery; }
+            get { return _fieldRegistry; }
+        }
+
+        public IFieldValidationQuery Query()
+        {
+            return _fieldQuery;
         }
 
         public void RegisterSource(IValidationSource source)

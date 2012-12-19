@@ -34,25 +34,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
-      <HintPath>..\packages\Bottles.1.0.0.429\lib\Bottles.dll</HintPath>
+      <HintPath>..\packages\Bottles.1.0.0.440\lib\Bottles.dll</HintPath>
     </Reference>
     <Reference Include="FubuCore">
-      <HintPath>..\packages\FubuCore.1.0.0.218\lib\FubuCore.dll</HintPath>
+      <HintPath>..\packages\FubuCore.1.0.0.225\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
-      <HintPath>..\packages\FubuLocalization.0.9.5.116\lib\FubuLocalization.dll</HintPath>
+      <HintPath>..\packages\FubuLocalization.0.9.5.124\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.Core.0.9.9.1334\lib\net40\FubuMVC.Core.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.0.9.9.1353\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core.UI">
-      <HintPath>..\packages\FubuMVC.Core.UI.0.9.9.94\lib\net40\FubuMVC.Core.UI.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.UI.0.9.9.103\lib\net40\FubuMVC.Core.UI.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core.View">
-      <HintPath>..\packages\FubuMVC.Core.View.0.9.9.85\lib\net40\FubuMVC.Core.View.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.View.0.9.9.97\lib\net40\FubuMVC.Core.View.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
-      <HintPath>..\packages\HtmlTags.1.2.0.138\lib\4.0\HtmlTags.dll</HintPath>
+      <HintPath>..\packages\HtmlTags.1.2.0.144\lib\4.0\HtmlTags.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />

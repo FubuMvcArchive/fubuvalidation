@@ -93,6 +93,35 @@
         }
     };
 
+    function RemoteRule(url, hash) {
+        this.url = url;
+        this.hash = hash;
+    }
+
+    RemoteRule.prototype = {
+        validate: function (context) {
+            var target = context.target;
+            var hash = this.hash;
+
+            $.ajax({
+                url: this.url,
+                data: { Hash: hash, Value: target.value() },
+                asynx: false,
+                acceptType: 'application/json',
+                success: function (continuation) {
+                    if (!continuation.errors) {
+                        continuation.errors = [];
+                    }
+
+                    if (continuation.errors.length == 0) return;
+                    // TODO -- FINISH THIS
+                    var token = new StringToken(hash, continuation.errors[0].message);
+                    context.registerMessage(token);
+                }
+            });
+        }
+    };
+
     defineLambda('Required', function (context) {
         var value = context.target.value();
         if (value.length == 0) {
@@ -129,6 +158,7 @@
     define('RangeLength', RangeLengthRule);
     define('Min', MinRule);
     define('Max', MaxRule);
+    define('Remote', RemoteRule);
 
     $.extend(true, $, {
         'fubuvalidation': {

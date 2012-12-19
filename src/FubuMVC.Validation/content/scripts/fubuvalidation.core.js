@@ -258,6 +258,22 @@
             });
         }
     });
+    defineSource('Remote', {
+        rulesFor: function (target) {
+            var value = target.element.data('remoteRule');
+            if (typeof (value) == 'undefined') {
+                return [];
+            }
+
+            var rules = [];
+
+            _.each(value.rules, function (hash) {
+                rules.push(new validation.Rules.Remote(value.url, hash));
+            });
+
+            return rules;
+        }
+    });
 
     $.extend(true, validation, {
         'Core': {

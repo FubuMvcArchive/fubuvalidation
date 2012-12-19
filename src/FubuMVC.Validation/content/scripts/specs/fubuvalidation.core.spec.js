@@ -453,6 +453,47 @@ describe('MaxSourceTester', function () {
     });
 });
 
+describe('RemoteSourceTester', function () {
+    var theSource = null;
+    var ruleFor = null;
+    var rulesFor = null;
+
+    beforeEach(function () {
+        theSource = $.fubuvalidation.Sources.Remote;
+
+        rulesFor = function (element) {
+            var target = $.fubuvalidation.Core.Target.forElement(element);
+            return theSource.rulesFor(target);
+        };
+
+        ruleFor = function (element, continuation) {
+            var rules = rulesFor(element, continuation);
+
+            expect(rules.length).toEqual(1);
+
+            continuation(rules[0]);
+        };
+    });
+
+    it('builds the Remote rules', function () {
+        var element = $('<input type="text" name="Test" />');
+        element.data('remote-rule', { url: 'test', rules: ['1', '2'] });
+
+        var rules = rulesFor(element);
+
+        expect(rules[0].url).toEqual('test');
+        expect(rules[0].hash).toEqual('1');
+
+        expect(rules[1].url).toEqual('test');
+        expect(rules[1].hash).toEqual('2');
+    });
+
+    it('no rules if remote-rule data does not exist', function () {
+        var rules = rulesFor($('<input type="text" name="Test" />'));
+        expect(rules.length).toEqual(0);
+    });
+});
+
 describe('Integrated Validator Tests', function () {
     var theValidator = null;
     var notificationFor = null;

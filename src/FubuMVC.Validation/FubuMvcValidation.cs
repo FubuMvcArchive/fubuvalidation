@@ -2,7 +2,9 @@ using Bottles;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.UI;
 using FubuMVC.Validation.Remote;
+using FubuMVC.Validation.UI;
 using FubuValidation;
 using FubuValidation.Fields;
 
@@ -15,6 +17,12 @@ namespace FubuMVC.Validation
             registry.Services<FubuValidationServiceRegistry>();
             registry.Services<FubuMvcValidationServices>();
             registry.Actions.IncludeType<ValidateFieldEndpoint>();
+
+            registry.Import<HtmlConventionRegistry>(x =>
+            {
+                x.Editors.Add(new FieldValidationElementModifier());
+                x.Editors.Add(new RemoteValidationElementModifier());
+            });
 
             registry.Policies.Add<ValidationConvention>();
         }
@@ -30,8 +38,10 @@ namespace FubuMVC.Validation
             SetServiceIfNone<IValidationTargetResolver, ValidationTargetResolver>();
             SetServiceIfNone<IRuleRunner, RuleRunner>();
             SetServiceIfNone(typeof(IValidationFilter<>), typeof(ValidationFilter<>));
+            SetServiceIfNone<IFieldValidationModifier, FieldValidationModifier>();
 
             AddService<IActivator, RemoteRuleGraphActivator>();
+            AddService<IValidationAnnotationStrategy, CssValidationAnnotationStrategy>();
         }
     }
 

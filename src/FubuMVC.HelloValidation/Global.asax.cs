@@ -1,7 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Bottles;
+using FubuCore.Reflection;
+using FubuLocalization;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
+using FubuValidation;
+using FubuValidation.Fields;
 using StructureMap.Configuration.DSL;
 
 namespace FubuMVC.HelloValidation
@@ -37,6 +43,42 @@ namespace FubuMVC.HelloValidation
                          x.TheCallingAssembly();
                          x.WithDefaultConventions();
                      });
+        }
+    }
+    
+    public interface IUserService
+    {
+        bool UsernameExists(string username);
+    }
+
+    public class UserService : IUserService
+    {
+        public bool UsernameExists(string username)
+        {
+            return username == "joel-arnold";
+        }
+    }
+
+    [Remote]
+    public class UniqueUsernameRule : IFieldValidationRule
+    {
+        public void Validate(Accessor accessor, ValidationContext context)
+        {
+            var username = context.GetFieldValue<string>(accessor);
+            var service = context.Service<IUserService>();
+
+            if(service.UsernameExists(username))
+            {
+                context.Notification.RegisterMessage(accessor, StringToken.FromKeyString("UniqueUser", "'{username}' is already in use"), TemplateValue.For("username", username));
+            }
+        }
+    }
+
+    public class UniqueUsernameAttribute : FieldValidationAttribute
+    {
+        public override IEnumerable<IFieldValidationRule> RulesFor(PropertyInfo property)
+        {
+            yield return new UniqueUsernameRule();
         }
     }
 }

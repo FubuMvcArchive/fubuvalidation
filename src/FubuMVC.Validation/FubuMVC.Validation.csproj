@@ -72,6 +72,9 @@
     </Compile>
     <Compile Include="AjaxValidation.cs" />
     <Compile Include="AjaxContinuationResolver.cs" />
+    <Compile Include="UI\CssValidationAnnotationStrategy.cs" />
+    <Compile Include="UI\FieldValidationElementModifier.cs" />
+    <Compile Include="UI\IFieldValidationModifier.cs" />
     <Compile Include="IAjaxValidationFailureHandler.cs" />
     <Compile Include="AjaxValidationBehavior.cs" />
     <Compile Include="CompositeChainFilter.cs" />
@@ -84,6 +87,9 @@
     <Compile Include="Remote\RemoteRuleGraph.cs" />
     <Compile Include="Remote\RemoteRuleGraphActivator.cs" />
     <Compile Include="Remote\ValidateField.cs" />
+    <Compile Include="UI\IValidationAnnotationStrategy.cs" />
+    <Compile Include="UI\RemoteValidationElementModifier.cs" />
+    <Compile Include="ValidationUrlRegistryExtensions.cs" />
     <Compile Include="ValidationConvention.cs" />
     <Compile Include="ValidationFilter.cs" />
     <Compile Include="ModelBindingErrors.cs" />

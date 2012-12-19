@@ -4,7 +4,7 @@ namespace FubuMVC.HelloValidation.Ajax
 {
     public class TestItem
     {
-        [Required]
+        [UniqueUsername]
         public string Name { get; set; }
 
         public string Description { get; set; }

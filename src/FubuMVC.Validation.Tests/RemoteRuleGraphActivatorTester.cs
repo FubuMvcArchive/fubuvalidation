@@ -44,7 +44,7 @@ namespace FubuMVC.Validation.Tests
         public void fills_the_rules_in_the_rule_graph()
         {
             var rule = theRuleGraph.RulesFor(ReflectionHelper.GetAccessor<ActivatorTargetWithRemotes>(x => x.Username)).Single();
-            rule.Type.ShouldEqual(typeof (UniqueUsernameRule));
+            rule.Type.ShouldEqual(typeof(UniqueUsernameRule));
 
             theRuleGraph.RulesFor(ReflectionHelper.GetAccessor<ActivatorTargetWithRemotes>(x => x.Name)).ShouldHaveCount(0);
             theRuleGraph.RulesFor(ReflectionHelper.GetAccessor<ActivatorTargetNoRemotes>(x => x.Name)).ShouldHaveCount(0);
@@ -77,21 +77,23 @@ namespace FubuMVC.Validation.Tests
             public string Name { get; set; }
         }
 
-        [Remote]
-        public class UniqueUsernameRule : IFieldValidationRule
-        {
-            public void Validate(Accessor accessor, ValidationContext context)
-            {
-                throw new System.NotImplementedException();
-            }
-        }
 
-        public class UniqueUsernameAttribute : FieldValidationAttribute
+    }
+
+    [Remote]
+    public class UniqueUsernameRule : IFieldValidationRule
+    {
+        public void Validate(Accessor accessor, ValidationContext context)
         {
-            public override IEnumerable<IFieldValidationRule> RulesFor(PropertyInfo property)
-            {
-                yield return new UniqueUsernameRule();
-            }
+            throw new System.NotImplementedException();
+        }
+    }
+
+    public class UniqueUsernameAttribute : FieldValidationAttribute
+    {
+        public override IEnumerable<IFieldValidationRule> RulesFor(PropertyInfo property)
+        {
+            yield return new UniqueUsernameRule();
         }
     }
 }

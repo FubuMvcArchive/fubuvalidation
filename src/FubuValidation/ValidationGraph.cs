@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using FubuCore.Reflection;
 using FubuCore.Util;
 using FubuValidation.Fields;
 
@@ -37,6 +38,16 @@ namespace FubuValidation
         public IFieldValidationQuery Query()
         {
             return _fieldQuery;
+        }
+
+        /// <summary>
+        /// Convenience method for querying against IFieldValidationRules.
+        /// </summary>
+        /// <param name="accessor"></param>
+        /// <returns></returns>
+        public IEnumerable<IFieldValidationRule> FieldRulesFor(Accessor accessor)
+        {
+            return Query().RulesFor(accessor);
         }
 
         public void RegisterSource(IValidationSource source)

@@ -1,6 +1,7 @@
 ﻿using Bottles;
 using FubuMVC.Core.Registration;
 using FubuMVC.Validation.Remote;
+using FubuMVC.Validation.UI;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -80,6 +81,18 @@ namespace FubuMVC.Validation.Tests
         public void registers_the_remote_rule_graph_activator()
         {
             theBehaviorGraph.Services.ServicesFor<IActivator>().ShouldContain(def => def.Type == typeof(RemoteRuleGraphActivator));
+        }
+
+        [Test]
+        public void registers_the_default_field_validation_modifier()
+        {
+            theDefaultServiceIs<IFieldValidationModifier, FieldValidationModifier>();
+        }
+
+        [Test]
+        public void adds_the_css_validation_annotation_strategy()
+        {
+            theBehaviorGraph.Services.ServicesFor<IValidationAnnotationStrategy>().ShouldContain(def => def.Type == typeof(CssValidationAnnotationStrategy));
         }
     }
 }

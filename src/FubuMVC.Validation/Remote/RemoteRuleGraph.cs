@@ -20,9 +20,12 @@ namespace FubuMVC.Validation.Remote
             });
         }
 
-        public void RegisterRule(Accessor accessor, IFieldValidationRule rule)
+        public RemoteFieldRule RegisterRule(Accessor accessor, IFieldValidationRule rule)
         {
-            _rules[accessor].Fill(RemoteFieldRule.For(accessor, rule));
+            var remote = RemoteFieldRule.For(accessor, rule);
+            _rules[accessor].Fill(remote);
+
+            return remote;
         }
 
         public IEnumerable<RemoteFieldRule> RulesFor(Accessor accessor)

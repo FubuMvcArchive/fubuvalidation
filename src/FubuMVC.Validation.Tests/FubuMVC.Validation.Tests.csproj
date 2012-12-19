@@ -46,6 +46,9 @@
     <Reference Include="FubuMVC.Core">
       <HintPath>..\packages\FubuMVC.Core.0.9.9.1353\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
+    <Reference Include="FubuMVC.Core.UI">
+      <HintPath>..\packages\FubuMVC.Core.UI.0.9.9.103\lib\net40\FubuMVC.Core.UI.dll</HintPath>
+    </Reference>
     <Reference Include="FubuMVC.SelfHost">
       <HintPath>..\packages\FubuMVC.SelfHost.0.9.9.1353\lib\net40\FubuMVC.SelfHost.dll</HintPath>
     </Reference>
@@ -105,6 +108,7 @@
     <Reference Include="System.Net.Http.WebRequest, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
     </Reference>
@@ -145,6 +149,10 @@
     <Compile Include="Remote\ValidationTargetResolverTester.cs" />
     <Compile Include="SampleInputModel.cs" />
     <Compile Include="AjaxValidationTester.cs" />
+    <Compile Include="UI\CssValidationAnnotationStrategyTester.cs" />
+    <Compile Include="UI\FieldValidationElementModifierTester.cs" />
+    <Compile Include="UI\FieldValidationModifierTester.cs" />
+    <Compile Include="UI\RemoteValidationElementModifierTester.cs" />
     <Compile Include="ValidationActionFilterTester.cs" />
     <Compile Include="ValidationConventionTester.cs" />
     <Compile Include="ValidationFilterTester.cs" />

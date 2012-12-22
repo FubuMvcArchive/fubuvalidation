@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Test name="Validation summary rendering" lifecycle="Acceptance">
+<Test name="Validation summary rendering" lifecycle="Regression">
   <CreateUserScreen>
     <EnterUsername isStep="True" Username="EMPTY" />
     <EnterPassword isStep="True" Password="EMPTY" />

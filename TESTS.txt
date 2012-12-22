@@ -1,0 +1,4 @@
+FubuValidation.Tests
+FubuValidation.StructureMap.Tests
+FubuMVC.Validation.Tests
+FubuMVC.Validation.IntegrationTesting

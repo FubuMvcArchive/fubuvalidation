@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-    <id>FubuMVC.Validation</id>
+    <id>FubuMVC.Validation.Serenity</id>
     <version>0.0</version>
     <authors>Joshua Arnold, et al.</authors>
     <owners>Joshua Arnold</owners>
@@ -9,17 +9,14 @@
     <projectUrl>http://validation.fubu-project.org</projectUrl>
     <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuValidation_256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A FubuMVC implementation of FubuValidation</description>
-    <tags>fubumvc mvc fubu validation conventional</tags>
+    <description>Serenity helpers for Validation</description>
+    <tags>fubumvc mvc fubu validation serenity</tags>
     <dependencies>
-      <dependency id="FubuMVC.Core" version="0.9.9.1366" />
-	  <dependency id="FubuMVC.Core.Assets" version="0.9.9.94" />
-      <dependency id="FubuMVC.Core.UI" version="0.9.9.109" />
-      <dependency id="FubuValidation" />
-      <dependency id="FubuCore" version="0.9.9.151" />
+      <dependency id="Serenity" version="0.9.8.116" />
+	  <dependency id="FubuMVC.Validation" version="0.8.9.640" />
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\build\FubuMVC.Validation.*" target="lib" />
+    <file src="..\..\build\FubuMVC.Validation.Serenity*" target="lib" />
   </files>
 </package>

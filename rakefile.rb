@@ -104,10 +104,19 @@ end
 desc "Runs unit tests"
 task :test => [:unit_test]
 
-desc "Runs unit tests"
-task :unit_test => :compile do
+desc "Run unit tests"
+task :unit_test do 
   runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
-  runner.executeTests ['FubuValidation.Tests', 'FubuMVC.Validation.Tests']
+  tests = Array.new
+  file = File.new("TESTS.txt", "r")
+  assemblies = file.readlines()
+  assemblies.each do |a|
+	test = a.gsub("\r\n", "").gsub("\n", "")
+	tests.push(test)
+  end
+  file.close
+  
+  runner.executeTests tests
 end
 
 desc "ZIPs up the build results"
@@ -138,6 +147,10 @@ task :run_jasmine_ci do
 	serenity "jasmine run --verbose --timeout 15 src/serenity.txt -b Firefox"
 end
 
+task :storyteller_ci do
+	storyteller "run src/FubuMVC.Validation.StoryTeller/validation.xml results/Storyteller.html"
+end
+
 def self.fubu(args)
   fubu = Platform.runtime(Nuget.tool("FubuMVC.References", "fubu.exe"))
   sh "#{fubu} #{args}" 
@@ -153,8 +166,8 @@ def self.serenity(args)
 end
 
 def self.storyteller(args)
-st = Platform.runtime(Nuget.tool("Storyteller", "StorytellerRunner.exe")) 
-sh "#{st} #{args}"
+  st = Platform.runtime(Nuget.tool("Storyteller2", "st.exe")) 
+  sh "#{st} #{args}"
 end
 
 def self.bottles(args)

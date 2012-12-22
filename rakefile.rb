@@ -119,7 +119,7 @@ end
 
 desc "Runs the StoryTeller UI"
 task :run_st => [:restore_if_missing] do
-  st = Platform.runtime(Nuget.tool("Storyteller", "StorytellerUI.exe"))
+  st = Platform.runtime(Nuget.tool("Storyteller2", "StorytellerUI.exe"))
   sh st 
 end
 

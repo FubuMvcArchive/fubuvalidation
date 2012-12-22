@@ -23,11 +23,25 @@
             .not(":submit, :reset, :image, [disabled]");
     }
 
+    function bindEvents(form) {
+        var selector = ":text, [type='password'], [type='file'], select, textarea, " +
+            "[type='number'], [type='search'] ,[type='tel'], [type='url'], " +
+                "[type='email'], [type='datetime'], [type='date'], [type='month'], " +
+                    "[type='week'], [type='time'], [type='datetime-local'], " +
+                        "[type='range'], [type='color'] ";
+        $(selector, form).bind('focusin focusout keyup', function () {
+            // TODO -- Consider scoping the notification to the single element
+            submitHandler(form);
+        });
+    }
+
     $.fn.validate = function (options) {
         return this.each(function () {
             var settings = {
                 ajax: true
             };
+
+            bindEvents($(this));
 
             settings = $.extend(true, settings, options);
 

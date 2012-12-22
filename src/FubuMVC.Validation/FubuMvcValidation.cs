@@ -16,15 +16,20 @@ namespace FubuMVC.Validation
         {
             registry.Services<FubuValidationServiceRegistry>();
             registry.Services<FubuMvcValidationServices>();
-            registry.Actions.IncludeType<ValidateFieldEndpoint>();
+            registry.Actions.FindWith<RemoteRulesSource>();
+            registry.Actions.FindWith<ValidationSummarySource>();
 
             registry.Import<HtmlConventionRegistry>(x =>
             {
                 x.Editors.Add(new FieldValidationElementModifier());
                 x.Editors.Add(new RemoteValidationElementModifier());
+                
+                x.Forms.Add(new FormValidationSummaryModifier());
+                x.Forms.Add(new FormValidationMode());
             });
 
             registry.Policies.Add<ValidationConvention>();
+            registry.Policies.Add<AttachDefaultValidationSummary>();
         }
     }
 

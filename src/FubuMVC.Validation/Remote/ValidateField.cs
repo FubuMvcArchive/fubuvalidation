@@ -1,5 +1,9 @@
+using System.Collections.Generic;
+using System.Reflection;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
+using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Nodes;
 
 namespace FubuMVC.Validation.Remote
 {
@@ -29,6 +33,14 @@ namespace FubuMVC.Validation.Remote
             var notification = _rules.Run(rule, field.Value);
 
             return _continuation.Resolve(notification);
+        }
+    }
+
+    public class RemoteRulesSource : IActionSource
+    {
+        public IEnumerable<ActionCall> FindActions(Assembly applicationAssembly)
+        {
+            yield return ActionCall.For<ValidateFieldEndpoint>(x => x.Validate(null));
         }
     }
 }

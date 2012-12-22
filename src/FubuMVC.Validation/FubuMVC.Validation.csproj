@@ -43,12 +43,16 @@
       <HintPath>..\packages\FubuLocalization.0.9.5.124\lib\FubuLocalization.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.Core.0.9.9.1353\lib\net40\FubuMVC.Core.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.0.9.9.1366\lib\net40\FubuMVC.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuMVC.Core.Assets">
+      <HintPath>..\packages\FubuMVC.Core.Assets.0.9.9.94\lib\net40\FubuMVC.Core.Assets.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core.UI">
-      <HintPath>..\packages\FubuMVC.Core.UI.0.9.9.103\lib\net40\FubuMVC.Core.UI.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.UI.0.9.9.109\lib\net40\FubuMVC.Core.UI.dll</HintPath>
     </Reference>
-    <Reference Include="FubuMVC.Core.View">
+    <Reference Include="FubuMVC.Core.View, Version=0.9.9.97, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FubuMVC.Core.View.0.9.9.97\lib\net40\FubuMVC.Core.View.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
@@ -72,8 +76,13 @@
     </Compile>
     <Compile Include="AjaxValidation.cs" />
     <Compile Include="AjaxContinuationResolver.cs" />
+    <Compile Include="UI\AttachDefaultValidationSummary.cs" />
     <Compile Include="UI\CssValidationAnnotationStrategy.cs" />
+    <Compile Include="UI\DefaultValidationSummaryNode.cs" />
+    <Compile Include="UI\DefaultValidationSummaryWriter.cs" />
     <Compile Include="UI\FieldValidationElementModifier.cs" />
+    <Compile Include="UI\FormValidationMode.cs" />
+    <Compile Include="UI\FormValidationSummaryModifier.cs" />
     <Compile Include="UI\IFieldValidationModifier.cs" />
     <Compile Include="IAjaxValidationFailureHandler.cs" />
     <Compile Include="AjaxValidationBehavior.cs" />
@@ -89,6 +98,8 @@
     <Compile Include="Remote\ValidateField.cs" />
     <Compile Include="UI\IValidationAnnotationStrategy.cs" />
     <Compile Include="UI\RemoteValidationElementModifier.cs" />
+    <Compile Include="UI\ValidationSummarySource.cs" />
+    <Compile Include="ValidationSummary.cs" />
     <Compile Include="ValidationUrlRegistryExtensions.cs" />
     <Compile Include="ValidationConvention.cs" />
     <Compile Include="ValidationFilter.cs" />
@@ -118,6 +129,7 @@
     <Content Include="content\scripts\specs\fubuvalidation.core.spec.js" />
     <Content Include="content\scripts\specs\fubuvalidation.ui.fixture.html" />
     <Content Include="content\scripts\specs\fubuvalidation.ui.spec.js" />
+    <Content Include="content\scripts\ValidationActivator.js" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

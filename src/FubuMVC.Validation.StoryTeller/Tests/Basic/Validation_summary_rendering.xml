@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<Test name="Validation summary rendering" lifecycle="Acceptance">
+  <CreateUserScreen>
+    <EnterUsername isStep="True" Username="EMPTY" />
+    <EnterPassword isStep="True" Password="EMPTY" />
+    <VerifyValidationMessages isStep="True">
+      <rows>
+        <row isStep="True" Property="Username" Message="Username - This field is required." />
+        <row isStep="True" Property="Password" Message="Password - This field is required." />
+      </rows>
+    </VerifyValidationMessages>
+    <EnterUsername isStep="True" Username="test" />
+    <VerifyValidationMessages isStep="True">
+      <rows>
+        <row isStep="True" Property="Password" Message="Password - This field is required." />
+      </rows>
+    </VerifyValidationMessages>
+    <EnterPassword isStep="True" Password="pass" />
+    <NoMessages isStep="True" />
+    <NoSummary isStep="True" />
+  </CreateUserScreen>
+</Test>

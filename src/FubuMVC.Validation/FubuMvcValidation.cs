@@ -25,7 +25,7 @@ namespace FubuMVC.Validation
                 x.Editors.Add(new RemoteValidationElementModifier());
                 
                 x.Forms.Add(new FormValidationSummaryModifier());
-                x.Forms.Add(new FormValidationMode());
+                x.Forms.Add(new FormActivationModifier());
             });
 
             registry.Policies.Add<ValidationConvention>();

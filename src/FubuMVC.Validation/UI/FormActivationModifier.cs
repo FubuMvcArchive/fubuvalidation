@@ -6,7 +6,7 @@ using HtmlTags.Conventions;
 
 namespace FubuMVC.Validation.UI
 {
-    public class FormValidationMode : ITagModifier<FormRequest>
+    public class FormActivationModifier : ITagModifier<FormRequest>
     {
         public static readonly string LoFi = "lofi";
         public static readonly string Ajax = "ajax";

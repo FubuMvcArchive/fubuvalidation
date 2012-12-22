@@ -28,7 +28,7 @@ namespace FubuMVC.Validation.Tests.UI
         [Test]
         public void applies_to_html()
         {
-            theNode.Mimetypes.ShouldHaveTheSameElementsAs(MimeType.Html.Value);
+            theNode.Mimetypes.ShouldHaveTheSameElementsAs(MimeType.Html.Value, MimeType.HttpFormMimetype);
         }
 
         [Test]

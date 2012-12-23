@@ -65,7 +65,7 @@
       <HintPath>..\packages\Serenity.0.9.8.116\lib\net40\Serenity.dll</HintPath>
     </Reference>
     <Reference Include="StoryTeller">
-      <HintPath>..\packages\Storyteller2.2.0.0.9\lib\net40\StoryTeller.dll</HintPath>
+      <HintPath>..\packages\Storyteller2.2.0.0.12\lib\net40\StoryTeller.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

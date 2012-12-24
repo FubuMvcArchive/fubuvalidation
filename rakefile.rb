@@ -37,6 +37,9 @@ task :default => [:compile, :unit_test, :run_jasmine]
 desc "Target used for the CI server"
 task :ci => [:update_all_dependencies, :compile, :unit_test, :run_jasmine_ci, :storyteller_ci, :history, :package]
 
+desc "Target used for the CI on mono"
+task :mono_ci => [:update_all_dependencies, :compile, :mono_unit_test]
+
 desc "Update the version information for the build"
 assemblyinfo :version do |asm|
   asm_version = BUILD_VERSION + ".0"
@@ -117,6 +120,12 @@ task :unit_test do
   file.close
   
   runner.executeTests tests
+end
+
+desc "Runs some of the unit tests for Mono"
+task :mono_unit_test => :compile do
+  runner = NUnitRunner.new :compilemode => COMPILE_TARGET, :source => 'src', :platform => 'x86'
+  runner.executeTests ['FubuValidation.Tests', 'FubuValidation.StructureMap.Tests', 'FubuMVC.Validation.Tests']
 end
 
 desc "ZIPs up the build results"

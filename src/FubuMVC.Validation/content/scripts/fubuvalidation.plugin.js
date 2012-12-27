@@ -41,6 +41,15 @@
         processNotification(notification, form);
     }
 
+    $.fn.bindAll = function (delegate, type, handler) {
+        return this.bind(type, function (event) {
+            var target = $(event.target);
+            if (target.is(delegate)) {
+                return handler.apply(target, arguments);
+            }
+        });
+    };
+
     function bindEvents(form) {
         var selector = ":text, [type='password'], [type='file'], select, textarea, " +
             "[type='number'], [type='search'] ,[type='tel'], [type='url'], " +
@@ -48,8 +57,7 @@
                     "[type='week'], [type='time'], [type='datetime-local'], " +
                         "[type='range'], [type='color'] ";
 
-        $(selector, form).bind('focusin focusout keyup', function () {
-            // TODO -- Consider scoping the notification to the single element
+        form.bindAll(selector, 'focusin focusout keyup', function () {
             elementHandler($(this), form);
         });
     }

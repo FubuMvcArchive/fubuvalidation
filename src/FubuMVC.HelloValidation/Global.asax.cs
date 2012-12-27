@@ -6,6 +6,7 @@ using FubuCore.Reflection;
 using FubuLocalization;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
+using FubuMVC.Validation.Remote;
 using FubuValidation;
 using FubuValidation.Fields;
 using StructureMap.Configuration.DSL;

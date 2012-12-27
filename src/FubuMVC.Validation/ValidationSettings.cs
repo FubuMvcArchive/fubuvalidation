@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Registration.Policies;
+using FubuMVC.Validation.Remote;
 
 namespace FubuMVC.Validation
 {
@@ -14,24 +15,12 @@ namespace FubuMVC.Validation
     public class ValidationSettings : IApplyValidationFilter
     {
         private readonly IList<IChainFilter> _filters = new List<IChainFilter>();
+        private readonly IList<IRemoteRuleFilter> _remoteFilters = new List<IRemoteRuleFilter>(); 
 
         public ValidationSettings()
         {
             FailAjaxRequestsWith(HttpStatusCode.BadRequest);
         }
-
-        public ChainPredicate Where
-        {
-            get
-            {
-                var predicate = new ChainPredicate();
-                _filters.Add(predicate);
-                
-                return predicate;
-            }
-        }
-
-        public HttpStatusCode StatusCode { get; private set; }
 
         public void FailAjaxRequestsWith(HttpStatusCode statusCode)
         {
@@ -46,6 +35,21 @@ namespace FubuMVC.Validation
             }
 
             return new DefaultValidationChainFilter();
+        }
+
+        public HttpStatusCode StatusCode { get; private set; }
+        public RemoteRuleExpression Remotes { get{ return new RemoteRuleExpression(_remoteFilters);}}
+        public IEnumerable<IRemoteRuleFilter> Filters { get { return _remoteFilters; } } 
+
+        public ChainPredicate Where
+        {
+            get
+            {
+                var predicate = new ChainPredicate();
+                _filters.Add(predicate);
+
+                return predicate;
+            }
         }
 
         bool IApplyValidationFilter.Filter(BehaviorChain chain)

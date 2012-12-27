@@ -75,6 +75,12 @@
     </Compile>
     <Compile Include="AjaxValidation.cs" />
     <Compile Include="AjaxContinuationResolver.cs" />
+    <Compile Include="RegisterRemoteRuleQuery.cs" />
+    <Compile Include="RemoteRuleExpression.cs" />
+    <Compile Include="Remote\IRemoteFieldValidationRule.cs" />
+    <Compile Include="Remote\IRemoteRuleFilter.cs" />
+    <Compile Include="Remote\IRemoteRuleQuery.cs" />
+    <Compile Include="Remote\RemoteAttribute.cs" />
     <Compile Include="UI\AttachDefaultValidationSummary.cs" />
     <Compile Include="UI\CssValidationAnnotationStrategy.cs" />
     <Compile Include="UI\DefaultValidationSummaryNode.cs" />

@@ -15,13 +15,15 @@ namespace FubuMVC.Validation.Remote
         private readonly ValidationGraph _graph;
         private readonly RemoteRuleGraph _remoteGraph;
         private readonly BehaviorGraph _behaviorGraph;
+        private readonly IRemoteRuleQuery _remotes;
         private readonly ITypeDescriptorCache _properties;
 
-        public RemoteRuleGraphActivator(ValidationGraph graph, RemoteRuleGraph remoteGraph, BehaviorGraph behaviorGraph, ITypeDescriptorCache properties)
+        public RemoteRuleGraphActivator(ValidationGraph graph, RemoteRuleGraph remoteGraph, BehaviorGraph behaviorGraph, IRemoteRuleQuery remotes, ITypeDescriptorCache properties)
         {
             _graph = graph;
             _remoteGraph = remoteGraph;
             _behaviorGraph = behaviorGraph;
+            _remotes = remotes;
             _properties = properties;
         }
 
@@ -45,7 +47,7 @@ namespace FubuMVC.Validation.Remote
                 var rules = _graph
                     .Query()
                     .RulesFor(accessor)
-                    .Where(rule => rule.GetType().HasAttribute<RemoteAttribute>()); // TODO -- Do better than a friggin attribute
+                    .Where(rule => _remotes.IsRemote(rule));
 
                 rules.Each(rule => _remoteGraph.RegisterRule(accessor, rule));
             });

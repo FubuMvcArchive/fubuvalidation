@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using FubuCore.Reflection;
 using FubuLocalization;
+using FubuMVC.Validation.Remote;
 using FubuValidation;
 using FubuValidation.Fields;
 
@@ -51,7 +52,6 @@ namespace FubuMVC.Validation.StoryTeller
         }
     }
 
-    [Remote]
     public class UniqueUsernameRule : IFieldValidationRule
     {
         public void Validate(Accessor accessor, ValidationContext context)

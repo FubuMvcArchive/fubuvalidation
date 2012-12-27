@@ -106,7 +106,7 @@
             $.ajax({
                 url: this.url,
                 data: { Hash: hash, Value: target.value() },
-                asynx: false,
+                async: false,
                 acceptType: 'application/json',
                 success: function (continuation) {
                     if (!continuation.errors) {

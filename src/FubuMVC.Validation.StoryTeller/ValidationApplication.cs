@@ -17,6 +17,8 @@ namespace FubuMVC.Validation.StoryTeller
             public ValidationStoryTellerRegistry()
             {
                 Actions.IncludeType<CreateUserEndpoint>();
+
+                AlterSettings<ValidationSettings>(x => x.Remotes.Include<UniqueUsernameRule>());
             }
         }
     }

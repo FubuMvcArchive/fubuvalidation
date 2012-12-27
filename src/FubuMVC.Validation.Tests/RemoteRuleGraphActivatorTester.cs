@@ -21,6 +21,7 @@ namespace FubuMVC.Validation.Tests
         private ValidationGraph theValidationGraph;
         private RemoteRuleGraph theRuleGraph;
         private BehaviorGraph theBehaviorGraph;
+        private RemoteRuleQuery theQuery;
         private RemoteRuleGraphActivator theActivator;
 
         [SetUp]
@@ -34,8 +35,9 @@ namespace FubuMVC.Validation.Tests
 
             theValidationGraph = ValidationGraph.BasicGraph();
             theRuleGraph = new RemoteRuleGraph();
+            theQuery = RemoteRuleQuery.Basic();
 
-            theActivator = new RemoteRuleGraphActivator(theValidationGraph, theRuleGraph, theBehaviorGraph, new TypeDescriptorCache());
+            theActivator = new RemoteRuleGraphActivator(theValidationGraph, theRuleGraph, theBehaviorGraph, theQuery, new TypeDescriptorCache());
 
             theActivator.Activate(new IPackageInfo[0], new PackageLog());
         }
@@ -80,8 +82,7 @@ namespace FubuMVC.Validation.Tests
 
     }
 
-    [Remote]
-    public class UniqueUsernameRule : IFieldValidationRule
+    public class UniqueUsernameRule : IRemoteFieldValidationRule
     {
         public void Validate(Accessor accessor, ValidationContext context)
         {

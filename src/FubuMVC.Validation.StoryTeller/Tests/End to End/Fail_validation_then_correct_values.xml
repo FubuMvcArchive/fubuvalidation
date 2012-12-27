@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Test name="Fail validation then correct values" lifecycle="Acceptance">
+<Test name="Fail validation then correct values" lifecycle="Regression">
   <SystemState>
     <NoUsers isStep="True" />
   </SystemState>

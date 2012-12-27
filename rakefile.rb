@@ -35,7 +35,7 @@ desc "**Default**, compiles and runs tests"
 task :default => [:compile, :unit_test, :run_jasmine]
 
 desc "Target used for the CI server"
-task :ci => [:update_all_dependencies, :compile, :unit_test, :run_jasmine_ci, :storyteller_ci, :history, :package]
+task :ci => [:update_all_dependencies, :compile, :unit_test, :run_jasmine_ci, :storyteller_ci, :history]
 
 desc "Target used for the CI on mono"
 task :mono_ci => [:update_all_dependencies, :compile, :mono_unit_test]
@@ -128,13 +128,6 @@ task :mono_unit_test => :compile do
   runner.executeTests ['FubuValidation.Tests', 'FubuValidation.StructureMap.Tests', 'FubuMVC.Validation.Tests']
 end
 
-desc "ZIPs up the build results"
-zip :package do |zip|
-	zip.directories_to_zip = [props[:stage]]
-	zip.output_file = 'FubuValidation.zip'
-	zip.output_path = [props[:artifacts]]
-end
-
 desc "Runs the StoryTeller UI"
 task :run_st => [:restore_if_missing] do
   st = Platform.runtime(Nuget.tool("Storyteller2", "StorytellerUI.exe"))
@@ -157,7 +150,7 @@ task :run_jasmine_ci do
 end
 
 task :storyteller_ci do
-	storyteller "run src/FubuMVC.Validation.StoryTeller/validation.xml results/Storyteller.html"
+	storyteller "run src/FubuMVC.Validation.StoryTeller/validation.xml artifacts/Storyteller.html"
 end
 
 def self.fubu(args)

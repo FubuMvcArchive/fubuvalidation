@@ -59,12 +59,17 @@
             }
 
             return continuation;
+        },
+
+        importForTarget: function (notification, target) {
+            this.messages[target.fieldName] = notification.messagesFor(target.fieldName);
         }
     };
 
-    function ValidationTarget(fieldName, value) {
+    function ValidationTarget(fieldName, value, correlationId) {
         this.fieldName = fieldName;
         this.rawValue = value;
+        this.correlationId = correlationId;
     };
 
     ValidationTarget.prototype = {
@@ -75,11 +80,14 @@
             }
 
             return $.trim(value);
+        },
+        toHash: function () {
+            return 'correlationId:' + this.correlationId + '&fieldName=' + this.fieldName;
         }
     };
 
-    ValidationTarget.forElement = function (element) {
-        var target = new ValidationTarget(element.attr('name'));
+    ValidationTarget.forElement = function (element, correlationId) {
+        var target = new ValidationTarget(element.attr('name'), null, correlationId);
         target.element = element;
 
         return target;
@@ -103,6 +111,7 @@
         this.sources = sources || [];
 
         var self = this;
+        var hash = function (target) { return target.toHash(); };
         this.rulesFor = _.memoize(function (target) {
             var rules = [];
             _.each(self.sources, function (src) {
@@ -111,7 +120,7 @@
             });
 
             return rules;
-        });
+        }, hash);
     };
 
     Validator.prototype = {
@@ -119,6 +128,7 @@
             this.sources.push(source);
         },
         validate: function (target, notification) {
+
             notification = notification || new ValidationNotification();
             var context = new ValidationContext(target, notification);
             var rules = this.rulesFor(target);

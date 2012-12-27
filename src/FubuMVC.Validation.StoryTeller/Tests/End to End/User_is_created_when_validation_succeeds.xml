@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<Test name="User is created when validation succeeds" lifecycle="Acceptance">
+  <SystemState>
+    <NoUsers isStep="True" />
+  </SystemState>
+  <CreateUserScreen>
+    <EnterUsername isStep="True" Username="Test" />
+    <EnterPassword isStep="True" Password="Password" />
+    <ClickCreate isStep="True" />
+    <VerifyTheUsers isStep="True">
+      <rows>
+        <row isStep="True" Username="Test" />
+      </rows>
+    </VerifyTheUsers>
+  </CreateUserScreen>
+</Test>

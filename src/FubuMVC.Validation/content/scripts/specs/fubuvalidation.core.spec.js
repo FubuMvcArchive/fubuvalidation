@@ -45,6 +45,36 @@ describe('ValidationNotificationTester', function () {
     });
 });
 
+describe('importing a notification with similar and different messages', function () {
+    var theNotification = null;
+    var theContext = null;
+    var theTarget = null;
+
+    beforeEach(function () {
+        theNotification = new $.fubuvalidation.Core.Notification();
+
+        theContext = { id: '234' };
+        theNotification.registerMessage('Test', 'User-friendly message', '123', theContext);
+        theNotification.registerMessage('Test 2', 'User-friendly message 2', '124', theContext);
+
+        var theNewNotification = new $.fubuvalidation.Core.Notification();
+        theNewNotification.registerMessage('Test', 'User-friendly message', '123', theContext);
+        theNewNotification.registerMessage('Test 2', 'Another message for this field', '125', theContext);
+
+        theTarget = new $.fubuvalidation.Core.Target('Test 2', 'blah', 'blah');
+
+        theNotification.importForTarget(theNewNotification, theTarget);
+    });
+
+    it('diffs the messages', function () {
+        var m1 = { field: 'Test', token: 'User-friendly message', element: '123', context: theContext };
+        var m2 = { field: 'Test 2', token: 'Another message for this field', element: '125', context: theContext };
+
+        expect(theNotification.allMessages()).toEqual([m1, m2]);
+    });
+});
+
+
 describe('Transforming a ValidationNotification to an AjaxContinuation', function () {
     var theNotification = null;
 
@@ -85,24 +115,36 @@ describe('Transforming a ValidationNotification to an AjaxContinuation', functio
 
 });
 
-describe('ValidationTargetTester', function() {
-    it('gets the value passed in', function() {
-       var theValue = '123';
-       var theTarget = new $.fubuvalidation.Core.Target('field', theValue);
+describe('ValidationTargetTester', function () {
+    it('gets the value passed in', function () {
+        var theValue = '123';
+        var theTarget = new $.fubuvalidation.Core.Target('field', theValue);
 
         expect(theTarget.value()).toEqual(theValue);
     });
 
-    it('uses the name of the element', function() {
+    it('uses the name of the element', function () {
         var theElement = $('<input type="text" value="test-test-test" name="Tester" />');
         var theTarget = new $.fubuvalidation.Core.Target.forElement(theElement);
         expect(theTarget.fieldName).toEqual('Tester');
     });
 
-    it('uses the element for the value when specified', function() {
+    it('uses the element for the value when specified', function () {
         var theElement = $('<input type="text" value="test-test-test" />');
         var theTarget = new $.fubuvalidation.Core.Target.forElement(theElement);
         expect(theTarget.value()).toEqual('test-test-test');
+    });
+
+    it('hashes on correlationId and fieldName', function () {
+        var target1 = new $.fubuvalidation.Core.Target('field 1', 'val', 'Correlation1');
+        var target2 = new $.fubuvalidation.Core.Target('field 2', 'val', 'Correlation1');
+        var target3 = new $.fubuvalidation.Core.Target('field 1', 'val', 'Correlation2');
+        var target4 = new $.fubuvalidation.Core.Target('field 1', 'val', 'Correlation1');
+
+        expect(target1.toHash()).not.toEqual(target2.toHash());
+        expect(target1.toHash()).not.toEqual(target3.toHash());
+
+        expect(target1.toHash()).toEqual(target4.toHash());
     });
 });
 
@@ -169,31 +211,33 @@ describe('CssValidationRuleSourceTester', function () {
     });
 });
 
-describe('ValidatorTests', function() {
+describe('ValidatorTests', function () {
     var theValidator = null;
 
-    beforeEach(function() {
-       theValidator = new $.fubuvalidation.Core.Validator();
+    beforeEach(function () {
+        theValidator = new $.fubuvalidation.Core.Validator();
     });
 
-    it('registers the validation source', function() {
-       var theSource = function() { return '123';};
+    it('registers the validation source', function () {
+        var theSource = function () { return '123'; };
         theValidator.registerSource(theSource);
 
         expect(theValidator.sources).toEqual([theSource]);
     });
 
-    it('aggregates the rules for a target', function() {
+    it('aggregates the rules for a target', function () {
         var r1 = 'rule 1';
         var r2 = 'rule 2';
 
-        var src1 = { rulesFor: function() { return [r1]; } };
-        var src2 = { rulesFor: function() { return [r2]; } };
+        var src1 = { rulesFor: function () { return [r1]; } };
+        var src2 = { rulesFor: function () { return [r2]; } };
 
         theValidator.registerSource(src1);
         theValidator.registerSource(src2);
 
-        expect(theValidator.rulesFor({})).toEqual([r1, r2]);
+        var theTarget = $.fubuvalidation.Core.Target.forElement($('<input type="text" name="Test" />'), '123');
+
+        expect(theValidator.rulesFor(theTarget)).toEqual([r1, r2]);
     })
 });
 

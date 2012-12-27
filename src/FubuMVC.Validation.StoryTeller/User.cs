@@ -6,9 +6,9 @@ using HtmlTags;
 
 namespace FubuMVC.Validation.StoryTeller
 {
-    public class CreateUser
+    public class User
     {
-        [Required]
+        [Required, Unique]
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }
@@ -16,14 +16,16 @@ namespace FubuMVC.Validation.StoryTeller
 
     public class CreateUserEndpoint
     {
-        private readonly FubuHtmlDocument<CreateUser> _page;
+        private readonly FubuHtmlDocument<User> _page;
+        private readonly IUserService _users;
 
-        public CreateUserEndpoint(FubuHtmlDocument<CreateUser> page)
+        public CreateUserEndpoint(FubuHtmlDocument<User> page, IUserService users)
         {
             _page = page;
+            _users = users;
         }
 
-        public FubuHtmlDocument<CreateUser> get_users_create(CreateUser request)
+        public FubuHtmlDocument<User> get_users_create(User request)
         {
             _page.Add(new HtmlTag("h1").Text("Create User"));
             _page.Add(createForm());
@@ -31,17 +33,18 @@ namespace FubuMVC.Validation.StoryTeller
             return _page;
         }
 
-        public FubuContinuation post_users_create(CreateUser user)
+        public FubuContinuation post_users_create(User user)
         {
-            return FubuContinuation.RedirectTo(new CreateUser(), "GET");
+            _users.Update(user);
+            return FubuContinuation.RedirectTo(new User(), "GET");
         }
 
         private HtmlTag createForm()
         {
-            var form = _page.FormFor<CreateUser>();
+            var form = _page.FormFor<User>();
             form.Append(_page.Edit(x => x.Username));
             form.Append(_page.Edit(x => x.Password));
-            form.Append(new HtmlTag("input").Attr("type", "submit").Attr("value", "Submit").Id("CreateUser"));
+            form.Append(new HtmlTag("input").Attr("type", "submit").Attr("value", "Submit").Id("User"));
             form.Id("CreateUserForm");
 
             return form;

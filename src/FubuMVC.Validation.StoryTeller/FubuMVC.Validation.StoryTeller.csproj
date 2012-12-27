@@ -117,8 +117,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateUser.cs" />
-    <Compile Include="CreateUserScreenFixture.cs" />
+    <Compile Include="Fixtures\SystemStateFixture.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="Fixtures\CreateUserScreenFixture.cs" />
+    <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidationApplication.cs" />
     <Compile Include="ValidationSystem.cs" />

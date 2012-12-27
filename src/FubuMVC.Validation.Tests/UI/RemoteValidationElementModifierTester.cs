@@ -58,6 +58,17 @@ namespace FubuMVC.Validation.Tests.UI
                 def.rules.ShouldHaveTheSameElementsAs(theRemoteRule.ToHash());
             });
         }
+        
+        [Test]
+        public void no_registration_when_no_rules_are_found()
+        {
+            theRemoteGraph = new RemoteRuleGraph();
+            theServices.Add(theRemoteGraph);
+
+            theModifier.Modify(theRequest);
+
+            theRequest.CurrentTag.Data("remote-rule").ShouldBeNull();
+        }
 
         public class RemoteTarget
         {

@@ -5,9 +5,9 @@ using Serenity.Fixtures;
 using StoryTeller;
 using StoryTeller.Engine;
 
-namespace FubuMVC.Validation.StoryTeller
+namespace FubuMVC.Validation.StoryTeller.Fixtures
 {
-    public class CreateUserScreenFixture : ScreenFixture<CreateUser>
+    public class CreateUserScreenFixture : ScreenFixture<User>
     {
         public CreateUserScreenFixture()
         {
@@ -15,9 +15,13 @@ namespace FubuMVC.Validation.StoryTeller
             EditableElementsForAllImmediateProperties();
         }
 
+        private IUserService _users;
+
         protected override void beforeRunning()
         {
-            Navigation.NavigateTo(new CreateUser());
+            Navigation.NavigateTo(new User());
+
+            _users = Retrieve<IUserService>();
         }
 
         private ValidationDriver validation
@@ -28,7 +32,7 @@ namespace FubuMVC.Validation.StoryTeller
         [FormatAs("Click the 'Create User' button")]
         public void ClickCreate()
         {
-            Driver.FindElement(By.Id("CreateUser")).Click();
+            Driver.FindElement(By.Id("User")).Click();
         }
 
         [FormatAs("There are no validation messages")]
@@ -48,6 +52,19 @@ namespace FubuMVC.Validation.StoryTeller
             return VerifySetOf(() => validation.AllMessages())
                 .Titled("Verify the validation messages")
                 .MatchOn(x => x.Property, x => x.Message);
+        }
+
+        public IGrammar VerifyTheUsers()
+        {
+            return VerifySetOf(() => _users.All())
+                .Titled("Verify the users")
+                .MatchOn(x => x.Username);
+        }
+
+        [FormatAs("Verify there are no users")]
+        public bool NoUsers()
+        {
+            return !_users.All().Any();
         }
     }
 }

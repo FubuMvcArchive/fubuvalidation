@@ -9,7 +9,7 @@ namespace FubuMVC.Validation.StoryTeller
         {
             return FubuApplication
                 .For<ValidationStoryTellerRegistry>()
-                .StructureMapObjectFactory();
+                .StructureMapObjectFactory(x => x.ForSingletonOf<IUserService>().Use<UserService>());
         }
 
         public class ValidationStoryTellerRegistry : FubuRegistry

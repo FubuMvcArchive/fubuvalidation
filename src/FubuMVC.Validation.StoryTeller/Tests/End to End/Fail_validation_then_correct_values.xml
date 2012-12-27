@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<Test name="Fail validation then correct values" lifecycle="Acceptance">
+  <SystemState>
+    <NoUsers isStep="True" />
+  </SystemState>
+  <CreateUserScreen>
+    <EnterUsername isStep="True" Username="EMPTY" />
+    <EnterPassword isStep="True" Password="Pass" />
+    <VerifyValidationMessages isStep="True">
+      <rows>
+        <row isStep="True" Property="Username" Message="Username - This field is required." />
+      </rows>
+    </VerifyValidationMessages>
+    <EnterUsername isStep="True" Username="Test" />
+    <NoMessages isStep="True" />
+    <ClickCreate isStep="True" />
+    <VerifyTheUsers isStep="True">
+      <rows>
+        <row isStep="True" Username="Test" />
+      </rows>
+    </VerifyTheUsers>
+  </CreateUserScreen>
+</Test>

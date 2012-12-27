@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Test name="No user is created if validation fails" lifecycle="Acceptance">
+  <SystemState>
+    <NoUsers isStep="True" />
+  </SystemState>
+  <CreateUserScreen>
+    <EnterUsername isStep="True" Username="EMPTY" />
+    <EnterPassword isStep="True" Password="password" />
+    <ClickCreate isStep="True" />
+    <NoUsers isStep="True" />
+  </CreateUserScreen>
+</Test>

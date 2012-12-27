@@ -28,6 +28,11 @@ namespace FubuMVC.Validation.UI
                 url = request.Get<IUrlRegistry>().RemoteRule()
             };
 
+            if(!data.rules.Any())
+            {
+                return;
+            }
+
             tag.Data("remote-rule", data);
         }
     }

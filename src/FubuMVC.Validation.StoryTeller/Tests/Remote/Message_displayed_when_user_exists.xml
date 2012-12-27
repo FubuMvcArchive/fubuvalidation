@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<Test name="Message displayed when user exists" lifecycle="Acceptance">
+  <SystemState>
+    <TheUsersAre isStep="True">
+      <Rows>
+        <row isStep="True" Username="Test" />
+      </Rows>
+    </TheUsersAre>
+  </SystemState>
+  <CreateUserScreen>
+    <EnterUsername isStep="True" Username="Test" />
+    <EnterPassword isStep="True" Password="Password" />
+    <VerifyValidationMessages isStep="True">
+      <rows>
+        <row isStep="True" Property="Username" Message="Username - Username 'Test' already exists" />
+      </rows>
+    </VerifyValidationMessages>
+  </CreateUserScreen>
+</Test>

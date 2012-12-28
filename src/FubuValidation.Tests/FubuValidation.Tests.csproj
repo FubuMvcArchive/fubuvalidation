@@ -106,7 +106,6 @@
     <Compile Include="ValidationContextTester.cs" />
     <Compile Include="ValidationGraphTester.cs" />
     <Compile Include="ValidationPlanTester.cs" />
-    <Compile Include="ValidationRegistryTester.cs" />
     <Compile Include="ValidationStepTester.cs" />
     <Compile Include="ValidatorTester.cs" />
   </ItemGroup>

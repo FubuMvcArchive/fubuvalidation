@@ -14,7 +14,7 @@ namespace FubuMVC.Validation.StoryTeller
             _page = page;
         }
 
-        public FubuHtmlDocument<IntegrationModel> get_integration(User request)
+        public FubuHtmlDocument<IntegrationModel> get_integration(IntegrationModel request)
         {
             _page.Add(new HtmlTag("h1").Text("All The Rules"));
             _page.Add(createForm());

@@ -6,7 +6,6 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
 using FubuValidation;
-using FubuValidation.Fields;
 
 namespace FubuMVC.Validation.Remote
 {

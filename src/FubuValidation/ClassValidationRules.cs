@@ -36,8 +36,6 @@ namespace FubuValidation
             yield break;
         }
 
-        
-
         public class RuleRegistrationExpression
         {
             private Func<Accessor, IFieldValidationRule> _ruleSource;

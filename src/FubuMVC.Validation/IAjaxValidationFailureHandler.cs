@@ -1,5 +1,4 @@
-﻿using System.Net;
-using FubuMVC.Core.Runtime;
+﻿using FubuMVC.Core.Runtime;
 using FubuValidation;
 
 namespace FubuMVC.Validation

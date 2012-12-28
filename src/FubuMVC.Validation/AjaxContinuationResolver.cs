@@ -9,27 +9,24 @@ namespace FubuMVC.Validation
         AjaxContinuation Resolve(Notification notification);
     }
 
-    public interface IAjaxContinuationDecorator
+    public interface IAjaxContinuationModifier
     {
-        AjaxContinuation Enrich(AjaxContinuation continuation, Notification notification);
+        void Modify(AjaxContinuation continuation, Notification notification);
     }
 
      public class AjaxContinuationResolver : IAjaxContinuationResolver
     {
-        private readonly IEnumerable<IAjaxContinuationDecorator> _decorators;
+        private readonly IEnumerable<IAjaxContinuationModifier> _modifiers;
 
-        public AjaxContinuationResolver(IEnumerable<IAjaxContinuationDecorator> decorators)
+        public AjaxContinuationResolver(IEnumerable<IAjaxContinuationModifier> modifiers)
         {
-            _decorators = decorators;
+            _modifiers = modifiers;
         }
 
         public AjaxContinuation Resolve(Notification notification)
         {
             var continuation = AjaxValidation.BuildContinuation(notification);
-            _decorators.Each(d =>
-            {
-                continuation = d.Enrich(continuation, notification);
-            });
+            _modifiers.Each(x => x.Modify(continuation, notification));
 
             return continuation;
         }

@@ -2,27 +2,43 @@ using FubuMVC.Core.Ajax;
 using FubuTestingSupport;
 using FubuValidation;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace FubuMVC.Validation.Tests
 {
     [TestFixture]
-    public class AjaxContinuationResolverTester : InteractionContext<AjaxContinuationResolver>
+    public class AjaxContinuationResolverTester
     {
-        [Test]
-        public void should_decorate_continuation()
+        private AjaxContinuationResolver theResolver;
+        private RecordingAjaxContinuationModifier theModifier;
+        private Notification theNotification;
+
+        [SetUp]
+        public void SetUp()
         {
-            var notification = new Notification();
-            var continuation = new AjaxContinuation();
+            theModifier = new RecordingAjaxContinuationModifier();
+            theResolver = new AjaxContinuationResolver(new[] { theModifier });
+            theNotification = new Notification();
 
-            MockFor<IAjaxContinuationDecorator>()
-                .Expect(d => d.Enrich(Arg<AjaxContinuation>.Is.NotNull, Arg<Notification>.Is.Same(notification)))
-                .Return(continuation);
+            theResolver.Resolve(theNotification);
+        }
 
-            ClassUnderTest
-                .Resolve(notification);
+        [Test]
+        public void modifies_the_continuation()
+        {
+            theModifier.Continuation.ShouldNotBeNull();
+            theModifier.Notification.ShouldBeTheSameAs(theNotification);
+        }
 
-            VerifyCallsFor<IAjaxContinuationDecorator>();
+        public class RecordingAjaxContinuationModifier : IAjaxContinuationModifier
+        {
+            public AjaxContinuation Continuation { get; private set; }
+            public Notification Notification { get; private set; }
+
+            public void Modify(AjaxContinuation continuation, Notification notification)
+            {
+                Continuation = continuation;
+                Notification = notification;
+            }
         }
     }
 }

@@ -117,7 +117,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fixtures\IntegrationScreenFixture.cs" />
     <Compile Include="Fixtures\SystemStateFixture.cs" />
+    <Compile Include="IntegrationEndpoint.cs" />
+    <Compile Include="IntegrationModel.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Fixtures\CreateUserScreenFixture.cs" />
     <Compile Include="IUserService.cs" />

@@ -60,6 +60,10 @@
         form.bindAll(selector, 'focusin focusout keyup', function () {
             elementHandler($(this), form);
         });
+
+        form.bindAll('select', 'change click', function () {
+            elementHandler($(this), form);
+        });
     }
 
     $.fn.storeNotification = function (notification) {

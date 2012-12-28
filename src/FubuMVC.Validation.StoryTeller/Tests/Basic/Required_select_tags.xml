@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<Test name="Required select tags" lifecycle="Regression">
+  <SelectTagScreen>
+    <EnterList isStep="True" List="EMPTY" />
+    <ClickTheSubmitButton isStep="True" />
+    <VerifyValidationMessages isStep="True">
+      <rows>
+        <row isStep="True" Property="List" Message="List - This field is required." />
+      </rows>
+    </VerifyValidationMessages>
+    <EnterList isStep="True" List="1" />
+    <NoMessages isStep="True" />
+  </SelectTagScreen>
+</Test>

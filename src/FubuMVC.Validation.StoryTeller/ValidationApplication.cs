@@ -1,4 +1,5 @@
 ﻿using FubuMVC.Core;
+using FubuMVC.Core.UI;
 using FubuMVC.StructureMap;
 
 namespace FubuMVC.Validation.StoryTeller
@@ -18,6 +19,9 @@ namespace FubuMVC.Validation.StoryTeller
             {
                 Actions.IncludeType<CreateUserEndpoint>();
                 Actions.IncludeType<IntegrationEndpoint>();
+                Actions.IncludeType<SelectTagEndpoint>();
+
+                Import<HtmlConventionRegistry>(x => x.Editors.IfPropertyIs<SimpleList>().BuildBy<SimpleListBuilder>());
 
                 AlterSettings<ValidationSettings>(x => x.Remotes.Include<UniqueUsernameRule>());
             }

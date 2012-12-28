@@ -143,7 +143,7 @@ namespace FubuValidation.Tests.Fields
             return _rules[holder];
         }
 
-        public void Validate()
+        public void AssertIsValid()
         {
             throw new NotImplementedException();
         }

@@ -14,7 +14,7 @@ namespace FubuValidation.Fields
                 .SelectMany(x => x.RulesFor(property));
         }
 
-        public void Validate()
+        public void AssertIsValid()
         {
             
         }

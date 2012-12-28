@@ -5,21 +5,10 @@ using FubuMVC.Validation.Remote;
 
 namespace FubuMVC.Validation.UI
 {
-    public class RemoteValidationElementModifier : IElementModifier
+    public class RemoteValidationElementModifier : InputElementModifier
     {
-        public bool Matches(ElementRequest token)
+        protected override void modify(ElementRequest request)
         {
-            return true;
-        }
-
-        public void Modify(ElementRequest request)
-        {
-            var tag = request.CurrentTag;
-            if (tag == null || !tag.IsInputElement())
-            {
-                return;
-            }
-
             var graph = request.Get<RemoteRuleGraph>();
             var rules = graph.RulesFor(request.Accessor);
             var data = new RemoteValidationDef
@@ -28,12 +17,12 @@ namespace FubuMVC.Validation.UI
                 url = request.Get<IUrlRegistry>().RemoteRule()
             };
 
-            if(!data.rules.Any())
+            if (!data.rules.Any())
             {
                 return;
             }
 
-            tag.Data("remote-rule", data);
+            request.CurrentTag.Data("remote-rule", data);
         }
     }
 

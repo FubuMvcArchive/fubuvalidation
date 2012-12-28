@@ -23,6 +23,14 @@ namespace FubuMVC.Validation
             {
                 x.Editors.Add(new FieldValidationElementModifier());
                 x.Editors.Add(new RemoteValidationElementModifier());
+                x.Editors.Add(new DateElementModifier());
+                x.Editors.Add(new NumberElementModifier());
+                x.Editors.Add(new MaximumLengthModifier());
+                x.Editors.Add(new MinimumLengthModifier());
+                x.Editors.Add(new RangeLengthModifier());
+                x.Editors.Add(new MinValueModifier());
+                x.Editors.Add(new MaxValueModifier());
+
                 
                 x.Forms.Add(new FormValidationSummaryModifier());
                 x.Forms.Add(new FormActivationModifier());

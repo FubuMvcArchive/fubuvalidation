@@ -4,21 +4,10 @@ using FubuValidation;
 
 namespace FubuMVC.Validation.UI
 {
-    public class FieldValidationElementModifier : IElementModifier
+    public class FieldValidationElementModifier : InputElementModifier
     {
-        public bool Matches(ElementRequest token)
+        protected override void modify(ElementRequest request)
         {
-            return true;
-        }
-
-        public void Modify(ElementRequest request)
-        {
-            var tag = request.CurrentTag;
-            if (tag == null || !tag.IsInputElement())
-            {
-                return;
-            }
-
             var rules = request.Get<ValidationGraph>().FieldRulesFor(request.Accessor);
             var modifier = request.Get<IFieldValidationModifier>();
 

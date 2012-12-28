@@ -11,9 +11,15 @@ namespace FubuMVC.Validation.UI
 
         static CssValidationAnnotationStrategy()
         {
-            Classes[typeof (RequiredFieldRule)] = "required";
-            Classes[typeof (GreaterThanZeroRule)] = "greater-than-zero";
-            Classes[typeof (GreaterOrEqualToZeroRule)] = "greater-equal-zero";
+            defineClass<RequiredFieldRule>("required");
+            defineClass<GreaterThanZeroRule>("greater-than-zero");
+            defineClass<GreaterOrEqualToZeroRule>("greater-equal-zero");
+            defineClass<EmailFieldRule>("email");
+        }
+
+        private static void defineClass<T>(string css)
+        {
+            Classes[typeof (T)] = css;
         }
 
         public bool Matches(IFieldValidationRule rule)

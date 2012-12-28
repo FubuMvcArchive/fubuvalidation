@@ -96,7 +96,7 @@ namespace FubuValidation
                 return _rules;
             }
 
-            public void Validate()
+            public void AssertIsValid()
             {
             }
         }

@@ -29,7 +29,7 @@ namespace FubuValidation.Fields
             yield return _ruleSource(property);
         }
 
-        void IFieldValidationSource.Validate()
+        void IFieldValidationSource.AssertIsValid()
         {
             if (_filter == null) throw new FubuValidationException("Missing filter on validation convention");
         }

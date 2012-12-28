@@ -101,7 +101,7 @@ namespace FubuValidation.Tests
             throw new NotImplementedException();
         }
 
-        public void Validate()
+        public void AssertIsValid()
         {
             throw new NotImplementedException();
         }

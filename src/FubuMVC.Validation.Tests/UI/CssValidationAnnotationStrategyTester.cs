@@ -43,6 +43,12 @@ namespace FubuMVC.Validation.Tests.UI
         }
 
         [Test]
+        public void matches_email_rule()
+        {
+            theStrategy.Matches(new EmailFieldRule()).ShouldBeTrue();
+        }
+
+        [Test]
         public void does_not_match_others()
         {
             theStrategy.Matches(new MinimumLengthRule(5)).ShouldBeFalse();
@@ -67,6 +73,13 @@ namespace FubuMVC.Validation.Tests.UI
         {
             theStrategy.Modify(theRequest, new GreaterOrEqualToZeroRule());
             theTag.HasClass("greater-equal-zero").ShouldBeTrue();
+        }
+
+        [Test]
+        public void adds_the_email_css_class()
+        {
+            theStrategy.Modify(theRequest, new EmailFieldRule());
+            theTag.HasClass("email").ShouldBeTrue();
         }
 
         public class CssTarget

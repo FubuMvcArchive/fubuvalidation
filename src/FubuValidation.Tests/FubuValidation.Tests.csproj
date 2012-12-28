@@ -71,11 +71,15 @@
     <Compile Include="ContinuationRuleTester.cs" />
     <Compile Include="Fields\attribute_scanning_tester.cs" />
     <Compile Include="Fields\ConditionalFieldRuleTester.cs" />
+    <Compile Include="Fields\EmailFieldRuleTester.cs" />
     <Compile Include="Fields\FieldAccessRuleRegistryTester.cs" />
     <Compile Include="Fields\FieldRulesRegistryTester.cs" />
     <Compile Include="Fields\FieldValidationQueryTester.cs" />
     <Compile Include="Fields\LambdaFieldValidationSourceTester.cs" />
+    <Compile Include="Fields\MaxValueFieldRuleTester.cs" />
     <Compile Include="Fields\MinimumLengthRuleTester.cs" />
+    <Compile Include="Fields\MinValueFieldRuleTester.cs" />
+    <Compile Include="Fields\RangeLengthFieldRuleTester.cs" />
     <Compile Include="Fields\when_evaluating_the_collection_length_rule.cs" />
     <Compile Include="Fields\RequiredFieldRuleTester.cs" />
     <Compile Include="IValidatedRuleSourceTester.cs" />

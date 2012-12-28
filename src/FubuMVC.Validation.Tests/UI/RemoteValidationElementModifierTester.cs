@@ -52,11 +52,9 @@ namespace FubuMVC.Validation.Tests.UI
         {
             theModifier.Modify(theRequest);
 
-            theRequest.CurrentTag.Data<RemoteValidationDef>("remote-rule", def =>
-            {
-                def.url.ShouldEqual(theUrls.RemoteRule());
-                def.rules.ShouldHaveTheSameElementsAs(theRemoteRule.ToHash());
-            });
+            var def = theRequest.CurrentTag.Data("remote-rule").As<RemoteValidationDef>();
+            def.url.ShouldEqual(theUrls.RemoteRule());
+            def.rules.ShouldHaveTheSameElementsAs(theRemoteRule.ToHash());
         }
         
         [Test]

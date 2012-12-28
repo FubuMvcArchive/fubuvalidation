@@ -2,6 +2,7 @@
 using FubuCore;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Assets;
+using FubuMVC.Core.Http;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.UI.Forms;
@@ -31,6 +32,7 @@ namespace FubuMVC.Validation.Tests.UI
             var services = new InMemoryServiceLocator();
             services.Add<IChainResolver>(new ChainResolutionCache(new TypeResolver(), theGraph));
             services.Add(theRequirements);
+            services.Add<ICurrentHttpRequest>(new StandInCurrentHttpRequest());
 
             var request = new FormRequest(new ChainSearch { Type = typeof(T) }, new T());
             request.Attach(services);

@@ -60,9 +60,19 @@ namespace FubuValidation
             return _plans[type];
         }
 
+        public void Import(IValidationRegistration registration)
+        {
+            registration.Register(this);
+        }
+
         public static ValidationGraph BasicGraph()
         {
             return new ValidationGraph(FieldRulesRegistry.BasicRegistry(), new IValidationSource[0]);
+        }
+
+        public static ValidationGraph For(IFieldRulesRegistry registry)
+        {
+            return new ValidationGraph(registry, new IValidationSource[0]);
         }
 
         /// <summary>

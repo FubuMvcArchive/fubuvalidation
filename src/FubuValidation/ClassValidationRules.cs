@@ -7,6 +7,21 @@ using FubuValidation.Fields;
 
 namespace FubuValidation
 {
+    public interface IFieldConditionalExpression
+    {
+        void If(IFieldRuleCondition condition);
+        void If<T>() where T : IFieldRuleCondition, new();
+    }
+
+    public interface IRuleRegistrationExpression : IFieldConditionalExpression
+    {
+    }
+
+    public interface IFieldValidationExpression : IFieldConditionalExpression
+    {
+        IFieldValidationExpression Register(IFieldValidationRule rule);
+    }
+
     public class ClassValidationRules<T> : IValidationRegistration where T : class
     {
         private readonly IList<RuleRegistrationExpression> _rules = new List<RuleRegistrationExpression>();
@@ -26,23 +41,18 @@ namespace FubuValidation
             return new FieldValidationExpression(this, property.ToAccessor());
         }
 
-        void IValidationRegistration.RegisterFieldRules(IFieldRulesRegistry registration)
+        void IValidationRegistration.Register(ValidationGraph graph)
         {
-            _rules.Each(r => r.Register(registration));
+            _rules.Each(r => r.Register(graph.Fields));
         }
 
-        IEnumerable<IFieldValidationSource> IValidationRegistration.FieldSources()
-        {
-            yield break;
-        }
-
-        public class RuleRegistrationExpression
+        public class RuleRegistrationExpression : IRuleRegistrationExpression
         {
             private Func<Accessor, IFieldValidationRule> _ruleSource;
             private readonly IEnumerable<Accessor> _accessors;
 
             public RuleRegistrationExpression(Func<Accessor, IFieldValidationRule> ruleSource, Accessor accessor)
-                : this(ruleSource, new Accessor[]{accessor})
+                : this(ruleSource, new[] { accessor })
             {
             }
 
@@ -52,10 +62,25 @@ namespace FubuValidation
                 _accessors = accessors;
             }
 
-            public void If(Func<T, bool> filter)
+            public void If(IFieldRuleCondition condition)
             {
                 var innerSource = _ruleSource;
-                _ruleSource = a => new ConditionalFieldRule<T>(filter, innerSource(a));
+                _ruleSource = a => new ConditionalFieldRule<T>(condition, innerSource(a));
+            }
+
+            public void If<TCondition>() where TCondition : IFieldRuleCondition, new()
+            {
+                If(new TCondition());
+            }
+
+            public void If(Func<T, bool> condition)
+            {
+                If(FieldRuleCondition.For(condition));
+            }
+
+            public void If(Func<T, ValidationContext, bool> condition)
+            {
+                If(FieldRuleCondition.For(condition));
             }
 
             internal void Register(IFieldRulesRegistry registration)
@@ -64,7 +89,7 @@ namespace FubuValidation
             } 
         }
 
-        public class FieldValidationExpression
+        public class FieldValidationExpression : IFieldValidationExpression
         {
             private readonly ClassValidationRules<T> _parent;
             private readonly Accessor _accessor;
@@ -76,17 +101,24 @@ namespace FubuValidation
                 _accessor = accessor;
             }
 
-            public void If(Func<T, bool> filter)
+            public void If(IFieldRuleCondition condition)
             {
-                _lastRule.If(filter);
+                _lastRule.If(condition);
             }
 
-            private FieldValidationExpression register(IFieldValidationRule rule)
+            public void If<TCondition>() where TCondition : IFieldRuleCondition, new()
             {
-                _lastRule = new RuleRegistrationExpression(a => rule, _accessor);
-                _parent._rules.Add(_lastRule);
+                If(new TCondition());
+            }
 
-                return this;
+            public void If(Func<T, bool> condition)
+            {
+                If(FieldRuleCondition.For(condition));
+            }
+
+            public void If(Func<T, ValidationContext, bool> condition)
+            {
+                If(FieldRuleCondition.For(condition));
             }
 
             public FieldValidationExpression MaximumLength(int length)
@@ -107,6 +139,24 @@ namespace FubuValidation
             public FieldValidationExpression Required()
             {
                 return register(new RequiredFieldRule());
+            }
+
+            public FieldValidationExpression Email()
+            {
+                return register(new EmailFieldRule());
+            }
+
+            private FieldValidationExpression register(IFieldValidationRule rule)
+            {
+                _lastRule = new RuleRegistrationExpression(a => rule, _accessor);
+                _parent._rules.Add(_lastRule);
+
+                return this;
+            }
+
+            IFieldValidationExpression IFieldValidationExpression.Register(IFieldValidationRule rule)
+            {
+                return register(rule);
             }
         }
     }

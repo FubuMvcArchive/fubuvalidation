@@ -114,6 +114,7 @@
     <Compile Include="UI\RangeLengthModifier.cs" />
     <Compile Include="UI\RemoteValidationElementModifier.cs" />
     <Compile Include="UI\ValidationSummarySource.cs" />
+    <Compile Include="ValidationRegistrationActivator.cs" />
     <Compile Include="ValidationSummary.cs" />
     <Compile Include="ValidationUrlRegistryExtensions.cs" />
     <Compile Include="ValidationConvention.cs" />

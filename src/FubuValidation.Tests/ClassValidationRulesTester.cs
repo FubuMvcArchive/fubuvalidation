@@ -23,7 +23,9 @@ namespace FubuValidation.Tests
         private IEnumerable<IFieldValidationRule> rulesFor(Expression<Func<ClassValidationRulesTarget, object>> expression)
         {
             var registry = new FieldRulesRegistry(new IFieldValidationSource[0], new TypeDescriptorCache());
-            registry.Import(theRules);
+            var graph = ValidationGraph.For(registry);
+
+            graph.Import(theRules);
 
             return registry.RulesFor(typeof (ClassValidationRulesTarget)).RulesFor(expression.ToAccessor());
         }
@@ -51,8 +53,11 @@ namespace FubuValidation.Tests
             var conditionalRule = rulesFor(x => x.Province).Single().ShouldBeOfType<ConditionalFieldRule<ClassValidationRulesTarget>>();
 
             conditionalRule.Inner.ShouldBeOfType<RequiredFieldRule>();
-            conditionalRule.Condition(new ClassValidationRulesTarget(){Country = "United States"}).ShouldBeFalse();
-            conditionalRule.Condition(new ClassValidationRulesTarget(){Country = "Canada"}).ShouldBeTrue();
+
+
+
+            conditionalRule.Condition.Matches(ValidationContext.For(new ClassValidationRulesTarget() { Country = "United States" })).ShouldBeFalse();
+            conditionalRule.Condition.Matches(ValidationContext.For(new ClassValidationRulesTarget() { Country = "Canada" })).ShouldBeTrue();
         }
 
         [Test]
@@ -75,7 +80,7 @@ namespace FubuValidation.Tests
         [Test]
         public void register_maximum_length_conditionally()
         {
-            Func<ClassValidationRulesTarget, bool> filter = x => x.Country == "Canada";
+            var filter = FieldRuleCondition.For<ClassValidationRulesTarget>(x => x.Country == "Canada");
             theRules.Property(x => x.Name).MaximumLength(19).If(filter);
             rulesFor(x => x.Name).Single().ShouldBeOfType<ConditionalFieldRule<ClassValidationRulesTarget>>()
                 .Inner

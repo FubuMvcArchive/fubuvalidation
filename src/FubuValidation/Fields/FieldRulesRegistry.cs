@@ -63,11 +63,6 @@ namespace FubuValidation.Fields
             RulesFor(accessor.OwnerType).ForRule<T>(accessor, continuation);
         }
 
-        public void Import(IValidationRegistration registration)
-        {
-            registration.RegisterFieldRules(this);
-        }
-
         public void Register(Type type, Accessor accessor, IFieldValidationRule rule)
         {
             RulesFor(type).AddRule(accessor, rule);

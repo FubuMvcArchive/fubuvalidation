@@ -70,6 +70,7 @@
     <Compile Include="Fields\FieldValidationRuleExtensions.cs" />
     <Compile Include="Fields\GreaterOrEqualToZeroRule.cs" />
     <Compile Include="Fields\GreaterThanZeroRule.cs" />
+    <Compile Include="Fields\IFieldRuleCondition.cs" />
     <Compile Include="Fields\IFieldRulesRegistry.cs" />
     <Compile Include="Fields\IFieldValidationQuery.cs" />
     <Compile Include="Fields\IFieldValidationRule.cs" />

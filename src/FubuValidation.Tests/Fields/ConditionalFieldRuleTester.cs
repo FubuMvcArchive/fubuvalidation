@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuValidation.Fields;
 using NUnit.Framework;
@@ -14,9 +16,10 @@ namespace FubuValidation.Tests.Fields
         [SetUp]
         public void SetUp()
         {
+            var condition = FieldRuleCondition.For<ConditionalFieldRuleTester>(x => x.Matches);
+            
             theInnerRule = MockRepository.GenerateMock<IFieldValidationRule>();
-
-            theConditionalRule = new ConditionalFieldRule<ConditionalFieldRuleTester>(x => x.Matches, theInnerRule);
+            theConditionalRule = new ConditionalFieldRule<ConditionalFieldRuleTester>(condition, theInnerRule);
         }
 
         [Test]

@@ -17,6 +17,8 @@ namespace FubuMVC.Validation
             SetServiceIfNone(typeof(IValidationFilter<>), typeof(ValidationFilter<>));
             SetServiceIfNone<IFieldValidationModifier, FieldValidationModifier>();
 
+            // Order is kind of important here
+            AddService<IActivator, ValidationRegistrationActivator>();
             AddService<IActivator, RemoteRuleGraphActivator>();
             AddService<IValidationAnnotationStrategy, CssValidationAnnotationStrategy>();
         }

@@ -177,6 +177,7 @@
     <Compile Include="ValidationConventionTester.cs" />
     <Compile Include="ValidationFilterTester.cs" />
     <Compile Include="DefaultValidationFilterTester.cs" />
+    <Compile Include="ValidationRegistrationActivatorTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Validation\FubuMVC.Validation.csproj">

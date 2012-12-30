@@ -1,10 +1,11 @@
 ﻿using System;
+using FubuCore.Reflection;
 
 namespace FubuValidation.Fields
 {
     public interface IFieldRuleCondition
     {
-        bool Matches(ValidationContext context);
+        bool Matches(Accessor accessor, ValidationContext context);
     }
 
     public static class FieldRuleCondition
@@ -34,7 +35,7 @@ namespace FubuValidation.Fields
             _condition = condition;
         }
 
-        public bool Matches(ValidationContext context)
+        public bool Matches(Accessor accessor, ValidationContext context)
         {
             var target = context.Target as T;
             return target != null && _condition(target, context);

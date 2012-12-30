@@ -17,7 +17,7 @@ namespace FubuValidation.Fields
 
         public void Validate(Accessor accessor, ValidationContext context)
         {
-            if(_condition.Matches(context))
+            if(_condition.Matches(accessor, context))
             {
                 _inner.Validate(accessor, context);
             }

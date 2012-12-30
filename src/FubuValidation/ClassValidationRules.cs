@@ -121,6 +121,11 @@ namespace FubuValidation
                 If(FieldRuleCondition.For(condition));
             }
 
+            public void IfValid()
+            {
+                If<IsValid>();
+            }
+
             public FieldValidationExpression MaximumLength(int length)
             {
                 return register(new MaximumLengthRule(length));

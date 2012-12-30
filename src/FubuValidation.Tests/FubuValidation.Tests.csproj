@@ -82,6 +82,7 @@
     <Compile Include="Fields\RangeLengthFieldRuleTester.cs" />
     <Compile Include="Fields\when_evaluating_the_collection_length_rule.cs" />
     <Compile Include="Fields\RequiredFieldRuleTester.cs" />
+    <Compile Include="IsValidTester.cs" />
     <Compile Include="IValidatedRuleSourceTester.cs" />
     <Compile Include="Models\CompositeModel.cs" />
     <Compile Include="Models\ContactModel.cs" />

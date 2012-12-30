@@ -56,8 +56,8 @@ namespace FubuValidation.Tests
 
 
 
-            conditionalRule.Condition.Matches(ValidationContext.For(new ClassValidationRulesTarget() { Country = "United States" })).ShouldBeFalse();
-            conditionalRule.Condition.Matches(ValidationContext.For(new ClassValidationRulesTarget() { Country = "Canada" })).ShouldBeTrue();
+            conditionalRule.Condition.Matches(null, ValidationContext.For(new ClassValidationRulesTarget() { Country = "United States" })).ShouldBeFalse();
+            conditionalRule.Condition.Matches(null, ValidationContext.For(new ClassValidationRulesTarget() { Country = "Canada" })).ShouldBeTrue();
         }
 
         [Test]

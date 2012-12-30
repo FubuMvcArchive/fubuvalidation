@@ -56,6 +56,12 @@ namespace FubuMVC.Validation.Tests
             ValidationRegistrationActivator.IsValidationRegistration(typeof(ClassValidationRules<>)).ShouldBeFalse();
         }
 
+        [Test]
+        public void no_match_for_non_validation_registration_types()
+        {
+            ValidationRegistrationActivator.IsValidationRegistration(typeof(FieldValidationQuery)).ShouldBeFalse();
+        }
+
         public class BadRules : ClassValidationRules<RegistrationTarget>
         {
             public BadRules(string test) { }

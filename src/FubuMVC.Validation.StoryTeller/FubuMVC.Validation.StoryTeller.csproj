@@ -117,6 +117,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassValidationModel.cs" />
+    <Compile Include="Fixtures\ClassValidationScreenFixture.cs" />
     <Compile Include="Fixtures\SelectTagScreenFixture.cs" />
     <Compile Include="Fixtures\IntegrationScreenFixture.cs" />
     <Compile Include="Fixtures\SystemStateFixture.cs" />
@@ -150,6 +152,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Tests\Basic\Required_select_tags.xml" />
+    <Content Include="Tests\Basic\Validation_summary_rendering.xml" />
+    <Content Include="Tests\End to End\Element_modifiers_for_class_validation_rules.xml" />
+    <Content Include="Tests\End to End\Element_modifiers_for_field_validation_rules.xml" />
+    <Content Include="Tests\End to End\Fail_validation_then_correct_values.xml" />
+    <Content Include="Tests\End to End\No_user_is_created_if_validation_fails.xml" />
+    <Content Include="Tests\End to End\User_is_created_when_validation_succeeds.xml" />
+    <Content Include="Tests\Remote\Message_displayed_when_user_exists.xml" />
     <Content Include="validation.xml">
       <SubType>Designer</SubType>
     </Content>

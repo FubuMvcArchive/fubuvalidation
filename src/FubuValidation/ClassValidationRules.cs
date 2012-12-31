@@ -19,7 +19,8 @@ namespace FubuValidation
 
     public interface IFieldValidationExpression : IFieldConditionalExpression
     {
-        IFieldValidationExpression Register(IFieldValidationRule rule);
+        IFieldValidationExpression Rule(IFieldValidationRule rule);
+        IFieldValidationExpression Rule<T>() where T : IFieldValidationRule, new();
     }
 
     public class ClassValidationRules<T> : IValidationRegistration where T : class
@@ -151,6 +152,26 @@ namespace FubuValidation
                 return register(new EmailFieldRule());
             }
 
+            public FieldValidationExpression MinimumLength(int length)
+            {
+                return register(new MinimumLengthRule(length));
+            }
+
+            public FieldValidationExpression MinValue(IComparable bounds)
+            {
+                return register(new MinValueFieldRule(bounds));
+            }
+
+            public FieldValidationExpression RangeLength(int min, int max)
+            {
+                return register(new RangeLengthFieldRule(min, max));
+            }
+
+            public FieldValidationExpression MaxValue(IComparable bounds)
+            {
+                return register(new MaxValueFieldRule(bounds));
+            }
+
             private FieldValidationExpression register(IFieldValidationRule rule)
             {
                 _lastRule = new RuleRegistrationExpression(a => rule, _accessor);
@@ -159,9 +180,14 @@ namespace FubuValidation
                 return this;
             }
 
-            IFieldValidationExpression IFieldValidationExpression.Register(IFieldValidationRule rule)
+            public IFieldValidationExpression Rule(IFieldValidationRule rule)
             {
                 return register(rule);
+            }
+
+            public IFieldValidationExpression Rule<TRule>() where TRule : IFieldValidationRule, new()
+            {
+                return Rule(new TRule());
             }
         }
     }

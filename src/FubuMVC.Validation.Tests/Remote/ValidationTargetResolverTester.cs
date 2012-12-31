@@ -3,6 +3,7 @@ using FubuCore.Binding;
 using FubuCore.Reflection;
 using FubuMVC.Validation.Remote;
 using FubuTestingSupport;
+using FubuValidation.Fields;
 using NUnit.Framework;
 
 namespace FubuMVC.Validation.Tests.Remote

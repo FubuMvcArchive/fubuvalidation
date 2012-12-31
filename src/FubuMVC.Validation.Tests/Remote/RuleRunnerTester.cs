@@ -17,6 +17,7 @@ namespace FubuMVC.Validation.Tests.Remote
         private ValidationContext theContext;
         private RunnerTarget theTarget;
         private Accessor theAccessor;
+        private RemoteFieldRule theRemoteRule;
         private string theValue;
 
         protected override void beforeEach()
@@ -28,13 +29,15 @@ namespace FubuMVC.Validation.Tests.Remote
             theRule = new RecordingFieldValidationRule();
             
             Services.Inject(theRule);
-            
+
+            theRemoteRule = RemoteFieldRule.For(theAccessor, theRule);
+
             MockFor<IValidationTargetResolver>().Stub(x => x.Resolve(theAccessor, theValue)).Return(theTarget);
             Services.Inject<IServiceLocator>(new StructureMapServiceLocator(Services.Container));
 
             MockFor<IValidator>().Stub(x => x.ContextFor(Arg<object>.Is.Same(theTarget), Arg<Notification>.Is.NotNull)).Return(theContext);
 
-            ClassUnderTest.Run(RemoteFieldRule.For(theAccessor, theRule), theValue);
+            ClassUnderTest.Run(theRemoteRule, theValue);
         }
 
         [Test]

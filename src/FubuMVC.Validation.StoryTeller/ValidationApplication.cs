@@ -17,10 +17,7 @@ namespace FubuMVC.Validation.StoryTeller
         {
             public ValidationStoryTellerRegistry()
             {
-                Actions.IncludeType<CreateUserEndpoint>();
-                Actions.IncludeType<IntegrationEndpoint>();
-                Actions.IncludeType<SelectTagEndpoint>();
-                Actions.IncludeType<ClassValidationEndpoint>();
+            	Actions.IncludeClassesSuffixedWithEndpoint();
 
                 Import<HtmlConventionRegistry>(x => x.Editors.IfPropertyIs<SimpleList>().BuildBy<SimpleListBuilder>());
 

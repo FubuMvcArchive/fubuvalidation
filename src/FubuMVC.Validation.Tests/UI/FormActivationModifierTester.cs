@@ -24,7 +24,11 @@ namespace FubuMVC.Validation.Tests.UI
         public void SetUp()
         {
             theRequirements = MockRepository.GenerateStub<IAssetRequirements>();
-            theGraph = BehaviorGraph.BuildFrom(x => x.Actions.IncludeType<FormValidationModeEndpoint>());
+            theGraph = BehaviorGraph.BuildFrom(x =>
+            {
+                x.Actions.IncludeType<FormValidationModeEndpoint>();
+				x.Import<FubuMvcValidation>();
+            });
         }
 
         private FormRequest requestFor<T>() where T : class, new()
@@ -42,19 +46,7 @@ namespace FubuMVC.Validation.Tests.UI
         }
 
         [Test]
-        public void lofi_mode()
-        {
-            FormActivationModifier.ModeFor(requestFor<LoFiTarget>()).ShouldEqual(FormActivationModifier.LoFi);
-        }
-
-        [Test]
-        public void ajax_mode()
-        {
-            FormActivationModifier.ModeFor(requestFor<AjaxTarget>()).ShouldEqual(FormActivationModifier.Ajax);
-        }
-
-        [Test]
-        public void writes_the_validationMode_attribute()
+        public void modifies_the_form()
         {
             var theRequest = requestFor<AjaxTarget>();
             
@@ -74,21 +66,35 @@ namespace FubuMVC.Validation.Tests.UI
 
             theRequirements.AssertWasCalled(x => x.Require("ValidationActivator.js"));
         }
-
-        public class LoFiTarget {}
-        public class AjaxTarget {}
-
-        public class FormValidationModeEndpoint
-        {
-            public LoFiTarget post_lofi(LoFiTarget target)
-            {
-                throw new NotImplementedException();
-            }
-
-            public AjaxContinuation post_ajax(AjaxTarget target)
-            {
-                throw new NotImplementedException();
-            }
-        }
     }
+
+	public class LoFiTarget { }
+	public class AjaxTarget { }
+	[NotValidated]
+	public class NoneTarget { }
+	public class IgnoredTarget {}
+
+	public class FormValidationModeEndpoint
+	{
+		public NoneTarget post_none(NoneTarget target)
+		{
+			throw new NotImplementedException();
+		}
+
+		[NotValidated]
+		public IgnoredTarget post_ignored(IgnoredTarget target)
+		{
+			throw new NotImplementedException();
+		}
+
+		public LoFiTarget post_lofi(LoFiTarget target)
+		{
+			throw new NotImplementedException();
+		}
+
+		public AjaxContinuation post_ajax(AjaxTarget target)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

@@ -77,6 +77,8 @@
     <Compile Include="AjaxContinuationResolver.cs" />
     <Compile Include="FubuMvcValidationServices.cs" />
     <Compile Include="FubuValidationServiceRegistry.cs" />
+    <Compile Include="NotValidatedAttribute.cs" />
+    <Compile Include="NotValidatedAttributeFilter.cs" />
     <Compile Include="RegisterRemoteRuleQuery.cs" />
     <Compile Include="RemoteRuleExpression.cs" />
     <Compile Include="Remote\IRemoteFieldValidationRule.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="UI\RangeLengthModifier.cs" />
     <Compile Include="UI\RemoteValidationElementModifier.cs" />
     <Compile Include="UI\ValidationSummarySource.cs" />
+    <Compile Include="ValidationMode.cs" />
     <Compile Include="ValidationRegistrationActivator.cs" />
     <Compile Include="ValidationSummary.cs" />
     <Compile Include="ValidationUrlRegistryExtensions.cs" />

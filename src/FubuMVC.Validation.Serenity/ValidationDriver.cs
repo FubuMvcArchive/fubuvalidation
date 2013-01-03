@@ -26,13 +26,21 @@ namespace FubuMVC.Validation.Serenity
 
         public IEnumerable<ValidationMessage> AllMessages()
         {
-            return element
-                .FindElements(By.CssSelector(".validation-summary li"))
-                .Select(x => new ValidationMessage
-                {
-                    Property = x.Data("field"),
-                    Message = x.Text
-                }).ToList();
+        	try
+        	{
+				return element
+				.FindElements(By.CssSelector(".validation-summary li"))
+				.Select(x => new ValidationMessage
+				{
+					Property = x.Data("field"),
+					Message = x.Text
+				}).ToList();
+        	}
+        	catch
+        	{
+        		return new ValidationMessage[0];
+        	}
+            
         }
 
         public bool Visible

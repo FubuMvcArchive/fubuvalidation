@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Test name="No validation for ignored models" lifecycle="Regression">
+  <IgnoredEndpointScreen>
+    <EnterName isStep="True" Name="EMPTY" />
+    <ClickTheSubmitButton isStep="True" />
+    <NoMessages isStep="True" />
+  </IgnoredEndpointScreen>
+</Test>

@@ -8,36 +8,22 @@ namespace FubuMVC.Validation.UI
 {
     public class FormActivationModifier : ITagModifier<FormRequest>
     {
-        public static readonly string LoFi = "lofi";
-        public static readonly string Ajax = "ajax";
-
-
         public bool Matches(FormRequest token)
-        {
+        {	
             return true;
         }
 
         public void Modify(FormRequest request)
         {
-            if(request.Chain.ResourceType() == null)
-            {
-                return;
-            }
+            writeScriptRequirements(request);
 
-            request.Services.GetInstance<IAssetRequirements>().Require("ValidationActivator.js");
-
-            var mode = ModeFor(request);
-            request.CurrentTag.Data("validation-mode", mode).AddClass("validated-form");
+        	var mode = ValidationMode.For(request);
+			mode.Modify(request.CurrentTag);
         }
 
-        public static string ModeFor(FormRequest request)
-        {
-            if(request.Chain.ResourceType().CanBeCastTo<AjaxContinuation>())
-            {
-                return Ajax;
-            }
-
-            return LoFi;
-        }
+		private void writeScriptRequirements(FormRequest request)
+		{
+			request.Services.GetInstance<IAssetRequirements>().Require("ValidationActivator.js");
+		}
     }
 }

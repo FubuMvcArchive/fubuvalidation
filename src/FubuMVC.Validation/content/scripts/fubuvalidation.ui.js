@@ -1,11 +1,4 @@
-﻿// fubuvalidation.js v0.5.7
-//
-// Copyright (C)2011 Joshua Arnold
-// Distributed under Apache License, Version 2.0
-//
-// https://github.com/DarthFubuMVC/fubuvalidation-js
-
-(function ($, continuations) {
+﻿(function ($, continuations) {
     _.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
 
     var handlers = [];
@@ -56,7 +49,7 @@
 
             if (!found) {
                 var self = this;
-                var token = $(_.template('<li data-field="{{ label }}"><a href="javascript:void(0);">{{ token }}</a></li>', {
+                var token = $(_.template('<li data-field="{{ field }}"><a href="javascript:void(0);">{{ token }}</a></li>', {
                     field: error.field,
                     label: error.label,
                     token: self.generateToken(error)

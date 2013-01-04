@@ -23,7 +23,6 @@ ValidationHarness.prototype = {
     dispose: function () {
         this.form.resetForm();
         this.server.restore();
-        $.fubuvalidation.ui.reset();
     }
 };
 

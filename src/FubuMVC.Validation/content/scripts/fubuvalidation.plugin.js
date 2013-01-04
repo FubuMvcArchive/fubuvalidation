@@ -1,6 +1,8 @@
-﻿(function ($, validation) {
-    // You can compose this however you like
+﻿(function ($, validation, continuations) {
+	
+    // You can compose these however you like
     validation.Validator = $.fubuvalidation.Core.Validator.basic();
+	validation.Processor = $.fubuvalidation.UI.ValidationProcessor.basic();
 
     function submitHandler(form) {
         form = $(form);
@@ -24,7 +26,7 @@
     function processNotification(notification, form) {
         var continuation = notification.toContinuation();
         continuation.form = form;
-        $.fubuvalidation.ui.process(continuation);
+        validation.Processor.process(continuation);
 
         form.storeNotification(notification);
     }
@@ -105,4 +107,30 @@
         });
     };
 
-} (jQuery, jQuery.fubuvalidation));
+	var _reset = $.fn.resetForm;
+	$.fn.resetForm = function () {
+		var continuation = new continuations.continuation();
+		continuation.success = true;
+		continuation.form = $(this);
+
+		validation.Processor.reset(continuation);
+		
+		return _reset.call(this);
+    };
+	
+	continuations.applyPolicy({
+        matches: function (continuation) {
+            return continuation.matchOnProperty('form', function (form) {
+                return form.size() != 0;
+            });
+        },
+        execute: function (continuation) {
+            if (!continuation.errors) {
+                continuation.errors = [];
+            }
+        	
+            validation.Processor.process(continuation);
+        }
+    });
+
+} (jQuery, jQuery.fubuvalidation, jQuery.continuations));

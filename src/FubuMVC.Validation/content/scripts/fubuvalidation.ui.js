@@ -1,184 +1,205 @@
-﻿(function ($, continuations) {
-    _.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
+﻿(function ($) {
+	var exports = {
+		Strategies: {}
+	};
 
-    var handlers = [];
-    var finders = [];
+	function defineCore(name, clazz) {
+		exports[name] = clazz;
+	}
 
-    var defaultHandler = function () { };
-    defaultHandler.prototype = {
-        matches: function (context) { return true; },
-        reset: function (context) {
-            var self = this;
-            context.container.find('.validation-summary').html('');
-            context.container.hide();
+	function defineStrategy(name, clazz) {
+		exports.Strategies[name] = clazz;
+	}
 
-            $('.error', context.form).each(function () {
-                self.unhighlight($(this));
-            });
-        },
-        process: function (context) {
-            var self = this;
-            var container = $('.validation-container', context.form);
-            context.container = container;
-            context.summary = container.find('ul.validation-summary');
-            this.reset(context);
+	function DefaultHandler() {
+		this.strategies = [];
+	}
 
-            if (context.errors.length == 0) {
-                return;
+	DefaultHandler.prototype = {
+		registerStrategy: function (strategy) {
+			this.strategies.push(strategy);
+		},
+		strategiesMatching: function (continuation, action) {
+			_.each(this.strategies, function (strategy) {
+				if (strategy.matches(continuation)) {
+					action(strategy);
+				}
+			});
+		},
+		process: function (continuation) {
+			this.reset(continuation);
+			this.strategiesMatching(continuation, function (strategy) {
+				strategy.render(continuation);
+			});
+		},
+		reset: function (continuation) {
+			this.strategiesMatching(continuation, function (strategy) {
+				strategy.reset(continuation);
+			});
+		}
+	};
+
+	DefaultHandler.basic = function () {
+		var handler = new DefaultHandler();
+		handler.registerStrategy(new ValidationSummaryStrategy());
+		handler.registerStrategy(new ElementHighlightingStrategy());
+
+		return handler;
+	};
+
+	function ValidationProcessor(handler) {
+		this.handler = handler;
+		this.finders = [];
+	}
+
+	ValidationProcessor.prototype = {
+		useValidationHandler: function (handler) {
+			this.handler = handler;
+		},
+		findElementsWith: function (finder) {
+			this.finders.push(finder);
+		},
+		findElement: function (continuation, key, error) {
+			var searchContext = {
+				key: key,
+				error: error,
+				form: continuation.form
+			};
+
+			for (var i = 0; i < this.finders.length; i++) {
+				var finder = this.finders[i];
+				finder(searchContext);
+			}
+
+			return searchContext.element;
+		},
+		fillElements: function (continuation) {
+			for (var i = 0; i < continuation.errors.length; i++) {
+				var error = continuation.errors[i];
+				if (!error.element && error.field) {
+					error.element = this.findElement(continuation, error.field, error);
+				}
+			}
+		},
+		process: function (continuation) {
+			this.fillElements(continuation);
+			this.handler.process(continuation);
+		},
+		reset: function (continuation) {
+			this.handler.reset(continuation);
+		}
+	};
+
+	ValidationProcessor.basic = function() {
+		var handler = DefaultHandler.basic();
+		var processor = new ValidationProcessor(handler);
+
+		return processor;
+	};
+
+	function tokenFor(error) {
+		return error.label + ' - ' + error.message;
+	}
+
+	function ValidationSummaryStrategy() {
+	}
+
+	ValidationSummaryStrategy.prototype = {
+		matches: function (continuation) {
+			var value = continuation.form.data('validationSummary');
+			return typeof (value) != 'undefined';
+		},
+		summaryContext: function (continuation) {
+			var container = $('.validation-container', continuation.form);
+			return {
+				container: container,
+				summary: container.find('ul.validation-summary')
+			};
+		},
+		reset: function (continuation, context) {
+            if(!context) {
+            	context = this.summaryContext(continuation);
             }
-
-            container.show();
-
-            $.fubuvalidation.ui.eachError(context, function (error) {
-                self.append(context, error);
-                self.highlight(error);
-            });
+			
+            context.summary.html('');
+            context.container.hide();
         },
-        append: function (context, error) {
-            var found = false;
-            context
+		render: function (continuation) {
+			var context = this.summaryContext(continuation);
+			if (continuation.errors.length == 0) {
+				return;
+			}
+
+			context.container.show();
+
+			for(var i = 0; i < continuation.errors.length; i++) {
+				var error = continuation.errors[i];
+				this.append(context, error);
+			}
+		},
+		append: function (context, error) {
+			var found = false;
+			context
 				.summary
                 .find("li[data-field='" + error.field + "']")
                 .each(function () {
-                    if (found) return;
-                    if ($(this).find('a').html() == error.message) {
-                        found = true;
-                        return;
-                    }
+                	if (found) return;
+                	if ($(this).find('a').html() == error.message) {
+                		found = true;
+                	}
                 });
 
-            if (!found) {
-                var self = this;
-                var token = $(_.template('<li data-field="{{ field }}"><a href="javascript:void(0);">{{ token }}</a></li>', {
-                    field: error.field,
-                    label: error.label,
-                    token: self.generateToken(error)
-                }));
-                token.find('a').click(function () {
-                    $.fubuvalidation.ui.findElement(context, error.field).focus();
-                });
-                context.summary.append(token);
-            }
-        },
-        generateToken: function (error) {
-            return _.template('{{ label }} - {{ message }}', error);
-        },
-        highlight: function (error) {
-            if (error.element) {
-                $(error.element).addClass('error');
-            }
-        },
-        unhighlight: function (element) {
-            element.removeClass('error');
-        }
-    };
-    // This instance is registered by default and made public via $.fubuvalidation.ui.defaultHandler
-    var theDefault = new defaultHandler();
+			if (!found) {
+				var token = tokenFor(error);
+				var item = $('<li data-field="' + error.field + '"><a href="javascript:void(0);">' + token + '</a></li>');
+				
+				if(error.element) {
+					item.find('a').click(function() {
+						item.element.focus();
+					});
+				}
+				
+				context.summary.append(item);
+			}
+		}
+	};
+	
+	function ElementHighlightingStrategy() {		
+	}
 
-    var validation = function () {
-        this.init();
-    };
-    validation.prototype = {
-        init: function () {
-            this.setupDefaults();
-        },
-        // this is here for testing
-        reset: function () {
-            handlers.length = 0;
-            finders.length = 0;
+	ElementHighlightingStrategy.prototype = {
+		matches: function (continuation) {
+			var value = continuation.form.data('validationHighlight');
+			return typeof (value) != 'undefined';
+		},
+		reset: function (continuation) {
+			continuation.form.find('.error').each(function() {
+				$(this).removeClass('error');
+			});
+		},
+		render: function (continuation) {
+			this.eachError(continuation, function(error) {
+				error.element.addClass('error');
+			});
+		},
+		eachError: function (continuation, action) {
+			for(var i = 0; i < continuation.errors.length; i++) {
+				var error = continuation.errors[i];
+				if(error.element) {
+					action(error);
+				}
+			}
+		}
+	};
 
-            this.setupDefaults();
-        },
-        setupDefaults: function () {
-            this.findElementsWith(function (searchContext) {
-                searchContext.element = $('#' + searchContext.key, searchContext.form);
-            });
 
-            this.registerHandler(theDefault);
-        },
-        registerHandler: function (handler) {
-            handlers.push(handler);
-            return this;
-        },
-        findHandler: function (context) {
-            var handler;
-            for (var i = 0; i < handlers.length; i++) {
-                var x = handlers[i];
-                if (x.matches(context)) {
-                    handler = x;
-                }
-            }
+	defineCore('DefaultHandler', DefaultHandler);
+	defineCore('ValidationProcessor', ValidationProcessor);
+	defineCore('TokenFor', tokenFor);
 
-            return handler;
-        },
-        findElementsWith: function (finder) {
-            finders.push(finder);
-            return this;
-        },
-        findElement: function (context, key, error) {
-            var searchContext = {
-                key: key,
-                error: error,
-                form: context.form
-            };
+	defineStrategy('Summary', ValidationSummaryStrategy);
+	defineStrategy('Highlighting', ElementHighlightingStrategy);
 
-            for (var i = 0; i < finders.length; i++) {
-                var finder = finders[i];
-                finder(searchContext);
-            }
-
-            return searchContext.element;
-        },
-        toValidationContext: function (continuation) {
-            var self = this;
-            this.eachError(continuation, function (e) {
-                if (!e.element && e.field) {
-                    e.element = self.findElement(continuation, e.field, e);
-                }
-            });
-
-            return continuation;
-        },
-        eachError: function (context, action) {
-            for (var i = 0; i < context.errors.length; i++) {
-                action(context.errors[i]);
-            }
-        },
-        process: function (continuation) {
-            var context = this.toValidationContext(continuation);
-            var handler = this.findHandler(context);
-
-            handler.process(context);
-        }
-    };
-
-    var module = new validation();
-    module.defaultHandler = theDefault;
-    module.defaultHandlerClass = defaultHandler;
-
-    $.extend(true, $, { 'fubuvalidation': { 'ui': module} });
-
-    var reset = $.fn.resetForm;
-    $.fn.resetForm = function () {
-        var context = {
-            form: $(this),
-            container: $('.validation-container', $(this))
-        };
-        $.fubuvalidation.ui.defaultHandler.reset(context);
-        reset.call(this);
-    };
-
-    $.continuations.applyPolicy({
-        matches: function (continuation) {
-            return continuation.matchOnProperty('form', function (form) {
-                return form.size() != 0;
-            });
-        },
-        execute: function (continuation) {
-            if (!continuation.errors) {
-                continuation.errors = [];
-            }
-            $.fubuvalidation.ui.process(continuation);
-        }
-    });
+	$.extend(true, $, { 'fubuvalidation': { 'UI': exports} });
+	
 } (jQuery));

@@ -136,17 +136,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".package-manifest" />
+    <Content Include="content\scripts\fubuvalidation.ui.js" />
     <Content Include="content\scripts\fubuvalidation.core.js" />
     <Content Include="content\scripts\fubuvalidation.plugin.js" />
     <Content Include="content\scripts\fubuvalidation.rules.js" />
-    <Content Include="content\scripts\fubuvalidation.ui.js" />
     <Content Include="content\scripts\fubuvalidation.localization.js" />
+    <Content Include="content\scripts\specs\fubuvalidation.ui.fixture.html" />
     <Content Include="content\scripts\specs\fubuvalidation.plugin.fixture.html" />
     <Content Include="content\scripts\specs\fubuvalidation.localization.spec.js" />
     <Content Include="content\scripts\specs\fubuvalidation.plugin.spec.js" />
     <Content Include="content\scripts\specs\fubuvalidation.rules.spec.js" />
     <Content Include="content\scripts\specs\fubuvalidation.core.spec.js" />
-    <Content Include="content\scripts\specs\fubuvalidation.ui.fixture.html" />
     <Content Include="content\scripts\specs\fubuvalidation.ui.spec.js" />
     <Content Include="content\scripts\ValidationActivator.js" />
     <Content Include="packages.config">

@@ -1,8 +1,274 @@
-﻿var ObjectMother = {
-	continuation: function() {
-		return {
+﻿describe('Default Validation Handler Tester', function() {
+	var theHandler = null;
+
+	beforeEach(function() {
+		theHandler = new $.fubuvalidation.UI.DefaultHandler();
+	});
+
+	it('registers the rendering strategy', function() {
+		var theStrategy = '123546';
+		theHandler.registerStrategy(theStrategy);
+
+		expect(theHandler.strategies).toEqual([theStrategy]);
+	});
+	
+	it('process resets all of the rendering strategies', function() {
+		theHandler.reset = sinon.spy();
+		theHandler.process({ });
+		expect(theHandler.reset.called).toEqual(true);
+	});
+
+	it('process renders the matching strategies', function() {
+		var s1 = {
+			matches: function () { return true; },
+			render: sinon.spy()
+		};
+		
+		var s2 = {
+			matches: function () { return false; },
+			render: sinon.spy()
+		};
+		
+		var s3 = {
+			matches: function () { return true; },
+			render: sinon.spy()
+		};
+		
+		theHandler.reset = sinon.spy();
+
+		theHandler.registerStrategy(s1);
+		theHandler.registerStrategy(s2);
+		theHandler.registerStrategy(s3);
+
+		theHandler.process({ });
+
+		expect(s1.render.called).toEqual(true);
+		expect(s2.render.called).toEqual(false);
+		expect(s3.render.called).toEqual(true);
+	});
+	
+	it('reset resets the matching strategies', function() {
+		var s1 = {
+			matches: function () { return true; },
+			reset: sinon.spy()
+		};
+		
+		var s2 = {
+			matches: function () { return false; },
+			reset: sinon.spy()
+		};
+		
+		var s3 = {
+			matches: function () { return true; },
+			reset: sinon.spy()
+		};
+
+		theHandler.registerStrategy(s1);
+		theHandler.registerStrategy(s2);
+		theHandler.registerStrategy(s3);
+
+		theHandler.reset({ });
+
+		expect(s1.reset.called).toEqual(true);
+		expect(s2.reset.called).toEqual(false);
+		expect(s3.reset.called).toEqual(true);
+	});
+});
+
+describe('ValidationProcessor Tests', function() {
+	var theHandler = null;
+	var theProcessor = null;
+
+	beforeEach(function() {
+		theHandler = {
+			process: sinon.spy(),
+			reset: sinon.spy()
+		};
+
+		theProcessor = new $.fubuvalidation.UI.ValidationProcessor(theHandler);
+	});
+
+	it('replaces the validation handler', function() {
+		var newHandler = { id: '1234' };
+		theProcessor.useValidationHandler(newHandler);
+
+		expect(theProcessor.handler).toEqual(newHandler);
+	});
+
+	it('registers the element finder', function() {
+		var finder = { id: '123' };
+		theProcessor.findElementsWith(finder);
+
+		expect(theProcessor.finders).toEqual([finder]);
+	});
+
+	it('resets the handler', function() {
+		var continuation = { };
+		theProcessor.reset(continuation);
+		
+		expect(theHandler.reset.called).toEqual(true);
+		expect(theHandler.reset.getCall(0).args[0]).toEqual(continuation);
+	});
+});
+
+describe('when finding an element', function() {
+	var theProcessor = null;
+	var theContinuation = null;
+	var theKey = null;
+	var theError = null;
+	var theForm = null;
+	var theSearchContext = null;
+	var theElement = null;
+	var theActualElement = null;
+	
+	var f1 = null;
+	var f2 = null;
+	
+
+	beforeEach(function() {
+		theProcessor = new $.fubuvalidation.UI.ValidationProcessor();
+
+		theKey = '123';
+		theError = { mesasge: 'uh oh' };
+		theForm = { id: '145' };
+		theSearchContext = {
+			key: theKey,
+			error: theError,
+			form: theForm
+		};
+
+		theElement = { id: 1029 };
+		f1 = sinon.spy(function(context) {
+			context.element = theElement;
+		});
+
+		theContinuation = { };
+
+		f2 = sinon.spy();
+
+		theProcessor.findElementsWith(f1);
+		theProcessor.findElementsWith(f2);
+		
+		theActualElement = theProcessor.findElement(theContinuation, theKey, theError);
+	});
+
+	it('calls each finder', function() {
+		expect(f1.called).toEqual(true);
+		expect(f2.called).toEqual(true);
+	});
+
+	it('returns the element from the context', function() {
+		expect(theActualElement).toEqual(theElement);
+	});
+
+});
+
+describe('when filling the element on the continuation error', function() {
+	var theProcessor = null;
+	
+	beforeEach(function() {
+		theProcessor = new $.fubuvalidation.UI.ValidationProcessor();
+		theProcessor.findElement = sinon.stub();
+	});
+
+	it('does nothing if the element already exists', function() {
+		var continuation = {
+			errors: [{ element: '123', field: 'Test' }]
+		};
+
+		theProcessor.fillElements(continuation);
+
+		expect(theProcessor.findElement.called).toEqual(false);
+		expect(continuation.errors[0].element).toEqual('123');
+	});
+	
+	it('does nothing if the field is not specified', function() {
+		var continuation = {
+			errors: [{ }]
+		};
+
+		theProcessor.fillElements(continuation);
+		
+		expect(theProcessor.findElement.called).toEqual(false);
+	});
+
+	it('sets the element', function() {
+		var error = { field: '123' };
+		var element = '345';
+
+		theProcessor.findElement.returns(element);
+		
+		var continuation = {
+			errors: [error]
+		};
+
+		theProcessor.fillElements(continuation);
+		
+		expect(theProcessor.findElement.called).toEqual(true);
+		expect(error.element).toEqual(element);
+	});
+});
+
+describe('when processing the continuation', function() {
+	var theProcessor = null;
+	var theContinuation = null;
+	var theHandler = null;
+	
+	beforeEach(function() {
+		theContinuation = { };
+		theHandler = {
+			process: sinon.spy()			
+		};
+		theProcessor = new $.fubuvalidation.UI.ValidationProcessor(theHandler);
+		theProcessor.fillElements = sinon.spy();
+
+		theProcessor.process(theContinuation);
+	});
+
+	it('fills the elements', function() {
+		expect(theProcessor.fillElements.called).toEqual(true);
+		expect(theProcessor.fillElements.getCall(0).args[0]).toEqual(theContinuation);
+	});
+	
+	it('invokes the handler', function() {
+		expect(theHandler.process.called).toEqual(true);
+		expect(theHandler.process.getCall(0).args[0]).toEqual(theContinuation);
+	});
+});
+
+describe('ValidationSummaryStrategy tests', function() {
+	var theStrategy = null;
+
+	beforeEach(function() {
+		theStrategy = new $.fubuvalidation.UI.Strategies.Summary();
+	});
+
+	it('matches forms with data-validation-summary attribute', function() {
+		var continuation = {
+			form: $('<form data-validation-summary="true" />')
+		};
+
+		expect(theStrategy.matches(continuation)).toEqual(true);
+	});
+	
+	it('does not match forms without data-validation-summary attribute', function() {
+		var continuation = {
+			form: $('<form data-validation-summmmmmmmary="true" />')
+		};
+
+		expect(theStrategy.matches(continuation)).toEqual(false);
+	});
+});
+
+describe('ValidationSummary rendering tests', function () {
+	var theContinuation = null;
+	var theStrategy = null;
+	
+	beforeEach(function() {
+		
+		theContinuation = {
 			correlationId: '123',
-			form: $('#test'),
+			form: $('#ValidationSummaryStrategy'),
 			success: false,
 			errors: [{
 				field: 'FirstName',
@@ -10,112 +276,35 @@
 				message: 'First Name is required'
 			}]
 		};
-	}
-};
-
-describe('fubuvalidation module tests', function() {
-	beforeEach(function() {
-		$.fubuvalidation.ui.reset();
-	});
-	it('should invoke the last registered handler', function() {
-		var invoked = false;
-		var myHandler = {
-			matches: function() { return true; },
-			process: function(context) { invoked = true; }
-		};
 		
-		$.fubuvalidation.ui.registerHandler(myHandler);
-		$.fubuvalidation.ui.process(ObjectMother.continuation());
-		
-		expect(invoked).toEqual(true);
-	});
-	
-	it('should use registered element finders', function() {
-		var context;
-		var myFinder = function(searchContext) {
-			var element = searchContext.element;
-			if(element && element.attr('type') == 'hidden') {
-				var hidden = $('#' + searchContext.key + 'Value', searchContext.form);
-				if(hidden.size() != 0) {
-					searchContext.element = hidden;
-				}
-			}
-			
-			context = searchContext;
-		};
-		
-		$.fubuvalidation.ui.findElementsWith(myFinder);
-		var continuation = ObjectMother.continuation();
-		continuation.errors.push({
-			field: 'LookupProperty',
-            label: 'LookupProperty',
-			message: 'LookupProperty is required'
-		});
-		
-		$.fubuvalidation.ui.process(continuation);
-		
-		expect(context.element.attr('id')).toEqual('LookupPropertyValue');
-	});
-	
-	it('handles empty fields', function() {
-		var continuation = ObjectMother.continuation();
-		continuation.errors.push({
-			field: '',
-			label: '',
-			message: 'LookupProperty is required'
-		});
-		
-		$.fubuvalidation.ui.process(continuation);
-	});
-});
-
-describe('Default validation handler integrated tests', function () {
-	var theContinuation;
-	var process;
-	beforeEach(function() {
-		$.fubuvalidation.ui.reset();
-		theContinuation = ObjectMother.continuation();
-		process = function() {
-			$.fubuvalidation.ui.process(theContinuation);
-		};
-	});
-	
-	it('should show validation summary', function() {
-		process();
-		expect($('#test > .validation-container').is(':visible')).toEqual(true);
+		theStrategy = new $.fubuvalidation.UI.Strategies.Summary();
 	});
 
-	it('should only highlight fields with errors', function() {
-		process();
-		expect($('#FirstName', '#test').hasClass('error')).toEqual(true);
-		expect($('#LastName', '#test').hasClass('error')).toEqual(false);
+	afterEach(function() {
+		theStrategy.reset(theContinuation);
 	});
 	
-	it('should hide summary when validation succeeds', function() {
-		process();
+	it('shows the validation summary', function() {
+		theStrategy.render(theContinuation);
+		expect($('#ValidationSummaryStrategy > .validation-container').is(':visible')).toEqual(true);
+	});
+	
+	it('hides the summary when validation succeeds', function() {
+		theStrategy.render(theContinuation);
 		theContinuation.success = true;
 		theContinuation.errors.length = 0;
-		process();
+		theStrategy.reset(theContinuation);
 		
-		expect($('#test > .validation-container').is(':visible')).toEqual(false);
+		expect($('#ValidationSummaryStrategy > .validation-container').is(':visible')).toEqual(false);
 	});
 	
-	it('should unhighlight fields when validation succeeds', function() {
-		process();
-		theContinuation.success = true;
-		theContinuation.errors.length = 0;
-		process();
-		
-		expect($('#FirstName', '#test').hasClass('error')).toEqual(false);
-	});
-	
-	it('should render messages in summary', function() {
-		process();
+	it('renders the messages in summary', function() {
+		theStrategy.render(theContinuation);
 		var error = theContinuation.errors[0];
-		var token = $.fubuvalidation.ui.defaultHandler.generateToken(error);
+		var token = $.fubuvalidation.UI.TokenFor(error);
 		var found = false;
 		
-		$('#test > .validation-container > .validation-summary > li').each(function() {
+		$('#ValidationSummaryStrategy > .validation-container > .validation-summary > li').each(function() {
 			if($('a', this).html() == token) {
 				found = true;
 			}
@@ -123,76 +312,60 @@ describe('Default validation handler integrated tests', function () {
 		
 		expect(found).toEqual(true);
 	});
-	
-	// this is such a common usage that it should come for free
-	it('should reset default handler when jquery form reset is invoked', function() {
-		$('#LastName', '#test').val('Test');
-		process();
-		$('#test').resetForm();
-		expect($('#FirstName', '#test').hasClass('error')).toEqual(false);
-		expect($('#LastName', '#test').val()).toEqual('');
-	});
 });
 
-describe('jquery.continuations and fubuvalidation.js integration tests', function () {
-    var server;
-    beforeEach(function () {
-        server = sinon.fakeServer.create();
-        $('#test').resetForm();
-    });
-    afterEach(function () {
-        server.restore();
-    });
+describe('ElementHighlightingStrategy tests', function() {
+	var theStrategy = null;
+	var theContinuation = null;
 
-    it('should render errors then clear previous errors when validation succeeds', function () {
-        var theContinuation = ObjectMother.continuation();
-        var continuation = function () {
-            var c = $.extend({}, theContinuation);
-            c.form = null;
-            return JSON.stringify(c);
-        };
-        $.continuations.bind('AjaxStarted', function (request) {
-            server.respondWith([200,
-				{ 'Content-Type': 'application/json', 'X-Correlation-Id': request.correlationId }, continuation()
-			]);
-        });
+	beforeEach(function() {
+		theStrategy = new $.fubuvalidation.UI.Strategies.Highlighting();
+		
+		theContinuation = {
+			correlationId: '123',
+			form: $('#ElementHighlightingStrategy'),
+			success: false,
+			errors: [{
+				field: 'FirstName',
+                label: 'FirstName',
+				message: 'First Name is required',
+				element: $('#FirstName', '#ElementHighlightingStrategy')
+			}]
+		};
+	});
 
-        runs(function () {
-            $('#test').correlatedSubmit();
-            server.respond();
-        });
+	afterEach(function() {
+		theStrategy.reset(theContinuation);
+	});
 
-        waits(500);
+	it('matches forms with data-validation-higlight attribute', function() {
+		var continuation = {
+			form: $('<form data-validation-highlight="true" />')
+		};
 
-        runs(function () {
-            expect($('#FirstName', '#test').hasClass('error')).toEqual(true);
+		expect(theStrategy.matches(continuation)).toEqual(true);
+	});
+	
+	it('does not match forms without data-validation-higlight attribute', function() {
+		var continuation = {
+			form: $('<form data-validation-summary="true" />')
+		};
 
-            var error = theContinuation.errors[0];
-            var token = $.fubuvalidation.ui.defaultHandler.generateToken(error);
-            var found = false;
-
-            $('#test > .validation-container > .validation-summary > li').each(function () {
-                if ($('a', this).html() == token) {
-                    found = true;
-                }
-            });
-
-            expect(found).toEqual(true);
-
-            theContinuation.errors = null; // make sure we can handle the absence of errors
-            theContinuation.success = true;
-
-            $('#test').correlatedSubmit();
-            server.respond();
-        });
-
-        waits(500);
-
-        runs(function () {
-            expect($('#test > .validation-container').is(':visible')).toEqual(false);
-            expect($('#test > .validation-container > .validation-summary > li').size()).toEqual(0);
-
-            expect($('#FirstName', '#test').hasClass('error')).toEqual(false);
-        });
-    });
+		expect(theStrategy.matches(continuation)).toEqual(false);
+	});
+	
+	it('only highlights fields with errors', function() {
+		theStrategy.render(theContinuation);
+		expect($('#FirstName', '#ElementHighlightingStrategy').hasClass('error')).toEqual(true);
+		expect($('#LastName', '#ElementHighlightingStrategy').hasClass('error')).toEqual(false);
+	});
+	
+	it('unhighlights fields when validation succeeds', function() {
+		theStrategy.render(theContinuation);
+		theContinuation.success = true;
+		theContinuation.errors.length = 0;
+		theStrategy.reset(theContinuation);
+		
+		expect($('#FirstName', '#ElementHighlightingStrategy').hasClass('error')).toEqual(false);
+	});
 });

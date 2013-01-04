@@ -165,13 +165,14 @@
     <Compile Include="UI\DefaultValidationSummaryWriterTester.cs" />
     <Compile Include="UI\FieldValidationElementModifierTester.cs" />
     <Compile Include="UI\FieldValidationModifierTester.cs" />
-    <Compile Include="UI\FormActivationModifierTester.cs" />
+    <Compile Include="UI\FormValidationModifierTester.cs" />
     <Compile Include="UI\FormValidationSummaryModifierTester.cs" />
     <Compile Include="UI\MaximumLengthModifierTester.cs" />
     <Compile Include="UI\MinimumLengthModifierTester.cs" />
     <Compile Include="UI\NumberElementModifierTester.cs" />
     <Compile Include="UI\RangeLengthModifierTester.cs" />
     <Compile Include="UI\RemoteValidationElementModifierTester.cs" />
+    <Compile Include="UI\RenderingStrategyTester.cs" />
     <Compile Include="UI\ValidationElementModifierContext.cs" />
     <Compile Include="UI\ValidationElementModifierScenario.cs" />
     <Compile Include="ValidationActionFilterTester.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="ValidationFilterTester.cs" />
     <Compile Include="DefaultValidationFilterTester.cs" />
     <Compile Include="ValidationModeTester.cs" />
+    <Compile Include="ValidationNodeTester.cs" />
     <Compile Include="ValidationRegistrationActivatorTester.cs" />
   </ItemGroup>
   <ItemGroup>

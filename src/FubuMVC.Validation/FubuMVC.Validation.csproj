@@ -91,7 +91,7 @@
     <Compile Include="UI\DefaultValidationSummaryNode.cs" />
     <Compile Include="UI\DefaultValidationSummaryWriter.cs" />
     <Compile Include="UI\FieldValidationElementModifier.cs" />
-    <Compile Include="UI\FormActivationModifier.cs" />
+    <Compile Include="UI\FormValidationModifier.cs" />
     <Compile Include="UI\FormValidationSummaryModifier.cs" />
     <Compile Include="UI\IFieldValidationModifier.cs" />
     <Compile Include="IAjaxValidationFailureHandler.cs" />
@@ -115,8 +115,11 @@
     <Compile Include="UI\NumberElementModifier.cs" />
     <Compile Include="UI\RangeLengthModifier.cs" />
     <Compile Include="UI\RemoteValidationElementModifier.cs" />
+    <Compile Include="UI\RenderingStrategy.cs" />
     <Compile Include="UI\ValidationSummarySource.cs" />
+    <Compile Include="ValidationBehaviorChainExtensions.cs" />
     <Compile Include="ValidationMode.cs" />
+    <Compile Include="ValidationNode.cs" />
     <Compile Include="ValidationRegistrationActivator.cs" />
     <Compile Include="ValidationSummary.cs" />
     <Compile Include="ValidationUrlRegistryExtensions.cs" />

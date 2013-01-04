@@ -15,7 +15,7 @@ using Rhino.Mocks;
 namespace FubuMVC.Validation.Tests.UI
 {
     [TestFixture]
-    public class FormActivationModifierTester
+    public class FormValidationModifierTester
     {
         private BehaviorGraph theGraph;
         private IAssetRequirements theRequirements;
@@ -50,18 +50,31 @@ namespace FubuMVC.Validation.Tests.UI
         {
             var theRequest = requestFor<AjaxTarget>();
             
-            var modifier = new FormActivationModifier();
+            var modifier = new FormValidationModifier();
             modifier.Modify(theRequest);
 
             theRequest.CurrentTag.ToString()
-                .ShouldEqual("<form method=\"post\" action=\"test\" data-validation-mode=\"ajax\" class=\"validated-form\">");
+				.ShouldEqual("<form method=\"post\" action=\"test\" data-validation-mode=\"ajax\" data-validation-summary=\"true\" data-validation-highlight=\"true\" class=\"validated-form\">");
         }
+
+		[Test]
+		public void no_strategies()
+		{
+			var theRequest = requestFor<AjaxTarget>();
+			theRequest.Chain.ValidationNode().Strategies.Clear();
+
+			var modifier = new FormValidationModifier();
+			modifier.Modify(theRequest);
+
+			theRequest.CurrentTag.ToString()
+				.ShouldEqual("<form method=\"post\" action=\"test\" data-validation-mode=\"ajax\" class=\"validated-form\">");
+		}
 
         [Test]
         public void writes_the_validation_activator_requirement()
         {
             var theRequest = requestFor<AjaxTarget>();
-            var modifier = new FormActivationModifier();
+            var modifier = new FormValidationModifier();
             modifier.Modify(theRequest);
 
             theRequirements.AssertWasCalled(x => x.Require("ValidationActivator.js"));

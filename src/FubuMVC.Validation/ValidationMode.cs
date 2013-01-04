@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using FubuCore;
-using FubuMVC.Core.Registration.Nodes;
+﻿using FubuCore;
 using FubuMVC.Core.UI.Forms;
 using HtmlTags;
 
@@ -9,8 +7,8 @@ namespace FubuMVC.Validation
 	public class ValidationMode
 	{
 		public static readonly ValidationMode None = new ValidationMode("None", false);
-		public static readonly ValidationMode LoFi = new ValidationMode("lofi");
-		public static readonly ValidationMode Ajax = new ValidationMode("ajax");
+		public static readonly ValidationMode LoFi = new ValidationMode("LoFi");
+		public static readonly ValidationMode Ajax = new ValidationMode("Ajax");
 
 		private readonly string _value;
 		private readonly bool _modify;
@@ -27,24 +25,19 @@ namespace FubuMVC.Validation
 		{
 			if (!_modify) return;
 
-			form.Data("validation-mode", _value);
+			form.Data("validation-mode", _value.ToLower());
 			form.AddClass("validated-form");
+		}
+
+		public override string ToString()
+		{
+			return "Validation Mode: {0}".ToFormat(_value);
 		}
 
 		public static ValidationMode For(FormRequest request)
 		{
-			var chain = request.Chain;
-			if(chain.OfType<AjaxValidationNode>().Any())
-			{
-				return Ajax;
-			}
-
-			if(chain.OfType<ActionFilter>().Any(x => x.HandlerType.Closes(typeof(ValidationActionFilter<>))))
-			{
-				return LoFi;
-			}
-
-			return None;
+			var validation = request.Chain.ValidationNode();
+			return validation == null ? None : validation.Mode;
 		}
 	}
 }

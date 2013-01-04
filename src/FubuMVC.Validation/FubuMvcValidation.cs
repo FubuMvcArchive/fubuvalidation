@@ -28,7 +28,7 @@ namespace FubuMVC.Validation
 
                 
                 x.Forms.Add(new FormValidationSummaryModifier());
-                x.Forms.Add(new FormActivationModifier());
+                x.Forms.Add(new FormValidationModifier());
             });
 
             registry.Policies.Add<ValidationConvention>();

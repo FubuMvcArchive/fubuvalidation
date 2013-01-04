@@ -20,7 +20,11 @@ namespace FubuMVC.Validation.Tests
             ValidationConvention.ApplyValidation(call);
 
             var nodes = chain.ToArray();
-            var filter = nodes[0].As<ActionFilter>();
+			var node = nodes[0].As<ValidationNode>();
+
+			node.Mode.ShouldEqual(ValidationMode.LoFi);
+
+			var filter = node.Inner.As<ActionFilter>();
             filter.HandlerType.ShouldEqual(typeof (ValidationActionFilter<string>));
         }
 
@@ -35,7 +39,10 @@ namespace FubuMVC.Validation.Tests
             ValidationConvention.ApplyValidation(call);
 
             var nodes = chain.ToArray();
-            nodes[0].ShouldBeOfType<AjaxValidationNode>();
+        	var node = nodes[0].As<ValidationNode>();
+
+        	node.Mode.ShouldEqual(ValidationMode.Ajax);
+        	node.Inner.ShouldBeOfType<AjaxValidationNode>();
         }
     }
 }

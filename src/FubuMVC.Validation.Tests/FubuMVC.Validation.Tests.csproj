@@ -169,6 +169,7 @@
     <Compile Include="UI\FormValidationSummaryModifierTester.cs" />
     <Compile Include="UI\MaximumLengthModifierTester.cs" />
     <Compile Include="UI\MinimumLengthModifierTester.cs" />
+    <Compile Include="UI\NotificationSerializationModifierTester.cs" />
     <Compile Include="UI\NumberElementModifierTester.cs" />
     <Compile Include="UI\RangeLengthModifierTester.cs" />
     <Compile Include="UI\RemoteValidationElementModifierTester.cs" />

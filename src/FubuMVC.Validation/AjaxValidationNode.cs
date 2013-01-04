@@ -9,12 +9,10 @@ namespace FubuMVC.Validation
             : base(typeof(AjaxValidationBehavior<>).MakeGenericType(call.InputType()))
         {
         	Strategies = RenderingStrategyRegistry.Default();
+        	Mode = ValidationMode.Ajax;
         }
 
-    	public ValidationMode Mode
-    	{
-			get { return ValidationMode.Ajax; }
-    	}
+		public ValidationMode Mode { get; set; }
 
 		public RenderingStrategyRegistry Strategies { get; private set; }
     }

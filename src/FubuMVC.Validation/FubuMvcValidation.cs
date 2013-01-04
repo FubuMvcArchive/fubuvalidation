@@ -25,10 +25,10 @@ namespace FubuMVC.Validation
                 x.Editors.Add(new RangeLengthModifier());
                 x.Editors.Add(new MinValueModifier());
                 x.Editors.Add(new MaxValueModifier());
-
                 
                 x.Forms.Add(new FormValidationSummaryModifier());
                 x.Forms.Add(new FormValidationModifier());
+				x.Forms.Add(new NotificationSerializationModifier());
             });
 
             registry.Policies.Add<ValidationConvention>();

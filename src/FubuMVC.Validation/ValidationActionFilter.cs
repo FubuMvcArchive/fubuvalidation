@@ -14,12 +14,10 @@ namespace FubuMVC.Validation
 		public ValidationActionFilter(Type handlerType, MethodInfo method) : base(handlerType, method)
 		{
 			Strategies = RenderingStrategyRegistry.Default();
+			Mode = ValidationMode.LoFi;
 		}
 
-		public ValidationMode Mode
-		{
-			get { return ValidationMode.LoFi; }
-		}
+		public ValidationMode Mode { get; set; }
 
 		public RenderingStrategyRegistry Strategies { get; private set; }
 

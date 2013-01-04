@@ -112,6 +112,7 @@
     <Compile Include="UI\MaximumLengthModifier.cs" />
     <Compile Include="UI\MinimumLengthModifier.cs" />
     <Compile Include="UI\MinValueModifier.cs" />
+    <Compile Include="UI\NotificationSerializationModifier.cs" />
     <Compile Include="UI\NumberElementModifier.cs" />
     <Compile Include="UI\RangeLengthModifier.cs" />
     <Compile Include="UI\RemoteValidationElementModifier.cs" />
@@ -139,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".package-manifest" />
+    <Content Include="content\scripts\ValidationResultsActivator.js" />
     <Content Include="content\scripts\fubuvalidation.ui.js" />
     <Content Include="content\scripts\fubuvalidation.core.js" />
     <Content Include="content\scripts\fubuvalidation.plugin.js" />

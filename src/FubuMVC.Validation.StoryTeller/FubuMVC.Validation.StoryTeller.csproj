@@ -123,6 +123,7 @@
     <Compile Include="Fixtures\InlineModelScreenFixture.cs" />
     <Compile Include="Fixtures\SelectTagScreenFixture.cs" />
     <Compile Include="Fixtures\IntegrationScreenFixture.cs" />
+    <Compile Include="Fixtures\ServerSideScreenFixture.cs" />
     <Compile Include="Fixtures\SystemStateFixture.cs" />
     <Compile Include="Fixtures\ValidationScreenFixture.cs" />
     <Compile Include="IgnoredModel.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="IntegrationEndpoint.cs" />
     <Compile Include="IntegrationModel.cs" />
     <Compile Include="SelectTagModel.cs" />
+    <Compile Include="ServerSideModel.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Fixtures\CreateUserScreenFixture.cs" />
     <Compile Include="IUserService.cs" />

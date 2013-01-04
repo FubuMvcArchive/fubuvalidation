@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Test name="Server side rules rendered clientside" lifecycle="Acceptance">
+  <ServerSideScreen>
+    <EnterValue isStep="True" Value="EMPTY" />
+    <ClickTheSubmitButton isStep="True" />
+    <VerifyValidationMessages isStep="True">
+      <rows>
+        <row isStep="True" Property="Value" Message="en-US_Value - Data is formatted incorrectly" />
+      </rows>
+    </VerifyValidationMessages>
+  </ServerSideScreen>
+</Test>

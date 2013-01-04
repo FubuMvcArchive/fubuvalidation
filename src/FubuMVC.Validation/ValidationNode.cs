@@ -4,7 +4,7 @@ namespace FubuMVC.Validation
 {
 	public interface ValidationNode
 	{
-		ValidationMode Mode { get; }
+		ValidationMode Mode { get; set; }
 		RenderingStrategyRegistry Strategies { get; }
 	}
 }

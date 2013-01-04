@@ -1,4 +1,6 @@
-﻿using FubuMVC.Validation.UI;
+﻿using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Validation.Tests.UI;
+using FubuMVC.Validation.UI;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -10,7 +12,8 @@ namespace FubuMVC.Validation.Tests
 		[Test]
 		public void default_rendering_strategies()
 		{
-			new ValidationNode(null, null).Strategies.All().ShouldHaveTheSameElementsAs(RenderingStrategyRegistry.Default().All());
+			new AjaxValidationNode(ActionCall.For<FormValidationModeEndpoint>(x => x.post_ajax(null))).Strategies.All().ShouldHaveTheSameElementsAs(RenderingStrategyRegistry.Default().All());
+			new ValidationActionFilter(null, null).Strategies.All().ShouldHaveTheSameElementsAs(RenderingStrategyRegistry.Default().All());
 		}
 	}
 }

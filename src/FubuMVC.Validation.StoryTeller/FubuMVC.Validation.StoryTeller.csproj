@@ -120,11 +120,13 @@
     <Compile Include="ClassValidationModel.cs" />
     <Compile Include="Fixtures\ClassValidationScreenFixture.cs" />
     <Compile Include="Fixtures\IgnoredEndpointScreenFixture.cs" />
+    <Compile Include="Fixtures\InlineModelScreenFixture.cs" />
     <Compile Include="Fixtures\SelectTagScreenFixture.cs" />
     <Compile Include="Fixtures\IntegrationScreenFixture.cs" />
     <Compile Include="Fixtures\SystemStateFixture.cs" />
     <Compile Include="Fixtures\ValidationScreenFixture.cs" />
     <Compile Include="IgnoredModel.cs" />
+    <Compile Include="InlineModel.cs" />
     <Compile Include="IntegrationEndpoint.cs" />
     <Compile Include="IntegrationModel.cs" />
     <Compile Include="SelectTagModel.cs" />

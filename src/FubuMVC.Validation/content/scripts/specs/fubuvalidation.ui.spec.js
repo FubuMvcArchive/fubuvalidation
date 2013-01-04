@@ -369,3 +369,66 @@ describe('ElementHighlightingStrategy tests', function() {
 		expect($('#FirstName', '#ElementHighlightingStrategy').hasClass('error')).toEqual(false);
 	});
 });
+
+describe('InlineErrorStrategy tests', function() {
+	var theStrategy = null;
+
+	beforeEach(function() {
+		theStrategy = new $.fubuvalidation.UI.Strategies.Inline();
+	});
+
+	it('matches forms with data-validation-inline attribute', function() {
+		var continuation = {
+			form: $('<form data-validation-inline="true" />')
+		};
+
+		expect(theStrategy.matches(continuation)).toEqual(true);
+	});
+	
+	it('does not match forms without data-validation-inline attribute', function() {
+		var continuation = {
+			form: $('<form data-validation-highlight="true" />')
+		};
+
+		expect(theStrategy.matches(continuation)).toEqual(false);
+	});
+});
+
+describe('InlineErrorStrategy rendering tests', function() {
+	var theStrategy = null;
+	var theContinuation = null;
+
+	beforeEach(function() {
+		theStrategy = new $.fubuvalidation.UI.Strategies.Inline();
+		
+		theContinuation = {
+			correlationId: '123',
+			form: $('#InlineErrorStrategy'),
+			success: false,
+			errors: [{
+				field: 'FirstName',
+                label: 'FirstName',
+				message: 'First Name is required',
+				element: $('#FirstName', '#InlineErrorStrategy')
+			}]
+		};
+	});
+
+	afterEach(function() {
+		theStrategy.reset(theContinuation);
+	});
+	
+	it('appends span next to the originating element', function() {
+		theStrategy.render(theContinuation);
+		expect($('[data-field="FirstName"]', '#InlineErrorStrategy').html()).toEqual('First Name is required');
+	});
+	
+	it('removes the inline errors when validation succeeds', function() {
+		theStrategy.render(theContinuation);
+		theContinuation.success = true;
+		theContinuation.errors.length = 0;
+		theStrategy.reset(theContinuation);
+		
+		expect($('[data-inline-error="FirstName"]', '#InlineErrorStrategy').size()).toEqual(0);
+	});
+});

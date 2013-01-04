@@ -25,23 +25,17 @@ namespace FubuMVC.Validation
         public static void ApplyValidation(ActionCall call)
         {
             BehaviorNode node;
-        	ValidationMode mode;
-
             if(call.ResourceType().CanBeCastTo<AjaxContinuation>())
             {
                 node = new AjaxValidationNode(call);
-            	mode = ValidationMode.Ajax;
             }
             else
             {
                 var builder = typeof (LoFiValidationNodeBuilder<>).CloseAndBuildAs<IValidationNodeBuilder>(call.InputType());
                 node = builder.BuildNode();
-
-            	mode = ValidationMode.LoFi;
             }
 
-        	var validationNode = new ValidationNode(node, mode);
-			call.AddBefore(validationNode);
+			call.AddBefore(node);
         }
 
         public interface IValidationNodeBuilder
@@ -53,7 +47,7 @@ namespace FubuMVC.Validation
         {
             public BehaviorNode BuildNode()
             {
-                return ActionFilter.For<ValidationActionFilter<T>>(x => x.Validate(null));
+				return ValidationActionFilter.ValidationFor<ValidationActionFilter<T>>(x => x.Validate(null));
             }
         }
     }

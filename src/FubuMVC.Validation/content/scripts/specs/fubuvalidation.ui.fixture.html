@@ -14,10 +14,10 @@
 </form>
 
 <form id="ElementHighlightingStrategy" action="/test" method="post">
-    <div class="alert-message block-message validation-container" style="display:none;">
-        <p>There are errors with the information you provided.</p>
-        <ul class="validation-summary"></ul>
-    </div>
+	<div class="alert-message block-message validation-container" style="display:none;">
+		<p>There are errors with the information you provided.</p>
+		<ul class="validation-summary"></ul>
+	</div>
 	<fieldset>
 		<div class="col">
 			<label for="FirstName">First Name *</label>
@@ -29,6 +29,21 @@
 			<label for="LastName">Last Name</label>
 			<div class="input">
 				<input type="text" title="Last Name is required" id="LastName" name="LastName" />
+			</div>
+		</div>
+	</fieldset>
+</form>
+
+<form id="InlineErrorStrategy" action="/test" method="post">
+	<div class="alert-message block-message validation-container" style="display:none;">
+		<p>There are errors with the information you provided.</p>
+		<ul class="validation-summary"></ul>
+	</div>
+	<fieldset>
+		<div class="col">
+			<label for="FirstName">First Name *</label>
+			<div class="input">
+				<input type="text" title="First Name is required" id="FirstName" name="FirstName" class="required" />
 			</div>
 		</div>
 	</fieldset>

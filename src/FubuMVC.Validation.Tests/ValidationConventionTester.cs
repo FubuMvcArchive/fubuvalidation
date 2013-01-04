@@ -24,8 +24,7 @@ namespace FubuMVC.Validation.Tests
 
 			node.Mode.ShouldEqual(ValidationMode.LoFi);
 
-			var filter = node.Inner.As<ActionFilter>();
-            filter.HandlerType.ShouldEqual(typeof (ValidationActionFilter<string>));
+			node.As<ActionFilter>().HandlerType.ShouldEqual(typeof (ValidationActionFilter<string>));
         }
 
         [Test]
@@ -42,7 +41,7 @@ namespace FubuMVC.Validation.Tests
         	var node = nodes[0].As<ValidationNode>();
 
         	node.Mode.ShouldEqual(ValidationMode.Ajax);
-        	node.Inner.ShouldBeOfType<AjaxValidationNode>();
+        	node.ShouldBeOfType<AjaxValidationNode>();
         }
     }
 }

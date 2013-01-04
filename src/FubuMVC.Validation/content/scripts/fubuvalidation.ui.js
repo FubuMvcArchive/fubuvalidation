@@ -43,6 +43,7 @@
 		var handler = new DefaultHandler();
 		handler.registerStrategy(new ValidationSummaryStrategy());
 		handler.registerStrategy(new ElementHighlightingStrategy());
+		handler.registerStrategy(new InlineErrorStrategy());
 
 		return handler;
 	};
@@ -191,6 +192,36 @@
 			}
 		}
 	};
+	
+	function InlineErrorStrategy() {
+	}
+
+	InlineErrorStrategy.prototype = {
+		matches: function (continuation) {
+			var value = continuation.form.data('validationInline');
+			return typeof (value) != 'undefined';
+		},
+		reset: function (continuation) {
+			continuation.form.find('.fubu-inline-error').each(function() {
+				$(this).remove();
+			});
+		},
+		render: function (continuation) {
+			this.eachError(continuation, function(error) {
+				var message = $('<span class="help-inline fubu-inline-error" data-field="' + error.field +  '">' + error.message + '</span>');
+
+				error.element.after(message);
+			});
+		},
+		eachError: function (continuation, action) {
+			for(var i = 0; i < continuation.errors.length; i++) {
+				var error = continuation.errors[i];
+				if(error.element) {
+					action(error);
+				}
+			}
+		}
+	};
 
 
 	defineCore('DefaultHandler', DefaultHandler);
@@ -199,6 +230,7 @@
 
 	defineStrategy('Summary', ValidationSummaryStrategy);
 	defineStrategy('Highlighting', ElementHighlightingStrategy);
+	defineStrategy('Inline', InlineErrorStrategy);
 
 	$.extend(true, $, { 'fubuvalidation': { 'UI': exports} });
 	

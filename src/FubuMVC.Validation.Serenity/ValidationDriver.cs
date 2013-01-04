@@ -43,6 +43,25 @@ namespace FubuMVC.Validation.Serenity
             
         }
 
+		public IEnumerable<ValidationMessage> InlineMessages()
+		{
+			try
+			{
+				return _context(_driver)
+				.FindElements(By.CssSelector("span.fubu-inline-error"))
+				.Select(x => new ValidationMessage
+				{
+					Property = x.Data("field"),
+					Message = x.Text
+				}).ToList();
+			}
+			catch
+			{
+				return new ValidationMessage[0];
+			}
+
+		}
+
         public bool Visible
         {
             get { return element.Displayed; }

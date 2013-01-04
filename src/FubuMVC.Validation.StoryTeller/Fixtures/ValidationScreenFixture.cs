@@ -50,5 +50,12 @@ namespace FubuMVC.Validation.StoryTeller.Fixtures
 				.Titled("Verify the validation messages")
 				.MatchOn(x => x.Property, x => x.Message);
 		}
+
+		public IGrammar VerifyInlineValidationMessages()
+		{
+			return VerifySetOf(() => validation.InlineMessages())
+				.Titled("Verify the inline validation messages")
+				.MatchOn(x => x.Property, x => x.Message);
+		}
 	}
 }

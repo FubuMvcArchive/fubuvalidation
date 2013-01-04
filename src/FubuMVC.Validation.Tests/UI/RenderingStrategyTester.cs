@@ -34,6 +34,13 @@ namespace FubuMVC.Validation.Tests.UI
 			RenderingStrategy.Highlight.Modify(theRequest);
 			theRequest.CurrentTag.ToString().ShouldEqual("<form method=\"post\" action=\"test\" data-validation-highlight=\"true\">");
 		}
+
+		[Test]
+		public void inline_strategy_adds_the_validation_inline_attribute()
+		{
+			RenderingStrategy.Inline.Modify(theRequest);
+			theRequest.CurrentTag.ToString().ShouldEqual("<form method=\"post\" action=\"test\" data-validation-inline=\"true\">");
+		}
 	}
 
 	[TestFixture]

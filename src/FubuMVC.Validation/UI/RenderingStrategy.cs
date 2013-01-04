@@ -13,6 +13,7 @@ namespace FubuMVC.Validation.UI
 	{
 		public static readonly RenderingStrategy Summary = new RenderingStrategy("Summary", x => x.CurrentTag.Data("validation-summary", true));
 		public static readonly RenderingStrategy Highlight = new RenderingStrategy("Highlight", x => x.CurrentTag.Data("validation-highlight", true));
+		public static readonly RenderingStrategy Inline = new RenderingStrategy("Inline", x => x.CurrentTag.Data("validation-inline", true));
 
 		private readonly string _name;
 		private readonly Action<FormRequest> _modify;

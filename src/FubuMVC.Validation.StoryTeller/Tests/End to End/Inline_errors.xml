@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Test name="Inline errors" lifecycle="Acceptance">
+  <InlineModelScreen>
+    <EnterName isStep="True" Name="EMPTY" />
+    <EnterEmail isStep="True" Email="invalid" />
+    <VerifyInlineValidationMessages isStep="True">
+      <rows>
+        <row isStep="True" Property="Name" Message="This field is required." />
+        <row isStep="True" Property="Email" Message="Please enter a valid email address." />
+      </rows>
+    </VerifyInlineValidationMessages>
+  </InlineModelScreen>
+</Test>

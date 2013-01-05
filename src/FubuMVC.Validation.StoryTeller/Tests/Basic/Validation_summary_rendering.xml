@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <Test name="Validation summary rendering" lifecycle="Regression">
+  <SystemState>
+    <NoUsers isStep="True" />
+  </SystemState>
   <CreateUserScreen>
     <EnterUsername isStep="True" Username="EMPTY" />
     <EnterPassword isStep="True" Password="EMPTY" />

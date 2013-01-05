@@ -3,6 +3,6 @@
   <IgnoredEndpointScreen>
     <EnterName isStep="True" Name="EMPTY" />
     <ClickTheSubmitButton isStep="True" />
-    <NoMessages isStep="True" />
+    <VerifyTheText isStep="True" value="Hello, world" />
   </IgnoredEndpointScreen>
 </Test>

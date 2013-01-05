@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Test name="Inline errors" lifecycle="Acceptance">
+<Test name="Inline errors" lifecycle="Regression">
   <InlineModelScreen>
     <EnterName isStep="True" Name="EMPTY" />
     <EnterEmail isStep="True" Email="invalid" />

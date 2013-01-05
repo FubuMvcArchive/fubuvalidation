@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Test name="Server side rules rendered clientside" lifecycle="Acceptance">
+<Test name="Server side rules rendered clientside" lifecycle="Regression">
   <ServerSideScreen>
     <EnterValue isStep="True" Value="EMPTY" />
     <ClickTheSubmitButton isStep="True" />

@@ -85,7 +85,10 @@
     $.fn.validate = function (options) {
         return this.each(function () {
             var settings = {
-                ajax: true
+                ajax: true,
+                continuationSuccess: function (continuation) {
+                    // no -op
+                }
             };
 
             bindEvents($(this));
@@ -98,7 +101,9 @@
                 }
 
                 if (settings.ajax) {
-                    $(this).correlatedSubmit();
+                    $(this).correlatedSubmit({
+                        continuationSuccess: settings.continuationSuccess
+                    });
                     return false;
                 }
 

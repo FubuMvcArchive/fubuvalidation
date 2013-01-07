@@ -1,15 +1,20 @@
-﻿function ValidationHarness() {
+﻿function ValidationHarness(callback) {
     this.form = $('#EndToEnd');
     this.container = $('.validation-container', this.form);
     this.posted = false;
 
-    this.form.validate();
+    this.form.validate({
+        continuationSuccess: callback
+    });
     this.form.resetForm();
 
     this.server = sinon.fakeServer.create();
     var self = this;
-    $.continuations.bind('AjaxStarted', function () {
+    $.continuations.bind('AjaxStarted', function (request) {
         self.posted = true;
+        self.server.respondWith([200,
+				{ 'Content-Type': 'application/json', 'X-Correlation-Id': request.correlationId }, '{"success":"true"}'
+        ]);
     });
 }
 
@@ -28,9 +33,11 @@ ValidationHarness.prototype = {
 
 describe('when submitting an invalid form', function () {
     var theHarness = null;
+    var theCallback = null;
 
     beforeEach(function () {
-        theHarness = new ValidationHarness();
+        theCallback = sinon.spy();
+        theHarness = new ValidationHarness(theCallback);
         theHarness.submit();
     });
 
@@ -49,5 +56,34 @@ describe('when submitting an invalid form', function () {
     it('highlights the fields with errors', function () {
         expect(theHarness.elementFor('Name').hasClass('error')).toEqual(true);
         expect(theHarness.elementFor('Email').hasClass('error')).toEqual(true);
+    });
+
+    it('does not invoke the callback', function() {
+        expect(theCallback.called).toEqual(false);
+    });
+});
+
+describe('when submitting a valid form', function () {
+    var theHarness = null;
+    var theCallback = null;
+
+    beforeEach(function () {
+        theCallback = sinon.spy();
+        theHarness = new ValidationHarness(theCallback);
+        
+        $('#Name', '#EndToEnd').val('Joel');
+        $('#Email', '#EndToEnd').val('joel@fubu-project.org');
+
+        theHarness.submit();
+        
+        theHarness.server.respond();
+    });
+
+    afterEach(function () {
+        theHarness.dispose();
+    });
+
+    it('invokes the callback', function () {
+        expect(theCallback.called).toEqual(true);
     });
 });

@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     $('form.validated-form').each(function () {
-        var mode = $(this).data('validateMode');
+        var mode = $(this).data('validationMode');
         $(this).validate({
             ajax: mode == 'ajax',
             continuationSuccess: function (continuation) {

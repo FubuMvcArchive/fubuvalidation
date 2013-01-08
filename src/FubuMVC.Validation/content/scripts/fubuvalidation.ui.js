@@ -86,6 +86,11 @@
 			this.fillElements(continuation);
 			this.handler.process(continuation);
 		},
+		registerStrategy: function(strategy) {
+            if (typeof(this.handler.registerStrategy) == 'function') {
+                this.handler.registerStrategy(strategy);
+            }
+		},
 		reset: function (continuation) {
 			this.handler.reset(continuation);
 		}

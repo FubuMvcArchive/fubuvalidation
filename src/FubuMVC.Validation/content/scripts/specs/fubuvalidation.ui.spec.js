@@ -109,6 +109,20 @@ describe('ValidationProcessor Tests', function() {
 		expect(theHandler.reset.called).toEqual(true);
 		expect(theHandler.reset.getCall(0).args[0]).toEqual(continuation);
 	});
+
+    it('registers the rendering strategy when the function exists', function() {
+        var theStrategy = { id: '1234' };
+        theHandler.registerStrategy = sinon.spy();
+        theProcessor.registerStrategy(theStrategy);
+
+        expect(theHandler.registerStrategy.called).toEqual(true);
+        expect(theHandler.registerStrategy.getCall(0).args[0]).toEqual(theStrategy);
+    });
+    
+    it('does not register the rendering strategy when the function does not exists', function () {
+        var theStrategy = { id: '1234' };
+        theProcessor.registerStrategy(theStrategy);
+    });
 });
 
 describe('when finding an element', function() {

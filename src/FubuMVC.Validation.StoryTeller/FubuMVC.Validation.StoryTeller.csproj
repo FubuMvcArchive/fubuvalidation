@@ -117,7 +117,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessorOverridesModel.cs" />
     <Compile Include="ClassValidationModel.cs" />
+    <Compile Include="Fixtures\AccessorOverridesScreenFixture.cs" />
     <Compile Include="Fixtures\ClassValidationScreenFixture.cs" />
     <Compile Include="Fixtures\IgnoredEndpointScreenFixture.cs" />
     <Compile Include="Fixtures\InlineModelScreenFixture.cs" />

@@ -15,5 +15,10 @@ namespace FubuValidation.Fields
                 context.Notification.RegisterMessage(accessor, ValidationKeys.Email);
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is EmailFieldRule;
+        }
     }
 }

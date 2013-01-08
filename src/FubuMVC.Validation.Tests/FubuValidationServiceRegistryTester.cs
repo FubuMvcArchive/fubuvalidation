@@ -51,5 +51,11 @@ namespace FubuMVC.Validation.Tests
         {
             verifyDefaultType<IFieldRulesRegistry, FieldRulesRegistry>().IsSingleton.ShouldBeTrue();
         }
+
+        [Test]
+        public void adds_the_accessor_rules_field_source()
+        {
+            theGraph.ServicesFor<IFieldValidationSource>().ShouldContain(x => x.Type == typeof(AccessorRulesFieldSource));
+        }
     }
 }

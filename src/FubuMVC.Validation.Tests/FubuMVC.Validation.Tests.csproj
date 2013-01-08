@@ -134,6 +134,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessorRulesFieldSourceTester.cs" />
     <Compile Include="AjaxContinuationResolverTester.cs" />
     <Compile Include="AjaxValidationActionFilterTester.cs" />
     <Compile Include="AjaxValidationFailureHandlerTester.cs" />

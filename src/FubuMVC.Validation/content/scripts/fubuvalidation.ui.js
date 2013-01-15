@@ -161,7 +161,7 @@
 				
 				if(error.element) {
 					item.find('a').click(function() {
-						item.element.focus();
+						error.element.focus();
 					});
 				}
 				

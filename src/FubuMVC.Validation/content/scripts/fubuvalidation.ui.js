@@ -70,6 +70,9 @@
 			for (var i = 0; i < this.finders.length; i++) {
 				var finder = this.finders[i];
 				finder(searchContext);
+				if(searchContext.element) {
+			            break;
+				}				
 			}
 
 			return searchContext.element;

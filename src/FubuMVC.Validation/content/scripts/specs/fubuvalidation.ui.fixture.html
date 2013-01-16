@@ -1,3 +1,20 @@
+<form id="FinderForm" action="/text" method="POST">
+    <fieldset>
+        <div class="col">
+            <label for="FirstName">First Name *</label>
+            <div class="input">
+                <input type="text" title="First Name is required" name="FirstName" class="required" />
+            </div>
+        </div>
+        <div class="col">
+			<label for="LastName">Last Name *</label>
+			<div class="input">
+				<input type="text" title="Last Name is required" id="LastName"  class="required" />
+			</div>
+		</div>
+	</fieldset>
+</form>
+
 <form id="ValidationSummaryStrategy" action="/test" method="post">
 	<div class="alert-message block-message validation-container" style="display:none;">
 		<p>There are errors with the information you provided.</p>

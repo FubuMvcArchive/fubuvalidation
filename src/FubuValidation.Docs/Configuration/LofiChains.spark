@@ -1,0 +1,9 @@
+<viewdata model="FubuValidation.Docs.Configuration.LofiChains"/>
+<use master="Topic" />
+<content:main>
+
+<markdown>
+
+</markdown>
+
+</content:main>

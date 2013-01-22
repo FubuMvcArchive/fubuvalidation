@@ -24,21 +24,21 @@ namespace FubuMVC.Validation.Tests.UI
 		[Test]
 		public void summary_strategy_adds_the_validation_summary_attribute()
 		{
-			RenderingStrategy.Summary.Modify(theRequest);
+			RenderingStrategies.Summary.Modify(theRequest);
 			theRequest.CurrentTag.ToString().ShouldEqual("<form method=\"post\" action=\"test\" data-validation-summary=\"true\">");
 		}
 
 		[Test]
 		public void highlight_strategy_adds_the_validation_highlight_attribute()
 		{
-			RenderingStrategy.Highlight.Modify(theRequest);
+			RenderingStrategies.Highlight.Modify(theRequest);
 			theRequest.CurrentTag.ToString().ShouldEqual("<form method=\"post\" action=\"test\" data-validation-highlight=\"true\">");
 		}
 
 		[Test]
 		public void inline_strategy_adds_the_validation_inline_attribute()
 		{
-			RenderingStrategy.Inline.Modify(theRequest);
+			RenderingStrategies.Inline.Modify(theRequest);
 			theRequest.CurrentTag.ToString().ShouldEqual("<form method=\"post\" action=\"test\" data-validation-inline=\"true\">");
 		}
 	}
@@ -81,7 +81,7 @@ namespace FubuMVC.Validation.Tests.UI
 		public void defaults()
 		{
 			var strategies = RenderingStrategyRegistry.Default();
-			strategies.All().ShouldHaveTheSameElementsAs(RenderingStrategy.Summary, RenderingStrategy.Highlight);
+			strategies.All().ShouldHaveTheSameElementsAs(RenderingStrategies.Summary, RenderingStrategies.Highlight);
 		}
 	}
 }

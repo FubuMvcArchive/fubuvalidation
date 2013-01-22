@@ -1,0 +1,30 @@
+<Topic title="Validation" name="FubuValidationMainTopic">
+  <GettingStarted>
+    <Topic title="Installing FubuMVCValidation" />
+    <Topic title="Adding rules to your model" />
+    <Topic title="Built in rules" />
+    <Topic title="Building your first validated form" />
+  </GettingStarted>
+  <Configuration>
+    <Topic title="Out of the box conventions">
+      <Topic title="LoFi Chains"/>
+      <Topic title="Ajax Chains" />
+      <Topic title="Rendering strategies"/>
+      <Topic title="Remote rules"/>
+    </Topic>
+    <Topic title="Per-route configuration">
+      <Topic title="Changing rendering strategies"/>
+    </Topic>
+    <Topic title="Configuring validation rules">
+      <Topic title="Using validation attributes"/>
+      <Topic title="Validation DSL"/>
+    </Topic>
+  </Configuration>
+  <Customization>
+    <Topic title="Creating your own rules" />
+    <Topic title="Configuring remote rules"/>
+    <Topic title="Configuring which routes have validation"/>
+    <Topic title="Customizing the CSS annotations"/>
+    <Topic title="Replacing the validation summary"/>
+  </Customization>
+</Topic>

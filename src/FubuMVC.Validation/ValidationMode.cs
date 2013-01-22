@@ -21,7 +21,7 @@ namespace FubuMVC.Validation
 
 		public string Value { get { return _value; } }
 
-		public void Modify(HtmlTag form)
+		public virtual void Modify(HtmlTag form)
 		{
 			if (!_modify) return;
 

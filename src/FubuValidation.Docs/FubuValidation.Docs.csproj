@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FubuValidation.Docs</RootNamespace>
+    <AssemblyName>FubuValidation.Docs</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FubuDocs">
+      <HintPath>..\packages\FubuDocs.0.0.0.43\lib\net40\FubuDocs.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\AjaxChains.cs" />
+    <Compile Include="Configuration\ChangingRenderingStrategies.cs" />
+    <Compile Include="Configuration\ConfiguringValidationRules.cs" />
+    <Compile Include="Configuration\LofiChains.cs" />
+    <Compile Include="Configuration\OutOfTheBoxConventions.cs" />
+    <Compile Include="Configuration\PerrouteConfiguration.cs" />
+    <Compile Include="Configuration\RemoteRules.cs" />
+    <Compile Include="Configuration\RenderingStrategies.cs" />
+    <Compile Include="Configuration\UsingValidationAttributes.cs" />
+    <Compile Include="Configuration\ValidationDsl.cs" />
+    <Compile Include="Customization\ConfiguringRemoteRules.cs" />
+    <Compile Include="Customization\ConfiguringWhichRoutesHaveValidation.cs" />
+    <Compile Include="Customization\CreatingYourOwnRules.cs" />
+    <Compile Include="Customization\CustomizingTheCssAnnotations.cs" />
+    <Compile Include="Customization\ReplacingTheValidationSummary.cs" />
+    <Compile Include="FubuValidationMainTopic.cs" />
+    <Compile Include="FubuValidationMainTopicTopicRegistry.cs" />
+    <Compile Include="GettingStarted\AddingRulesToYourModel.cs" />
+    <Compile Include="GettingStarted\AjaxChains.cs" />
+    <Compile Include="GettingStarted\BuildingYourFirstValidatedForm.cs" />
+    <Compile Include="GettingStarted\BuiltInRules.cs" />
+    <Compile Include="GettingStarted\ChangingRenderingStrategies.cs" />
+    <Compile Include="GettingStarted\ConfiguringRemoteRules.cs" />
+    <Compile Include="GettingStarted\ConfiguringValidationRules.cs" />
+    <Compile Include="GettingStarted\ConfiguringWhichRoutesHaveValidation.cs" />
+    <Compile Include="GettingStarted\CreatingYourOwnRules.cs" />
+    <Compile Include="GettingStarted\CustomizingTheCssAnnotations.cs" />
+    <Compile Include="GettingStarted\InstallingFubumvcvalidation.cs" />
+    <Compile Include="GettingStarted\LofiChains.cs" />
+    <Compile Include="GettingStarted\OutOfTheBoxConventions.cs" />
+    <Compile Include="GettingStarted\PerrouteConfiguration.cs" />
+    <Compile Include="GettingStarted\RemoteRules.cs" />
+    <Compile Include="GettingStarted\RenderingStrategies.cs" />
+    <Compile Include="GettingStarted\ReplacingTheValidationSummary.cs" />
+    <Compile Include="GettingStarted\UsingValidationAttributes.cs" />
+    <Compile Include="GettingStarted\ValidationDsl.cs" />
+    <Compile Include="GettingStarted\WhatRulesAreAvailable.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Configuration\AjaxChains.spark" />
+    <None Include="Configuration\ChangingRenderingStrategies.spark" />
+    <None Include="Configuration\ConfiguringValidationRules.spark" />
+    <None Include="Configuration\LofiChains.spark" />
+    <None Include="Configuration\OutOfTheBoxConventions.spark" />
+    <None Include="Configuration\PerrouteConfiguration.spark" />
+    <None Include="Configuration\RemoteRules.spark" />
+    <None Include="Configuration\RenderingStrategies.spark" />
+    <None Include="Configuration\UsingValidationAttributes.spark" />
+    <None Include="Configuration\ValidationDsl.spark" />
+    <None Include="Customization\ConfiguringRemoteRules.spark" />
+    <None Include="Customization\ConfiguringWhichRoutesHaveValidation.spark" />
+    <None Include="Customization\CreatingYourOwnRules.spark" />
+    <None Include="Customization\CustomizingTheCssAnnotations.spark" />
+    <None Include="Customization\ReplacingTheValidationSummary.spark" />
+    <None Include="GettingStarted\AddingRulesToYourModel.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GettingStarted\BuildingYourFirstValidatedForm.spark" />
+    <None Include="GettingStarted\BuiltInRules.spark" />
+    <None Include="GettingStarted\InstallingFubumvcvalidation.spark" />
+    <None Include="GettingStarted\LofiChains.spark" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Topics.xml">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

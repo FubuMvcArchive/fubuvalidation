@@ -1,0 +1,33 @@
+<viewdata model="FubuValidation.Docs.GettingStarted.AddingRulesToYourModel"/>
+<use master="Topic" />
+<content:main>
+
+  <p>There are currently two recommended ways to describe rules for your models:</p>
+  <ul>
+    <li>Attributes</li>
+    <li>OverridesFor<T> DSL</li>
+  </ul>
+
+  <h4>Attributes</h4>
+  <p>All built-in validation rules have corresponding attribute markers. Here is an example of using attributes to define rules:</p>
+
+  // Pull in the code sample
+  <markdown>
+    > Note: Attributes are not the rules themselves. See the ValidationSource and AttributeValidationSource sections for more information.
+  </markdown>
+
+  <h4>OverridesFor<T> DSL</h4>
+  <markdown>
+    FubuMVC.Validation also makes use of the OverridesFor<T>
+    DSL from FubuMVC to define rules. There are extension methods for all built-in validation rules. Here is an example of using the OverridesFor<T>:
+
+    // Pull in the code sample (make sure it does built-in and custom rules)
+  </markdown>
+
+  <h4>Validation DSL</h4>
+  <markdown>
+    FubuValidation also provides a built-in DSL for defining rules.
+    > TODO -- We need a simpler way to register IValidationRules. Maybe we rig something up in FubuMVC.Valiation as an activator.
+  </markdown>
+
+</content:main>

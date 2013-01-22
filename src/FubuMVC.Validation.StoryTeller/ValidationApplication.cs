@@ -37,7 +37,7 @@ namespace FubuMVC.Validation.StoryTeller
 				var validation = chain.ValidationNode();
 				if(validation != null)
 				{
-					validation.Strategies.RegisterStrategy(RenderingStrategy.Inline);
+					validation.Strategies.RegisterStrategy(RenderingStrategies.Inline);
 				}
 			}
 		}

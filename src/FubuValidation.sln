@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Validation.StoryTel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuMVC.Validation.Serenity", "FubuMVC.Validation.Serenity\FubuMVC.Validation.Serenity.csproj", "{A30EE761-C299-453A-BCB6-B03A664463CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FubuValidation.Docs", "FubuValidation.Docs\FubuValidation.Docs.csproj", "{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -188,6 +190,21 @@ Global
 		{A30EE761-C299-453A-BCB6-B03A664463CD}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{A30EE761-C299-453A-BCB6-B03A664463CD}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
 		{A30EE761-C299-453A-BCB6-B03A664463CD}.Retail|x86.ActiveCfg = Release|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Release|x86.ActiveCfg = Release|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Retail|Any CPU.ActiveCfg = Release|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Retail|Any CPU.Build.0 = Release|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Retail|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Retail|Mixed Platforms.Build.0 = Release|Any CPU
+		{D6B03061-68CD-4AFD-875C-1BDCE5C3437C}.Retail|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

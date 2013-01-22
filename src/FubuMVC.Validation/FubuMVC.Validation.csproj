@@ -119,6 +119,7 @@
     <Compile Include="Remote\RemoteRuleGraphActivator.cs" />
     <Compile Include="Remote\ValidateField.cs" />
     <Compile Include="UI\InputElementModifier.cs" />
+    <Compile Include="UI\IRenderingStrategy.cs" />
     <Compile Include="UI\IValidationAnnotationStrategy.cs" />
     <Compile Include="UI\MaxValueModifier.cs" />
     <Compile Include="UI\MaximumLengthModifier.cs" />
@@ -128,7 +129,8 @@
     <Compile Include="UI\NumberElementModifier.cs" />
     <Compile Include="UI\RangeLengthModifier.cs" />
     <Compile Include="UI\RemoteValidationElementModifier.cs" />
-    <Compile Include="UI\RenderingStrategy.cs" />
+    <Compile Include="UI\RenderingStrategies.cs" />
+    <Compile Include="UI\RenderingStrategyRegistry.cs" />
     <Compile Include="UI\ValidationSummarySource.cs" />
     <Compile Include="ValidationBehaviorChainExtensions.cs" />
     <Compile Include="ValidationMode.cs" />

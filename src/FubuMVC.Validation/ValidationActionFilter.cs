@@ -5,21 +5,17 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Core.Runtime;
-using FubuMVC.Validation.UI;
 
 namespace FubuMVC.Validation
 {
-	public class ValidationActionFilter : ActionFilter, ValidationNode
+	public class ValidationActionFilter : ActionFilter, IHaveValidation
 	{
 		public ValidationActionFilter(Type handlerType, MethodInfo method) : base(handlerType, method)
 		{
-			Strategies = RenderingStrategyRegistry.Default();
-			Mode = ValidationMode.LoFi;
+            Validation = ValidationNode.DefaultFor(ValidationMode.LoFi);
 		}
 
-		public ValidationMode Mode { get; set; }
-
-		public RenderingStrategyRegistry Strategies { get; private set; }
+        public ValidationNode Validation { get; private set; }
 
 		public static ActionFilter ValidationFor<T>(Expression<Func<T, object>> method)
 		{

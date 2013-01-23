@@ -61,7 +61,7 @@ namespace FubuMVC.Validation.Tests.UI
 		public void no_strategies()
 		{
 			var theRequest = requestFor<AjaxTarget>();
-			theRequest.Chain.ValidationNode().Strategies.Clear();
+			theRequest.Chain.ValidationNode().Clear();
 
 			var modifier = new FormValidationModifier();
 			modifier.Modify(theRequest);

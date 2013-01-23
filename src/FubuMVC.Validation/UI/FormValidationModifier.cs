@@ -21,16 +21,8 @@ namespace FubuMVC.Validation.UI
 			}
 
             writeScriptRequirements(request);
-
-			validation.Mode.Modify(request.CurrentTag);
-
-			renderingStrategies(validation, request);
+	        validation.Modify(request);
         }
-
-		private void renderingStrategies(ValidationNode validation, FormRequest request)
-		{
-			validation.Strategies.Each(x => x.Modify(request));
-		}
 
 		private void writeScriptRequirements(FormRequest request)
 		{

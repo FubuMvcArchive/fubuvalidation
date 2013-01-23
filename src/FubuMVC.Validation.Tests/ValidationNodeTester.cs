@@ -12,8 +12,13 @@ namespace FubuMVC.Validation.Tests
 		[Test]
 		public void default_rendering_strategies()
 		{
-			new AjaxValidationNode(ActionCall.For<FormValidationModeEndpoint>(x => x.post_ajax(null))).Strategies.All().ShouldHaveTheSameElementsAs(RenderingStrategyRegistry.Default().All());
-			new ValidationActionFilter(null, null).Strategies.All().ShouldHaveTheSameElementsAs(RenderingStrategyRegistry.Default().All());
+            new AjaxValidationNode(ActionCall.For<FormValidationModeEndpoint>(x => x.post_ajax(null)))
+                .Validation
+                .ShouldHaveTheSameElementsAs(ValidationNode.DefaultFor(ValidationMode.Ajax));
+			
+            new ValidationActionFilter(null, null)
+                .Validation
+                .ShouldHaveTheSameElementsAs(ValidationNode.DefaultFor(ValidationMode.LoFi));
 		}
 	}
 }

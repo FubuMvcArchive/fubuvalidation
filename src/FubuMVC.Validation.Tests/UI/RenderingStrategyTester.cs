@@ -4,7 +4,6 @@ using FubuMVC.Validation.UI;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace FubuMVC.Validation.Tests.UI
 {
@@ -40,48 +39,6 @@ namespace FubuMVC.Validation.Tests.UI
 		{
 			RenderingStrategies.Inline.Modify(theRequest);
 			theRequest.CurrentTag.ToString().ShouldEqual("<form method=\"post\" action=\"test\" data-validation-inline=\"true\">");
-		}
-	}
-
-	[TestFixture]
-	public class RenderingStrategiesTester
-	{
-		private RenderingStrategyRegistry theStrategies;
-
-		[SetUp]
-		public void SetUp()
-		{
-			theStrategies = new RenderingStrategyRegistry();
-		}
-
-		[Test]
-		public void no_duplicates()
-		{
-			var s1 = MockRepository.GenerateStub<IRenderingStrategy>();
-			theStrategies.RegisterStrategy(s1);
-
-			theStrategies.All().ShouldHaveTheSameElementsAs(s1);
-		}
-
-		[Test]
-		public void clears_the_strategies()
-		{
-			var s1 = MockRepository.GenerateStub<IRenderingStrategy>();
-			var s2 = MockRepository.GenerateStub<IRenderingStrategy>();
-			
-			theStrategies.RegisterStrategy(s1);
-			theStrategies.RegisterStrategy(s2);
-
-			theStrategies.Clear();
-
-			theStrategies.All().ShouldHaveCount(0);
-		}
-
-		[Test]
-		public void defaults()
-		{
-			var strategies = RenderingStrategyRegistry.Default();
-			strategies.All().ShouldHaveTheSameElementsAs(RenderingStrategies.Summary, RenderingStrategies.Highlight);
 		}
 	}
 }

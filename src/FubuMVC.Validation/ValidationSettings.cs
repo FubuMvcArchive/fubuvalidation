@@ -12,7 +12,7 @@ namespace FubuMVC.Validation
         bool Filter(BehaviorChain chain);
     }
 
-    public class ValidationSettings : IApplyValidationFilter
+    public class ValidationSettings : ValidationSettingsRegistry, IApplyValidationFilter
     {
         private readonly IList<IChainFilter> _filters = new List<IChainFilter>();
         private readonly IList<IRemoteRuleFilter> _remoteFilters = new List<IRemoteRuleFilter>(); 
@@ -20,21 +20,6 @@ namespace FubuMVC.Validation
         public ValidationSettings()
         {
             FailAjaxRequestsWith(HttpStatusCode.BadRequest);
-        }
-
-        public void FailAjaxRequestsWith(HttpStatusCode statusCode)
-        {
-            StatusCode = statusCode;
-        }
-
-        private IChainFilter createFilter()
-        {
-            if(_filters.Any())
-            {
-                return new CompositeChainFilter(_filters.ToArray());
-            }
-
-            return new DefaultValidationChainFilter();
         }
 
         public HttpStatusCode StatusCode { get; private set; }
@@ -52,9 +37,41 @@ namespace FubuMVC.Validation
             }
         }
 
+		private IChainFilter filter
+		{
+			get
+			{
+				if (_filters.Any())
+				{
+					return new CompositeChainFilter(_filters.ToArray());
+				}
+
+				return new DefaultValidationChainFilter();
+			}
+		}
+
+		public void ModifyChain(BehaviorChain chain)
+		{
+			Modifications
+				.Where(x => x.Matches(chain))
+				.Each(x => x.Modify(chain));
+		}
+
+		public void Import<T>()
+			where T : ValidationSettingsRegistry, new()
+		{
+			var registry = new T();
+			registry.Modifications.Each(addModification);
+		}
+
+		public void FailAjaxRequestsWith(HttpStatusCode statusCode)
+		{
+			StatusCode = statusCode;
+		}
+
         bool IApplyValidationFilter.Filter(BehaviorChain chain)
         {
-            return createFilter().Matches(chain);
+            return filter.Matches(chain);
         }
     }
 }

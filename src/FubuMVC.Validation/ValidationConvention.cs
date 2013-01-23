@@ -18,11 +18,11 @@ namespace FubuMVC.Validation
 
             graph
                 .Actions()
-                .Where(chain => filter.Filter(chain.ParentChain()))
-                .Each(ApplyValidation);
+                .Where(call => filter.Filter(call.ParentChain()))
+                .Each(call => ApplyValidation(call, settings));
         }
 
-        public static void ApplyValidation(ActionCall call)
+        public static void ApplyValidation(ActionCall call, ValidationSettings settings)
         {
             BehaviorNode node;
             if(call.ResourceType().CanBeCastTo<AjaxContinuation>())
@@ -36,6 +36,7 @@ namespace FubuMVC.Validation
             }
 
 			call.AddBefore(node);
+			settings.ModifyChain(call.ParentChain());
         }
 
         public interface IValidationNodeBuilder

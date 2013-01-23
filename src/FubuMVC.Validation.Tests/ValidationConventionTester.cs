@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Validation.UI;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -17,12 +18,12 @@ namespace FubuMVC.Validation.Tests
             var chain = new BehaviorChain();
             chain.AddToEnd(call);
 
-            ValidationConvention.ApplyValidation(call);
+            ValidationConvention.ApplyValidation(call, new ValidationSettings());
 
             var nodes = chain.ToArray();
-			var node = nodes[0].As<ValidationNode>();
+			var node = nodes[0].As<IHaveValidation>();
 
-			node.Mode.ShouldEqual(ValidationMode.LoFi);
+			node.Validation.Mode.ShouldEqual(ValidationMode.LoFi);
 
 			node.As<ActionFilter>().HandlerType.ShouldEqual(typeof (ValidationActionFilter<string>));
         }
@@ -35,13 +36,53 @@ namespace FubuMVC.Validation.Tests
             var chain = new BehaviorChain();
             chain.AddToEnd(call);
 
-            ValidationConvention.ApplyValidation(call);
+            ValidationConvention.ApplyValidation(call, new ValidationSettings());
 
             var nodes = chain.ToArray();
-        	var node = nodes[0].As<ValidationNode>();
+        	var node = nodes[0].As<IHaveValidation>();
 
-        	node.Mode.ShouldEqual(ValidationMode.Ajax);
+        	node.Validation.Mode.ShouldEqual(ValidationMode.Ajax);
         	node.ShouldBeOfType<AjaxValidationNode>();
         }
+
+		[Test]
+		public void applies_modifications_from_the_settings()
+		{
+			var call = ActionCall.For<SampleInputModel>(x => x.Test(null));
+
+			var chain = new BehaviorChain();
+			chain.AddToEnd(call);
+
+			var settings = new ValidationSettings();
+			settings.ForInputType<string>(x =>
+			{
+				x.Clear();
+				x.RegisterStrategy(RenderingStrategies.Inline);
+			});
+
+			ValidationConvention.ApplyValidation(call, settings);
+
+			chain.ValidationNode().ShouldHaveTheSameElementsAs(RenderingStrategies.Inline);
+		}
+
+		[Test]
+		public void no_modifications_from_the_settings()
+		{
+			var call = ActionCall.For<SampleInputModel>(x => x.Test(null));
+
+			var chain = new BehaviorChain();
+			chain.AddToEnd(call);
+
+			var settings = new ValidationSettings();
+			settings.ForInputType<int>(x =>
+			{
+				x.Clear();
+				x.RegisterStrategy(RenderingStrategies.Inline);
+			});
+
+			ValidationConvention.ApplyValidation(call, settings);
+
+			chain.ValidationNode().ShouldHaveTheSameElementsAs(RenderingStrategies.Summary, RenderingStrategies.Highlight);
+		}
     }
 }

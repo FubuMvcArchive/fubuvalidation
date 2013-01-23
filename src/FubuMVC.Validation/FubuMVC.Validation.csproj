@@ -130,12 +130,14 @@
     <Compile Include="UI\RangeLengthModifier.cs" />
     <Compile Include="UI\RemoteValidationElementModifier.cs" />
     <Compile Include="UI\RenderingStrategies.cs" />
-    <Compile Include="UI\RenderingStrategyRegistry.cs" />
     <Compile Include="UI\ValidationSummarySource.cs" />
     <Compile Include="ValidationBehaviorChainExtensions.cs" />
     <Compile Include="ValidationMode.cs" />
+    <Compile Include="IHaveValidation.cs" />
     <Compile Include="ValidationNode.cs" />
+    <Compile Include="ValidationNodeModification.cs" />
     <Compile Include="ValidationRegistrationActivator.cs" />
+    <Compile Include="ValidationSettingsRegistry.cs" />
     <Compile Include="ValidationSummary.cs" />
     <Compile Include="ValidationUrlRegistryExtensions.cs" />
     <Compile Include="ValidationConvention.cs" />

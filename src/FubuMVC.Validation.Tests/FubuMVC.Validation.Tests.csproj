@@ -139,13 +139,17 @@
     <Compile Include="UI\RenderingStrategyTester.cs" />
     <Compile Include="UI\ValidationElementModifierContext.cs" />
     <Compile Include="UI\ValidationElementModifierScenario.cs" />
+    <Compile Include="UI\ValidationNodeTester.cs" />
     <Compile Include="ValidationActionFilterTester.cs" />
+    <Compile Include="ValidationBehaviorChainExtensionsTester.cs" />
     <Compile Include="ValidationConventionTester.cs" />
     <Compile Include="ValidationFilterTester.cs" />
     <Compile Include="DefaultValidationFilterTester.cs" />
     <Compile Include="ValidationModeTester.cs" />
+    <Compile Include="ValidationNodeModificationTester.cs" />
     <Compile Include="ValidationNodeTester.cs" />
     <Compile Include="ValidationRegistrationActivatorTester.cs" />
+    <Compile Include="ValidationSettingsTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Validation\FubuMVC.Validation.csproj">

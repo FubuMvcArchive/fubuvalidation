@@ -31,7 +31,6 @@ namespace FubuMVC.Validation
 
         public static bool IsValidationRegistration(Type type)
         {
-            // TODO -- No open generics
             return type.IsConcreteTypeOf<IValidationRegistration>()
                 && type.IsConcreteWithDefaultCtor()
                 && !type.IsOpenGeneric();

@@ -7,7 +7,13 @@ namespace FubuMVC.Validation
 	{
 		 public static ValidationNode ValidationNode(this BehaviorChain chain)
 		 {
-			 return chain.OfType<ValidationNode>().SingleOrDefault();
+			 var node = chain.OfType<IHaveValidation>().SingleOrDefault();
+             if (node != null)
+             {
+                 return node.Validation;
+             }
+
+		     return Validation.ValidationNode.Empty();
 		 }
 	}
 }

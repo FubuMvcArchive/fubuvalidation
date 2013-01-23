@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuCore;
 using FubuMVC.Core.UI.Forms;
 
 namespace FubuMVC.Validation.UI
@@ -23,6 +24,11 @@ namespace FubuMVC.Validation.UI
 		public void Modify(FormRequest request)
 		{
 			_modify(request);
+		}
+
+		public override string ToString()
+		{
+			return "Rendering Strategy: {0}".ToFormat(_name);
 		}
 	}
 }

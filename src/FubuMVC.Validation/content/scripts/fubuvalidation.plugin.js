@@ -44,15 +44,6 @@
         processNotification(notification, form, element);
     }
 
-    $.fn.bindAll = function (delegate, type, handler) {
-        return this.bind(type, function (event) {
-            var target = $(event.target);
-            if (target.is(delegate)) {
-                return handler.apply(target, arguments);
-            }
-        });
-    };
-
     function bindEvents(form) {
         form
             .on("change", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {

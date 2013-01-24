@@ -23,14 +23,15 @@
         return form.find("input, select, textarea").not(":submit, :reset, :image, [disabled]");
     }
 
-    function processNotification(notification, form) {
+    function processNotification(notification, form, element) {
         var continuation = notification.toContinuation();
         continuation.form = form;
+        continuation.element = element;
         validation.Processor.process(continuation);
 
         form.storeNotification(notification);
     }
-
+    
     function elementHandler(element, form) {
         var notification = form.notification();
         var elementNotification = new validation.Core.Notification();
@@ -40,32 +41,35 @@
 
         notification.importForTarget(elementNotification, target);
 
-        processNotification(notification, form);
+        processNotification(notification, form, element);
     }
 
-    $.fn.bindAll = function (delegate, type, handler) {
-        return this.bind(type, function (event) {
-            var target = $(event.target);
-            if (target.is(delegate)) {
-                return handler.apply(target, arguments);
-            }
-        });
-    };
-
     function bindEvents(form) {
-        var selector = ":text, [type='password'], [type='file'], select, textarea, " +
-            "[type='number'], [type='search'] ,[type='tel'], [type='url'], " +
-                "[type='email'], [type='datetime'], [type='date'], [type='month'], " +
-                    "[type='week'], [type='time'], [type='datetime-local'], " +
-                        "[type='range'], [type='color'] ";
-
-        form.bindAll(selector, 'focusin focusout keyup', function () {
-            elementHandler($(this), form);
-        });
-
-        form.bindAll('select', 'change click', function () {
-            elementHandler($(this), form);
-        });
+        form
+            .on("change", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
+                var element = $(e.target);
+                if (element.data("validation-onchange-fired") === true) {
+                    return;
+                }
+                elementHandler(element, form);
+                element.data("validation-onchange-fired", true);
+            })
+            .on("keyup", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
+                var element = $(e.target);
+                if (element.data("validation-onchange-fired") === true) {
+                    var timeout = element.data("validation-timeout");
+                    if (timeout != undefined) {
+                        clearTimeout(timeout);
+                    }
+                    element.data("validation-timeout", setTimeout(function () {
+                        elementHandler(element, form);
+                    }, 1000));
+                }
+            })
+            .on("change", "input:radio:not([disabled]),input:checkbox:not([disabled]),select:not([disabled])", function (e) {
+                var element = $(e.target);
+                elementHandler(element, form);
+            });
     }
 
     $.fn.storeNotification = function (notification) {

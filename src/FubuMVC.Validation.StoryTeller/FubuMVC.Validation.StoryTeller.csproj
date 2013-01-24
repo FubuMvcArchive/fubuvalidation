@@ -31,6 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FubuMVC.Core.Assets">
+      <HintPath>..\packages\FubuMVC.Core.Assets.0.9.9.257\lib\net40\FubuMVC.Core.Assets.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuMVC.Core.UI">
+      <HintPath>..\packages\FubuMVC.Core.UI.1.0.0.279\lib\net40\FubuMVC.Core.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuMVC.Core.View">
+      <HintPath>..\packages\FubuMVC.Core.View.1.0.0.257\lib\net40\FubuMVC.Core.View.dll</HintPath>
+    </Reference>
     <Reference Include="_">
       <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net45\_._</HintPath>
     </Reference>
@@ -48,15 +57,6 @@
     </Reference>
     <Reference Include="FubuMVC.Core">
       <HintPath>..\packages\FubuMVC.Core.1.0.0.1403\lib\net40\FubuMVC.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.Core.Assets">
-      <HintPath>..\packages\FubuMVC.Core.Assets.0.9.9.225\lib\net40\FubuMVC.Core.Assets.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.Core.UI">
-      <HintPath>..\packages\FubuMVC.Core.UI.1.0.0.247\lib\net40\FubuMVC.Core.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.Core.View">
-      <HintPath>..\packages\FubuMVC.Core.View.1.0.0.227\lib\net40\FubuMVC.Core.View.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.SelfHost">
       <HintPath>..\packages\FubuMVC.SelfHost.1.0.0.1403\lib\net40\FubuMVC.SelfHost.dll</HintPath>
@@ -150,6 +150,9 @@
   <ItemGroup>
     <None Include="packages.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Validation.application.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

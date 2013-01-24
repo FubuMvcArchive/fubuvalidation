@@ -44,19 +44,19 @@
       <HintPath>..\packages\FubuMVC.Core.1.0.0.1403\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core.Assets">
-      <HintPath>..\packages\FubuMVC.Core.Assets.0.9.9.225\lib\net40\FubuMVC.Core.Assets.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.Assets.0.9.9.257\lib\net40\FubuMVC.Core.Assets.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core.UI">
-      <HintPath>..\packages\FubuMVC.Core.UI.1.0.0.247\lib\net40\FubuMVC.Core.UI.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.UI.1.0.0.279\lib\net40\FubuMVC.Core.UI.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core.View">
-      <HintPath>..\packages\FubuMVC.Core.View.1.0.0.227\lib\net40\FubuMVC.Core.View.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.View.1.0.0.257\lib\net40\FubuMVC.Core.View.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Katana">
-      <HintPath>..\packages\FubuMVC.Katana.0.9.9.1388\lib\net40\FubuMVC.Katana.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Katana.1.0.0.1403\lib\net40\FubuMVC.Katana.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.OwinHost">
-      <HintPath>..\packages\FubuMVC.OwinHost.0.9.9.1388\lib\net40\FubuMVC.OwinHost.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.OwinHost.1.0.0.1403\lib\net40\FubuMVC.OwinHost.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.SelfHost">
       <HintPath>..\packages\FubuMVC.SelfHost.0.9.9.1388\lib\net40\FubuMVC.SelfHost.dll</HintPath>
@@ -75,10 +75,10 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin.Host.HttpListener">
-      <HintPath>..\packages\FubuMVC.Katana.0.9.9.1388\lib\net40\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Katana.1.0.0.1403\lib\net40\Microsoft.Owin.Host.HttpListener.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Hosting">
-      <HintPath>..\packages\FubuMVC.Katana.0.9.9.1388\lib\net40\Microsoft.Owin.Hosting.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Katana.1.0.0.1403\lib\net40\Microsoft.Owin.Hosting.dll</HintPath>
     </Reference>
     <Reference Include="NUnit">
       <HintPath>..\packages\NUnit.2.5.10.11092\lib\pnunit.framework.dll</HintPath>

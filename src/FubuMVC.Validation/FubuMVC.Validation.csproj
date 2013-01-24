@@ -56,13 +56,13 @@
       <HintPath>..\packages\FubuMVC.Core.1.0.0.1403\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core.Assets">
-      <HintPath>..\packages\FubuMVC.Core.Assets.0.9.9.225\lib\net40\FubuMVC.Core.Assets.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.Assets.0.9.9.257\lib\net40\FubuMVC.Core.Assets.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core.UI">
-      <HintPath>..\packages\FubuMVC.Core.UI.1.0.0.247\lib\net40\FubuMVC.Core.UI.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.UI.1.0.0.279\lib\net40\FubuMVC.Core.UI.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core.View">
-      <HintPath>..\packages\FubuMVC.Core.View.1.0.0.227\lib\net40\FubuMVC.Core.View.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.View.1.0.0.257\lib\net40\FubuMVC.Core.View.dll</HintPath>
     </Reference>
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags.1.2.0.145\lib\4.0\HtmlTags.dll</HintPath>

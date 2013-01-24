@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.UI;
 using FubuTestingSupport;
@@ -7,17 +8,31 @@ using NUnit.Framework;
 
 namespace FubuMVC.Validation.IntegrationTesting
 {
-    [TestFixture, Ignore]
+    [TestFixture]
     public class validation_assets
     {
-        [Test]
-        public void fetches_fubuvalidation_localization()
-        {
-            ServerHarness.Endpoints.Get<AssetEndpoint>(x => x.get_fubuvalidation_localization())
-               .StatusCodeShouldBe(HttpStatusCode.OK)
-               .ScriptNames()
-               .ShouldHaveTheSameElementsAs("_content/scripts/jquery-1.8.2.min.js", "_content/scripts/underscore.min.js", "_content/scripts/fubuvalidation.localization.js");
-        }
+		[Test]
+		public void fetches_fubuvalidation()
+		{
+			var scripts = new List<string>
+			{
+				"_content/scripts/jquery-1.8.2.min.js",
+				"_content/scripts/underscore-min.js",
+				"_content/scripts/fubuvalidation.localization.js",
+				"_content/scripts/fubuvalidation.ui.js",
+				"_content/scripts/jquery.continuations.js",
+				"_content/scripts/jquery.form.js",
+				"_content/scripts/fubuvalidation.rules.js",
+				"_content/scripts/jquery.continuations.forms.js",
+				"_content/scripts/fubuvalidation.core.js",
+				"_content/scripts/fubuvalidation.plugin.js"
+			};
+
+			ServerHarness.Endpoints.Get<AssetEndpoint>(x => x.get_fubuvalidation())
+			   .StatusCodeShouldBe(HttpStatusCode.OK)
+			   .ScriptNames()
+			   .ShouldHaveTheSameElementsAs(scripts);
+		}
     }
 
     public class AssetEndpoint
@@ -29,9 +44,9 @@ namespace FubuMVC.Validation.IntegrationTesting
             _document = document;
         }
 
-        public HtmlDocument get_fubuvalidation_localization()
+        public HtmlDocument get_fubuvalidation()
         {
-            _document.Asset("fubuvalidation.localization.js");
+            _document.Asset("fubuvalidation");
             _document.WriteAssetsToHead();
 
             return _document;

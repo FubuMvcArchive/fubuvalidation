@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
 using OpenQA.Selenium;
+using Serenity;
 using Serenity.Fixtures;
 
 namespace FubuMVC.Validation.Serenity
@@ -21,7 +22,11 @@ namespace FubuMVC.Validation.Serenity
 
         private IWebElement element
         {
-            get { return _context(_driver).FindElement(By.CssSelector(".validation-container")); }
+            get
+            {
+				Wait.Until(() => _context(_driver).FindElement(By.CssSelector(".validation-container")).Displayed);
+	            return _context(_driver).FindElement(By.CssSelector(".validation-container"));
+            }
         }
 
         public IEnumerable<ValidationMessage> AllMessages()

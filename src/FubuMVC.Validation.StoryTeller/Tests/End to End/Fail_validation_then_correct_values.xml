@@ -6,12 +6,14 @@
   <CreateUserScreen>
     <EnterUsername isStep="True" Username="EMPTY" />
     <EnterPassword isStep="True" Password="Pass" />
+    <ClickCreate isStep="True" />
     <VerifyValidationMessages isStep="True">
       <rows>
         <row isStep="True" Property="Username" Message="Username - This field is required." />
       </rows>
     </VerifyValidationMessages>
     <EnterUsername isStep="True" Username="Test" />
+    <ClickCreate isStep="True" />
     <NoMessages isStep="True" />
     <ClickCreate isStep="True" />
     <VerifyTheUsers isStep="True">

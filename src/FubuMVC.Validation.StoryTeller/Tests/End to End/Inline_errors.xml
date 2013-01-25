@@ -3,6 +3,7 @@
   <InlineModelScreen>
     <EnterName isStep="True" Name="EMPTY" />
     <EnterEmail isStep="True" Email="invalid" />
+    <ClickTheSubmitButton isStep="True" />
     <VerifyInlineValidationMessages isStep="True">
       <rows>
         <row isStep="True" Property="Name" Message="This field is required." />

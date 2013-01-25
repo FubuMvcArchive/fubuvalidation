@@ -63,7 +63,7 @@
                     }
                     element.data("validation-timeout", setTimeout(function () {
                         elementHandler(element, form);
-                    }, 1000));
+                    }, 500));
                 }
             })
             .on("change", "input:radio:not([disabled]),input:checkbox:not([disabled]),select:not([disabled])", function (e) {

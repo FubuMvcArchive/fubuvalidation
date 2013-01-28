@@ -29,6 +29,10 @@ namespace FubuMVC.Validation.Tests.UI
             theRequest = new FormRequest(new ChainSearch { Type = typeof(ValidationSummaryTarget) }, new ValidationSummaryTarget());
             theRequest.Attach(new StructureMapServiceLocator(Services.Container));
 
+            ValidationConvention.ApplyValidation(theRequest.Chain.FirstCall(), new ValidationSettings());
+            theRequest.Chain.ValidationNode().Clear();
+            theRequest.Chain.ValidationNode().RegisterStrategy(RenderingStrategies.Summary);
+
             var theForm = new FormTag("test");
             theForm.Append(new HtmlTag("input").Attr("type", "text").Attr("name", "Name"));
 
@@ -38,6 +42,19 @@ namespace FubuMVC.Validation.Tests.UI
             MockFor<IPartialInvoker>().Stub(x => x.Invoke<ValidationSummary>()).Return(theValidationSummary);
 
             ClassUnderTest.Modify(theRequest);
+        }
+
+        [Test]
+        public void true_if_the_summary_strategy_is_registered()
+        {
+            ClassUnderTest.Matches(theRequest).ShouldBeTrue();
+        }
+
+        [Test]
+        public void false_if_the_summary_strategy_is_not_registered()
+        {
+            theRequest.Chain.ValidationNode().Clear();
+            ClassUnderTest.Matches(theRequest).ShouldBeFalse();
         }
 
         [Test]

@@ -141,12 +141,12 @@ end
 
 desc "Runs the Jasmine tests"
 task :run_jasmine do
-	serenity "jasmine run src/serenity.txt -b Firefox"
+	serenity "jasmine run src/serenity.txt -b Phantom"
 end
 
 desc "Runs the Jasmine tests and outputs the results for CI"
 task :run_jasmine_ci do
-	serenity "jasmine run --verbose --timeout 15 src/serenity.txt -b Firefox"
+	serenity "jasmine run --verbose --timeout 15 src/serenity.txt -b Phantom"
 end
 
 task :storyteller_ci do

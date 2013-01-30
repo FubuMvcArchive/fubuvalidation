@@ -48,7 +48,7 @@ namespace FubuMVC.Validation.StoryTeller
             _page = page;
         }
 
-        public FubuHtmlDocument<AccessorOverridesModel> get_class_validation(AccessorOverridesModel request)
+        public FubuHtmlDocument<AccessorOverridesModel> get_accessor_validation(AccessorOverridesModel request)
         {
             _page.Add(new HtmlTag("h1").Text("Accessor Overrides Validation Rules"));
             _page.Add(createForm());
@@ -56,7 +56,7 @@ namespace FubuMVC.Validation.StoryTeller
             return _page;
         }
 
-        public FubuContinuation post_class_validation(AccessorOverridesModel model)
+        public FubuContinuation post_accessor_validation(AccessorOverridesModel model)
         {
             return FubuContinuation.RedirectTo(new AccessorOverridesModel(), "GET");
         }

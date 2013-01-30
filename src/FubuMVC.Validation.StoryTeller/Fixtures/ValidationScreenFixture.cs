@@ -1,7 +1,9 @@
 using System.Linq;
+using System.Threading;
 using FubuCore;
 using FubuMVC.Validation.Serenity;
 using OpenQA.Selenium;
+using Serenity;
 using Serenity.Fixtures;
 using StoryTeller;
 using StoryTeller.Engine;
@@ -41,6 +43,8 @@ namespace FubuMVC.Validation.StoryTeller.Fixtures
 		[FormatAs("Click the submit button")]
 		public void ClickTheSubmitButton()
 		{
+			Driver.FindElement(By.Id("Model")).Click();
+			Thread.Sleep(100);
 			Driver.FindElement(By.Id("Model")).Click();
 		}
 

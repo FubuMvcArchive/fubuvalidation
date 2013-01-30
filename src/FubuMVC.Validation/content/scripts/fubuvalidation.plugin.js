@@ -125,7 +125,24 @@
 		validation.Processor.reset(continuation);
 		
 		return _reset.call(this);
-    };
+	};
+
+	$.fn.activateValidation = function () {
+		return this.each(function () {
+			var container = $(this);
+			$('form.validated-form', container).each(function () {
+				var mode = $(this).data('validationMode');
+				$(this).validate({
+					ajax: mode == 'ajax',
+					continuationSuccess: function (continuation) {
+						if (continuation.success && continuation.form) {
+							continuation.form.trigger('validation:success', continuation);
+						}
+					}
+				});
+			});
+		});
+	};
 	
 	continuations.applyPolicy({
         matches: function (continuation) {

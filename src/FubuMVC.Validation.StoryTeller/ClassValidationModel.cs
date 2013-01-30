@@ -77,7 +77,7 @@ namespace FubuMVC.Validation.StoryTeller
             form.Append(_page.Edit(x => x.Custom));
 
             form.Append(new HtmlTag("input").Attr("type", "submit").Attr("value", "Submit").Id("Model"));
-            form.Id("ClassValidationModel");
+			form.Id(typeof(ClassValidationModel).Name);
 
             return form;
         }

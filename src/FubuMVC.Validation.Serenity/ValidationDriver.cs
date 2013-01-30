@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
@@ -25,6 +26,7 @@ namespace FubuMVC.Validation.Serenity
             get
             {
 				Wait.Until(() => _context(_driver).FindElement(By.CssSelector(".validation-container")).Displayed);
+				Wait.Until(() => _context(_driver).FindElements(By.CssSelector(".validation-summary > li")).Count != 0);
 	            return _context(_driver).FindElement(By.CssSelector(".validation-container"));
             }
         }
@@ -41,8 +43,9 @@ namespace FubuMVC.Validation.Serenity
 					Message = x.Text
 				}).ToList();
         	}
-        	catch
+        	catch(Exception exc)
         	{
+				Debug.Write(exc);
         		return new ValidationMessage[0];
         	}
             

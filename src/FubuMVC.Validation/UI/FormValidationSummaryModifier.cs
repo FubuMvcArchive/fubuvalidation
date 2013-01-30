@@ -10,11 +10,16 @@ namespace FubuMVC.Validation.UI
     {
         public bool Matches(FormRequest token)
         {
-            return token.Chain.ValidationNode().Contains(RenderingStrategies.Summary);
+	        return true;
         }
 
         public void Modify(FormRequest request)
         {
+			if (!request.Chain.ValidationNode().Contains(RenderingStrategies.Summary))
+			{
+				return;
+			}
+
             var summary = request.Services.GetInstance<IPartialInvoker>().Invoke<ValidationSummary>();
             request.CurrentTag.InsertFirst(new LiteralTag(summary));
         }

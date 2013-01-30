@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using FubuCore;
@@ -43,9 +44,24 @@ namespace FubuMVC.Validation.StoryTeller.Fixtures
 		[FormatAs("Click the submit button")]
 		public void ClickTheSubmitButton()
 		{
-			Driver.FindElement(By.Id("Model")).Click();
-			Thread.Sleep(100);
-			Driver.FindElement(By.Id("Model")).Click();
+			click();
+			click();
+		}
+
+		private void click()
+		{
+			try
+			{
+				Driver.FindElement(By.Id("Model")).Click();
+			}
+			catch
+			{
+			}
+			finally
+			{
+				Thread.Sleep(100);
+			}
+			
 		}
 
 		public IGrammar VerifyValidationMessages()

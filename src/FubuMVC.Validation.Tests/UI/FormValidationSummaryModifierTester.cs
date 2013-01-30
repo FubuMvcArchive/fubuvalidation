@@ -40,26 +40,21 @@ namespace FubuMVC.Validation.Tests.UI
 
             theValidationSummary = "<div>summary</div>";
             MockFor<IPartialInvoker>().Stub(x => x.Invoke<ValidationSummary>()).Return(theValidationSummary);
-
-            ClassUnderTest.Modify(theRequest);
         }
 
-        [Test]
-        public void true_if_the_summary_strategy_is_registered()
-        {
-            ClassUnderTest.Matches(theRequest).ShouldBeTrue();
-        }
-
-        [Test]
-        public void false_if_the_summary_strategy_is_not_registered()
-        {
-            theRequest.Chain.ValidationNode().Clear();
-            ClassUnderTest.Matches(theRequest).ShouldBeFalse();
-        }
+		[Test]
+		public void no_summary_if_the_summary_strategy_is_not_registered()
+		{
+			theRequest.Chain.ValidationNode().Clear();
+			ClassUnderTest.Modify(theRequest);
+			theRequest.CurrentTag.ToString()
+				.ShouldEqual("<form method=\"post\" action=\"test\"><input type=\"text\" name=\"Name\" />");
+		}
 
         [Test]
         public void prepends_the_validation_summary()
         {
+			ClassUnderTest.Modify(theRequest);
             theRequest.CurrentTag.ToString()
                 .ShouldEqual("<form method=\"post\" action=\"test\"><div>summary</div><input type=\"text\" name=\"Name\" />");
         }

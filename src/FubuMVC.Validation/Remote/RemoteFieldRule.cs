@@ -33,7 +33,7 @@ namespace FubuMVC.Validation.Remote
 
         public string ToHash()
         {
-            return "RuleType={0}&Type={1}&Accessor={2}".ToFormat(_type.FullName, _accessor.OwnerType.Name, _accessor.Name).ToHash();
+            return "RuleType={0}&Type={1}&Accessor={2}".ToFormat(_type.FullName, _accessor.OwnerType.FullName, _accessor.Name).ToHash();
         }
 
         public override bool Equals(object obj)

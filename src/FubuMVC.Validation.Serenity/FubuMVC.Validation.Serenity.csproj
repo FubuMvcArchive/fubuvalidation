@@ -32,16 +32,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FubuMVC.Core">
-      <HintPath>..\packages\FubuMVC.Core.1.0.1.1404\lib\net40\FubuMVC.Core.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.Core.1.0.1.1407\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.SelfHost">
-      <HintPath>..\packages\FubuMVC.SelfHost.1.0.1.1404\lib\net40\FubuMVC.SelfHost.dll</HintPath>
+      <HintPath>..\packages\FubuMVC.SelfHost.1.0.1.1407\lib\net40\FubuMVC.SelfHost.dll</HintPath>
     </Reference>
     <Reference Include="Selenium.WebDriverBackedSelenium">
       <HintPath>..\packages\Selenium.WebDriverBackedSelenium.2.29.1\lib\net40\Selenium.WebDriverBackedSelenium.dll</HintPath>
     </Reference>
     <Reference Include="Serenity">
-      <HintPath>..\packages\Serenity.0.9.8.118\lib\net40\Serenity.dll</HintPath>
+      <HintPath>..\packages\Serenity.0.9.8.119\lib\net40\Serenity.dll</HintPath>
     </Reference>
     <Reference Include="WebDriver">
       <HintPath>..\packages\Selenium.WebDriver.2.29.1\lib\net40\WebDriver.dll</HintPath>

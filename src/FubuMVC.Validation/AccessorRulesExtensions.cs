@@ -1,4 +1,5 @@
 ﻿using System;
+using FubuLocalization;
 using FubuMVC.Core.Registration;
 using FubuValidation.Fields;
 
@@ -7,7 +8,14 @@ namespace FubuMVC.Validation
     // This is all covered by ST
     public static class AccessorRulesExtensions
     {
-        public static void MaximumLength(this IAccessorRulesExpression expression, int length)
+		public static void AddRule<T>(this IAccessorRulesExpression expression, StringToken token)
+			where T : IFieldValidationRule, new()
+	    {
+		    var rule = new T {Token = token};
+			expression.Add(rule);
+	    }
+
+	    public static void MaximumLength(this IAccessorRulesExpression expression, int length)
         {
             expression.Add(new MaximumLengthRule(length));
         }

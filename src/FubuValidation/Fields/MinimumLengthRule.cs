@@ -1,16 +1,28 @@
+using FubuCore;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
+using FubuLocalization;
 
 namespace FubuValidation.Fields
 {
-    public class MinimumLengthRule : IFieldValidationRule
+    public class MinimumLengthRule : IFieldValidationRule, DescribesItself
     {
-        public static readonly string LENGTH = "min";
+	    public static readonly string LENGTH = "min";
         private readonly int _length;
 
         public MinimumLengthRule(int length)
+			: this(length, ValidationKeys.MinLength)
         {
-            _length = length;
         }
+
+	    public MinimumLengthRule(int length, StringToken token)
+	    {
+		    _length = length;
+
+		    Token = token;
+	    }
+
+	    public StringToken Token { get; set; }
 
         public int Length
         {
@@ -22,28 +34,34 @@ namespace FubuValidation.Fields
             var value = context.GetFieldValue<string>(accessor);
             if (value != null && value.Length < Length)
             {
-                context.Notification.RegisterMessage(accessor, ValidationKeys.MinLength, TemplateValue.For(LENGTH, _length));
+                context.Notification.RegisterMessage(accessor, Token, TemplateValue.For(LENGTH, _length));
             }
         }
 
-        public bool Equals(MinimumLengthRule other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return other._length == _length;
-        }
+		protected bool Equals(MinimumLengthRule other)
+		{
+			return _length == other._length && Token.Equals(other.Token);
+		}
 
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof(MinimumLengthRule)) return false;
-            return Equals((MinimumLengthRule)obj);
-        }
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != GetType()) return false;
+			return Equals((MinimumLengthRule)obj);
+		}
 
-        public override int GetHashCode()
-        {
-            return _length;
-        }
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				return (_length * 397) ^ Token.GetHashCode();
+			}
+		}
+
+	    public void Describe(Description description)
+	    {
+			description.ShortDescription = "Length: {0}; Message: {1}".ToFormat(_length, Token);
+	    }
     }
 }

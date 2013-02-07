@@ -1,4 +1,5 @@
 ﻿using FubuCore.Reflection;
+using FubuLocalization;
 using FubuMVC.Validation.Remote;
 using FubuTestingSupport;
 using FubuValidation;
@@ -32,7 +33,9 @@ namespace FubuMVC.Validation.Tests.Remote
 
         public class RemoteRuleStub : IRemoteFieldValidationRule
         {
-            public void Validate(Accessor accessor, ValidationContext context)
+	        public StringToken Token { get; set; }
+
+	        public void Validate(Accessor accessor, ValidationContext context)
             {
                 throw new System.NotImplementedException();
             }

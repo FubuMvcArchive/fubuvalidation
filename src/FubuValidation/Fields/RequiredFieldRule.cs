@@ -1,22 +1,36 @@
-﻿using FubuCore.Reflection;
+﻿using FubuCore.Descriptions;
+using FubuCore.Reflection;
+using FubuLocalization;
 
 namespace FubuValidation.Fields
 {
-    public class RequiredFieldRule : IFieldValidationRule
+    public class RequiredFieldRule : IFieldValidationRule, DescribesItself
     {
+	    public RequiredFieldRule()
+			: this(ValidationKeys.Required)
+	    {
+	    }
+
+	    public RequiredFieldRule(StringToken token)
+	    {
+		    Token = token;
+	    }
+
+		public StringToken Token { get; set; }
+
         public void Validate(Accessor accessor, ValidationContext context)
         {
             var rawValue = accessor.GetValue(context.Target);
 
             if (rawValue == null || string.Empty.Equals(rawValue))
             {
-                context.Notification.RegisterMessage(accessor, ValidationKeys.Required);
+                context.Notification.RegisterMessage(accessor, Token);
             }
         }
 
         public bool Equals(RequiredFieldRule other)
         {
-            return !ReferenceEquals(null, other);
+            return Token.Equals(other.Token);
         }
 
         public override bool Equals(object obj)
@@ -29,7 +43,12 @@ namespace FubuValidation.Fields
 
         public override int GetHashCode()
         {
-            return 0;
+            return Token.GetHashCode();
         }
+
+	    public void Describe(Description description)
+	    {
+		    description.ShortDescription = Token.ToString();
+	    }
     }
 }

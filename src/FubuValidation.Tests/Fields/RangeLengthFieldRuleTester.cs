@@ -30,6 +30,12 @@ namespace FubuValidation.Tests.Fields
             }
         }
 
+		[Test]
+		public void uses_the_default_token()
+		{
+			new RangeLengthFieldRule(0, 0).Token.ShouldEqual(ValidationKeys.RangeLength);
+		}
+
         [Test]
         public void registers_a_message_when_the_length_is_less_than_min()
         {

@@ -121,6 +121,7 @@
     <Compile Include="UI\InputElementModifier.cs" />
     <Compile Include="UI\IRenderingStrategy.cs" />
     <Compile Include="UI\IValidationAnnotationStrategy.cs" />
+    <Compile Include="UI\LocalizationElementModifier.cs" />
     <Compile Include="UI\MaxValueModifier.cs" />
     <Compile Include="UI\MaximumLengthModifier.cs" />
     <Compile Include="UI\MinimumLengthModifier.cs" />

@@ -94,5 +94,11 @@ namespace FubuMVC.Validation.Tests
         {
             theBehaviorGraph.Services.ServicesFor<IValidationAnnotationStrategy>().ShouldContain(def => def.Type == typeof(CssValidationAnnotationStrategy));
         }
+
+		[Test]
+		public void adds_the_localization_annotation_strategy()
+		{
+			theBehaviorGraph.Services.ServicesFor<IValidationAnnotationStrategy>().ShouldContain(def => def.Type == typeof(LocalizationAnnotationStrategy));
+		}
     }
 }

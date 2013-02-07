@@ -1,10 +1,24 @@
 ﻿using System;
+using FubuCore.Descriptions;
 using FubuCore.Reflection;
+using FubuLocalization;
 
 namespace FubuValidation.Fields
 {
-    public class GreaterOrEqualToZeroRule : IFieldValidationRule
+    public class GreaterOrEqualToZeroRule : IFieldValidationRule, DescribesItself
     {
+	    public GreaterOrEqualToZeroRule()
+			: this(ValidationKeys.GreaterThanOrEqualToZero)
+	    {
+	    }
+
+	    public GreaterOrEqualToZeroRule(StringToken token)
+	    {
+		    Token = token;
+	    }
+
+	    public StringToken Token { get; set; }
+
         public void Validate(Accessor accessor, ValidationContext context)
         {
             var rawValue = accessor.GetValue(context.Target);
@@ -13,14 +27,14 @@ namespace FubuValidation.Fields
                 var value = Convert.ToDouble(rawValue);
                 if (value < 0)
                 {
-                    context.Notification.RegisterMessage(accessor, ValidationKeys.GreaterThanOrEqualToZero);
+                    context.Notification.RegisterMessage(accessor, Token);
                 }
             }
         }
 
         public bool Equals(GreaterOrEqualToZeroRule other)
         {
-            return !ReferenceEquals(null, other);
+	        return Token.Equals(other.Token);
         }
 
         public override bool Equals(object obj)
@@ -33,7 +47,12 @@ namespace FubuValidation.Fields
 
         public override int GetHashCode()
         {
-            return 0;
+	        return Token.GetHashCode();
         }
+
+	    public void Describe(Description description)
+	    {
+		    description.ShortDescription = Token.ToString();
+	    }
     }
 }

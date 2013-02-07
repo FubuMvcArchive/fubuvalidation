@@ -1,16 +1,28 @@
-﻿using FubuCore.Reflection;
+﻿using FubuCore;
+using FubuCore.Descriptions;
+using FubuCore.Reflection;
+using FubuLocalization;
 
 namespace FubuValidation.Fields
 {
-    public class MaximumLengthRule : IFieldValidationRule
+    public class MaximumLengthRule : IFieldValidationRule, DescribesItself
     {
         public static readonly string LENGTH = "length";
         private readonly int _length;
 
         public MaximumLengthRule(int length)
+			: this(length, ValidationKeys.MaxLength)
         {
-            _length = length;
         }
+
+	    public MaximumLengthRule(int length, StringToken token)
+	    {
+		    _length = length;
+
+		    Token = token;
+	    }
+
+	    public StringToken Token { get; set; }
 
         public int Length
         {
@@ -22,15 +34,8 @@ namespace FubuValidation.Fields
             var rawValue = accessor.GetValue(context.Target);
             if (rawValue != null && rawValue.ToString().Length > Length)
             {
-                context.Notification.RegisterMessage(accessor, ValidationKeys.MaxLength, TemplateValue.For(LENGTH, _length));
+                context.Notification.RegisterMessage(accessor, Token, TemplateValue.For(LENGTH, _length));
             }
-        }
-
-        public bool Equals(MaximumLengthRule other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return other._length == _length;
         }
 
         public override bool Equals(object obj)
@@ -41,9 +46,22 @@ namespace FubuValidation.Fields
             return Equals((MaximumLengthRule) obj);
         }
 
+		protected bool Equals(MaximumLengthRule other)
+		{
+			return _length.Equals(other._length) && Token.Equals(other.Token);
+		}
+
         public override int GetHashCode()
         {
-            return _length;
+			unchecked
+			{
+				return (_length * 397) ^ Token.GetHashCode();
+			}
         }
+
+	    public void Describe(Description description)
+	    {
+			description.ShortDescription = "Length: {0}; Message: {1}".ToFormat(_length, Token);
+	    }
     }
 }

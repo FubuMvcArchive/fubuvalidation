@@ -1,5 +1,6 @@
 ﻿using FubuCore;
 using FubuCore.Reflection;
+using FubuLocalization;
 using FubuMVC.StructureMap;
 using FubuMVC.Validation.Remote;
 using FubuTestingSupport;
@@ -57,7 +58,9 @@ namespace FubuMVC.Validation.Tests.Remote
             public Accessor Accessor;
             public ValidationContext Context;
 
-            public void Validate(Accessor accessor, ValidationContext context)
+	        public StringToken Token { get; set; }
+
+	        public void Validate(Accessor accessor, ValidationContext context)
             {
                 Accessor = accessor;
                 Context = context;

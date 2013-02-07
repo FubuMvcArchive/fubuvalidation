@@ -1,4 +1,5 @@
 ﻿using FubuCore.Reflection;
+using FubuLocalization;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.UI;
@@ -23,9 +24,16 @@ namespace FubuMVC.Validation.StoryTeller
 
 	public class ServerSideRule : IFieldValidationRule
 	{
+		public ServerSideRule()
+		{
+			Token = ValidationKeys.InvalidFormat;
+		}
+
+		public StringToken Token { get; set; }
+
 		public void Validate(Accessor accessor, ValidationContext context)
 		{
-			context.Notification.RegisterMessage(accessor, ValidationKeys.InvalidFormat);
+			context.Notification.RegisterMessage(accessor, Token);
 		}
 	}
 

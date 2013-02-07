@@ -21,6 +21,7 @@ namespace FubuMVC.Validation
             AddService<IActivator, ValidationRegistrationActivator>();
             AddService<IActivator, RemoteRuleGraphActivator>();
             AddService<IValidationAnnotationStrategy, CssValidationAnnotationStrategy>();
+			AddService<IValidationAnnotationStrategy, LocalizationAnnotationStrategy>();
         }
     }
 }

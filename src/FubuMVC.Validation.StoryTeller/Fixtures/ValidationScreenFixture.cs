@@ -46,6 +46,7 @@ namespace FubuMVC.Validation.StoryTeller.Fixtures
 		{
 			click();
 			click();
+			click();
 		}
 
 		private void click()

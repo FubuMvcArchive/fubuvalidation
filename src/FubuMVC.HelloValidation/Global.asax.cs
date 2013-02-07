@@ -63,14 +63,21 @@ namespace FubuMVC.HelloValidation
     [Remote]
     public class UniqueUsernameRule : IFieldValidationRule
     {
-        public void Validate(Accessor accessor, ValidationContext context)
+	    public UniqueUsernameRule()
+	    {
+		    Token = StringToken.FromKeyString("UniqueUser", "'{username}' is already in use");
+	    }
+
+	    public StringToken Token { get; set; }
+
+	    public void Validate(Accessor accessor, ValidationContext context)
         {
             var username = context.GetFieldValue<string>(accessor);
             var service = context.Service<IUserService>();
 
             if(service.UsernameExists(username))
             {
-                context.Notification.RegisterMessage(accessor, StringToken.FromKeyString("UniqueUser", "'{username}' is already in use"), TemplateValue.For("username", username));
+                context.Notification.RegisterMessage(accessor, Token, TemplateValue.For("username", username));
             }
         }
     }

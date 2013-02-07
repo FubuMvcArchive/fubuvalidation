@@ -30,6 +30,12 @@ namespace FubuValidation.Tests.Fields
             }
         }
 
+		[Test]
+		public void uses_the_default_token()
+		{
+			new MaxValueFieldRule(0).Token.ShouldEqual(ValidationKeys.MaxValue);
+		}
+
         [Test]
         public void registers_a_message_when_the_value_is_greater_than_max()
         {

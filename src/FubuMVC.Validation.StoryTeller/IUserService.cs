@@ -54,7 +54,9 @@ namespace FubuMVC.Validation.StoryTeller
 
     public class UniqueUsernameRule : IFieldValidationRule
     {
-        public void Validate(Accessor accessor, ValidationContext context)
+	    public StringToken Token { get; set; }
+
+	    public void Validate(Accessor accessor, ValidationContext context)
         {
             var username = context.GetFieldValue<string>(accessor);
             var users = context.Service<IUserService>();

@@ -31,6 +31,12 @@ namespace FubuValidation.Tests.Fields
             }
         }
 
+		[Test]
+		public void uses_the_default_token()
+		{
+			new MinimumLengthRule(0).Token.ShouldEqual(ValidationKeys.MinLength);
+		}
+
         [Test]
         public void should_not_register_message_if_value_is_null()
         {

@@ -1,11 +1,13 @@
-using System;
 using FubuCore.Reflection;
+using FubuLocalization;
 
 namespace FubuValidation.Fields
 {
     public class ContinuationFieldRule : IFieldValidationRule
     {
-        public void Validate(Accessor accessor, ValidationContext context)
+	    public StringToken Token { get; set; }
+
+	    public void Validate(Accessor accessor, ValidationContext context)
         {
             context.ContinueValidation(accessor);
         }

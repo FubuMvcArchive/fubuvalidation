@@ -70,7 +70,9 @@ namespace FubuMVC.Validation.IntegrationTesting
     [Remote]
     public class UniqueUsernameRule : IFieldValidationRule
     {
-        public void Validate(Accessor accessor, ValidationContext context)
+	    public StringToken Token { get; set; }
+
+	    public void Validate(Accessor accessor, ValidationContext context)
         {
             var service = context.Service<IUserService>();
             var username = context.GetFieldValue<string>(accessor);

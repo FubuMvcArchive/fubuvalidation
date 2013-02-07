@@ -30,6 +30,12 @@ namespace FubuValidation.Tests.Fields
             }
         }
 
+		[Test]
+		public void default_token_is_email_key()
+		{
+			new EmailFieldRule().Token.ShouldEqual(ValidationKeys.Email);
+		}
+
         [Test]
         public void no_message_if_email_is_valid()
         {

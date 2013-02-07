@@ -9,7 +9,6 @@ namespace FubuValidation.Tests.Fields
     [TestFixture]
     public class MaximumLengthRuleTester
     {
-
         private AddressModel theModel;
 
         [SetUp]
@@ -31,6 +30,12 @@ namespace FubuValidation.Tests.Fields
                 return scenario.Notification;
             }
         }
+
+		[Test]
+		public void uses_the_default_token()
+		{
+			new MaximumLengthRule(0).Token.ShouldEqual(ValidationKeys.MaxLength);
+		}
 
         [Test]
         public void should_not_register_message_if_value_is_null()

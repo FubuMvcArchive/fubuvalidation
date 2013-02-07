@@ -7,7 +7,7 @@ using System.Linq;
 namespace FubuValidation.Tests.Fields
 {
     [TestFixture]
-    public class when_evaluating_greater_than_zero_rule
+    public class GreaterThanZeroRuleTester
     {
         private SimpleModel theModel;
         private GreaterThanZeroRule theRule;
@@ -17,8 +17,13 @@ namespace FubuValidation.Tests.Fields
         {
             theRule = new GreaterThanZeroRule();
             theModel = new SimpleModel();
-
         }
+
+		[Test]
+		public void uses_the_default_token()
+		{
+			theRule.Token.ShouldEqual(ValidationKeys.GreaterThanZero);
+		}
 
         [Test]
         public void should_register_message_if_value_is_less_than_zero()

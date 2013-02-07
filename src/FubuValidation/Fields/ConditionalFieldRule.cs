@@ -1,5 +1,6 @@
 ﻿using FubuCore.Descriptions;
 using FubuCore.Reflection;
+using FubuLocalization;
 
 namespace FubuValidation.Fields
 {
@@ -27,6 +28,12 @@ namespace FubuValidation.Fields
         {
             get { return _condition; }
         }
+
+	    public StringToken Token
+	    {
+			get { return _inner.Token; }
+			set { _inner.Token = value; }
+	    }
 
         public IFieldValidationRule Inner
         {

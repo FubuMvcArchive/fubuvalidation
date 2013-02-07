@@ -1,5 +1,6 @@
 using FubuCore;
 using FubuCore.Reflection;
+using FubuLocalization;
 using FubuTestingSupport;
 using FubuValidation.Fields;
 using NUnit.Framework;
@@ -63,7 +64,9 @@ namespace FubuValidation.Tests
         {
             public static readonly string FIELD = "field";
 
-            public void Validate(Accessor accessor, ValidationContext context)
+	        public StringToken Token { get; set; }
+
+	        public void Validate(Accessor accessor, ValidationContext context)
             {
                 var username = context.GetFieldValue<string>(accessor);
                 var userService = context.Service<IUserService>();

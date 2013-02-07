@@ -23,7 +23,7 @@ namespace FubuValidation
         public static readonly ValidationKeys Summary = new ValidationKeys("There are errors with the information you provided.");
 
         public ValidationKeys(string text)
-            : base(text, text, namespaceByType: true)
+            : base(null, text, namespaceByType: true)
         {   
         }
     }

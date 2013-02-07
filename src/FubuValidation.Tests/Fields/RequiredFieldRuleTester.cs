@@ -31,6 +31,12 @@ namespace FubuValidation.Tests.Fields
             }
         }
 
+		[Test]
+		public void defaults_to_required_key()
+		{
+			new RequiredFieldRule().Token.ShouldEqual(ValidationKeys.Required);
+		}
+
         [Test]
         public void no_message_if_property_is_valid()
         {

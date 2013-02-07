@@ -5,6 +5,7 @@ using System.Reflection;
 using Bottles;
 using Bottles.Diagnostics;
 using FubuCore.Reflection;
+using FubuLocalization;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Registration;
 using FubuMVC.Validation.Remote;
@@ -84,7 +85,9 @@ namespace FubuMVC.Validation.Tests
 
     public class UniqueUsernameRule : IRemoteFieldValidationRule
     {
-        public void Validate(Accessor accessor, ValidationContext context)
+	    public StringToken Token { get; set; }
+
+	    public void Validate(Accessor accessor, ValidationContext context)
         {
             throw new System.NotImplementedException();
         }

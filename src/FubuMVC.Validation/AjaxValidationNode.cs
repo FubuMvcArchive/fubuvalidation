@@ -1,5 +1,5 @@
+using System;
 using FubuMVC.Core.Registration.Nodes;
-using FubuMVC.Validation.UI;
 
 namespace FubuMVC.Validation
 {
@@ -8,9 +8,11 @@ namespace FubuMVC.Validation
         public AjaxValidationNode(ActionCall call)
             : base(typeof(AjaxValidationBehavior<>).MakeGenericType(call.InputType()))
         {
+	        InputType = call.InputType();
         	Validation = ValidationNode.DefaultFor(ValidationMode.Ajax);
         }
 
+		public Type InputType { get; private set; }
         public ValidationNode Validation { get; private set; }
     }
 }

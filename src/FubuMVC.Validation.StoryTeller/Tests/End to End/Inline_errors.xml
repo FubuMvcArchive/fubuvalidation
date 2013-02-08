@@ -6,8 +6,8 @@
     <ClickTheSubmitButton isStep="True" />
     <VerifyInlineValidationMessages isStep="True">
       <rows>
-        <row isStep="True" Property="Name" Message="This field is required." />
-        <row isStep="True" Property="Email" Message="Please enter a valid email address." />
+        <row isStep="True" Property="Name" Message="Required Field" />
+        <row isStep="True" Property="Email" Message="Invalid email address" />
       </rows>
     </VerifyInlineValidationMessages>
   </InlineModelScreen>

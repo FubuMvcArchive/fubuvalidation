@@ -5,7 +5,7 @@
     <ClickTheSubmitButton isStep="True" />
     <VerifyValidationMessages isStep="True">
       <rows>
-        <row isStep="True" Property="List" Message="List - This field is required." />
+        <row isStep="True" Property="List" Message="List - Required Field" />
       </rows>
     </VerifyValidationMessages>
     <EnterList isStep="True" List="1" />

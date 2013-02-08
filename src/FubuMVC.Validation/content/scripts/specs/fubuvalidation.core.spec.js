@@ -1,3 +1,35 @@
+describe('ValidationMessage Tests', function() {
+	it('defaults to an empty context', function() {
+		var message = new $.fubuvalidation.Core.Message('field', 'token', 'element');
+		expect(message.context).toEqual({});
+	});
+
+	it('simple render', function () {
+		var element = $('<input type="text" name="Test" />');
+		var message = new $.fubuvalidation.Core.Message('field', 'token', element);
+		expect(message.toString()).toEqual('token');
+	});
+
+	it('uses the replacement values', function() {
+		var context = {
+			'Min': 0,
+			'Max': 15
+		};
+		
+		var element = $('<input type="text" name="Test" />');
+		var message = new $.fubuvalidation.Core.Message('field', 'Between {Min} and {Max}', element, context);
+		expect(message.toString()).toEqual('Between 0 and 15');
+	});
+
+	it('uses the {field} value', function() {
+		var context = {};
+		var element = $('<input type="text" name="Test" />');
+		
+		var message = new $.fubuvalidation.Core.Message('field', '{field} is required', element, context);
+		expect(message.toString()).toEqual('Test is required');
+	});
+});
+
 describe('ValidationNotificationTester', function () {
     var theNotification = null;
 
@@ -86,7 +118,7 @@ describe('Transforming a ValidationNotification to an AjaxContinuation', functio
     it('sets the success flag', function () {
         expect(theNotification.toContinuation().success).toEqual(true);
 
-        theNotification.registerMessage('Test', $.fubuvalidation.ValidationKeys.Required);
+        theNotification.registerMessage('Test', $.fubuvalidation.ValidationKeys.Required, $('<input type="text" name="Test" />'));
         expect(theNotification.toContinuation().success).toEqual(false);
     });
 
@@ -99,9 +131,11 @@ describe('Transforming a ValidationNotification to an AjaxContinuation', functio
     });
 
     it('renders the message', function () {
-        expect(new $.continuations.continuation().errors.length).toEqual(0);
-        var token = new $.fubuvalidation.StringToken('Test', '{{Property}} is required');
-        theNotification.registerMessage('Test', token, null, { Property: 'The Value' });
+    	expect(new $.continuations.continuation().errors.length).toEqual(0);
+	    
+    	var theElement = $('<input type="text" name="Test" />');
+        var token = new $.fubuvalidation.StringToken('Test', '{Property} is required');
+        theNotification.registerMessage('Test', token, theElement, { Property: 'The Value' });
 
         var theContinuation = theNotification.toContinuation();
         var theError = theContinuation.errors[0];
@@ -146,6 +180,30 @@ describe('ValidationTargetTester', function () {
 
         expect(target1.toHash()).toEqual(target4.toHash());
     });
+
+	it('finds the localization message', function() {
+		var theElement = $('<input type="text" value="test-test-test" />');
+		theElement.data('localization', { Messages: { required: 'Required Field' } });
+
+		var theTarget = new $.fubuvalidation.Core.Target.forElement(theElement);
+
+		expect(theTarget.localizedMessageFor('required')).toEqual('Required Field');
+	});
+	
+	it('null if the localization message key does not exist', function () {
+		var theElement = $('<input type="text" value="test-test-test" data-localization="{"Messages":{"required":"Required Field"}}" />');
+		theElement.data('localization', { Messages: { required: 'Required Field' } });
+		var theTarget = new $.fubuvalidation.Core.Target.forElement(theElement);
+
+		expect(theTarget.localizedMessageFor('email')).toEqual(null);
+	});
+	
+	it('null if the localization data attribute does not exist', function () {
+		var theElement = $('<input type="text" value="test-test-test" />');
+		var theTarget = new $.fubuvalidation.Core.Target.forElement(theElement);
+
+		expect(theTarget.localizedMessageFor('required')).toEqual(null);
+	});
 });
 
 describe('ValidationContextTester', function () {

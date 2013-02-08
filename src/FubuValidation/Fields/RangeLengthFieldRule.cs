@@ -32,8 +32,8 @@ namespace FubuValidation.Fields
 
             if(length < _min || length > _max)
             {
-                var min = TemplateValue.For("Min", _min);
-                var max = TemplateValue.For("Max", _max);
+                var min = TemplateValue.For("min", _min);
+                var max = TemplateValue.For("max", _max);
 
                 context.Notification.RegisterMessage(accessor, Token, min, max);
             }

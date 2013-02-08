@@ -30,7 +30,7 @@ namespace FubuValidation.Fields
             var value = accessor.GetValue(context.Target);
             if(_bounds.CompareTo(value) < 0)
             {
-                context.Notification.RegisterMessage(accessor, Token, TemplateValue.For("Bounds", _bounds));
+                context.Notification.RegisterMessage(accessor, Token, TemplateValue.For("bounds", _bounds));
             }
         }
 

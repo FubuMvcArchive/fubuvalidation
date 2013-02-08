@@ -7,7 +7,7 @@ namespace FubuValidation.Fields
 {
     public class MinimumLengthRule : IFieldValidationRule, DescribesItself
     {
-	    public static readonly string LENGTH = "min";
+	    public static readonly string LENGTH = "length";
         private readonly int _length;
 
         public MinimumLengthRule(int length)

@@ -21,12 +21,12 @@
         <row isStep="True" Property="StandardDate" Message="StandardDate - Please enter a valid date (e.g., 01/01/2012)." />
         <row isStep="True" Property="GreaterThanZero" Message="GreaterThanZero - Please enter a valid number." />
         <row isStep="True" Property="GreaterOrEqualToZero" Message="GreaterOrEqualToZero - Please enter a valid number." />
-        <row isStep="True" Property="LongerThanTen" Message="LongerThanTen - Please enter at least 10 characters." />
-        <row isStep="True" Property="AtLeastFiveButNotTen" Message="AtLeastFiveButNotTen - Please enter a value between 5 and 10 characters." />
-        <row isStep="True" Property="GreaterThanFive" Message="GreaterThanFive - Please enter a value less than or equal to 5." />
-        <row isStep="True" Property="LessThanFifteen" Message="LessThanFifteen - Please enter a value greater than or equal to 15." />
-        <row isStep="True" Property="Email" Message="Email - Please enter a valid email address." />
-        <row isStep="True" Property="Required" Message="Required - This field is required." />
+        <row isStep="True" Property="LongerThanTen" Message="LongerThanTen - Minimum length not met. Must be greater than or equal to 10" />
+        <row isStep="True" Property="AtLeastFiveButNotTen" Message="AtLeastFiveButNotTen - Value must be between 5 and 10 characters" />
+        <row isStep="True" Property="GreaterThanFive" Message="GreaterThanFive - Value must be greater than or equal to 5" />
+        <row isStep="True" Property="LessThanFifteen" Message="LessThanFifteen - Value must be less than or equal to 15" />
+        <row isStep="True" Property="Email" Message="Email - Invalid email address" />
+        <row isStep="True" Property="Required" Message="Required - Required Field" />
       </rows>
     </VerifyValidationMessages>
   </IntegrationScreen>

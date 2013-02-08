@@ -18,11 +18,11 @@
     defineToken('Email', 'Please enter a valid email address.');
     defineToken('Date', 'Please enter a valid date (e.g., 01/01/2012).');
     defineToken('Number', 'Please enter a valid number.');
-    defineToken('MinLength', 'Please enter at least {{length}} characters.');
-    defineToken('MaxLength', 'Please enter no more than {{length}} characters.');
+    defineToken('MinimumLength', 'Please enter at least {{length}} characters.');
+    defineToken('MaximumLength', 'Please enter no more than {{length}} characters.');
     defineToken('RangeLength', 'Please enter a value between {{min}} and {{max}} characters.');
-    defineToken('Min', 'Please enter a value less than or equal to {{bounds}}.');
-    defineToken('Max', 'Please enter a value greater than or equal to {{bounds}}.');
+    defineToken('MinValue', 'Please enter a value less than or equal to {{bounds}}.');
+    defineToken('MaxValue', 'Please enter a value greater than or equal to {{bounds}}.');
 
 
     function MinLengthRule(length) {
@@ -33,7 +33,7 @@
         validate: function (context) {
             var value = context.target.value();
             if (value.length < this.length) {
-                context.registerMessage(validationKeys.MinLength);
+            	context.registerMessage(validationKeys.MinimumLength);
             }
         }
     };
@@ -46,7 +46,7 @@
         validate: function (context) {
             var value = context.target.value();
             if (value.length > this.length) {
-                context.registerMessage(validationKeys.MaxLength);
+                context.registerMessage(validationKeys.MaximumLength);
             }
         }
     };
@@ -75,7 +75,7 @@
         validate: function (context) {
             var value = context.target.value();
             if (value < this.bounds) {
-                context.registerMessage(validationKeys.Min);
+                context.registerMessage(validationKeys.MinValue);
             }
         }
     };
@@ -88,7 +88,7 @@
         validate: function (context) {
             var value = context.target.value();
             if (value > this.bounds) {
-                context.registerMessage(validationKeys.Max);
+                context.registerMessage(validationKeys.MaxValue);
             }
         }
     };

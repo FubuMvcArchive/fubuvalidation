@@ -4,6 +4,27 @@
         sources[key] = source;
     };
 
+    function ValidationMessage(field, token, element, context) {
+    	this.field = field;
+    	this.token = token;
+    	this.element = element;
+    	this.context = context || {};
+    }
+
+	ValidationMessage.prototype.toString = function() {
+		var message = this.token.toString();
+		var context = this.context;
+
+		if (this.element) {
+			message = message.replace('{field}', this.element.attr('name'));
+		}
+		
+		for (var key in context) {
+			message = message.replace('{' + key + '}', context[key]);
+		}
+
+		return message;
+	};
 
     function ValidationNotification() {
         this.messages = {};
@@ -21,9 +42,8 @@
         },
 
         registerMessage: function (field, token, element, context) {
-            context = context || {};
             var messages = this.messagesFor(field);
-            messages.push({ field: field, token: token, element: element, context: context });
+            messages.push(new ValidationMessage(field, token, element, context));
         },
 
         allMessages: function () {
@@ -53,7 +73,7 @@
                 continuation.errors.push({
                     field: message.field,
                     label: message.field, // TODO -- maybe do a localization trick here
-                    message: _.template(message.token.toString(), message.context),
+                    message: message.toString(),
                     element: message.element
                 });
             }
@@ -73,6 +93,15 @@
     };
 
     ValidationTarget.prototype = {
+    	localizedMessageFor: function (key) {
+    		var data = this.element.data('localization');
+    		if (typeof (data) == 'undefined') return null;
+
+    		var message = data.Messages[key];
+    		if (typeof (message) == 'undefined') return null;
+
+    		return message;
+    	},
         value: function () {
             var value = this.rawValue;
             if (typeof (this.element) != 'undefined') {
@@ -102,7 +131,16 @@
         pushTemplateContext: function (context) {
             this.templateContext = context;
         },
-        registerMessage: function (message) {
+        registerMessage: function (token) {
+        	var message = token;
+        	if (typeof (token.key) != 'undefined') {
+        		var key = token.key.toLowerCase();
+	        	var localizedMsg = this.target.localizedMessageFor(key);
+		        if (localizedMsg) {
+			        message = localizedMsg;
+		        }
+	        }
+
             this.notification.registerMessage(this.target.fieldName, message, this.target.element, this.templateContext);
         }
     };
@@ -286,8 +324,9 @@
     });
 
     $.extend(true, validation, {
-        'Core': {
-            'Context': ValidationContext,
+    	'Core': {
+    		'Context': ValidationContext,
+    		'Message': ValidationMessage,
             'Notification': ValidationNotification,
             'Validator': Validator,
             'Target': ValidationTarget,

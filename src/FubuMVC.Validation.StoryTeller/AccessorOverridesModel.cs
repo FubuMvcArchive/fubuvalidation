@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Assets;
+﻿using FubuLocalization;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.UI;
@@ -18,8 +19,20 @@ namespace FubuMVC.Validation.StoryTeller
         public string Email { get; set; }
         public string Required { get; set; }
 
+		public string EmailCustomMessage { get; set; }
+
         public string Custom { get; set; }
     }
+
+	public class CustomValidationKeys : StringToken
+	{
+		public static readonly CustomValidationKeys CustomEmail = new CustomValidationKeys("Custom email error");
+
+		protected CustomValidationKeys(string text)
+			: base(null, text, namespaceByType: true)
+		{
+		}
+	}
 
     public class AccessorOverridesModelRules : OverridesFor<AccessorOverridesModel>
     {
@@ -34,6 +47,8 @@ namespace FubuMVC.Validation.StoryTeller
             Property(x => x.LessThanFifteen).MaxValue(15);
             Property(x => x.Email).Email();
             Property(x => x.Required).Required();
+
+			Property(x => x.EmailCustomMessage).Email(CustomValidationKeys.CustomEmail);
 
             Property(x => x.Custom).Add<UniqueUsernameRule>();
         }
@@ -75,6 +90,7 @@ namespace FubuMVC.Validation.StoryTeller
             form.Append(_page.Edit(x => x.Email));
             form.Append(_page.Edit(x => x.Required));
             form.Append(_page.Edit(x => x.Custom));
+			form.Append(_page.Edit(x => x.EmailCustomMessage));
 
             form.Append(new HtmlTag("input").Attr("type", "submit").Attr("value", "Submit").Id("Model"));
             form.Id("AccessorOverridesModel");

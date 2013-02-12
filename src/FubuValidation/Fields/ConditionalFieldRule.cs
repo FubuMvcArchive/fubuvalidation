@@ -45,5 +45,25 @@ namespace FubuValidation.Fields
             description.AddChild("If", Condition);
             description.AddChild("Then", Inner);
         }
+
+        public bool Equals(ConditionalFieldRule<T> other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other._inner, _inner);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (ConditionalFieldRule<T>)) return false;
+            return Equals((ConditionalFieldRule<T>) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return _inner.GetHashCode();
+        }
     }
 }

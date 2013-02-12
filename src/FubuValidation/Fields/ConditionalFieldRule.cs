@@ -65,5 +65,15 @@ namespace FubuValidation.Fields
         {
             return _inner.GetHashCode();
         }
+
+        public static bool operator ==(ConditionalFieldRule<T> left, ConditionalFieldRule<T> right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(ConditionalFieldRule<T> left, ConditionalFieldRule<T> right)
+        {
+            return !Equals(left, right);
+        }
     }
 }

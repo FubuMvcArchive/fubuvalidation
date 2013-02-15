@@ -150,7 +150,7 @@ task :run_jasmine_ci do
 end
 
 task :storyteller_ci do
-	storyteller "run src/FubuMVC.Validation.StoryTeller/validation.xml artifacts/Storyteller.html"
+	serenity "storyteller src/FubuMVC.Validation.StoryTeller/validation.xml artifacts/Storyteller.html -b Phantom"
 end
 
 def self.fubu(args)

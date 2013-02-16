@@ -9,7 +9,7 @@ namespace FubuValidation
 {
     public static class CoreExtensions
     {
-        public static void Fill<KEY, VALUE>(this IDictionary<KEY, VALUE> dictionary, KEY key, VALUE value)
+        public static void Fill<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
         {
             if (dictionary.ContainsKey(key))
             {

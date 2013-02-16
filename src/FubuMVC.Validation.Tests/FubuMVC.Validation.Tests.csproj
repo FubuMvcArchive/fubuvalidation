@@ -121,6 +121,7 @@
     <Compile Include="SampleInputModel.cs" />
     <Compile Include="AjaxValidationTester.cs" />
     <Compile Include="UI\ElementLocalizationMessagesTester.cs" />
+    <Compile Include="UI\LocalizationAnnotationStrategyTester.cs" />
     <Compile Include="UI\MaxValueModifierTester.cs" />
     <Compile Include="UI\MinValueModifierTester.cs" />
     <Compile Include="UI\CssValidationAnnotationStrategyTester.cs" />

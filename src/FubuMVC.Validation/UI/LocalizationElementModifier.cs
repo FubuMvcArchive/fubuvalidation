@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using FubuCore;
 using FubuCore.Util;
 using FubuMVC.Core.UI.Elements;
+using FubuValidation;
 using FubuValidation.Fields;
 
 namespace FubuMVC.Validation.UI
@@ -12,7 +14,8 @@ namespace FubuMVC.Validation.UI
 
 		public bool Matches(IFieldValidationRule rule)
 		{
-			return rule.Token != null;
+			// TODO -- We might need to make this smarter
+			return rule.Token != null && !rule.GetType().Closes(typeof(ConditionalFieldRule<>));
 		}
 
 		public void Modify(ElementRequest request, IFieldValidationRule rule)
@@ -44,7 +47,7 @@ namespace FubuMVC.Validation.UI
 		public void Add(IFieldValidationRule rule)
 		{
 			var key = Aliases[rule.GetType()];
-			_messages.Add(key, rule.Token.ToString());
+			_messages.Fill(key, rule.Token.ToString());
 		}
 	}
 }

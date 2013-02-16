@@ -1,7 +1,5 @@
-﻿using FubuCore;
-using FubuCore.Reflection;
+﻿using FubuCore.Reflection;
 using FubuLocalization;
-using FubuMVC.StructureMap;
 using FubuMVC.Validation.Remote;
 using FubuTestingSupport;
 using FubuValidation;
@@ -28,13 +26,10 @@ namespace FubuMVC.Validation.Tests.Remote
             theTarget = new RunnerTarget();
             theContext = ValidationContext.For(theTarget);
             theRule = new RecordingFieldValidationRule();
-            
-            Services.Inject(theRule);
 
             theRemoteRule = RemoteFieldRule.For(theAccessor, theRule);
 
             MockFor<IValidationTargetResolver>().Stub(x => x.Resolve(theAccessor, theValue)).Return(theTarget);
-            Services.Inject<IServiceLocator>(new StructureMapServiceLocator(Services.Container));
 
             MockFor<IValidator>().Stub(x => x.ContextFor(Arg<object>.Is.Same(theTarget), Arg<Notification>.Is.NotNull)).Return(theContext);
 

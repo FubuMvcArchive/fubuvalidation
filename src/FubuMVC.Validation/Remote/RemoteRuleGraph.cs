@@ -15,9 +15,9 @@ namespace FubuMVC.Validation.Remote
         {
             _rules = new Cache<Accessor, IList<RemoteFieldRule>>(x => new List<RemoteFieldRule>());
             _lookup = new Cache<string, RemoteFieldRule>(hash =>
-            {
-                return _rules.SelectMany(r => r).SingleOrDefault(r => r.ToHash() == hash);                                 
-            });
+	        {
+		        return _rules.SelectMany(r => r).SingleOrDefault(r => r.Matches(hash));
+	        });
         }
 
         public RemoteFieldRule RegisterRule(Accessor accessor, IFieldValidationRule rule)

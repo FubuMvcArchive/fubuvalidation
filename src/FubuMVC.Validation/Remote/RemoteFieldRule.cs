@@ -7,17 +7,12 @@ namespace FubuMVC.Validation.Remote
 {
     public class RemoteFieldRule
     {
-        private readonly Type _type;
+		private readonly IFieldValidationRule _rule;
         private readonly Accessor _accessor;
 
-        public RemoteFieldRule(Type type, Accessor accessor)
+        public RemoteFieldRule(IFieldValidationRule rule, Accessor accessor)
         {
-            if(!type.CanBeCastTo<IFieldValidationRule>())
-            {
-                throw new ArgumentException("Must be an IFieldValidationRule", "type");
-            }
-
-            _type = type;
+	        _rule = rule;
             _accessor = accessor;
         }
 
@@ -26,15 +21,25 @@ namespace FubuMVC.Validation.Remote
             get { return _accessor; }
         }
 
+	    public IFieldValidationRule Rule
+	    {
+			get { return _rule; }
+	    }
+
         public Type Type
         {
-            get { return _type; }
+            get { return _rule.GetType(); }
         }
 
         public string ToHash()
         {
-            return "RuleType={0}&Type={1}&Accessor={2}".ToFormat(_type.FullName, _accessor.OwnerType.FullName, _accessor.Name).ToHash();
+			return "RuleType={0}&Type={1}&Accessor={2}".ToFormat(Type.FullName, _accessor.OwnerType.FullName, _accessor.Name).ToHash();
         }
+
+		public bool Matches(string hash)
+		{
+			return ToHash().Equals(hash);
+		}
 
         public override bool Equals(object obj)
         {
@@ -48,20 +53,26 @@ namespace FubuMVC.Validation.Remote
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return other._type == _type && Equals(other._accessor, _accessor);
+            return _rule.Equals(other._rule) && Equals(other._accessor, _accessor);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return (_type.GetHashCode()*397) ^ _accessor.GetHashCode();
+                return (Type.GetHashCode()*397) ^ _accessor.GetHashCode();
             }
         }
 
         public static RemoteFieldRule For(Accessor accessor, IFieldValidationRule rule)
         {
-            return new RemoteFieldRule(rule.GetType(), accessor);
+            return new RemoteFieldRule(rule, accessor);
         }
+
+		public static RemoteFieldRule For<T>(Accessor accessor)
+			where T : IFieldValidationRule, new()
+		{
+			return new RemoteFieldRule(new T(), accessor);
+		}
     }
 }

@@ -17,19 +17,12 @@ namespace FubuMVC.Validation.Tests.Remote
         }
 
         [Test]
-        public void blows_up_if_the_type_is_not_a_field_validation_rule()
-        {
-            Exception<ArgumentException>
-                .ShouldBeThrownBy(() => new RemoteFieldRule(typeof (string), accessorFor(x => x.Name)));
-        }
-
-        [Test]
         public void equality_check()
         {
             var accessor = accessorFor(x => x.Name);
 
-            var r1 = new RemoteFieldRule(typeof (RequiredFieldRule), accessor);
-            var r2 = new RemoteFieldRule(typeof (RequiredFieldRule), accessor);
+	        var r1 = RemoteFieldRule.For<RequiredFieldRule>(accessor);
+			var r2 = RemoteFieldRule.For<RequiredFieldRule>(accessor);
 
             r1.ShouldEqual(r2);
         }
@@ -37,8 +30,8 @@ namespace FubuMVC.Validation.Tests.Remote
         [Test]
         public void equality_check_negative_accessor()
         {
-            var r1 = new RemoteFieldRule(typeof (RequiredFieldRule), accessorFor(x => x.Name));
-            var r2 = new RemoteFieldRule(typeof (RequiredFieldRule), accessorFor(x => x.Test));
+            var r1 = RemoteFieldRule.For<RequiredFieldRule>(accessorFor(x => x.Name));
+            var r2 = RemoteFieldRule.For<RequiredFieldRule>(accessorFor(x => x.Test));
 
             r1.ShouldNotEqual(r2);
         }
@@ -48,8 +41,8 @@ namespace FubuMVC.Validation.Tests.Remote
         {
             var accessor = accessorFor(x => x.Name);
 
-            var r1 = new RemoteFieldRule(typeof (RequiredFieldRule), accessor);
-            var r2 = new RemoteFieldRule(typeof (MinimumLengthRule), accessor);
+			var r1 = RemoteFieldRule.For<RequiredFieldRule>(accessor);
+			var r2 = RemoteFieldRule.For<EmailFieldRule>(accessor);
 
             r1.ShouldNotEqual(r2);
         }
@@ -57,8 +50,8 @@ namespace FubuMVC.Validation.Tests.Remote
         [Test]
         public void hash_is_repeatable()
         {
-            var r1 = new RemoteFieldRule(typeof (RequiredFieldRule), accessorFor(x => x.Name));
-            var r2 = new RemoteFieldRule(typeof (RequiredFieldRule), accessorFor(x => x.Name));
+			var r1 = RemoteFieldRule.For<RequiredFieldRule>(accessorFor(x => x.Name));
+			var r2 = RemoteFieldRule.For<RequiredFieldRule>(accessorFor(x => x.Name));
 
             r1.ToHash().ShouldEqual(r2.ToHash());
         }
@@ -66,8 +59,9 @@ namespace FubuMVC.Validation.Tests.Remote
         [Test]
         public void hash_is_unique_by_rule_model_and_accessor()
         {
-            var r1 = new RemoteFieldRule(typeof(RequiredFieldRule), SingleProperty.Build<SomeNamespace.Model>(e => e.Property));
-            var r2 = new RemoteFieldRule(typeof(RequiredFieldRule), SingleProperty.Build<OtherNamespace.Model>(e => e.Property));
+            var r1 = RemoteFieldRule.For<RequiredFieldRule>(SingleProperty.Build<SomeNamespace.Model>(e => e.Property));
+			var r2 = RemoteFieldRule.For<RequiredFieldRule>(SingleProperty.Build<OtherNamespace.Model>(e => e.Property));
+
             r1.ToHash().ShouldNotEqual(r2.ToHash());
         }
 

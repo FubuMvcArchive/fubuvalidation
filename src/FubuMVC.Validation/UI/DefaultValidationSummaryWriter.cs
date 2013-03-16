@@ -31,7 +31,10 @@ namespace FubuMVC.Validation.UI
 
         public IEnumerable<string> Mimetypes
         {
-            get { yield return MimeType.Html.Value; }
+            get { 
+                yield return MimeType.Html.Value;
+                yield return MimeType.Any.Value; 
+                }
         }
     }
 }

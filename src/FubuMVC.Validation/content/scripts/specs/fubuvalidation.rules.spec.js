@@ -165,6 +165,12 @@ describe('EmailRuleTester', function () {
         expect(theHarness.messagesFor('first.last@sub.domain.com').length).toEqual(0);
         expect(theHarness.messagesFor('gmail+style@sub.domain.com').length).toEqual(0);
     });
+
+    it('no message for an empty email', function () {
+       var x = theHarness.messagesFor('');
+       console.log(x);
+       expect(theHarness.messagesFor('').length).toEqual(0);
+    });
 });
 
 describe('DateRuleTester', function () {

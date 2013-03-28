@@ -38,6 +38,9 @@ describe('when submitting an invalid form', function () {
     beforeEach(function () {
         theCallback = sinon.spy();
         theHarness = new ValidationHarness(theCallback);
+
+        $('#Email', '#EndToEnd').val('invalid-email-address');
+
         theHarness.submit();
     });
 

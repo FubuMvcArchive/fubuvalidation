@@ -30,17 +30,20 @@ namespace FubuValidation.Tests.Fields
             }
         }
 
-		[Test]
-		public void default_token_is_email_key()
-		{
-			new EmailFieldRule().Token.ShouldEqual(ValidationKeys.Email);
-		}
+        [Test]
+        public void default_token_is_email_key()
+        {
+	         new EmailFieldRule().Token.ShouldEqual(ValidationKeys.Email);
+        }
 
         [Test]
         public void no_message_if_email_is_valid()
         {
-            theTarget.Email = "joel+paulus@arnold.com";
-            theNotification.MessagesFor<EmailTarget>(x => x.Email).Any().ShouldBeFalse();
+            AssertEmailValidationReturnsNoMessage("joel+paulus@arnold.com").ShouldBeTrue();
+            AssertEmailValidationReturnsNoMessage("user@domain.com").ShouldBeTrue();
+            AssertEmailValidationReturnsNoMessage("user@sub.domain.com").ShouldBeTrue();
+            AssertEmailValidationReturnsNoMessage("first.last@sub.domain.com").ShouldBeTrue();
+            AssertEmailValidationReturnsNoMessage("gmail+style@sub.domain.com").ShouldBeTrue();
         }
 
         [Test]
@@ -49,6 +52,18 @@ namespace FubuValidation.Tests.Fields
             theTarget.Email = "something";
             var messages = theNotification.MessagesFor<EmailTarget>(x => x.Email);
             messages.Single().StringToken.ShouldEqual(ValidationKeys.Email);
+        }
+
+		  [Test]
+		  public void no_message_if_email_is_empty()
+		  {
+           AssertEmailValidationReturnsNoMessage(string.Empty).ShouldBeTrue();
+		  }
+
+        private bool AssertEmailValidationReturnsNoMessage(string email)
+        {
+           theTarget.Email = email;
+           return theNotification.MessagesFor<EmailTarget>(x => x.Email).Any() == false;
         }
 
         public class EmailTarget

@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using FubuCore;
 using FubuCore.Descriptions;
 using FubuCore.Reflection;
 using FubuLocalization;
@@ -24,6 +25,9 @@ namespace FubuValidation.Fields
         public void Validate(Accessor accessor, ValidationContext context)
         {
             var email = context.GetFieldValue<string>(accessor);
+
+	         if(email.IsEmpty()) return;
+
             if(!EmailExpression.IsMatch(email))
             {
                 context.Notification.RegisterMessage(accessor, Token);

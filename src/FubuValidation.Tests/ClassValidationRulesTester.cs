@@ -30,6 +30,13 @@ namespace FubuValidation.Tests
             return registry.RulesFor(typeof (ClassValidationRulesTarget)).RulesFor(expression.ToAccessor());
         }
 
+        private IEnumerable<IValidationRule> classRules()
+        {
+            var graph = ValidationGraph.For(theRules);
+
+            return graph.Sources.SelectMany(source => source.RulesFor(typeof(ClassValidationRulesTarget)));
+        }
+
         [Test]
         public void no_rules()
         {
@@ -118,6 +125,24 @@ namespace FubuValidation.Tests
             nameRules.Any(x => x is RequiredFieldRule).ShouldBeTrue();
             nameRules.ShouldContain(new MaximumLengthRule(10));
         }
+
+        [Test]
+        public void register_class_level_rule_by_type()
+        {
+            theRules.Register<SimpleClassLevelRule>();
+
+            var classLevelRules = classRules();
+            classLevelRules.Any(x => x is SimpleClassLevelRule).ShouldBeTrue();
+        }
+
+        [Test]
+        public void register_class_level_rule_by_instance()
+        {
+            theRules.Register(new ComplexClassLevelRule<ClassValidationRulesTarget>(x => x.Province, x => x.Country));
+
+            var classLevelRules = classRules();
+            classLevelRules.Any(x => x is ComplexClassLevelRule<ClassValidationRulesTarget>);
+        }
     }
 
     public class ClassValidationRulesTarget
@@ -128,5 +153,31 @@ namespace FubuValidation.Tests
         public string Country { get; set; }
 
         public int Age { get; set; }
+    }
+
+    public class SimpleClassLevelRule : IValidationRule
+    {
+        public void Validate(ValidationContext context)
+        {
+            
+        }
+    }
+
+    public class ComplexClassLevelRule<T> : IValidationRule where T : class
+    {
+        private readonly Accessor _firstAccessor;
+        private readonly Accessor _secondAccessor;
+
+        public ComplexClassLevelRule(Expression<Func<T, object>> firstField, Expression<Func<T, object>> secondField)
+        {
+            _firstAccessor = firstField.ToAccessor();
+            _secondAccessor = secondField.ToAccessor();
+        }
+
+
+        public void Validate(ValidationContext context)
+        {
+           
+        }
     }
 }

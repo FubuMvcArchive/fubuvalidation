@@ -23,9 +23,10 @@ namespace FubuValidation
         IFieldValidationExpression Rule<T>() where T : IFieldValidationRule, new();
     }
 
-    public class ClassValidationRules<T> : IValidationRegistration where T : class
+    public class ClassValidationRules<T> : IValidationRegistration, IValidationSource where T : class
     {
         private readonly IList<RuleRegistrationExpression> _rules = new List<RuleRegistrationExpression>();
+        private readonly IList<IValidationRule> _classRules = new List<IValidationRule>();
 
         public RuleRegistrationExpression Require(params Expression<Func<T, object>>[] properties)
         {
@@ -42,10 +43,29 @@ namespace FubuValidation
             return new FieldValidationExpression(this, property.ToAccessor());
         }
 
+        public void Register<TClassRule>() where TClassRule : IValidationRule, new()
+        {
+            _classRules.Add(new TClassRule());
+        }
+
+        public void Register<TClassRule>(TClassRule rule) where TClassRule : IValidationRule
+        {
+            _classRules.Add(rule);
+        }
+
         void IValidationRegistration.Register(ValidationGraph graph)
         {
             _rules.Each(r => r.Register(graph.Fields));
+            graph.RegisterSource(this);
         }
+
+        IEnumerable<IValidationRule> IValidationSource.RulesFor(Type type)
+        {
+            return type == typeof(T)
+                ? _classRules
+                : Enumerable.Empty<IValidationRule>();
+        }
+
 
         public class RuleRegistrationExpression : IRuleRegistrationExpression
         {

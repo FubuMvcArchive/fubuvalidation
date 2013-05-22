@@ -53,6 +53,12 @@ namespace FubuMVC.Validation.Tests
         }
 
         [Test]
+        public void registers_the_list_field_validation_source()
+        {
+            theGraph.ServicesFor<IFieldValidationSource>().ShouldContain(x => x.Type == typeof(ListFieldValidationSource));
+        }
+
+        [Test]
         public void adds_the_accessor_rules_field_source()
         {
             theGraph.ServicesFor<IFieldValidationSource>().ShouldContain(x => x.Type == typeof(AccessorRulesFieldSource));

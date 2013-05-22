@@ -105,6 +105,7 @@
     <Compile Include="default_validation_services.cs" />
     <Compile Include="FubuValidationServiceRegistryTester.cs" />
     <Compile Include="HasInputTypeTester.cs" />
+    <Compile Include="ListFieldValidationSourceTester.cs" />
     <Compile Include="ModelBindingErrorsTester.cs" />
     <Compile Include="NotValidatedAttributeFilterTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

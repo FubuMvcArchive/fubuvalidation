@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Ajax;
+﻿using System.Collections.Generic;
+using FubuMVC.Core.Ajax;
 using FubuValidation;
 
 namespace FubuMVC.Validation.IntegrationTesting.Ajax
@@ -9,6 +10,12 @@ namespace FubuMVC.Validation.IntegrationTesting.Ajax
          {
              return AjaxContinuation.Successful();
          }
+
+        public AjaxContinuation post_ajax_collection(AjaxCollectionRequest request)
+        {
+            return AjaxContinuation.Successful();
+        }
+
     }
 
     public class AjaxRequest
@@ -16,4 +23,17 @@ namespace FubuMVC.Validation.IntegrationTesting.Ajax
         [Required]
         public string Name { get; set; }
     }
+
+    public class AjaxCollectionRequest
+    {
+        public List<CollectionItem> Collection { get; set; }
+    }
+
+    public class CollectionItem
+    {
+        [Required]
+        public string Name { get; set; }
+    }
+
+
 }

@@ -14,6 +14,7 @@ namespace FubuMVC.Validation
             SetServiceIfNone<IValidator, Validator>();
 
             AddService<IFieldValidationSource, AccessorRulesFieldSource>();
+            AddService<IFieldValidationSource, ListFieldValidationSource>();
 
             setSingleton<ValidationGraph, ValidationGraph>();
             setSingleton<IFieldRulesRegistry, FieldRulesRegistry>();

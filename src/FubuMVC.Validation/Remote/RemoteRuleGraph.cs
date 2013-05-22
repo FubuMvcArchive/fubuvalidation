@@ -23,14 +23,14 @@ namespace FubuMVC.Validation.Remote
         public RemoteFieldRule RegisterRule(Accessor accessor, IFieldValidationRule rule)
         {
             var remote = RemoteFieldRule.For(accessor, rule);
-            _rules[accessor].Fill(remote);
+            _rules[accessor is SingleProperty ? accessor : new SingleProperty(accessor.InnerProperty, accessor.OwnerType)].Fill(remote);
 
             return remote;
         }
 
         public IEnumerable<RemoteFieldRule> RulesFor(Accessor accessor)
         {
-            return _rules[accessor];
+            return _rules[accessor is SingleProperty ? accessor : new SingleProperty(accessor.InnerProperty, accessor.OwnerType)];
         }
 
         public RemoteFieldRule RuleFor(string hash)

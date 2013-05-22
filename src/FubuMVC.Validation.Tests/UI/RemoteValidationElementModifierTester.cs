@@ -1,4 +1,7 @@
-﻿using FubuCore;
+﻿using System;
+using System.Collections.Generic;
+using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.UI.Elements;
 using FubuMVC.Core.Urls;
 using FubuMVC.Validation.Remote;
@@ -13,24 +16,34 @@ namespace FubuMVC.Validation.Tests.UI
     public class RemoteValidationElementModifierTester
     {
         private RemoteValidationElementModifier theModifier;
-        private HtmlTag theTag;
-        private ElementRequest theRequest;
+        private HtmlTag theTag, theNestedTag, theItemTag;
+        private ElementRequest theRequest, theNestedRequest, theItemRequest;
         private RemoteRuleGraph theRemoteGraph;
         private InMemoryServiceLocator theServices;
         private IUrlRegistry theUrls;
-        private RemoteFieldRule theRemoteRule;
+        private RemoteFieldRule theRemoteRule, theNestedRemoteRule, theItemRemoteRule;
 
         [SetUp]
         public void SetUp()
         {
             theModifier = new RemoteValidationElementModifier();
             theTag = new HtmlTag("input");
+            theNestedTag = new HtmlTag("input");
+            theItemTag = new HtmlTag("input");
 
             theRequest = ElementRequest.For<RemoteTarget>(x => x.Username);
             theRequest.ReplaceTag(theTag);
 
+            theNestedRequest = ElementRequest.For<NestedRemoteTarget>(x => x.NestedProperty.StringProperty);
+            theNestedRequest.ReplaceTag(theNestedTag);
+
+            theItemRequest = ElementRequest.For<NestedRemoteTarget>(x => x.NestedProperty.Items[3].IntProperty);
+            theItemRequest.ReplaceTag(theItemTag);
+
             theRemoteGraph = new RemoteRuleGraph();
             theRemoteRule = theRemoteGraph.RegisterRule(theRequest.Accessor, new UniqueUsernameRule());
+            theNestedRemoteRule = theRemoteGraph.RegisterRule(ReflectionHelper.GetAccessor<Nested>(p => p.StringProperty), new RemoteStringRule());
+            theItemRemoteRule = theRemoteGraph.RegisterRule(ReflectionHelper.GetAccessor<Item>(p => p.IntProperty), new RemoteIntRule());
 
             theUrls = new StubUrlRegistry();
 
@@ -38,7 +51,7 @@ namespace FubuMVC.Validation.Tests.UI
             theServices.Add(theRemoteGraph);
             theServices.Add(theUrls);
 
-            theRequest.Attach(theServices);
+            new[] {theRequest, theNestedRequest, theItemRequest}.Each(x => x.Attach(theServices));
         }
 
         [Test]
@@ -50,11 +63,20 @@ namespace FubuMVC.Validation.Tests.UI
         [Test]
         public void registers_the_validation_def()
         {
-            theModifier.Modify(theRequest);
+            new[]
+                {
+                    Tuple.Create(theRequest, theRemoteRule),
+                    Tuple.Create(theNestedRequest, theNestedRemoteRule),
+                    Tuple.Create(theItemRequest, theItemRemoteRule)
+                }
+                .Each(x =>
+                    {
+                        theModifier.Modify(x.Item1);
+                        var def = x.Item1.CurrentTag.Data("remote-rule").As<RemoteValidationDef>();
+                        def.url.ShouldEqual(theUrls.RemoteRule());
+                        def.rules.ShouldHaveTheSameElementsAs(x.Item2.ToHash());
+                    });
 
-            var def = theRequest.CurrentTag.Data("remote-rule").As<RemoteValidationDef>();
-            def.url.ShouldEqual(theUrls.RemoteRule());
-            def.rules.ShouldHaveTheSameElementsAs(theRemoteRule.ToHash());
         }
         
         [Test]
@@ -63,14 +85,39 @@ namespace FubuMVC.Validation.Tests.UI
             theRemoteGraph = new RemoteRuleGraph();
             theServices.Add(theRemoteGraph);
 
-            theModifier.Modify(theRequest);
+            new[]
+                {
+                    theRequest,
+                    theNestedRequest,
+                    theItemRequest
+                }
+                .Each(x =>
+                    {
+                        theModifier.Modify(x);
+                        x.CurrentTag.Data("remote-rule").ShouldBeNull();
+                    });
 
-            theRequest.CurrentTag.Data("remote-rule").ShouldBeNull();
         }
 
         public class RemoteTarget
         {
             public string Username { get; set; }
+        }
+
+        public class NestedRemoteTarget
+        {
+            public Nested NestedProperty { get; set; }
+        }
+
+        public class Nested
+        {
+            public List<Item> Items { get; set; }
+            public string StringProperty { get; set; }
+        }
+
+        public class Item
+        {
+            public int IntProperty { get; set; }
         }
     }
 }

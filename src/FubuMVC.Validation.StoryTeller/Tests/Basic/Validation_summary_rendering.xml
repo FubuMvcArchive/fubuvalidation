@@ -9,15 +9,15 @@
     <ClickCreate isStep="True" />
     <VerifyValidationMessages isStep="True">
       <rows>
-        <row isStep="True" Property="Username" Message="Username - Required Field" />
-        <row isStep="True" Property="Password" Message="Password - Required Field" />
+        <row isStep="True" Property="Username" Message="en-US_Username - Required Field" />
+        <row isStep="True" Property="Password" Message="en-US_Password - Required Field" />
       </rows>
     </VerifyValidationMessages>
     <EnterUsername isStep="True" Username="test" />
     <ClickCreate isStep="True" />
     <VerifyValidationMessages isStep="True">
       <rows>
-        <row isStep="True" Property="Password" Message="Password - Required Field" />
+        <row isStep="True" Property="Password" Message="en-US_Password - Required Field" />
       </rows>
     </VerifyValidationMessages>
     <EnterPassword isStep="True" Password="pass" />

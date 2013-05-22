@@ -4,6 +4,7 @@ using FubuLocalization;
 
 namespace FubuValidation.Fields
 {
+    [IgnoreClientLocalization]
     public class ConditionalFieldRule<T> : IFieldValidationRule, DescribesItself
         where T : class
     {

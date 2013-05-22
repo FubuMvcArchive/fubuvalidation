@@ -27,6 +27,7 @@ namespace FubuMVC.Validation
                 x.Editors.Add(new RangeLengthModifier());
                 x.Editors.Add(new MinValueModifier());
                 x.Editors.Add(new MaxValueModifier());
+                x.Editors.Add(new LocalizationLabelModifier());
                 
                 x.Forms.Add(new FormValidationSummaryModifier());
                 x.Forms.Add(new FormValidationModifier());

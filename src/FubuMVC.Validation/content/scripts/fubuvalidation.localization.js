@@ -15,7 +15,6 @@
     }
 
     LocalizationManager.prototype = {
-        // TODO -- This obviously gets smarter later
         valueFor: function (token) {
             var value = this.cache[token.key];
             if (typeof (value) == 'undefined') {
@@ -34,9 +33,8 @@
         'fubuvalidation': {
             'StringToken': StringToken,
             'LocalizationManager': LocalizationManager,
-
-            // singleton scope
             'localizer': new LocalizationManager()
         }
-    })
+    });
+    
 } (jQuery.fubuvalidation));

@@ -133,18 +133,31 @@ describe('Transforming a ValidationNotification to an AjaxContinuation', functio
     it('renders the message', function () {
     	expect(new $.continuations.continuation().errors.length).toEqual(0);
 	    
-    	var theElement = $('<input type="text" name="Test" />');
-        var token = new $.fubuvalidation.StringToken('Test', '{Property} is required');
-        theNotification.registerMessage('Test', token, theElement, { Property: 'The Value' });
+    	var theElement = $('<input type="text" name="FirstName" data-localized-label="First Name" />');
+    	var token = new $.fubuvalidation.StringToken('FirstName', '{Property} is required');
+    	theNotification.registerMessage('FirstName', token, theElement, { Property: 'The Value' });
 
         var theContinuation = theNotification.toContinuation();
         var theError = theContinuation.errors[0];
 
         expect(theContinuation.errors.length).toEqual(1);
 
-        expect(theError.field).toEqual('Test');
-        expect(theError.label).toEqual('Test');
+        expect(theError.field).toEqual('FirstName');
+        expect(theError.label).toEqual('First Name');
         expect(theError.message).toEqual('The Value is required');
+    });
+    
+    it('renders the label with no localized label', function () {
+        expect(new $.continuations.continuation().errors.length).toEqual(0);
+
+        var theElement = $('<input type="text" name="FirstName" />');
+        var token = new $.fubuvalidation.StringToken('FirstName', '{Property} is required');
+        theNotification.registerMessage('FirstName', token, theElement, { Property: 'The Value' });
+
+        var theContinuation = theNotification.toContinuation();
+        var theError = theContinuation.errors[0];
+        
+        expect(theError.label).toEqual('FirstName');
     });
 
 });

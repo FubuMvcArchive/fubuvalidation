@@ -12,7 +12,7 @@
     <EnterPassword isStep="True" Password="Password" />
     <VerifyValidationMessages isStep="True">
       <rows>
-        <row isStep="True" Property="Username" Message="Username - Username 'Test' already exists" />
+        <row isStep="True" Property="Username" Message="en-US_Username - Username 'Test' already exists" />
       </rows>
     </VerifyValidationMessages>
   </CreateUserScreen>

@@ -70,9 +70,14 @@
             var messages = this.allMessages();
             for (var i = 0; i < messages.length; i++) {
                 var message = messages[i];
+                var label = message.element.data('localized-label');
+                if (typeof(label) == 'undefined') {
+                    label = message.field;
+                }
+
                 continuation.errors.push({
                     field: message.field,
-                    label: message.field, // TODO -- maybe do a localization trick here
+                    label: label,
                     message: message.toString(),
                     element: message.element
                 });

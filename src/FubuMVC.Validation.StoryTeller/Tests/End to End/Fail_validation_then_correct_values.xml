@@ -9,7 +9,7 @@
     <ClickCreate isStep="True" />
     <VerifyValidationMessages isStep="True">
       <rows>
-        <row isStep="True" Property="Username" Message="Username - Required Field" />
+        <row isStep="True" Property="Username" Message="en-US_Username - Required Field" />
       </rows>
     </VerifyValidationMessages>
     <EnterUsername isStep="True" Username="Test" />

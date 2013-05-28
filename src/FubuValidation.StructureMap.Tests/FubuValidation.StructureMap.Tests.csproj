@@ -57,13 +57,13 @@
       <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="structuremap">
-      <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
+      <HintPath>..\packages\structuremap\lib\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap\lib\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="structuremap.automocking">
-      <HintPath>..\packages\structuremap.automocking.2.6.3\lib\StructureMap.AutoMocking.dll</HintPath>
+      <HintPath>..\packages\structuremap.automocking\lib\StructureMap.AutoMocking.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap.AutoMocking">
       <HintPath>..\packages\structuremap.automocking\lib\StructureMap.AutoMocking.dll</HintPath>

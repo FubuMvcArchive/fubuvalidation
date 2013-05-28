@@ -9,7 +9,7 @@
     <projectUrl>http://validation.fubu-project.org</projectUrl>
     <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuValidation_256.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>FubuValidation - have validation your way, whatever way that happens to be</description>
+    <description>Have validation your way, whatever way that happens to be</description>
     <tags>fubu validation fubumvc conventional</tags>
     <dependencies>
       <dependency id="FubuLocalization" />
@@ -18,6 +18,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\build\FubuValidation.*" target="lib" />
+    <file src="..\..\src\FubuValidation\bin\Release\FubuValidation*" target="lib" />
   </files>
 </package>

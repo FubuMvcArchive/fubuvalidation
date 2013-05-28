@@ -17,6 +17,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\build\FubuMVC.Validation.Serenity*" target="lib" />
+    <file src="..\..\src\FubuMVC.Validation.Serenity\bin\Release\FubuMVC.Validation.Serenity*" target="lib" />
   </files>
 </package>

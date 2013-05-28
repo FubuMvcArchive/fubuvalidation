@@ -20,6 +20,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\build\FubuMVC.Validation.*" target="lib" />
+    <file src="..\..\src\FubuMVC.Validation\bin\Release\FubuMVC.Validation.*" target="lib" />
   </files>
 </package>

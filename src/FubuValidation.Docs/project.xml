@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ProjectRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TagLine>Have validation your way, whatever way that happens to be</TagLine>
+  <Name>FubuValidation</Name>
+  <GitHubPage>http://github.com/DarthFubuMVC/FubuValidation</GitHubPage>
+  <UserGroupUrl>https://groups.google.com/forum/?fromgroups#!forum/fubumvc-devel</UserGroupUrl>
+  <BuildServerUrl>http://build.fubu-project.org/project.html?projectId=project4&amp;tab=projectOverview</BuildServerUrl>
+  <BottleName>FubuValidation.Docs</BottleName>
+  <NugetWhitelist>FubuValidation</NugetWhitelist>
+  <Nugets>
+    <PublishedNuget>
+      <Name>FubuValidation</Name>
+      <Description>FubuValidation - have validation your way, whatever way that happens to be</Description>
+    </PublishedNuget>
+  </Nugets>
+  <Url>fubuvalidation</Url>
+</ProjectRoot>

@@ -42,71 +42,10 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\AjaxChains.cs" />
-    <Compile Include="Configuration\ChangingRenderingStrategies.cs" />
-    <Compile Include="Configuration\ConfiguringValidationRules.cs" />
-    <Compile Include="Configuration\LofiChains.cs" />
-    <Compile Include="Configuration\OutOfTheBoxConventions.cs" />
-    <Compile Include="Configuration\PerrouteConfiguration.cs" />
-    <Compile Include="Configuration\RemoteRules.cs" />
-    <Compile Include="Configuration\RenderingStrategies.cs" />
-    <Compile Include="Configuration\UsingValidationAttributes.cs" />
-    <Compile Include="Configuration\ValidationDsl.cs" />
-    <Compile Include="Customization\ConfiguringRemoteRules.cs" />
-    <Compile Include="Customization\ConfiguringWhichRoutesHaveValidation.cs" />
-    <Compile Include="Customization\CreatingYourOwnRules.cs" />
-    <Compile Include="Customization\CustomizingTheCssAnnotations.cs" />
-    <Compile Include="Customization\ReplacingTheValidationSummary.cs" />
-    <Compile Include="FubuValidationMainTopic.cs" />
-    <Compile Include="FubuValidationMainTopicTopicRegistry.cs" />
-    <Compile Include="GettingStarted\AddingRulesToYourModel.cs" />
-    <Compile Include="GettingStarted\AjaxChains.cs" />
-    <Compile Include="GettingStarted\BuildingYourFirstValidatedForm.cs" />
-    <Compile Include="GettingStarted\BuiltInRules.cs" />
-    <Compile Include="GettingStarted\ChangingRenderingStrategies.cs" />
-    <Compile Include="GettingStarted\ConfiguringRemoteRules.cs" />
-    <Compile Include="GettingStarted\ConfiguringValidationRules.cs" />
-    <Compile Include="GettingStarted\ConfiguringWhichRoutesHaveValidation.cs" />
-    <Compile Include="GettingStarted\CreatingYourOwnRules.cs" />
-    <Compile Include="GettingStarted\CustomizingTheCssAnnotations.cs" />
-    <Compile Include="GettingStarted\InstallingFubumvcvalidation.cs" />
-    <Compile Include="GettingStarted\LofiChains.cs" />
-    <Compile Include="GettingStarted\OutOfTheBoxConventions.cs" />
-    <Compile Include="GettingStarted\PerrouteConfiguration.cs" />
-    <Compile Include="GettingStarted\RemoteRules.cs" />
-    <Compile Include="GettingStarted\RenderingStrategies.cs" />
-    <Compile Include="GettingStarted\ReplacingTheValidationSummary.cs" />
-    <Compile Include="GettingStarted\UsingValidationAttributes.cs" />
-    <Compile Include="GettingStarted\ValidationDsl.cs" />
-    <Compile Include="GettingStarted\WhatRulesAreAvailable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Configuration\AjaxChains.spark" />
-    <None Include="Configuration\ChangingRenderingStrategies.spark" />
-    <None Include="Configuration\ConfiguringValidationRules.spark" />
-    <None Include="Configuration\LofiChains.spark" />
-    <None Include="Configuration\OutOfTheBoxConventions.spark" />
-    <None Include="Configuration\PerrouteConfiguration.spark" />
-    <None Include="Configuration\RemoteRules.spark" />
-    <None Include="Configuration\RenderingStrategies.spark" />
-    <None Include="Configuration\UsingValidationAttributes.spark" />
-    <None Include="Configuration\ValidationDsl.spark" />
-    <None Include="Customization\ConfiguringRemoteRules.spark" />
-    <None Include="Customization\ConfiguringWhichRoutesHaveValidation.spark" />
-    <None Include="Customization\CreatingYourOwnRules.spark" />
-    <None Include="Customization\CustomizingTheCssAnnotations.spark" />
-    <None Include="Customization\ReplacingTheValidationSummary.spark" />
-    <None Include="GettingStarted\AddingRulesToYourModel.spark">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="GettingStarted\BuildingYourFirstValidatedForm.spark" />
-    <None Include="GettingStarted\BuiltInRules.spark" />
-    <None Include="GettingStarted\InstallingFubumvcvalidation.spark" />
-    <None Include="GettingStarted\LofiChains.spark" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="project.xml" />
     <Content Include="Topics.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -119,4 +58,18 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <EmbeddedResource Include="pak-WebContent.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="pak-Data.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="pak-Config.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".package-manifest" />
+    <None Include="index.spark" />
+    <None Include="ripple.dependencies.config" />
+  </ItemGroup>
 </Project>

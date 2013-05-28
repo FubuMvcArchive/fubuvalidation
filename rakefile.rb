@@ -21,4 +21,6 @@ end
 
 	sln.ripple_enabled = true
 	sln.fubudocs_enabled = true
+    
+    sln.assembly_bottle 'FubuMVC.Validation'
 end

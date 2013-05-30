@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>FubuValidation.StructureMap</id>
+    <version>0.0</version>
+    <authors>Joshua Arnold, Jeremy D. Miller, et al.</authors>
+    <owners>Joshua Arnold, Jeremy D. Miller</owners>
+    <licenseUrl>https://raw.github.com/DarthFubuMVC/fubuvalidation/master/license.txt</licenseUrl>
+    <projectUrl>http://validation.fubu-project.org</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuValidation_256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Helpers to bootstrap FubuValidation for StructureMap</description>
+    <tags>fubu validation fubumvc conventional</tags>
+    <dependencies>
+      <dependency id="FubuValidation" version="[1.0.0.0,2.0.0.0)" />
+      <dependency id="structuremap" version="[2.6.3,3.0)" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\src\FubuValidation.StructureMap\bin\Release\FubuValidation.StructureMap*" target="lib" />
+  </files>
+</package>

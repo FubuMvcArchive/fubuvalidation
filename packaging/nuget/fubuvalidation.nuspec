@@ -13,8 +13,7 @@
     <tags>fubu validation fubumvc conventional</tags>
     <dependencies>
       <dependency id="FubuLocalization" />
-      <dependency id="HtmlTags" />
-      <dependency id="FubuCore" version="0.9.9.151" />
+      <dependency id="FubuCore" version="[1.0.0.0,2.0.0.0)" />
     </dependencies>
   </metadata>
   <files>

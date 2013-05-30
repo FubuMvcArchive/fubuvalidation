@@ -12,7 +12,7 @@
     <description>Helpers to bootstrap FubuValidation for StructureMap</description>
     <tags>fubu validation fubumvc conventional</tags>
     <dependencies>
-      <dependency id="FubuValidation" version="[1.0.0.0,2.0.0.0)" />
+      <dependency id="FubuValidation" />
       <dependency id="structuremap" version="[2.6.3,3.0)" />
     </dependencies>
   </metadata>

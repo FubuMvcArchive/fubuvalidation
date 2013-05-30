@@ -116,6 +116,7 @@
     <Compile Include="Fields\MaximumLengthRuleTester.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="RuleSnippets.cs" />
     <Compile Include="TemplateValueTester.cs" />
     <Compile Include="ValidationContextTester.cs" />
     <Compile Include="ValidationGraphTester.cs" />

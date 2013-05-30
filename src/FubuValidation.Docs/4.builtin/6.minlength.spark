@@ -1,0 +1,18 @@
+<!--Title: Minimum Length -->
+
+<h4>Description</h4>
+<p class="half-margin">Ensures that the length of a string is greater than or equal to the given value.</p>
+
+<h4>Default Message</h4>
+<p class="half-margin">Minimum length not met. Must be greater than or equal to {length}.</p>
+
+<h4>Template Fields</h4>
+<ul class="half-margin">
+    <li>{field} - The property name</li>
+    <li>{length} - The minimum length</li>
+</ul>
+
+<h4>Usages</h4>
+<Snippet name="MinLengthRuleAttribute" />
+
+<Snippet name="MinLengthRuleDsl" />

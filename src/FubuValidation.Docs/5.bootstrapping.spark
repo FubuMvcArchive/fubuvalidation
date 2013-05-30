@@ -1,0 +1,11 @@
+<!--Title: Bootstrapping -->
+
+<p>If you're using <code>FubuMVC.Validation</code>, bootstrapping is done for you. However, if you're using this outside of <code>FubuMVC</code>
+you can also install the <code>FubuValidation.StructureMap</code> NuGet. Here's some sample usage of bootstrapping:
+</p>
+
+<Snippet name="StructureMapBootstrapping" />
+
+<p>If you're using a different IoC container (and not using <code>FubuMVC</code>, here is the list of services you will need to register:</p>
+
+<Snippet name="ValidationBootsrapping" />

@@ -1,0 +1,51 @@
+<!--Title: Where do rules come from? -->
+
+<p>In order to understand where rules come from and how they are registered, let's first look at the various building blocks that are involved:</p>
+<ol>
+    <li>ValidationStep</li>
+    <li>ValidationPlan</li>
+    <li>ValidationGraph</li>
+</ol>
+
+<Section title="Validation Step" id="validation-step">
+<p><code>Validation steps</code> are simply a representation of a step in the validation process. A step is created to represent the rules found from a particular <code>IValidationSource</code>. Each step keeps track of where the rules were defined (for diagnostics purposes)
+and can execute the subset of rules.</p>
+</Section>
+
+<Section title="Validation Plan" id="validation-plan">
+    <p>A <code>Validation Plan</code> is a complete representation of the steps involved in validating a particular type. These steps are built-up when requested and then memoized as a <code>Validation Plan</code>.</p>
+</Section>
+
+<Section title="Validation Graph" id="graph">
+    <p>The <code>Validation Graph</code> is the semantic model for <code>FubuValidation</code>. It is responsible for maintaining the memoized collection of <code>Validation Plans</code>. All querying for rules and field rules can be made using the <code>graph</code>.</p>
+</Section>
+
+<Section title="IValidationSource" id="source">
+    <p>The <code>IValidationSource</code> interface provides a mechanism for defining rules for a particular type:</p>
+</Section>
+
+<Snippet name="IValidationSource" />
+
+<p>There are various built in implementations that are available for use. The first one is the <code>ClassValidationRules</code> DSL as seen in use here:</p>
+
+<Snippet name="ClassValidationRules" />
+
+<p>Another common usage is the <code>IValidated</code> interface. This interface allows you to mark your model/entity as self-validating. The mechanics can be seen in use here:</p>
+
+<Snippet name="IValidated" />
+
+<Snippet name="SelfValidatingClassRuleSource" />
+
+<blockquote>Other example implementations might include NHibernate or Entity Framework adapters.</blockquote>
+
+<Section title="IFieldRulesRegistry" id="field-rule-registry">
+    <p>All field-level rules are registered through the <code>IFieldRulesRegistry</code>. </p>
+</Section>
+
+<Snippet name="IFieldRulesRegistry" />
+
+<p>Field-level rules can also be defined through:</p>
+<ol>
+    <li>The <code>ClassValidationRules</code> DSL</li>
+    <li>Attributes (e.g., Required, Email)</li>
+</ol>

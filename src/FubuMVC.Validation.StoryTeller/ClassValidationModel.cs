@@ -21,6 +21,7 @@ namespace FubuMVC.Validation.StoryTeller
         public string Custom { get; set; }
     }
 
+	// SAMPLE: ClassValidationRules
     public class ClassValidationModelRules : ClassValidationRules<ClassValidationModel>
     {
         public ClassValidationModelRules()
@@ -38,6 +39,7 @@ namespace FubuMVC.Validation.StoryTeller
             Property(x => x.Custom).Rule<UniqueUsernameRule>();
         }
     }
+	// ENDSAMPLE
 
     public class ClassValidationEndpoint
     {

@@ -1,0 +1,65 @@
+<!--Title: Architecture-->
+
+  <p>FubuValidation's API leverages several important types:</p>
+  <ol>
+    <li>Accessor</li>
+    <li>Notification</li>
+    <li>IValidator</li>
+    <li>ValidationContext</li>
+    <li>IValidationRule</li>
+    <li>IFieldValidationRule</li>
+    <li>IValidationSource</li>
+  </ol>
+  
+  <p>In this section, we will cover each of these types and discuss how they are used and interact with one another.</p>
+  
+  <Section title="Accessors" id="accessors">
+    <p>Accessors are part of <code>FubuCore</code> and provide a basic abstraction (interface) to properties. This is done so that the mechanics
+    of dealing with a single property or chain of properties is unified (e.g., x => x.FirstName vs. x => x.Child.FirstName). For more information, see the FubuCore docs.</p>
+    <p>The Accessor interface is a first class citizen in FubuValidation.</p>
+  </Section>
+  
+  <Section title="Notification" id="notification">
+    <p>From Martin Fowler, the <a href="http://www.martinfowler.com/eaaDev/Notification.html" target="_blank">Notification Pattern</a> is:</p>
+    <blockquote>
+        An object that collects together information about errors and other information in the domain layer and communicates it to the presentation.
+    </blockquote>
+    <p>The Notification class is passed through to each <code>rule</code> that participates in the validation for an object. All information is aggregated into a single instance of the <code>Notification</code> class and returned as the final result of validation.</p>
+    <p>The API for registering messages in a <code>Notification</code> allows for direct registration of an instance of the <code>NotificationMessage</code> class or through helpers:</p>
+  </Section>
+  
+  <Snippet name="RegisteringNotificationMessages" />
+  
+  <p>Notification messages also support templating. We will discuss this in a later topic.</p>
+  
+  <Section title="IValidator" id="ivalidator">
+    <p>The IValidator interface is the entry point into <code>FubuValidation</code>. Invoking the <code>Validate</code> method for a given object will execute all associated rules
+    and return the aggregated <code>Notification</code>. In a later topic we will discuss the details of the invocation of each rule.</p>
+  </Section>
+  
+  <Snippet name="IValidator" />
+  
+  <Section title="ValidationContext" id="validation-context">
+    <p><code>Validation rules</code> are stateful. That is, they hang around for a lot longer than you may think. This is due to a variety of reasons but it mostly boils down to performance and diagnostics. Because
+    the instances of rules are long-lived, any services required for validation are obtained through the <code>ValidationContext</code>. The <code>context</code> provides service location, access to the <code>Notification</code>,
+    access to the <code>target</code> (object being validated), and a few other useful helpers.</p>
+  </Section>
+  
+  <Section title="IValidationRule" id="validation-rule">
+    <p><code>Validation rules</code> operate at the class level. That is, when more than one property is involved in the evaluation of a rule, a <code>validation rule</code> should be used.</p>
+  </Section>
+  
+  <Snippet name="IValidationRule" />
+  
+  <Section title="IFieldValidationRule" id="field-validation-rule">
+    <p><code>Field validation rules</code> operate at the <code>accessor</code> level. Architecturally speaking, all field level rules are configured within the
+    <code>IFieldRulesRegistry</code> class. The field rules are then invoked by an adapter: the <code>ClassFieldValidationRules</code> class (which is actually a validation rule itself).</p>
+  </Section>
+  
+  <Snippet name="IFieldValidationRule" />
+
+  <Section title="IValidationSource" id="validation-source">
+    <p>The <code>IValidationSource</code> interface is one of the most important types in <code>FubuValidation</code> as it is responsible
+    for providing the <code>rules</code> for a given type. We will discuss this further in the next section: <TopicLink name="rules" />.</p>
+  </Section>
+  

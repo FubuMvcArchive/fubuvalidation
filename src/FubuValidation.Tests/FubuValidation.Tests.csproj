@@ -103,6 +103,7 @@
     <Compile Include="Models\SimpleModel.cs" />
     <Compile Include="Models\SiteModel.cs" />
     <Compile Include="NotificationMessageTester.cs" />
+    <Compile Include="NotificationSnippets.cs" />
     <Compile Include="NotificationTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="intregated_rule_using_service_tester.cs" />
@@ -129,9 +130,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="ripple.dependencies.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

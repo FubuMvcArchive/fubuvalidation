@@ -162,7 +162,7 @@
     <Content Include="content\scripts\specs\fubuvalidation.core.spec.js" />
     <Content Include="content\scripts\specs\fubuvalidation.ui.spec.js" />
     <Content Include="content\scripts\ValidationActivator.js" />
-    <Content Include="packages.config">
+    <Content Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="validation.asset.config">
@@ -185,12 +185,10 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>18912</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl></IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <CustomServerUrl></CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

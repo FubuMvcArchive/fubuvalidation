@@ -1,5 +1,6 @@
 namespace FubuValidation
 {
+	// SAMPLE: IValidator
     public interface IValidator
     {
         Notification Validate(object target);
@@ -7,4 +8,5 @@ namespace FubuValidation
 
         ValidationContext ContextFor(object target, Notification notification);
     }
+	// ENDSAMPLE
 }

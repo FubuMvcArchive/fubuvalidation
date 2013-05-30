@@ -4,10 +4,12 @@ using FubuCore;
 
 namespace FubuValidation
 {
+	// SAMPLE: IValidated
     public interface IValidated
     {
         void Validate(ValidationContext context);
     }
+	// ENDSAMPLE
 
     public class SelfValidatingClassRule : IValidationRule
     {
@@ -49,6 +51,7 @@ namespace FubuValidation
         }
     }
 
+	// SAMPLE: SelfValidatingClassRuleSource
     public class SelfValidatingClassRuleSource : IValidationSource
     {
         public IEnumerable<IValidationRule> RulesFor(Type type)
@@ -64,4 +67,5 @@ namespace FubuValidation
             return obj is SelfValidatingClassRuleSource;
         }
     }
+	// ENDSAMPLE
 }

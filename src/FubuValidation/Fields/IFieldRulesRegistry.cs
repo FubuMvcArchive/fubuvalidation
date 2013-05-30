@@ -3,6 +3,7 @@ using FubuCore.Reflection;
 
 namespace FubuValidation.Fields
 {
+	// SAMPLE: IFieldRulesRegistry
     public interface IFieldRulesRegistry
     {
         bool HasRule<T>(Accessor accessor) where T : IFieldValidationRule;
@@ -13,4 +14,5 @@ namespace FubuValidation.Fields
         ClassFieldValidationRules RulesFor<T>();
         ClassFieldValidationRules RulesFor(Type type);
     }
+	// ENDSAMPLE
 }

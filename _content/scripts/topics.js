@@ -8,8 +8,8 @@ $(document).ready(function () {
         var toc = $("#page-toc");
         if (toc.find('li').size() == 0) {
             sections.each(function(i, section) {
-                var id = $(this).attr('id');
                 var heading = $('.section-header', section).text();
+                var id = $('.section-header', section).attr('id');
 
                 $('<li><a href="#' + id + '">' + heading + '</a>').appendTo("#page-toc");
             });

@@ -31,15 +31,6 @@ namespace FubuValidation.StructureMap.Tests
         }
 
         [Test]
-        public void should_register_field_rule_source()
-        {
-            _container
-                .Model
-                .InstancesOf<IValidationSource>()
-                .ShouldContain(r => r.ConcreteType== typeof(FieldRuleSource));
-        }
-
-        [Test]
         public void should_register_field_rule_registry()
         {
             _container
@@ -67,7 +58,7 @@ namespace FubuValidation.StructureMap.Tests
         {
             public ValidationTestRegistry()
             {
-                this.FubuValidation();
+				IncludeRegistry<FubuValidationRegistry>();
             }
         }
     }

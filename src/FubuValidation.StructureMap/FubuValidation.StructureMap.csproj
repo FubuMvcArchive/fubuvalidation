@@ -49,8 +49,10 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ValidationConfiguration.cs" />
     <Compile Include="FubuValidationRegistry.cs" />
-    <Compile Include="ValidationBootstrapExtensions.cs" />
+    <Compile Include="StructureMapServiceLocator.cs" />
+    <Compile Include="ValidationRegistrationRunner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ripple.dependencies.config">

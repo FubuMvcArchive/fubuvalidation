@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+    <title>
+      Architecture | FubuValidation
+    </title><meta charset="utf-8" />
+<meta content="FubuWorld" name="description" />
+<meta content="FubuWorld" name="author" />
+
+
+
+<link type="text/css" rel="stylesheet" href="/fubuvalidation/_content/styles/sons-of-obsidian.css" />
+<link type="text/css" rel="stylesheet" href="/fubuvalidation/_content/styles/toastr.css" />
+<link type="text/css" rel="stylesheet" href="/fubuvalidation/_content/styles/twitter/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="/fubuvalidation/_content/styles/twitter/bootstrap-responsive.min.css" />
+<link type="text/css" rel="stylesheet" href="/fubuvalidation/_content/styles/toastr-responsive.css" />
+<link type="text/css" rel="stylesheet" href="/fubuvalidation/_content/styles/fubuworld.core.css" />
+
+<link href="http://fonts.googleapis.com/css?family=Oswald:400,300" rel="stylesheet" type="text/css" media="screen" />
+  </head>
+  <body data-target=".bs-docs-sidebar" data-spy="scroll">
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a title="Fubu" href="/fubuvalidation/topics"><span>Fubu</span></a>
+      <a class="project-logo" title="Have validation your way, whatever way that happens to be" href="/fubuvalidation/fubuvalidation"><span>FubuValidation</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#%21forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a class="ico-github" href="http://github.com/DarthFubuMVC/FubuValidation"><img src="/fubuvalidation/_content/images/github-icon.png" alt="Github" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <div class="navbar" id="nav-follow">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a data-key="index" href="/fubuvalidation/fubuvalidation">FubuValidation »</a></li><li class="active"><a data-key="architecture" href="/fubuvalidation/fubuvalidation/architecture">Architecture »</a></li></ul>
+<ul style="float:right" class="nav"><li><a title="Introduction" href="/fubuvalidation/fubuvalidation/intro">Previous</a></li><li><a title="Where do rules come from?" href="/fubuvalidation/fubuvalidation/rules">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            <h3 class="half-margin">Topics</h3>
+            <ul class="nav nav-tabs nav-stacked affix-top" id="page-toc">
+            <li><a href="#undefined">Accessors</a></li><li><a href="#undefined">Notification</a></li><li><a href="#undefined">IValidator</a></li><li><a href="#undefined">ValidationContext</a></li><li><a href="#undefined">IValidationRule</a></li><li><a href="#undefined">IFieldValidationRule</a></li><li><a href="#undefined">IValidationSource</a></li></ul>
+            <br />
+            <h3 class="no-margin">Next</h3>
+<p><a data-key="rules" href="/fubuvalidation/fubuvalidation/rules">Where do rules come from?</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a data-key="intro" href="/fubuvalidation/fubuvalidation/intro">Introduction</a></p>
+          </div>
+          <div class="span9">
+            <h1 class="no-margin">Architecture</h1><hr class="header-line" />
+             <!--Title: Architecture-->
+
+  <p>FubuValidation's API leverages several important types:</p>
+  <ol>
+    <li>Accessor</li>
+    <li>Notification</li>
+    <li>IValidator</li>
+    <li>ValidationContext</li>
+    <li>IValidationRule</li>
+    <li>IFieldValidationRule</li>
+    <li>IValidationSource</li>
+  </ol>
+  
+  <p>In this section, we will cover each of these types and discuss how they are used and interact with one another.</p>
+  
+  <section><h4 class="section-header" id="accessors">Accessors</h4>
+    <p>Accessors are part of <code>FubuCore</code> and provide a basic abstraction (interface) to properties. This is done so that the mechanics
+    of dealing with a single property or chain of properties is unified (e.g., x =&gt; x.FirstName vs. x =&gt; x.Child.FirstName). For more information, see the FubuCore docs.</p>
+    <p>The Accessor interface is a first class citizen in FubuValidation.</p></section>
+  
+  <section><h4 class="section-header" id="notification">Notification</h4>
+    <p>From Martin Fowler, the <a target="_blank" href="http://www.martinfowler.com/eaaDev/Notification.html">Notification Pattern</a> is:</p>
+    <blockquote>
+        An object that collects together information about errors and other information in the domain layer and communicates it to the presentation.
+    </blockquote>
+    <p>The Notification class is passed through to each <code>rule</code> that participates in the validation for an object. All information is aggregated into a single instance of the <code>Notification</code> class and returned as the final result of validation.</p>
+    <p>The API for registering messages in a <code>Notification</code> allows for direct registration of an instance of the <code>NotificationMessage</code> class or through helpers:</p></section>
+  
+  <pre class="prettyprint lang-cs linenums:14 prettyprinted" data-linenums="14" style=""><ol class="linenums"><li value="14" class="L3"><span class="pln">    </span><span class="com">// Registering a message</span></li><li class="L4"><span class="pln">    notification</span><span class="pun">.</span><span class="typ">RegisterMessage</span><span class="pun">(</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">NotificationMessage</span><span class="pun">(</span><span class="typ">MyTokens</span><span class="pun">.</span><span class="typ">MyKey</span><span class="pun">));</span></li><li class="L5"><span class="pln"> </span></li><li class="L6"><span class="pln">	</span><span class="com">// Helper to register a message for a given StringToken</span></li><li class="L7"><span class="pln">	notification</span><span class="pun">.</span><span class="typ">RegisterMessage</span><span class="pun">(</span><span class="typ">MyTokens</span><span class="pun">.</span><span class="typ">MyKey</span><span class="pun">);</span></li><li class="L8"><span class="pln"> </span></li><li class="L9"><span class="pln">	</span><span class="com">// Register a message for the specific accessor (e.g., "Username is required")</span></li><li class="L0"><span class="pln">	notification</span><span class="pun">.</span><span class="typ">RegisterMessage</span><span class="pun">(</span><span class="pln">accessor</span><span class="pun">,</span><span class="pln"> </span><span class="typ">MyTokens</span><span class="pun">.</span><span class="typ">MyKey</span><span class="pun">);</span></li></ol></pre>
+  
+  <p>Notification messages also support templating. We will discuss this in a later topic.</p>
+  
+  <section><h4 class="section-header" id="ivalidator">IValidator</h4>
+    <p>The IValidator interface is the entry point into <code>FubuValidation</code>. Invoking the <code>Validate</code> method for a given object will execute all associated rules
+    and return the aggregated <code>Notification</code>. In a later topic we will discuss the details of the invocation of each rule.</p></section>
+  
+  <pre class="prettyprint lang-cs linenums:4 prettyprinted" data-linenums="4" style=""><ol class="linenums"><li value="4" class="L3"><span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">interface</span><span class="pln"> </span><span class="typ">IValidator</span></li><li class="L4"><span class="pln">    </span><span class="pun">{</span></li><li class="L5"><span class="pln">        </span><span class="typ">Notification</span><span class="pln"> </span><span class="typ">Validate</span><span class="pun">(</span><span class="kwd">object</span><span class="pln"> target</span><span class="pun">);</span></li><li class="L6"><span class="pln">        </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Validate</span><span class="pun">(</span><span class="kwd">object</span><span class="pln"> target</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Notification</span><span class="pln"> notification</span><span class="pun">);</span></li><li class="L7"><span class="pln"> </span></li><li class="L8"><span class="pln">        </span><span class="typ">ValidationContext</span><span class="pln"> </span><span class="typ">ContextFor</span><span class="pun">(</span><span class="kwd">object</span><span class="pln"> target</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Notification</span><span class="pln"> notification</span><span class="pun">);</span></li><li class="L9"><span class="pln">    </span><span class="pun">}</span></li></ol></pre>
+  
+  <section><h4 class="section-header" id="validation-context">ValidationContext</h4>
+    <p><code>Validation rules</code> are stateful. That is, they hang around for a lot longer than you may think. This is due to a variety of reasons but it mostly boils down to performance and diagnostics. Because
+    the instances of rules are long-lived, any services required for validation are obtained through the <code>ValidationContext</code>. The <code>context</code> provides service location, access to the <code>Notification</code>,
+    access to the <code>target</code> (object being validated), and a few other useful helpers.</p></section>
+  
+  <section><h4 class="section-header" id="validation-rule">IValidationRule</h4>
+    <p><code>Validation rules</code> operate at the class level. That is, when more than one property is involved in the evaluation of a rule, a <code>validation rule</code> should be used.</p></section>
+  
+  <pre class="prettyprint lang-cs linenums:4 prettyprinted" data-linenums="4" style=""><ol class="linenums"><li value="4" class="L3"><span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">interface</span><span class="pln"> </span><span class="typ">IValidationRule</span></li><li class="L4"><span class="pln">    </span><span class="pun">{</span></li><li class="L5"><span class="pln">        </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Validate</span><span class="pun">(</span><span class="typ">ValidationContext</span><span class="pln"> context</span><span class="pun">);</span></li><li class="L6"><span class="pln">    </span><span class="pun">}</span></li></ol></pre>
+  
+  <section><h4 class="section-header" id="field-validation-rule">IFieldValidationRule</h4>
+    <p><code>Field validation rules</code> operate at the <code>accessor</code> level. Architecturally speaking, all field level rules are configured within the
+    <code>IFieldRulesRegistry</code> class. The field rules are then invoked by an adapter: the <code>ClassFieldValidationRules</code> class (which is actually a validation rule itself).</p></section>
+  
+  <pre class="prettyprint lang-cs linenums:7 prettyprinted" data-linenums="7" style=""><ol class="linenums"><li value="7" class="L6"><span class="pln">	</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">interface</span><span class="pln"> </span><span class="typ">IFieldValidationRule</span></li><li class="L7"><span class="pln">	</span><span class="pun">{</span></li><li class="L8"><span class="pln">		</span><span class="typ">StringToken</span><span class="pln"> </span><span class="typ">Token</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> get</span><span class="pun">;</span><span class="pln"> </span><span class="typ">set</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span></li><li class="L9"><span class="pln"> </span></li><li class="L0"><span class="pln">		</span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Validate</span><span class="pun">(</span><span class="typ">Accessor</span><span class="pln"> accessor</span><span class="pun">,</span><span class="pln"> </span><span class="typ">ValidationContext</span><span class="pln"> context</span><span class="pun">);</span></li><li class="L1"><span class="pln">	</span><span class="pun">}</span></li></ol></pre>
+
+  <section><h4 class="section-header" id="validation-source">IValidationSource</h4>
+    <p>The <code>IValidationSource</code> interface is one of the most important types in <code>FubuValidation</code> as it is responsible
+    for providing the <code>rules</code> for a given type. We will discuss this further in the next section: <a data-key="rules" href="/fubuvalidation/fubuvalidation/rules">Where do rules come from?</a>.</p></section>
+  
+            </div>
+        </div>
+      </div>
+    </div>
+    <script src="/fubuvalidation/_content/scripts/jquery-1.8.2.min.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/prettify.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/bootstrap-prettify.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/fubuworld.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/toastr.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/twitter/bootstrap.min.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/fubudocs-tools.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/twitter/bootstrap-affix.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/topics.js" type="text/javascript"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuWorld">FubuDocs</a>.
+    </p>
+    <p>
+      Code licensed under the <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a>.
+    </p>
+  </div>
+</footer>
+  
+</body></html>

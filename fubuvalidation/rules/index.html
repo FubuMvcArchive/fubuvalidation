@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+    <title>
+      Where do rules come from? | FubuValidation
+    </title><meta charset="utf-8" />
+<meta content="FubuWorld" name="description" />
+<meta content="FubuWorld" name="author" />
+
+
+
+<link type="text/css" rel="stylesheet" href="/fubuvalidation/_content/styles/sons-of-obsidian.css" />
+<link type="text/css" rel="stylesheet" href="/fubuvalidation/_content/styles/toastr.css" />
+<link type="text/css" rel="stylesheet" href="/fubuvalidation/_content/styles/twitter/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="/fubuvalidation/_content/styles/twitter/bootstrap-responsive.min.css" />
+<link type="text/css" rel="stylesheet" href="/fubuvalidation/_content/styles/toastr-responsive.css" />
+<link type="text/css" rel="stylesheet" href="/fubuvalidation/_content/styles/fubuworld.core.css" />
+
+<link href="http://fonts.googleapis.com/css?family=Oswald:400,300" rel="stylesheet" type="text/css" media="screen" />
+  </head>
+  <body data-target=".bs-docs-sidebar" data-spy="scroll">
+    <div class="container">
+      
+      
+
+<div class="row">
+  <div class="span6">
+    <p class="logo">
+      <a title="Fubu" href="/fubuvalidation/topics"><span>Fubu</span></a>
+      <a class="project-logo" title="Have validation your way, whatever way that happens to be" href="/fubuvalidation/fubuvalidation"><span>FubuValidation</span></a>
+    </p>
+  </div>
+  <div class="span6">
+    <div class="top-header text-right">
+      <em>
+        <em><a href="https://groups.google.com/forum/?fromgroups#%21forum/fubumvc-devel">Join our vibrant mailing list</a></em>
+      </em>
+      <div class="social">
+        <a class="ico-github" href="http://github.com/DarthFubuMVC/FubuValidation"><img src="/fubuvalidation/_content/images/github-icon.png" alt="Github" /></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <div class="navbar" id="nav-follow">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav"><li><a data-key="index" href="/fubuvalidation/fubuvalidation">FubuValidation »</a></li><li class="active"><a data-key="rules" href="/fubuvalidation/fubuvalidation/rules">Where do rules come from? »</a></li></ul>
+<ul style="float:right" class="nav"><li><a title="Architecture" href="/fubuvalidation/fubuvalidation/architecture">Previous</a></li><li><a title="Bootstrapping" href="/fubuvalidation/fubuvalidation/bootstrapping">Next</a></li></ul>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        
+
+        <div class="row">
+          <div class="span3 sidebar">
+            <h3 class="half-margin">Topics</h3>
+            <ul class="nav nav-tabs nav-stacked affix-top" id="page-toc">
+            <li><a href="#undefined">Validation Step</a></li><li><a href="#undefined">Validation Plan</a></li><li><a href="#undefined">Validation Graph</a></li><li><a href="#undefined">IValidationSource</a></li><li><a href="#undefined">IFieldRulesRegistry</a></li></ul>
+            <br />
+            <h3 class="no-margin">Next</h3>
+<p><a data-key="bootstrapping" href="/fubuvalidation/fubuvalidation/bootstrapping">Bootstrapping</a></p>
+<h3 class="no-margin">Previous</h3>
+<p><a data-key="architecture" href="/fubuvalidation/fubuvalidation/architecture">Architecture</a></p>
+          </div>
+          <div class="span9">
+            <h1 class="no-margin">Where do rules come from?</h1><hr class="header-line" />
+             <!--Title: Where do rules come from? -->
+
+<p>In order to understand where rules come from and how they are registered, let's first look at the various building blocks that are involved:</p>
+<ol>
+    <li>ValidationStep</li>
+    <li>ValidationPlan</li>
+    <li>ValidationGraph</li>
+</ol>
+
+<section><h4 class="section-header" id="validation-step">Validation Step</h4>
+<p><code>Validation steps</code> are simply a representation of a step in the validation process. A step is created to represent the rules found from a particular <code>IValidationSource</code>. Each step keeps track of where the rules were defined (for diagnostics purposes)
+and can execute the subset of rules.</p></section>
+
+<section><h4 class="section-header" id="validation-plan">Validation Plan</h4>
+    <p>A <code>Validation Plan</code> is a complete representation of the steps involved in validating a particular type. These steps are built-up when requested and then memoized as a <code>Validation Plan</code>.</p></section>
+
+<section><h4 class="section-header" id="graph">Validation Graph</h4>
+    <p>The <code>Validation Graph</code> is the semantic model for <code>FubuValidation</code>. It is responsible for maintaining the memoized collection of <code>Validation Plans</code>. All querying for rules and field rules can be made using the <code>graph</code>.</p></section>
+
+<section><h4 class="section-header" id="source">IValidationSource</h4>
+    <p>The <code>IValidationSource</code> interface provides a mechanism for defining rules for a particular type:</p></section>
+
+<pre class="prettyprint lang-cs linenums:7 prettyprinted" data-linenums="7" style=""><ol class="linenums"><li value="7" class="L6"><span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">interface</span><span class="pln"> </span><span class="typ">IValidationSource</span></li><li class="L7"><span class="pln">    </span><span class="pun">{</span></li><li class="L8"><span class="pln">        </span><span class="typ">IEnumerable</span><span class="pun">&lt;</span><span class="typ">IValidationRule</span><span class="pun">&gt;</span><span class="pln"> </span><span class="typ">RulesFor</span><span class="pun">(</span><span class="typ">Type</span><span class="pln"> type</span><span class="pun">);</span></li><li class="L9"><span class="pln">    </span><span class="pun">}</span></li></ol></pre>
+
+<p>There are various built in implementations that are available for use. The first one is the <code>ClassValidationRules</code> DSL as seen in use here:</p>
+
+<pre class="prettyprint lang-cs linenums:25 prettyprinted" data-linenums="25" style=""><ol class="linenums"><li value="25" class="L4"><span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">ClassValidationModelRules</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">ClassValidationRules</span><span class="pun">&lt;</span><span class="typ">ClassValidationModel</span><span class="pun">&gt;</span></li><li class="L5"><span class="pln">    </span><span class="pun">{</span></li><li class="L6"><span class="pln">        </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">ClassValidationModelRules</span><span class="pun">()</span></li><li class="L7"><span class="pln">        </span><span class="pun">{</span></li><li class="L8"><span class="pln">            </span><span class="typ">Property</span><span class="pun">(</span><span class="pln">x </span><span class="pun">=&gt;</span><span class="pln"> x</span><span class="pun">.</span><span class="typ">GreaterThanZero</span><span class="pun">).</span><span class="typ">GreaterThanZero</span><span class="pun">();</span></li><li class="L9"><span class="pln">            </span><span class="typ">Property</span><span class="pun">(</span><span class="pln">x </span><span class="pun">=&gt;</span><span class="pln"> x</span><span class="pun">.</span><span class="typ">GreaterOrEqualToZero</span><span class="pun">).</span><span class="typ">GreaterOrEqualToZero</span><span class="pun">();</span></li><li class="L0"><span class="pln">            </span><span class="typ">Property</span><span class="pun">(</span><span class="pln">x </span><span class="pun">=&gt;</span><span class="pln"> x</span><span class="pun">.</span><span class="typ">LongerThanTen</span><span class="pun">).</span><span class="typ">MinimumLength</span><span class="pun">(</span><span class="lit">10</span><span class="pun">);</span></li><li class="L1"><span class="pln">            </span><span class="typ">Property</span><span class="pun">(</span><span class="pln">x </span><span class="pun">=&gt;</span><span class="pln"> x</span><span class="pun">.</span><span class="typ">NoMoreThanFiveCharacters</span><span class="pun">).</span><span class="typ">MaximumLength</span><span class="pun">(</span><span class="lit">5</span><span class="pun">);</span></li><li class="L2"><span class="pln">            </span><span class="typ">Property</span><span class="pun">(</span><span class="pln">x </span><span class="pun">=&gt;</span><span class="pln"> x</span><span class="pun">.</span><span class="typ">AtLeastFiveButNotTen</span><span class="pun">).</span><span class="typ">RangeLength</span><span class="pun">(</span><span class="lit">5</span><span class="pun">,</span><span class="pln"> </span><span class="lit">10</span><span class="pun">);</span></li><li class="L3"><span class="pln">            </span><span class="typ">Property</span><span class="pun">(</span><span class="pln">x </span><span class="pun">=&gt;</span><span class="pln"> x</span><span class="pun">.</span><span class="typ">GreaterThanFive</span><span class="pun">).</span><span class="typ">MinValue</span><span class="pun">(</span><span class="lit">5</span><span class="pun">);</span></li><li class="L4"><span class="pln">            </span><span class="typ">Property</span><span class="pun">(</span><span class="pln">x </span><span class="pun">=&gt;</span><span class="pln"> x</span><span class="pun">.</span><span class="typ">LessThanFifteen</span><span class="pun">).</span><span class="typ">MaxValue</span><span class="pun">(</span><span class="lit">15</span><span class="pun">);</span></li><li class="L5"><span class="pln">            </span><span class="typ">Property</span><span class="pun">(</span><span class="pln">x </span><span class="pun">=&gt;</span><span class="pln"> x</span><span class="pun">.</span><span class="typ">Email</span><span class="pun">).</span><span class="typ">Email</span><span class="pun">();</span></li><li class="L6"><span class="pln">            </span><span class="typ">Property</span><span class="pun">(</span><span class="pln">x </span><span class="pun">=&gt;</span><span class="pln"> x</span><span class="pun">.</span><span class="typ">Required</span><span class="pun">).</span><span class="typ">Required</span><span class="pun">();</span></li><li class="L7"><span class="pln"> </span></li><li class="L8"><span class="pln">            </span><span class="typ">Property</span><span class="pun">(</span><span class="pln">x </span><span class="pun">=&gt;</span><span class="pln"> x</span><span class="pun">.</span><span class="typ">Custom</span><span class="pun">).</span><span class="typ">Rule</span><span class="pun">&lt;</span><span class="typ">UniqueUsernameRule</span><span class="pun">&gt;();</span></li><li class="L9"><span class="pln">        </span><span class="pun">}</span></li><li class="L0"><span class="pln">    </span><span class="pun">}</span></li></ol></pre>
+
+<p>Another common usage is the <code>IValidated</code> interface. This interface allows you to mark your model/entity as self-validating. The mechanics can be seen in use here:</p>
+
+<pre class="prettyprint lang-cs linenums:8 prettyprinted" data-linenums="8" style=""><ol class="linenums"><li value="8" class="L7"><span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">interface</span><span class="pln"> </span><span class="typ">IValidated</span></li><li class="L8"><span class="pln">    </span><span class="pun">{</span></li><li class="L9"><span class="pln">        </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Validate</span><span class="pun">(</span><span class="typ">ValidationContext</span><span class="pln"> context</span><span class="pun">);</span></li><li class="L0"><span class="pln">    </span><span class="pun">}</span></li></ol></pre>
+
+<pre class="prettyprint lang-cs linenums:55 prettyprinted" data-linenums="55" style=""><ol class="linenums"><li value="55" class="L4"><span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">SelfValidatingClassRuleSource</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="typ">IValidationSource</span></li><li class="L5"><span class="pln">    </span><span class="pun">{</span></li><li class="L6"><span class="pln">        </span><span class="kwd">public</span><span class="pln"> </span><span class="typ">IEnumerable</span><span class="pun">&lt;</span><span class="typ">IValidationRule</span><span class="pun">&gt;</span><span class="pln"> </span><span class="typ">RulesFor</span><span class="pun">(</span><span class="typ">Type</span><span class="pln"> type</span><span class="pun">)</span></li><li class="L7"><span class="pln">        </span><span class="pun">{</span></li><li class="L8"><span class="pln">            </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">type</span><span class="pun">.</span><span class="typ">CanBeCastTo</span><span class="pun">&lt;</span><span class="typ">IValidated</span><span class="pun">&gt;())</span></li><li class="L9"><span class="pln">            </span><span class="pun">{</span></li><li class="L0"><span class="pln">                yield </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">SelfValidatingClassRule</span><span class="pun">(</span><span class="pln">type</span><span class="pun">);</span></li><li class="L1"><span class="pln">            </span><span class="pun">}</span></li><li class="L2"><span class="pln">        </span><span class="pun">}</span></li><li class="L3"><span class="pln"> </span></li><li class="L4"><span class="pln">        </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">override</span><span class="pln"> bool </span><span class="typ">Equals</span><span class="pun">(</span><span class="kwd">object</span><span class="pln"> obj</span><span class="pun">)</span></li><li class="L5"><span class="pln">        </span><span class="pun">{</span></li><li class="L6"><span class="pln">            </span><span class="kwd">return</span><span class="pln"> obj </span><span class="kwd">is</span><span class="pln"> </span><span class="typ">SelfValidatingClassRuleSource</span><span class="pun">;</span></li><li class="L7"><span class="pln">        </span><span class="pun">}</span></li><li class="L8"><span class="pln">    </span><span class="pun">}</span></li></ol></pre>
+
+<blockquote>Other example implementations might include NHibernate or Entity Framework adapters.</blockquote>
+
+<section><h4 class="section-header" id="field-rule-registry">IFieldRulesRegistry</h4>
+    <p>All field-level rules are registered through the <code>IFieldRulesRegistry</code>. </p></section>
+
+<pre class="prettyprint lang-cs linenums:7 prettyprinted" data-linenums="7" style=""><ol class="linenums"><li value="7" class="L6"><span class="pln">    </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">interface</span><span class="pln"> </span><span class="typ">IFieldRulesRegistry</span></li><li class="L7"><span class="pln">    </span><span class="pun">{</span></li><li class="L8"><span class="pln">        bool </span><span class="typ">HasRule</span><span class="pun">&lt;</span><span class="pln">T</span><span class="pun">&gt;(</span><span class="typ">Accessor</span><span class="pln"> accessor</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">where</span><span class="pln"> T </span><span class="pun">:</span><span class="pln"> </span><span class="typ">IFieldValidationRule</span><span class="pun">;</span></li><li class="L9"><span class="pln">        </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">ForRule</span><span class="pun">&lt;</span><span class="pln">T</span><span class="pun">&gt;(</span><span class="typ">Accessor</span><span class="pln"> accessor</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Action</span><span class="pun">&lt;</span><span class="pln">T</span><span class="pun">&gt;</span><span class="pln"> continuation</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">where</span><span class="pln"> T </span><span class="pun">:</span><span class="pln"> </span><span class="typ">IFieldValidationRule</span><span class="pun">;</span></li><li class="L0"><span class="pln"> </span></li><li class="L1"><span class="pln">        </span><span class="kwd">void</span><span class="pln"> </span><span class="typ">Register</span><span class="pun">(</span><span class="typ">Type</span><span class="pln"> type</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Accessor</span><span class="pln"> accessor</span><span class="pun">,</span><span class="pln"> </span><span class="typ">IFieldValidationRule</span><span class="pln"> rule</span><span class="pun">);</span></li><li class="L2"><span class="pln"> </span></li><li class="L3"><span class="pln">        </span><span class="typ">ClassFieldValidationRules</span><span class="pln"> </span><span class="typ">RulesFor</span><span class="pun">&lt;</span><span class="pln">T</span><span class="pun">&gt;();</span></li><li class="L4"><span class="pln">        </span><span class="typ">ClassFieldValidationRules</span><span class="pln"> </span><span class="typ">RulesFor</span><span class="pun">(</span><span class="typ">Type</span><span class="pln"> type</span><span class="pun">);</span></li><li class="L5"><span class="pln">    </span><span class="pun">}</span></li></ol></pre>
+
+<p>Field-level rules can also be defined through:</p>
+<ol>
+    <li>The <code>ClassValidationRules</code> DSL</li>
+    <li>Attributes (e.g., Required, Email)</li>
+</ol>
+            </div>
+        </div>
+      </div>
+    </div>
+    <script src="/fubuvalidation/_content/scripts/jquery-1.8.2.min.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/prettify.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/bootstrap-prettify.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/fubuworld.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/toastr.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/twitter/bootstrap.min.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/fubudocs-tools.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/twitter/bootstrap-affix.js" type="text/javascript"></script>
+<script src="/fubuvalidation/_content/scripts/topics.js" type="text/javascript"></script>
+
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+    </p>
+    <p>
+      Powered by <a href="http://github.com/DarthFubuMVC/FubuWorld">FubuDocs</a>.
+    </p>
+    <p>
+      Code licensed under the <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License v2.0</a>.
+    </p>
+  </div>
+</footer>
+  
+</body></html>

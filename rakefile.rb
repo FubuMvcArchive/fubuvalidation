@@ -24,3 +24,16 @@ end
     
     sln.assembly_bottle 'FubuMVC.Validation'
 end
+
+
+
+desc "Target used for the CI on mono"
+task :mono_ci => [:compile, :mono_unit_test]
+
+
+
+desc "Runs some of the unit tests for Mono"
+task :mono_unit_test => :compile do
+  runner = NUnitRunner.new :compilemode => @solution.compilemode, :source => 'src', :platform => 'x86'
+  runner.executeTests ['FubuValidation.Tests', 'FubuValidation.StructureMap.Tests', 'FubuMVC.Validation.Tests']
+end

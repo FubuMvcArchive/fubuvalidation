@@ -96,6 +96,7 @@
     <Compile Include="MinValueAttribute.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="NotificationMessage.cs" />
+    <Compile Include="FieldEqualityRule.cs" />
     <Compile Include="RangeLengthAttribute.cs" />
     <Compile Include="RegularExpressionAttribute.cs" />
     <Compile Include="TemplateExtensions.cs" />

@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using FubuCore;
 using FubuCore.Reflection;
+using FubuLocalization;
 using FubuTestingSupport;
 using FubuValidation.Fields;
 using NUnit.Framework;
@@ -143,6 +145,25 @@ namespace FubuValidation.Tests
             var classLevelRules = classRules();
             classLevelRules.Any(x => x is ComplexClassLevelRule<ClassValidationRulesTarget>);
         }
+
+		[Test]
+		public void configure_a_field_equality_rule()
+		{
+			var myToken = StringToken.FromKeyString("MyKeys:MyToken", "Passwords must match");
+			
+			theRules
+				.Property(x => x.Password)
+				.Matches(x => x.ConfirmPassword)
+				.ReportErrorsOn(x => x.ConfirmPassword)
+				.UseToken(myToken);
+
+			var rule = theRules.As<IValidationSource>().RulesFor(typeof(ClassValidationRulesTarget)).OfType<FieldEqualityRule>().Single();
+			
+			rule.Property1.ShouldEqual(SingleProperty.Build<ClassValidationRulesTarget>(x => x.Password));
+			rule.Property2.ShouldEqual(SingleProperty.Build<ClassValidationRulesTarget>(x => x.ConfirmPassword));
+
+			rule.Token.ShouldEqual(myToken);
+		}
     }
 
     public class ClassValidationRulesTarget
@@ -151,6 +172,9 @@ namespace FubuValidation.Tests
         public string Address1 { get; set; }
         public string Province { get; set;}
         public string Country { get; set; }
+
+		public string Password { get; set; }
+		public string ConfirmPassword { get; set; }
 
         public int Age { get; set; }
     }

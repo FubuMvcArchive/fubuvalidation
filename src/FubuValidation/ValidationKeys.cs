@@ -17,6 +17,8 @@ namespace FubuValidation
 
 		public static readonly ValidationKeys RegEx = new ValidationKeys("Invalid format");
 
+		public static readonly ValidationKeys FieldEquality = new ValidationKeys("{0} must equal {1}".ToFormat(FieldEqualityRule.Field1.AsTemplateField(), FieldEqualityRule.Field2.AsTemplateField()));
+
         public static readonly ValidationKeys MinValue = new ValidationKeys("Value must be greater than or equal to {bounds}");
         public static readonly ValidationKeys MaxValue = new ValidationKeys("Value must be less than or equal to {bounds}");
 

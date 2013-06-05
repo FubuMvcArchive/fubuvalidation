@@ -203,6 +203,13 @@ namespace FubuValidation
 				return register(new RegularExpressionFieldRule(expression, token));
 			}
 
+			public FieldEqualityRuleExpression Matches(Expression<Func<T, object>> property)
+			{
+				var rule = new FieldEqualityRule(_accessor, property.ToAccessor());
+				_parent.Register(rule);
+				return new FieldEqualityRuleExpression(rule);
+			}
+
             private FieldValidationExpression register(IFieldValidationRule rule)
             {
                 _lastRule = new RuleRegistrationExpression(a => rule, _accessor);
@@ -221,5 +228,27 @@ namespace FubuValidation
                 return Rule(new TRule());
             }
         }
+
+		public class FieldEqualityRuleExpression
+		{
+			private readonly FieldEqualityRule _rule;
+
+			public FieldEqualityRuleExpression(FieldEqualityRule rule)
+			{
+				_rule = rule;
+			}
+
+			public FieldEqualityRuleExpression UseToken(StringToken token)
+			{
+				_rule.Token = token;
+				return this;
+			}
+
+			public FieldEqualityRuleExpression ReportErrorsOn(Expression<Func<T, object>> property)
+			{
+				_rule.ReportMessagesFor(property.ToAccessor());
+				return this;
+			}
+		}
     }
 }

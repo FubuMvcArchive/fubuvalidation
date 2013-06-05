@@ -9,7 +9,7 @@ namespace FubuMVC.Validation
             : base(typeof(AjaxValidationBehavior<>).MakeGenericType(call.InputType()))
         {
 	        InputType = call.InputType();
-        	Validation = ValidationNode.DefaultFor(ValidationMode.Ajax);
+        	Validation = ValidationNode.Default();
         }
 
 		public Type InputType { get; private set; }

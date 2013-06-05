@@ -42,7 +42,7 @@ namespace FubuMVC.Validation.Tests.UI
         [Test]
         public void defaults()
         {
-            var strategies = ValidationNode.DefaultFor(ValidationMode.LoFi);
+            var strategies = ValidationNode.Default();
             strategies.ShouldHaveTheSameElementsAs(RenderingStrategies.Summary, RenderingStrategies.Highlight);
         }
     }

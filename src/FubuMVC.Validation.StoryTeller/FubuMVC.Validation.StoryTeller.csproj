@@ -1,10 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />    
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{19D1BF8E-B4CA-4091-8F5D-9C9F9EBDC13F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -34,14 +33,14 @@
     <Reference Include="Bottles">
       <HintPath>..\packages\Bottles\lib\Bottles.dll</HintPath>
     </Reference>
-    <Reference Include="Castle.Core">
-      <HintPath>..\packages\Castle.Core\lib\net40-client\Castle.Core.dll</HintPath>
-    </Reference>
     <Reference Include="FubuCore">
       <HintPath>..\packages\FubuCore\lib\FubuCore.dll</HintPath>
     </Reference>
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
+    </Reference>
+    <Reference Include="FubuMVC.Ajax">
+      <HintPath>..\packages\FubuMVC.Ajax\lib\net40\FubuMVC.Ajax.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Core">
       <HintPath>..\packages\FubuMVC.Core\lib\net40\FubuMVC.Core.dll</HintPath>
@@ -66,9 +65,6 @@
     </Reference>
     <Reference Include="HtmlTags">
       <HintPath>..\packages\HtmlTags\lib\4.0\HtmlTags.dll</HintPath>
-    </Reference>
-    <Reference Include="Ionic.Zip">
-      <HintPath>..\packages\DotNetZip\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin.Host.HttpListener">
@@ -123,6 +119,7 @@
     <Compile Include="AccessorOverridesModel.cs" />
     <Compile Include="ClassValidationModel.cs" />
     <Compile Include="Fixtures\AccessorOverridesScreenFixture.cs" />
+    <Compile Include="Fixtures\AjaxFormFixture.cs" />
     <Compile Include="Fixtures\ClassValidationScreenFixture.cs" />
     <Compile Include="Fixtures\IgnoredEndpointScreenFixture.cs" />
     <Compile Include="Fixtures\InlineModelScreenFixture.cs" />
@@ -145,6 +142,7 @@
     <Compile Include="ValidationSystem.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="validation-storyteller.asset.config" />
     <None Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </None>
@@ -167,6 +165,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="content\scripts\ajaxTester.js" />
     <Content Include="Tests\Basic\Required_select_tags.xml" />
     <Content Include="Tests\Basic\Validation_summary_rendering.xml" />
     <Content Include="Tests\End to End\Element_modifiers_for_class_validation_rules.xml" />

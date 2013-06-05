@@ -39,6 +39,9 @@
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
     </Reference>
+    <Reference Include="FubuMVC.Ajax">
+      <HintPath>..\packages\FubuMVC.Ajax\lib\net40\FubuMVC.Ajax.dll</HintPath>
+    </Reference>
     <Reference Include="FubuMVC.Core">
       <HintPath>..\packages\FubuMVC.Core\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
@@ -124,7 +127,6 @@
     <Compile Include="UI\RenderingStrategies.cs" />
     <Compile Include="UI\ValidationSummarySource.cs" />
     <Compile Include="ValidationBehaviorChainExtensions.cs" />
-    <Compile Include="ValidationMode.cs" />
     <Compile Include="IHaveValidation.cs" />
     <Compile Include="ValidationNode.cs" />
     <Compile Include="ValidationNodeModification.cs" />
@@ -177,23 +179,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
-        <WebProjectProperties>
-          <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>18912</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl></IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl></CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-        </WebProjectProperties>
-      </FlavorProperties>
-    </VisualStudio>
-  </ProjectExtensions>
+  <ProjectExtensions />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

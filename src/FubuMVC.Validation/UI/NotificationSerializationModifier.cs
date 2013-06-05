@@ -16,7 +16,7 @@ namespace FubuMVC.Validation.UI
 		public void Modify(FormRequest request)
 		{
 			var validation = request.Chain.ValidationNode();
-			if (validation == null || validation.Mode != ValidationMode.LoFi) return;
+			if (validation.IsEmpty()) return;
 
 			var notification = request.Services.GetInstance<IFubuRequest>().Get<Notification>();
 			if (notification.IsValid()) return;

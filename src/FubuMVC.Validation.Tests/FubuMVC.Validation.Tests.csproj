@@ -148,7 +148,6 @@
     <Compile Include="ValidationConventionTester.cs" />
     <Compile Include="ValidationFilterTester.cs" />
     <Compile Include="DefaultValidationFilterTester.cs" />
-    <Compile Include="ValidationModeTester.cs" />
     <Compile Include="ValidationNodeModificationTester.cs" />
     <Compile Include="ValidationNodeTester.cs" />
     <Compile Include="ValidationRegistrationActivatorTester.cs" />

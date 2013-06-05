@@ -13,7 +13,7 @@ namespace FubuMVC.Validation.Tests
         {
             var stub = new StubValidationBehaviorNode
             {
-                Validation = ValidationNode.DefaultFor(ValidationMode.LoFi)
+                Validation = ValidationNode.Default()
             };
 
             var chain = new BehaviorChain();

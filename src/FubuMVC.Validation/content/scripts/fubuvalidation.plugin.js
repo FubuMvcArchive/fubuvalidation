@@ -131,12 +131,15 @@
 		return this.each(function () {
 			var container = $(this);
 			$('form.validated-form', container).each(function () {
-				var mode = $(this).data('validationMode');
+			  var form = $(this);
+			  form.off('submit.fubu');
+
+				var mode = form.data('formMode');
 				$(this).validate({
 					ajax: mode == 'ajax',
 					continuationSuccess: function (continuation) {
 						if (continuation.success && continuation.form) {
-							continuation.form.trigger('validation:success', continuation);
+							continuation.form.trigger('validation:success', [continuation]);
 						}
 					}
 				});

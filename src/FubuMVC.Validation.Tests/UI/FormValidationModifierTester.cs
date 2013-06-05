@@ -54,7 +54,7 @@ namespace FubuMVC.Validation.Tests.UI
             modifier.Modify(theRequest);
 
             theRequest.CurrentTag.ToString()
-				.ShouldEqual("<form method=\"post\" action=\"test\" data-validation-mode=\"ajax\" data-validation-summary=\"true\" data-validation-highlight=\"true\" class=\"validated-form\">");
+				.ShouldEqual("<form method=\"post\" action=\"test\" data-validation-summary=\"true\" data-validation-highlight=\"true\" class=\"validated-form\">");
         }
 
 		[Test]
@@ -67,7 +67,7 @@ namespace FubuMVC.Validation.Tests.UI
 			modifier.Modify(theRequest);
 
 			theRequest.CurrentTag.ToString()
-				.ShouldEqual("<form method=\"post\" action=\"test\" data-validation-mode=\"ajax\" class=\"validated-form\">");
+				.ShouldEqual("<form method=\"post\" action=\"test\">");
 		}
 
         [Test]

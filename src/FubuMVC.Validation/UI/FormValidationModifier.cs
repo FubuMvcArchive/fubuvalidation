@@ -15,13 +15,15 @@ namespace FubuMVC.Validation.UI
         public void Modify(FormRequest request)
         {
         	var validation = request.Chain.ValidationNode();
-			if(validation == null)
+			if(validation.IsEmpty())
 			{
 				return;
 			}
 
             writeScriptRequirements(request);
 	        validation.Modify(request);
+
+	        request.CurrentTag.AddClass("validated-form");
         }
 
 		private void writeScriptRequirements(FormRequest request)

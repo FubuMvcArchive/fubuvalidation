@@ -22,10 +22,12 @@ namespace FubuMVC.Validation.IntegrationTesting
 				"_content/scripts/fubuvalidation.ui.js",
 				"_content/scripts/jquery.continuations.js",
 				"_content/scripts/jquery.form.js",
+				"_content/scripts/ajax-diagnostics.js",
 				"_content/scripts/fubuvalidation.rules.js",
-				"_content/scripts/jquery.continuations.forms.js",
 				"_content/scripts/fubuvalidation.core.js",
-				"_content/scripts/fubuvalidation.plugin.js"
+				"_content/scripts/jquery.continuations.forms.js",
+				"_content/scripts/fubuvalidation.plugin.js",
+				
 			};
 
 			ServerHarness.Endpoints.Get<AssetEndpoint>(x => x.get_fubuvalidation())

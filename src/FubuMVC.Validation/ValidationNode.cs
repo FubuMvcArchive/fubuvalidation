@@ -11,21 +11,13 @@ namespace FubuMVC.Validation
     {
         private readonly IList<IRenderingStrategy> _strategies = new List<IRenderingStrategy>();
 
-        public ValidationNode()
-            : this(ValidationMode.None)
-        {
-        }
-
-        public ValidationNode(ValidationMode mode)
-        {
-            Mode = mode;
-        }
-
-        public ValidationMode Mode { get; set; }
+		public bool IsEmpty()
+		{
+			return !_strategies.Any();
+		}
 
 		public void Modify(FormRequest request)
 		{
-			Mode.Modify(request.CurrentTag);
 			Each(x => x.Modify(request));
 		}
 
@@ -59,14 +51,14 @@ namespace FubuMVC.Validation
 
         protected bool Equals(ValidationNode other)
         {
-            return _strategies.SequenceEqual(other._strategies) && Mode.Equals(other.Mode);
+            return _strategies.SequenceEqual(other._strategies);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return (_strategies.GetHashCode() * 397) ^ Mode.GetHashCode();
+                return (_strategies.GetHashCode() * 397);
             }
         }
 
@@ -80,9 +72,9 @@ namespace FubuMVC.Validation
             return new ValidationNode();
         }
 
-        public static ValidationNode DefaultFor(ValidationMode mode)
+        public static ValidationNode Default()
         {
-            var validation = new ValidationNode(mode);
+            var validation = new ValidationNode();
 
             validation.RegisterStrategy(RenderingStrategies.Summary);
             validation.RegisterStrategy(RenderingStrategies.Highlight);

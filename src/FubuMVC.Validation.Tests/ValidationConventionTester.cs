@@ -23,8 +23,6 @@ namespace FubuMVC.Validation.Tests
             var nodes = chain.ToArray();
 			var node = nodes[0].As<IHaveValidation>();
 
-			node.Validation.Mode.ShouldEqual(ValidationMode.LoFi);
-
 			node.As<ActionFilter>().HandlerType.ShouldEqual(typeof (ValidationActionFilter<string>));
         }
 
@@ -41,7 +39,6 @@ namespace FubuMVC.Validation.Tests
             var nodes = chain.ToArray();
         	var node = nodes[0].As<IHaveValidation>();
 
-        	node.Validation.Mode.ShouldEqual(ValidationMode.Ajax);
         	node.ShouldBeOfType<AjaxValidationNode>();
         }
 

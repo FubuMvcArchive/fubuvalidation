@@ -40,6 +40,9 @@
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
     </Reference>
+    <Reference Include="FubuMVC.Ajax">
+      <HintPath>..\packages\FubuMVC.Ajax\lib\net40\FubuMVC.Ajax.dll</HintPath>
+    </Reference>
     <Reference Include="FubuMVC.Core">
       <HintPath>..\packages\FubuMVC.Core\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>

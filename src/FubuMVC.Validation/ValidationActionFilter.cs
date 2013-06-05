@@ -12,7 +12,7 @@ namespace FubuMVC.Validation
 	{
 		public ValidationActionFilter(Type handlerType, MethodInfo method) : base(handlerType, method)
 		{
-            Validation = ValidationNode.DefaultFor(ValidationMode.LoFi);
+            Validation = ValidationNode.Default();
 		}
 
         public ValidationNode Validation { get; private set; }

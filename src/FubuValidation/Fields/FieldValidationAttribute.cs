@@ -8,6 +8,7 @@ namespace FubuValidation.Fields
     public abstract class FieldValidationAttribute : Attribute, IFieldValidationSource
     {
         public abstract IEnumerable<IFieldValidationRule> RulesFor(PropertyInfo property);
+
         public void AssertIsValid()
         {
         }

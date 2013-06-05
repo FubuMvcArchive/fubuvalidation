@@ -93,6 +93,7 @@
     <Compile Include="Fields\MinValueFieldRuleTester.cs" />
     <Compile Include="Fields\RangeLengthFieldRuleTester.cs" />
     <Compile Include="Fields\CollectionLengthRuleTester.cs" />
+    <Compile Include="Fields\RegularExpressionFieldRuleTester.cs" />
     <Compile Include="Fields\RequiredFieldRuleTester.cs" />
     <Compile Include="IsValidTester.cs" />
     <Compile Include="IValidatedRuleSourceTester.cs" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using FubuCore.Reflection;
+using FubuLocalization;
 using FubuValidation.Fields;
 
 namespace FubuValidation
@@ -191,6 +192,16 @@ namespace FubuValidation
             {
                 return register(new MaxValueFieldRule(bounds));
             }
+
+			public FieldValidationExpression RegEx(string expression)
+			{
+				return register(new RegularExpressionFieldRule(expression));
+			}
+
+			public FieldValidationExpression RegEx(string expression, StringToken token)
+			{
+				return register(new RegularExpressionFieldRule(expression, token));
+			}
 
             private FieldValidationExpression register(IFieldValidationRule rule)
             {

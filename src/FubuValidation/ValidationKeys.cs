@@ -15,6 +15,8 @@ namespace FubuValidation
         public static readonly ValidationKeys GreaterThanOrEqualToZero = new ValidationKeys("Value must be greater than or equal to zero");
         public static readonly ValidationKeys Email = new ValidationKeys("Invalid email address");
 
+		public static readonly ValidationKeys RegEx = new ValidationKeys("Invalid format");
+
         public static readonly ValidationKeys MinValue = new ValidationKeys("Value must be greater than or equal to {bounds}");
         public static readonly ValidationKeys MaxValue = new ValidationKeys("Value must be less than or equal to {bounds}");
 

@@ -311,6 +311,13 @@
             });
         }
     });
+    defineSource('RegularExpression', {
+      rulesFor: function (target) {
+        return rulesForData(target, 'regex', function (value) {
+          return new validation.Rules.RegularExpression(value);
+        });
+      }
+    });
     defineSource('Remote', {
         rulesFor: function (target) {
             var value = target.element.data('remoteRule');

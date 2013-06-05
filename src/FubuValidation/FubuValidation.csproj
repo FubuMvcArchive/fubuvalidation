@@ -79,6 +79,7 @@
     <Compile Include="Fields\MinimumLengthRule.cs" />
     <Compile Include="Fields\MinValueFieldRule.cs" />
     <Compile Include="Fields\RangeLengthFieldRule.cs" />
+    <Compile Include="Fields\RegularExpressionFieldRule.cs" />
     <Compile Include="Fields\RequiredFieldRule.cs" />
     <Compile Include="Fields\LambdaFieldValidationSource.cs" />
     <Compile Include="FubuValidationException.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Notification.cs" />
     <Compile Include="NotificationMessage.cs" />
     <Compile Include="RangeLengthAttribute.cs" />
+    <Compile Include="RegularExpressionAttribute.cs" />
     <Compile Include="TemplateExtensions.cs" />
     <Compile Include="TemplateValue.cs" />
     <Compile Include="ValidationContext.cs" />

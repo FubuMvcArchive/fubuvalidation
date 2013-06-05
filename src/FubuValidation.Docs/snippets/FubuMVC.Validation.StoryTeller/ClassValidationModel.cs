@@ -17,6 +17,7 @@ namespace FubuMVC.Validation.StoryTeller
         public double LessThanFifteen { get; set; }
         public string Email { get; set; }
         public string Required { get; set; }
+		public string Regex { get; set; }
 
         public string Custom { get; set; }
     }
@@ -35,6 +36,7 @@ namespace FubuMVC.Validation.StoryTeller
             Property(x => x.LessThanFifteen).MaxValue(15);
             Property(x => x.Email).Email();
             Property(x => x.Required).Required();
+	        Property(x => x.Regex).RegEx("[a-zA-Z0-9]+$");
 
             Property(x => x.Custom).Rule<UniqueUsernameRule>();
         }
@@ -76,6 +78,7 @@ namespace FubuMVC.Validation.StoryTeller
             form.Append(_page.Edit(x => x.LessThanFifteen));
             form.Append(_page.Edit(x => x.Email));
             form.Append(_page.Edit(x => x.Required));
+	        form.Append(_page.Edit(x => x.Regex));
             form.Append(_page.Edit(x => x.Custom));
 
             form.Append(new HtmlTag("input").Attr("type", "submit").Attr("value", "Submit").Id("Model"));

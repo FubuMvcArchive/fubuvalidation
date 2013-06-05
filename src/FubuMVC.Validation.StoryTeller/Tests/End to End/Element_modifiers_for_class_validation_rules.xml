@@ -17,6 +17,7 @@
     <EnterLongerThanTen isStep="True" LongerThanTen="12345678" />
     <EnterNoMoreThanFiveCharacters isStep="True" NoMoreThanFiveCharacters="123456" />
     <EnterRequired isStep="True" Required="EMPTY" />
+    <EnterRegex isStep="True" Regex="invalid//" />
     <EnterCustom isStep="True" Custom="test" />
     <ClickTheSubmitButton isStep="True" />
     <VerifyValidationMessages isStep="True">
@@ -29,6 +30,7 @@
         <row isStep="True" Property="LessThanFifteen" Message="en-US_LessThanFifteen - Value must be less than or equal to 15" />
         <row isStep="True" Property="Email" Message="en-US_Email - Invalid email address" />
         <row isStep="True" Property="Required" Message="en-US_Required - Required Field" />
+        <row isStep="True" Property="Regex" Message="en-US_Regex - Invalid format" />
         <row isStep="True" Property="Custom" Message="en-US_Custom - Username 'test' already exists" />
       </rows>
     </VerifyValidationMessages>

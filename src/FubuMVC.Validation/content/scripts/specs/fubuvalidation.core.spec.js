@@ -568,6 +568,40 @@ describe('MaxSourceTester', function () {
     });
 });
 
+describe('RegularExpressionSourceTester', function () {
+  var theSource = null;
+  var ruleFor = null;
+  var rulesFor = null;
+
+  beforeEach(function () {
+    theSource = $.fubuvalidation.Sources.RegularExpression;
+
+    rulesFor = function (element) {
+      var target = $.fubuvalidation.Core.Target.forElement(element);
+      return theSource.rulesFor(target);
+    };
+
+    ruleFor = function (element, continuation) {
+      var rules = rulesFor(element, continuation);
+
+      expect(rules.length).toEqual(1);
+
+      continuation(rules[0]);
+    };
+  });
+
+  it('builds the Regex rule', function () {
+    ruleFor($('<input type="text" name="Test" data-regex="[a-zA-Z0-9]+$" />'), function (rule) {
+      expect(rule.expression.source).toEqual('[a-zA-Z0-9]+$');
+    });
+  });
+
+  it('no rule if regex data does not exist', function () {
+    var rules = rulesFor($('<input type="text" name="Test" />'));
+    expect(rules.length).toEqual(0);
+  });
+});
+
 describe('RemoteSourceTester', function () {
     var theSource = null;
     var ruleFor = null;

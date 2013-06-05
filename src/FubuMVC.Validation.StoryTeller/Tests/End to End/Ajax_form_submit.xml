@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Test name="Ajax form submit" lifecycle="Regression">
+  <AjaxForm>
+    <EnterName isStep="True" Name="User 1" />
+    <Submit isStep="True" />
+    <EnterName isStep="True" Name="User 2" />
+    <Submit isStep="True" />
+    <VerifyTheMessages isStep="True">
+      <rows>
+        <row isStep="True" Message="User created: User 1" />
+        <row isStep="True" Message="User created: User 2" />
+      </rows>
+    </VerifyTheMessages>
+  </AjaxForm>
+</Test>

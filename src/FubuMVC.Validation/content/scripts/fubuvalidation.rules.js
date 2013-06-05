@@ -23,6 +23,7 @@
     defineToken('RangeLength', 'Please enter a value between {{min}} and {{max}} characters.');
     defineToken('MinValue', 'Please enter a value less than or equal to {{bounds}}.');
     defineToken('MaxValue', 'Please enter a value greater than or equal to {{bounds}}.');
+    defineToken('RegularExpression', 'The data is in an invalid format.');
 
 
     function MinLengthRule(length) {
@@ -114,12 +115,25 @@
                     }
 
                     if (continuation.errors.length == 0) return;
-                    // TODO -- FINISH THIS
+                    
                     var token = new StringToken(hash, continuation.errors[0].message);
                     context.registerMessage(token);
                 }
             });
         }
+    };
+  
+    function RegularExpressionRule(value) {
+      this.expression = new RegExp(value);
+    }
+
+    RegularExpressionRule.prototype = {
+      validate: function (context) {
+        var value = context.target.value();
+        if (value == '' || this.expression.test(value)) return;
+
+        context.registerMessage(validationKeys.RegularExpression);
+      }
     };
 
     defineLambda('Required', function (context) {
@@ -162,6 +176,7 @@
     define('Min', MinRule);
     define('Max', MaxRule);
     define('Remote', RemoteRule);
+    define('RegularExpression', RegularExpressionRule);
 
     $.extend(true, $, {
         'fubuvalidation': {

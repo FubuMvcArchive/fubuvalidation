@@ -205,3 +205,19 @@ describe('NumberRuleTester', function () {
         expect(theHarness.messagesFor('100').length).toEqual(0);
     });
 });
+
+describe('RegularExpressionRuleTester', function () {
+  var theHarness = null;
+
+  beforeEach(function () {
+    theHarness = new RuleHarness(new $.fubuvalidation.Rules.RegularExpression('[a-zA-Z0-9]+$'));
+  });
+
+  it('registers a message when string does not match', function () {
+    expect(theHarness.messagesFor('hello//').length).toEqual(1);
+  });
+
+  it('no message when the string is a match', function () {
+    expect(theHarness.messagesFor('hello').length).toEqual(0);
+  });
+});

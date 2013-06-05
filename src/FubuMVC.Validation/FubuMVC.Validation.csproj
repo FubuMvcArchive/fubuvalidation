@@ -123,6 +123,7 @@
     <Compile Include="UI\NotificationSerializationModifier.cs" />
     <Compile Include="UI\NumberElementModifier.cs" />
     <Compile Include="UI\RangeLengthModifier.cs" />
+    <Compile Include="UI\RegularExpressionModifier.cs" />
     <Compile Include="UI\RemoteValidationElementModifier.cs" />
     <Compile Include="UI\RenderingStrategies.cs" />
     <Compile Include="UI\ValidationSummarySource.cs" />

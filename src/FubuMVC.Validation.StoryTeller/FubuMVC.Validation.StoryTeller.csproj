@@ -152,9 +152,6 @@
     <None Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Validation.application.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Validation.Serenity\FubuMVC.Validation.Serenity.csproj">

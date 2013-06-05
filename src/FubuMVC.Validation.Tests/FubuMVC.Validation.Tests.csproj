@@ -138,6 +138,7 @@
     <Compile Include="UI\NotificationSerializationModifierTester.cs" />
     <Compile Include="UI\NumberElementModifierTester.cs" />
     <Compile Include="UI\RangeLengthModifierTester.cs" />
+    <Compile Include="UI\RegularExpressionModifierTester.cs" />
     <Compile Include="UI\RemoteValidationElementModifierTester.cs" />
     <Compile Include="UI\RenderingStrategyTester.cs" />
     <Compile Include="UI\ValidationElementModifierContext.cs" />

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<Test name="Field equality targeting only one property" lifecycle="Regression">
+  <ClassValidationScreen>
+    <EnterAtLeastFiveButNotTen isStep="True" AtLeastFiveButNotTen="123456" />
+    <EnterGreaterOrEqualToZero isStep="True" GreaterOrEqualToZero="1" />
+    <EnterGreaterThanFive isStep="True" GreaterThanFive="6" />
+    <EnterGreaterThanZero isStep="True" GreaterThanZero="1" />
+    <EnterLessThanFifteen isStep="True" LessThanFifteen="14" />
+    <EnterLongerThanTen isStep="True" LongerThanTen="12345678910" />
+    <EnterNoMoreThanFiveCharacters isStep="True" NoMoreThanFiveCharacters="1234" />
+    <EnterRequired isStep="True" Required="Something" />
+    <EnterRegex isStep="True" Regex="hello" />
+    <EnterEmail isStep="True" Email="test@test.com" />
+    <EnterConfirmEmail isStep="True" ConfirmEmail="tester@test.com" />
+    <ClickTheSubmitButton isStep="True" />
+    <VerifyValidationMessages isStep="True">
+      <rows>
+        <row isStep="True" Property="ConfirmEmail" Message="en-US_ConfirmEmail - Emails must match" />
+      </rows>
+    </VerifyValidationMessages>
+  </ClassValidationScreen>
+</Test>

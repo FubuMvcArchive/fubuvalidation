@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Assets;
+﻿using FubuLocalization;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.UI;
 using FubuValidation;
@@ -20,6 +21,11 @@ namespace FubuMVC.Validation.StoryTeller
 		public string Regex { get; set; }
 
         public string Custom { get; set; }
+
+		public string Password { get; set; }
+		public string ConfirmPassword { get; set; }
+
+		public string ConfirmEmail { get; set; }
     }
 
 	// SAMPLE: ClassValidationRules
@@ -39,6 +45,16 @@ namespace FubuMVC.Validation.StoryTeller
 	        Property(x => x.Regex).RegEx("[a-zA-Z0-9]+$");
 
             Property(x => x.Custom).Rule<UniqueUsernameRule>();
+
+	        Property(x => x.Password)
+				.Matches(x => x.ConfirmPassword)
+		        .ReportErrorsOn(x => x.Password)
+		        .ReportErrorsOn(x => x.ConfirmPassword);
+
+	        Property(x => x.Email)
+		        .Matches(x => x.ConfirmEmail)
+		        .ReportErrorsOn(x => x.ConfirmEmail)
+		        .UseToken(StringToken.FromKeyString("Test:Keys", "Emails must match"));
         }
     }
 	// ENDSAMPLE
@@ -80,6 +96,10 @@ namespace FubuMVC.Validation.StoryTeller
             form.Append(_page.Edit(x => x.Required));
 	        form.Append(_page.Edit(x => x.Regex));
             form.Append(_page.Edit(x => x.Custom));
+			form.Append(_page.Edit(x => x.Password));
+			form.Append(_page.Edit(x => x.ConfirmPassword));
+			form.Append(_page.Edit(x => x.ConfirmEmail));
+
 
             form.Append(new HtmlTag("input").Attr("type", "submit").Attr("value", "Submit").Id("Model"));
 			form.Id(typeof(ClassValidationModel).Name);

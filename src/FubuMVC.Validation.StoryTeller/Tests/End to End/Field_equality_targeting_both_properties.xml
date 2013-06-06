@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<Test name="Field equality targeting both properties" lifecycle="Regression">
+  <ClassValidationScreen>
+    <EnterAtLeastFiveButNotTen isStep="True" AtLeastFiveButNotTen="123456" />
+    <EnterGreaterOrEqualToZero isStep="True" GreaterOrEqualToZero="1" />
+    <EnterGreaterThanFive isStep="True" GreaterThanFive="6" />
+    <EnterGreaterThanZero isStep="True" GreaterThanZero="1" />
+    <EnterLessThanFifteen isStep="True" LessThanFifteen="14" />
+    <EnterLongerThanTen isStep="True" LongerThanTen="12345678910" />
+    <EnterNoMoreThanFiveCharacters isStep="True" NoMoreThanFiveCharacters="1234" />
+    <EnterRequired isStep="True" Required="Something" />
+    <EnterRegex isStep="True" Regex="hello" />
+    <EnterPassword isStep="True" Password="something" />
+    <EnterConfirmPassword isStep="True" ConfirmPassword="something else" />
+    <ClickTheSubmitButton isStep="True" />
+    <VerifyValidationMessages isStep="True">
+      <rows>
+        <row isStep="True" Property="Password" Message="en-US_Password - Password must equal ConfirmPassword" />
+        <row isStep="True" Property="ConfirmPassword" Message="en-US_ConfirmPassword - Password must equal ConfirmPassword" />
+      </rows>
+    </VerifyValidationMessages>
+  </ClassValidationScreen>
+</Test>

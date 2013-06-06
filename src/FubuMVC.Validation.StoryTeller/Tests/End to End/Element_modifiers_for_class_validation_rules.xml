@@ -10,6 +10,7 @@
   <ClassValidationScreen>
     <EnterAtLeastFiveButNotTen isStep="True" AtLeastFiveButNotTen="Four" />
     <EnterEmail isStep="True" Email="invalid!" />
+    <EnterConfirmEmail isStep="True" ConfirmEmail="invalid!" />
     <EnterGreaterOrEqualToZero isStep="True" GreaterOrEqualToZero="-1" />
     <EnterGreaterThanFive isStep="True" GreaterThanFive="4" />
     <EnterGreaterThanZero isStep="True" GreaterThanZero="-5" />

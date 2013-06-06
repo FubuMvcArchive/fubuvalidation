@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using FubuCore.Reflection;
 using FubuLocalization;
-using FubuMVC.Validation.Remote;
 using FubuValidation;
 using FubuValidation.Fields;
 

@@ -30,6 +30,7 @@
     validation.Processor.process(continuation);
 
     form.storeNotification(notification);
+    form.trigger('validation:processed', [continuation]);
   }
 
   function elementHandler(element, form) {

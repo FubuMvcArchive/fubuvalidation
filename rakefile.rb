@@ -23,7 +23,7 @@ end
 	sln.fubudocs_enabled = true
     
     sln.assembly_bottle 'FubuMVC.Validation'
-    sln.ci_steps = ['run_phantom']
+    sln.ci_steps = ['run_phantom', 'storyteller']
     sln.defaults = [:run]
 end
 
@@ -49,6 +49,11 @@ end
 desc "Runs the Jasmine tests and outputs the results for TC"
 task :run_phantom => [:compile] do
     serenity "jasmine run --verbose --timeout 60 src/serenity.txt -b Phantom"
+end
+
+desc "Runs the ST suite"
+task :storyteller do
+    serenity "storyteller src/FubuMVC.Validation.StoryTeller/validation.xml results/Storyteller.html -b Phantom"
 end
 
 def self.serenity(args)

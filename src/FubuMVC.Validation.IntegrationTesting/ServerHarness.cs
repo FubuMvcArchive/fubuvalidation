@@ -16,22 +16,6 @@ using StructureMap;
 
 namespace FubuMVC.Validation.IntegrationTesting
 {
-    [SetUpFixture]
-    public class HarnessBootstrapper
-    {
-        [SetUp]
-        public void SetUp()
-        {
-            ServerHarness.Start();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            ServerHarness.Shutdown();
-        }
-    }
-
     public static class ServerHarness
     {
         private static EmbeddedFubuMvcServer _server;

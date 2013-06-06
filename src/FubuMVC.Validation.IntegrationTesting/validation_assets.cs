@@ -11,6 +11,18 @@ namespace FubuMVC.Validation.IntegrationTesting
     [TestFixture]
     public class validation_assets
     {
+		[SetUp]
+		public void SetUp()
+		{
+			ServerHarness.Start();
+		}
+
+		[TearDown]
+		public void TearDown()
+		{
+			
+		}
+
 		[Test]
 		public void fetches_fubuvalidation()
 		{

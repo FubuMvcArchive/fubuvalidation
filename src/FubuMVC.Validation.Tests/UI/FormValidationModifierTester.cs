@@ -81,7 +81,12 @@ namespace FubuMVC.Validation.Tests.UI
         }
     }
 
-	public class LoFiTarget { }
+	public class LoFiTarget
+	{
+		public string Value1 { get; set; }
+		public string Value2 { get; set; }
+	}
+
 	public class AjaxTarget { }
 	[NotValidated]
 	public class NoneTarget { }

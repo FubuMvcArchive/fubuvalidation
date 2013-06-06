@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using FubuMVC.Core.Assets;
+﻿using FubuMVC.Core.Assets;
 using FubuMVC.Core.UI.Forms;
 using HtmlTags.Conventions;
 

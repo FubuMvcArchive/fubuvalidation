@@ -73,6 +73,24 @@ namespace FubuValidation.Tests
         {
             thePlan.FieldRules.HasRule<RequiredFieldRule>(ReflectionHelper.GetAccessor<ContactModel>(x => x.FirstName)).ShouldBeTrue();
         }
+
+		[Test]
+		public void finds_the_rules_from_all_steps()
+		{
+			var r1 = new StubRule();
+			var r2 = new StubRule();
+			var r3 = new ClassFieldValidationRules();
+			var r4 = new ClassFieldValidationRules();
+
+			var src1 = new ConfiguredValidationSource(new IValidationRule[] { r1, r3 });
+			var src2 = new ConfiguredValidationSource(new IValidationRule[] { r2, r4 });
+
+			var step1 = ValidationStep.FromSource(typeof(object), src1);
+			var step2 = ValidationStep.FromSource(typeof(object), src2);
+
+			var plan = new ValidationPlan(typeof (object), new[] {step1, step2});
+			plan.FindRules<StubRule>().ShouldHaveTheSameElementsAs(r1, r2);
+		}
     }
 
     [TestFixture]

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuCore.Reflection;
+using FubuLocalization;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -58,24 +61,6 @@ namespace FubuValidation.Tests
 
 			Exception<ArgumentOutOfRangeException>
 				.ShouldBeThrownBy(() => rule.ReportMessagesFor(accessor));
-		}
-
-		[Test]
-		public void should_report_on_known_accessors()
-		{
-			var rule = FieldEqualityRule.For<FieldEqualityTarget>(x => x.Value1, x => x.Value2);
-			rule.ReportMessagesFor(rule.Property1);
-
-			rule.ShouldReport(rule.Property1).ShouldBeTrue();
-		}
-
-		[Test]
-		public void should_not_report_on_unknown_accessors()
-		{
-			var rule = FieldEqualityRule.For<FieldEqualityTarget>(x => x.Value1, x => x.Value2);
-			rule.ReportMessagesFor(rule.Property1);
-
-			rule.ShouldReport(rule.Property2).ShouldBeFalse();
 		}
 
 		[Test]
@@ -166,5 +151,38 @@ namespace FubuValidation.Tests
 
 			theNotification.MessagesFor<FieldEqualityTarget>(x => x.Value1).Any().ShouldBeFalse();
 		}	
+
+		[Test]
+		public void builds_the_localized_properties()
+		{
+			var values = theRule.ToValues();
+			
+			var prop1 = values.Child("property1");
+			prop1.Get<string>("field").ShouldEqual(theRule.Property1.Name);
+			prop1.Get<string>("label").ShouldEqual(LocalizationManager.GetHeader(theRule.Property1.InnerProperty));
+
+			var prop2 = values.Child("property2");
+			prop2.Get<string>("field").ShouldEqual(theRule.Property2.Name);
+			prop2.Get<string>("label").ShouldEqual(LocalizationManager.GetHeader(theRule.Property2.InnerProperty));
+		}
+
+		[Test]
+		public void builds_the_token()
+		{
+			var values = theRule.ToValues();
+
+			values.Get<string>("message").ShouldEqual(theRule.Token.ToString());
+		}
+
+		[Test]
+		public void builds_the_targets()
+		{
+			theRule.ReportMessagesFor(theRule.Property1);
+			theRule.ReportMessagesFor(theRule.Property2);
+
+			var values = theRule.ToValues();
+
+			values.Get<IEnumerable<string>>("targets").ShouldHaveTheSameElementsAs(theRule.Property1.Name, theRule.Property2.Name);
+		}
 	}
 }

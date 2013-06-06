@@ -31,6 +31,12 @@ namespace FubuValidation
             get { return _rules; }
         }
 
+		public IEnumerable<T> FindRules<T>()
+			where T : IValidationRule
+		{
+			return _rules.OfType<T>();
+		}
+
         public void Execute(ValidationContext context)
         {
             // TODO -- Could push a logging mechanism into the context
@@ -74,5 +80,10 @@ namespace FubuValidation
                 return result;
             }
         }
+
+		public static ValidationStep FromSource(Type type, IValidationSource source)
+		{
+			return new ValidationStep(type, source.GetType(), source.RulesFor(type));
+		}
     }
 }

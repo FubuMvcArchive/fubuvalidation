@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Descriptions;
@@ -54,11 +55,6 @@ namespace FubuValidation
 			_accessors.Fill(accessor);
 		}
 
-		public bool ShouldReport(Accessor accessor)
-		{
-			return _accessors.Contains(accessor);
-		}
-
 		public void Validate(ValidationContext context)
 		{
 			var value1 = _property1.GetValue(context.Target);
@@ -94,6 +90,27 @@ namespace FubuValidation
 					.Notification
 					.RegisterMessage(x, Token, values);
 			});
+		}
+
+		private IDictionary<string, object> localizedProperty(Accessor accessor)
+		{
+			var values = new Dictionary<string, object>();
+			values.Add("field", accessor.Name);
+			values.Add("label", LocalizationManager.GetHeader(accessor.InnerProperty));
+			return values;
+		}
+
+		public IDictionary<string, object> ToValues()
+		{
+			var values = new Dictionary<string, object>();
+			values.Add("property1", localizedProperty(_property1));
+			values.Add("property2", localizedProperty(_property2));
+
+			values.Add("message", Token.ToString());
+
+			values.Add("targets", _accessors.Select(x => x.Name));
+
+			return values;
 		}
 
 		public void Describe(Description description)

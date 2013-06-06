@@ -32,6 +32,7 @@ namespace FubuMVC.Validation
                 
                 x.Forms.Add(new FormValidationSummaryModifier());
                 x.Forms.Add(new FormValidationModifier());
+				x.Forms.Add(new FieldEqualityFormModifier());
 				x.Forms.Add(new NotificationSerializationModifier());
             });
 

@@ -3,6 +3,7 @@ using System.Linq;
 using FubuCore;
 using FubuCore.Descriptions;
 using FubuTestingSupport;
+using FubuValidation.Fields;
 using FubuValidation.Tests.Models;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -53,7 +54,28 @@ namespace FubuValidation.Tests
             r1.AssertWasCalled(x => x.Validate(theContext));
             r2.AssertWasCalled(x => x.Validate(theContext));
         }
+
+		[Test]
+		public void finds_the_rules()
+		{
+			var r1 = new StubRule();
+			var r2 = new StubRule();
+			var r3 = new ClassFieldValidationRules();
+
+			var src = new ConfiguredValidationSource(new IValidationRule[] {r1, r2, r3});
+			var step = ValidationStep.FromSource(typeof (object), src);
+
+			step.FindRules<StubRule>().ShouldHaveTheSameElementsAs(r1, r2);
+		}
     }
+
+	public class StubRule : IValidationRule
+	{
+		public void Validate(ValidationContext context)
+		{
+			throw new NotImplementedException();
+		}
+	}
 
     [TestFixture]
     public class when_building_the_description_for_the_validation_step

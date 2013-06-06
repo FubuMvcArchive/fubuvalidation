@@ -94,6 +94,7 @@
     <Compile Include="UI\DateElementModifier.cs" />
     <Compile Include="UI\DefaultValidationSummaryNode.cs" />
     <Compile Include="UI\DefaultValidationSummaryWriter.cs" />
+    <Compile Include="UI\FieldEqualityFormModifier.cs" />
     <Compile Include="UI\FieldValidationElementModifier.cs" />
     <Compile Include="UI\FormValidationModifier.cs" />
     <Compile Include="UI\FormValidationSummaryModifier.cs" />

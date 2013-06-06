@@ -33,6 +33,12 @@ namespace FubuValidation
             get { return _fieldRules.Value ?? new ClassFieldValidationRules(); }
         }
 
+		public IEnumerable<T> FindRules<T>()
+			where T : IValidationRule
+		{
+			return _steps.SelectMany(x => x.FindRules<T>());
+		}
+
         public void Describe(Description description)
         {
             var list = description.AddList("ValidationSteps", _steps);
@@ -53,20 +59,6 @@ namespace FubuValidation
             return Equals((ValidationPlan) obj);
         }
 
-        public static ValidationPlan For(Type type, ValidationGraph graph)
-        {
-            var steps = new List<ValidationStep>();
-            graph.Sources.Each(source =>
-            {
-                var rules = source.RulesFor(type);
-                if (!rules.Any()) return;
-
-                steps.Add(new ValidationStep(type, source.GetType(), rules));
-            });
-
-            return new ValidationPlan(type, steps);
-        }
-
         public bool Equals(ValidationPlan other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -81,5 +73,19 @@ namespace FubuValidation
                 return (_type.GetHashCode()*397) ^ _steps.GetHashCode();
             }
         }
+
+		public static ValidationPlan For(Type type, ValidationGraph graph)
+		{
+			var steps = new List<ValidationStep>();
+			graph.Sources.Each(source =>
+			{
+				var rules = source.RulesFor(type);
+				if (!rules.Any()) return;
+
+				steps.Add(new ValidationStep(type, source.GetType(), rules));
+			});
+
+			return new ValidationPlan(type, steps);
+		}
     }
 }

@@ -6,6 +6,9 @@ using FubuValidation.Fields;
 
 namespace FubuValidation
 {
+	// Add a new JS source...
+	// Then add the field equality JS rule
+
     public class ValidationGraph
     {
         private readonly IList<IValidationSource> _sources = new List<IValidationSource>();

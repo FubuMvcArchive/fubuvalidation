@@ -795,5 +795,6 @@ describe('Integrated Continuation Tests', function () {
   it('required with rendered message', function () {
     var theContinuation = continuationFor($('<input type="text" name="Test" class="required" />'));
     expect(theContinuation.errors[0].message).toEqual($.fubuvalidation.ValidationKeys.Required.toString());
+    expect(theContinuation.errors[0].source).toEqual(typeof($.fubuvalidation.Rules.Required));
   });
 });

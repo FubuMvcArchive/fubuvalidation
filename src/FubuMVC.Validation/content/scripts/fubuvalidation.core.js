@@ -48,17 +48,19 @@
 
     registerMessage: function (field, token, element, context) {
       var message = new ValidationMessage(field, token, element, context);
-      var exists = false;
+      var existing = null;
       this.eachMessage(function(msg) {
         if (message.toHash() == msg.toHash()) {
-          exists = true;
+          existing = msg;
         }
       });
 
-      if (exists) return;
+      if (existing != null) return existing;
 
       var messages = this.messagesFor(field);
       messages.push(message);
+      
+      return message;
     },
 
     allMessages: function () {
@@ -98,7 +100,8 @@
           field: message.field,
           label: label,
           message: message.toString(),
-          element: message.element
+          element: message.element,
+          source: typeof(message.context)
         });
       }
 
@@ -167,7 +170,7 @@
       this.templateContext = context;
     },
     registerMessage: function (token) {
-      this.registerMessageForElement(token, this.target.fieldName, this.target.element);
+      return this.registerMessageForElement(token, this.target.fieldName, this.target.element);
     },
     registerMessageForElement: function (token, fieldName, element) {
       var message = token;
@@ -179,7 +182,7 @@
         }
       }
 
-      this.notification.registerMessage(fieldName, message, element, this.templateContext);
+      return this.notification.registerMessage(fieldName, message, element, this.templateContext);
     }
   };
 

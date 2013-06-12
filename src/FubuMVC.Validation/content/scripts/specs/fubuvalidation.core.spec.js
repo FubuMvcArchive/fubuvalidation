@@ -178,6 +178,77 @@ describe('Transforming a ValidationNotification to an AjaxContinuation', functio
 
 });
 
+describe('ValidationOptionsTester', function() {
+
+  it('uses the passed in fields', function() {
+    var hash = {
+      fields: [
+        { field: 'field1', mode: 'live' }
+      ]
+    };
+
+    var theOptions = new $.fubuvalidation.Core.Options(hash);
+    expect(theOptions.fields).toEqual(hash.fields);
+  });
+
+  it('finds the mode for an element', function() {
+    var hash = {
+      fields: [
+        { field: 'field1', mode: 'live' }
+      ]
+    };
+
+    var element = $('<input type="text" name="field1" id="field1" />');
+    var theOptions = new $.fubuvalidation.Core.Options(hash);
+
+    expect(theOptions.modeFor(element)).toEqual('live');
+  });
+  
+  it('should validate live', function () {
+    var hash = {
+      fields: [
+        { field: 'field1', mode: 'live' }
+      ]
+    };
+
+    var element = $('<input type="text" name="field1" id="field1" />');
+    var theOptions = new $.fubuvalidation.Core.Options(hash);
+
+    expect(theOptions.shouldValidateLive(element)).toEqual(true);
+  });
+  
+  it('should NOT validate live', function () {
+    var hash = {
+      fields: [
+        { field: 'field1', mode: 'triggered' }
+      ]
+    };
+
+    var element = $('<input type="text" name="field1" id="field1" />');
+    var theOptions = new $.fubuvalidation.Core.Options(hash);
+
+    expect(theOptions.shouldValidateLive(element)).toEqual(false);
+  });
+  
+  it('builds the options from the data attribute', function () {
+    var hash = {
+      fields: [
+        { field: 'field1', mode: 'live' }
+      ]
+    };
+    
+    var options = new $.fubuvalidation.Core.Options(hash);
+
+    var form = $('<form>');
+    form.data('validation-options', hash);
+
+    var fromForm = $.fubuvalidation.Core.Options.fromForm(form);
+
+    expect(fromForm).toEqual(options);
+  });
+
+});
+
 describe('ValidationTargetTester', function () {
   it('gets the value passed in', function () {
     var theValue = '123';
@@ -795,6 +866,6 @@ describe('Integrated Continuation Tests', function () {
   it('required with rendered message', function () {
     var theContinuation = continuationFor($('<input type="text" name="Test" class="required" />'));
     expect(theContinuation.errors[0].message).toEqual($.fubuvalidation.ValidationKeys.Required.toString());
-    expect(theContinuation.errors[0].source).toEqual(typeof($.fubuvalidation.Rules.Required));
+    expect(theContinuation.errors[0].source).toEqual($.fubuvalidation.Rules.Required);
   });
 });

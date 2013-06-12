@@ -1,5 +1,6 @@
 ﻿using System;
 using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http;
@@ -37,6 +38,9 @@ namespace FubuMVC.Validation.Tests.UI
             services.Add<IChainResolver>(new ChainResolutionCache(new TypeResolver(), theGraph));
             services.Add(theRequirements);
             services.Add<ICurrentHttpRequest>(new StandInCurrentHttpRequest());
+			services.Add<ITypeResolver>(new TypeResolver());
+			services.Add(new AccessorRules());
+			services.Add<ITypeDescriptorCache>(new TypeDescriptorCache());
 
             var request = new FormRequest(new ChainSearch { Type = typeof(T) }, new T());
             request.Attach(services);
@@ -68,6 +72,18 @@ namespace FubuMVC.Validation.Tests.UI
 
 			theRequest.CurrentTag.ToString()
 				.ShouldEqual("<form method=\"post\" action=\"test\">");
+		}
+
+		[Test]
+		public void adds_the_validation_options()
+		{
+			var theRequest = requestFor<AjaxTarget>();
+			var modifier = new FormValidationModifier();
+			modifier.Modify(theRequest);
+
+			var options = ValidationOptions.For(theRequest);
+
+			theRequest.CurrentTag.Data(ValidationOptions.Data).ShouldEqual(options);
 		}
 
         [Test]

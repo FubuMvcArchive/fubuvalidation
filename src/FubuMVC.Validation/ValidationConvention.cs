@@ -5,6 +5,7 @@ using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.Registration.Policies;
 
 namespace FubuMVC.Validation
 {
@@ -36,7 +37,7 @@ namespace FubuMVC.Validation
             }
 
 			call.AddBefore(node);
-			settings.ModifyChain(call.ParentChain());
+			settings.As<IChainModification>().Modify(call.ParentChain());
         }
 
         public interface IValidationNodeBuilder

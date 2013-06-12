@@ -97,5 +97,20 @@ namespace FubuMVC.Validation
 		{
 			expression.Add(new MaxValueFieldRule(bounds, message));
 		} 
+
+		public static void ValidationMode(this IAccessorRulesExpression expression, ValidationMode mode)
+		{
+			expression.Add(mode);
+		}
+
+		public static void LiveValidation(this IAccessorRulesExpression expression)
+		{
+			expression.ValidationMode(Validation.ValidationMode.Live);
+		}
+
+		public static void TriggeredValidation(this IAccessorRulesExpression expression)
+		{
+			expression.ValidationMode(Validation.ValidationMode.Triggered);
+		}
     }
 }

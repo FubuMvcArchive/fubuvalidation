@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Assets;
+﻿using FubuCore;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.UI.Forms;
 using HtmlTags.Conventions;
 
@@ -20,7 +21,12 @@ namespace FubuMVC.Validation.UI
 			}
 
             writeScriptRequirements(request);
-	        validation.Modify(request);
+
+			var node = validation.As<IValidationNode>();
+	        node.Modify(request);
+
+	        var options = ValidationOptions.For(request);
+	        request.CurrentTag.Data(ValidationOptions.Data, options);
 
 	        request.CurrentTag.AddClass("validated-form");
         }

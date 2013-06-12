@@ -101,7 +101,7 @@
           label: label,
           message: message.toString(),
           element: message.element,
-          source: typeof(message.context)
+          source: message.context
         });
       }
 
@@ -229,6 +229,35 @@
 
     return new Validator(validationSources);
 
+  };
+  
+  function ValidationOptions(options) {
+    $.extend(true, this, options);
+  }
+
+  ValidationOptions.prototype = {
+    modeFor: function(element) {
+      var field;
+      _.each(this.fields, function(x) {
+        if (x.field == element.attr('name') || x.field == element.attr('id')) {
+          field = x;
+        }
+      });
+      
+      if (field) {
+        return field.mode;
+      }
+
+      return this.mode;
+    },
+    shouldValidateLive: function(element) {
+      return this.modeFor(element) == 'live';
+    }
+  };
+
+  ValidationOptions.fromForm = function (form) {
+    var hash = form.data('validationOptions');
+    return new ValidationOptions(hash);
   };
 
   function CssValidationAliasRegistry() {
@@ -394,6 +423,7 @@
       'Context': ValidationContext,
       'Message': ValidationMessage,
       'Notification': ValidationNotification,
+      'Options': ValidationOptions,
       'Validator': Validator,
       'Target': ValidationTarget,
       'CssAliasRegistry': CssValidationAliasRegistry

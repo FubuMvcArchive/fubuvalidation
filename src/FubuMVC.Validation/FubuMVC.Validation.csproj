@@ -75,12 +75,14 @@
     </Compile>
     <Compile Include="AccessorRulesExtensions.cs" />
     <Compile Include="AccessorRulesFieldSource.cs" />
+    <Compile Include="AccessorRulesValidationModePolicy.cs" />
     <Compile Include="AjaxValidation.cs" />
     <Compile Include="AjaxContinuationResolver.cs" />
     <Compile Include="Diagnostics\ValidationDiagnostics.cs" />
     <Compile Include="Diagnostics\ValidationDiagnosticsSource.cs" />
     <Compile Include="FubuMvcValidationServices.cs" />
     <Compile Include="FubuValidationServiceRegistry.cs" />
+    <Compile Include="IValidationModePolicy.cs" />
     <Compile Include="NotValidatedAttribute.cs" />
     <Compile Include="NotValidatedAttributeFilter.cs" />
     <Compile Include="RegisterRemoteRuleQuery.cs" />
@@ -127,9 +129,12 @@
     <Compile Include="UI\RegularExpressionModifier.cs" />
     <Compile Include="UI\RemoteValidationElementModifier.cs" />
     <Compile Include="UI\RenderingStrategies.cs" />
+    <Compile Include="UI\ValidationOptions.cs" />
     <Compile Include="UI\ValidationSummarySource.cs" />
     <Compile Include="ValidationBehaviorChainExtensions.cs" />
     <Compile Include="IHaveValidation.cs" />
+    <Compile Include="ValidationMode.cs" />
+    <Compile Include="ValidationModeAttributePolicy.cs" />
     <Compile Include="ValidationNode.cs" />
     <Compile Include="ValidationNodeModification.cs" />
     <Compile Include="ValidationRegistrationActivator.cs" />

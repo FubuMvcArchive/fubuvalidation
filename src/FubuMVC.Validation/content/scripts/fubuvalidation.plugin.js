@@ -46,17 +46,29 @@
   }
 
   function bindEvents(form) {
+
+    var options = validation.Core.Options.fromForm(form);
+
     form
         .on("change", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
           var element = $(e.target);
+          if (!options.shouldValidateLive(element)) {
+            return;
+          }
+          
           if (element.data("validation-onchange-fired") === true) {
             return;
           }
+
           elementHandler(element, form);
           element.data("validation-onchange-fired", true);
         })
         .on("keyup", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
           var element = $(e.target);
+          if (!options.shouldValidateLive(element)) {
+            return;
+          }
+
           if (element.data("validation-onchange-fired") === true) {
             var timeout = element.data("validation-timeout");
             if (timeout != undefined) {
@@ -69,6 +81,9 @@
         })
         .on("change", "input:radio:not([disabled]),input:checkbox:not([disabled]),select:not([disabled])", function (e) {
           var element = $(e.target);
+          if (!options.shouldValidateLive(element)) {
+            return;
+          }
           elementHandler(element, form);
         });
   }

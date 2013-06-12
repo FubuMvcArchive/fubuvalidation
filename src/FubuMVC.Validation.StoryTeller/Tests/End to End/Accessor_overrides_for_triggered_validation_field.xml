@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Test name="Accessor overrides for triggered validation field" lifecycle="Acceptance">
+  <SystemState>
+    <NoUsers isStep="True" />
+  </SystemState>
+  <AccessorOverridesScreen>
+    <EnterAtLeastFiveButNotTen isStep="True" AtLeastFiveButNotTen="123456" />
+    <EnterEmail isStep="True" Email="valid@domain.com" />
+    <EnterGreaterOrEqualToZero isStep="True" GreaterOrEqualToZero="2" />
+    <EnterGreaterThanFive isStep="True" GreaterThanFive="6" />
+    <EnterGreaterThanZero isStep="True" GreaterThanZero="1" />
+    <EnterLessThanFifteen isStep="True" LessThanFifteen="14" />
+    <EnterLongerThanTen isStep="True" LongerThanTen="12345678910" />
+    <EnterNoMoreThanFiveCharacters isStep="True" NoMoreThanFiveCharacters="1234" />
+    <EnterRequired isStep="True" Required="Something" />
+    <EnterCustom isStep="True" Custom="test" />
+    <EnterTriggered isStep="True" Triggered="-1" />
+    <EnterEmailCustomMessage isStep="True" EmailCustomMessage="valid@domain.com" />
+    <NoMessages isStep="True" />
+    <ClickTheSubmitButton isStep="True" />
+    <VerifyValidationMessages isStep="True">
+      <rows>
+        <row isStep="True" Property="Triggered" Message="en-US_Triggered - Please enter a valid number." />
+      </rows>
+    </VerifyValidationMessages>
+  </AccessorOverridesScreen>
+</Test>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FubuCore;
 using FubuMVC.Core.Registration.Policies;
 
 namespace FubuMVC.Validation
@@ -36,6 +35,6 @@ namespace FubuMVC.Validation
 			_modifications.Add(modification);
 		}
 
-		public IEnumerable<ValidationNodeModification> Modifications { get { return _modifications; } }
+		internal IEnumerable<ValidationNodeModification> Modifications { get { return _modifications; } }
 	}
 }

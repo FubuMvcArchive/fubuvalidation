@@ -2,29 +2,74 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
+using FubuCore.Reflection;
 using FubuMVC.Core.UI.Forms;
 using FubuMVC.Validation.UI;
 
 namespace FubuMVC.Validation
 {
-    public class ValidationNode : IEnumerable<IRenderingStrategy>
+	public interface IValidationNode
+	{
+		void Modify(FormRequest request);
+
+		ValidationMode DetermineMode(IServiceLocator services, Accessor accessor);
+	}
+
+    public class ValidationNode : IValidationNode, IEnumerable<IRenderingStrategy>
     {
+	    private ValidationMode _mode;
         private readonly IList<IRenderingStrategy> _strategies = new List<IRenderingStrategy>();
+		private readonly IList<IValidationModePolicy> _policies = new List<IValidationModePolicy>();
+
+	    public ValidationNode()
+	    {
+		    DefaultMode(ValidationMode.Live);
+
+			RegisterPolicy(new ValidationModeAttributePolicy());
+			RegisterPolicy(new AccessorRulesValidationModePolicy());
+	    }
+
+	    public ValidationMode Mode
+	    {
+		    get { return _mode; }
+	    }
+
+	    public void DefaultMode(ValidationMode mode)
+		{
+			_mode = mode;
+		}
 
 		public bool IsEmpty()
 		{
 			return !_strategies.Any();
 		}
 
-		public void Modify(FormRequest request)
+		void IValidationNode.Modify(FormRequest request)
 		{
 			Each(x => x.Modify(request));
+		}
+
+		ValidationMode IValidationNode.DetermineMode(IServiceLocator services, Accessor accessor)
+		{
+			var policy = _policies.LastOrDefault(x => x.Matches(services, accessor));
+			if (policy != null)
+			{
+				return policy.DetermineMode(services, accessor);
+			}
+
+			return _mode;
 		}
 
         public void RegisterStrategy(IRenderingStrategy strategy)
         {
             _strategies.Fill(strategy);
         }
+
+		public void RegisterPolicy(IValidationModePolicy policy)
+		{
+			_policies.Fill(policy);
+		}
 
         public void Each(Action<IRenderingStrategy> action)
         {

@@ -4,6 +4,7 @@ using System.Net;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.Core.Registration;
+using FubuMVC.Core.Registration.Policies;
 using FubuMVC.Validation.UI;
 using FubuTestingSupport;
 using NUnit.Framework;
@@ -59,7 +60,7 @@ namespace FubuMVC.Validation.Tests
 			var graph = BehaviorGraph.BuildFrom(registry);
 			var chain = graph.BehaviorFor<FubuValidationSettingsEndpoint>(x => x.post_json_model(null));
 
-			theSettings.ModifyChain(chain);
+			theSettings.As<IChainModification>().Modify(chain);
 
 			chain.ValidationNode().ShouldContain(RenderingStrategies.Inline);
 		}

@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessorRulesFieldSourceTester.cs" />
+    <Compile Include="AccessorRulesValidationModePolicyTester.cs" />
     <Compile Include="AjaxContinuationResolverTester.cs" />
     <Compile Include="AjaxValidationActionFilterTester.cs" />
     <Compile Include="AjaxValidationFailureHandlerTester.cs" />
@@ -145,11 +146,13 @@
     <Compile Include="UI\ValidationElementModifierContext.cs" />
     <Compile Include="UI\ValidationElementModifierScenario.cs" />
     <Compile Include="UI\ValidationNodeTester.cs" />
+    <Compile Include="UI\IntegratedValidationOptionsTester.cs" />
     <Compile Include="ValidationActionFilterTester.cs" />
     <Compile Include="ValidationBehaviorChainExtensionsTester.cs" />
     <Compile Include="ValidationConventionTester.cs" />
     <Compile Include="ValidationFilterTester.cs" />
     <Compile Include="DefaultValidationFilterTester.cs" />
+    <Compile Include="ValidationModeAttributePolicyTester.cs" />
     <Compile Include="ValidationNodeModificationTester.cs" />
     <Compile Include="ValidationNodeTester.cs" />
     <Compile Include="ValidationRegistrationActivatorTester.cs" />

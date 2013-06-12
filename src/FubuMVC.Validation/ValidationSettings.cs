@@ -12,7 +12,7 @@ namespace FubuMVC.Validation
         bool Filter(BehaviorChain chain);
     }
 
-    public class ValidationSettings : ValidationSettingsRegistry, IApplyValidationFilter
+    public class ValidationSettings : ValidationSettingsRegistry, IApplyValidationFilter, IChainModification
     {
         private readonly IList<IChainFilter> _filters = new List<IChainFilter>();
         private readonly IList<IRemoteRuleFilter> _remoteFilters = new List<IRemoteRuleFilter>(); 
@@ -50,13 +50,6 @@ namespace FubuMVC.Validation
 			}
 		}
 
-		public void ModifyChain(BehaviorChain chain)
-		{
-			Modifications
-				.Where(x => x.Matches(chain))
-				.Each(x => x.Modify(chain));
-		}
-
 		public void Import<T>()
 			where T : ValidationSettingsRegistry, new()
 		{
@@ -73,5 +66,12 @@ namespace FubuMVC.Validation
         {
             return filter.Matches(chain);
         }
+
+	    void IChainModification.Modify(BehaviorChain chain)
+	    {
+			Modifications
+				.Where(x => x.Matches(chain))
+				.Each(x => x.Modify(chain));
+	    }
     }
 }

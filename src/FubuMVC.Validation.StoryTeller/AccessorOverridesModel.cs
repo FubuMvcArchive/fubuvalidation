@@ -1,5 +1,4 @@
 ﻿using FubuLocalization;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.UI;
@@ -22,6 +21,8 @@ namespace FubuMVC.Validation.StoryTeller
 		public string EmailCustomMessage { get; set; }
 
         public string Custom { get; set; }
+
+		public int Triggered { get; set; }
     }
 
 	public class CustomValidationKeys : StringToken
@@ -51,6 +52,9 @@ namespace FubuMVC.Validation.StoryTeller
 			Property(x => x.EmailCustomMessage).Email(CustomValidationKeys.CustomEmail);
 
             Property(x => x.Custom).Add<UniqueUsernameRule>();
+
+			Property(x => x.Triggered).GreaterThanZero();
+			Property(x => x.Triggered).TriggeredValidation();
         }
     }
 
@@ -91,6 +95,7 @@ namespace FubuMVC.Validation.StoryTeller
             form.Append(_page.Edit(x => x.Required));
             form.Append(_page.Edit(x => x.Custom));
 			form.Append(_page.Edit(x => x.EmailCustomMessage));
+			form.Append(_page.Edit(x => x.Triggered));
 
             form.Append(new HtmlTag("input").Attr("type", "submit").Attr("value", "Submit").Id("Model"));
             form.Id("AccessorOverridesModel");

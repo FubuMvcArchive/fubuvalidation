@@ -1,4 +1,5 @@
 ﻿using FubuLocalization;
+using FubuMVC.Core.Assets;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.UI;

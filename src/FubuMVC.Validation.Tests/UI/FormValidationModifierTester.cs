@@ -57,8 +57,12 @@ namespace FubuMVC.Validation.Tests.UI
             var modifier = new FormValidationModifier();
             modifier.Modify(theRequest);
 
-            theRequest.CurrentTag.ToString()
-				.ShouldEqual("<form method=\"post\" action=\"test\" data-validation-summary=\"true\" data-validation-highlight=\"true\" class=\"validated-form\">");
+	        theRequest.CurrentTag.Data("validation-summary").ShouldEqual(true);
+			theRequest.CurrentTag.Data("validation-highlight").ShouldEqual(true);
+			theRequest.CurrentTag.HasClass("validated-form").ShouldBeTrue();
+
+	        //.ToString()
+	        //.ShouldEqual("<form method=\"post\" action=\"test\" data-validation-summary=\"true\" data-validation-highlight=\"true\" class=\"validated-form\">");
         }
 
 		[Test]

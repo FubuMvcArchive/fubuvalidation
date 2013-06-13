@@ -24,6 +24,8 @@ namespace FubuValidation.Fields
 
 		public StringToken Token { get; set; }
 
+	    public ValidationMode Mode { get; set; }
+
 		public int Length
 		{
 			get { return _length; }

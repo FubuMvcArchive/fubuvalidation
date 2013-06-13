@@ -7,7 +7,7 @@
   };
 
   var defineLambda = function (key, rule) {
-    define(key, { validate: rule });
+    define(key, { name: key.toLowerCase(), validate: rule });
   };
 
   var defineToken = function (key, value) {
@@ -28,6 +28,7 @@
 
 
   function MinLengthRule(length) {
+    this.name = 'minlength';
     this.length = length;
   }
 
@@ -41,6 +42,7 @@
   };
 
   function MaxLengthRule(length) {
+    this.name = 'maxlength';
     this.length = length;
   }
 
@@ -54,6 +56,7 @@
   };
 
   function RangeLengthRule(min, max) {
+    this.name = 'rangelength';
     this.min = min;
     this.max = max;
   }
@@ -70,6 +73,7 @@
   };
 
   function MinRule(bounds) {
+    this.name = 'min';
     this.bounds = bounds;
   }
 
@@ -83,6 +87,7 @@
   };
 
   function MaxRule(bounds) {
+    this.name = 'max';
     this.bounds = bounds;
   }
 
@@ -96,6 +101,7 @@
   };
 
   function RemoteRule(url, hash) {
+    this.name = 'remote';
     this.url = url;
     this.hash = hash;
   }
@@ -125,6 +131,7 @@
   };
 
   function RegularExpressionRule(value) {
+    this.name = 'regularexpression';
     this.expression = new RegExp(value);
   }
 
@@ -138,6 +145,7 @@
   };
   
   function FieldEqualityRule(options) {
+    this.name = 'fieldequality';
     this.options = options;
 
     // Makes the message substitutions flow a lot easier

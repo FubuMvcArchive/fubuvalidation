@@ -97,6 +97,7 @@
     <Compile Include="UI\DefaultValidationSummaryNode.cs" />
     <Compile Include="UI\DefaultValidationSummaryWriter.cs" />
     <Compile Include="UI\FieldEqualityFormModifier.cs" />
+    <Compile Include="UI\FieldOptions.cs" />
     <Compile Include="UI\FieldValidationElementModifier.cs" />
     <Compile Include="UI\FormValidationModifier.cs" />
     <Compile Include="UI\FormValidationSummaryModifier.cs" />
@@ -129,11 +130,11 @@
     <Compile Include="UI\RegularExpressionModifier.cs" />
     <Compile Include="UI\RemoteValidationElementModifier.cs" />
     <Compile Include="UI\RenderingStrategies.cs" />
+    <Compile Include="UI\RuleAliases.cs" />
     <Compile Include="UI\ValidationOptions.cs" />
     <Compile Include="UI\ValidationSummarySource.cs" />
     <Compile Include="ValidationBehaviorChainExtensions.cs" />
     <Compile Include="IHaveValidation.cs" />
-    <Compile Include="ValidationMode.cs" />
     <Compile Include="ValidationModeAttributePolicy.cs" />
     <Compile Include="ValidationNode.cs" />
     <Compile Include="ValidationNodeModification.cs" />

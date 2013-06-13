@@ -36,6 +36,10 @@ describe('RequiredRuleTester', function () {
     theHarness = new RuleHarness($.fubuvalidation.Rules.Required);
   });
 
+  it('defines the name', function() {
+    expect(theHarness.rule.name).toEqual('required');
+  });
+
   it('registers a message when the value is empty', function () {
     var messages = theHarness.messagesFor('');
     expect(messages.length).toEqual(1);
@@ -63,6 +67,10 @@ describe('MinLengthRuleTester', function () {
   beforeEach(function () {
     theHarness = new RuleHarness(new $.fubuvalidation.Rules.MinLength(5));
   });
+  
+  it('defines the name', function () {
+    expect(theHarness.rule.name).toEqual('minlength');
+  });
 
   it('registers a message when the string is too short', function () {
     expect(theHarness.messagesFor('123').length).toEqual(1);
@@ -83,6 +91,10 @@ describe('MaxLengthRuleTester', function () {
   beforeEach(function () {
     theHarness = new RuleHarness(new $.fubuvalidation.Rules.MaxLength(3));
   });
+  
+  it('defines the name', function () {
+    expect(theHarness.rule.name).toEqual('maxlength');
+  });
 
   it('registers a message when the string is too long', function () {
     expect(theHarness.messagesFor('1234').length).toEqual(1);
@@ -102,6 +114,10 @@ describe('RangeLengthRuleTester', function () {
 
   beforeEach(function () {
     theHarness = new RuleHarness(new $.fubuvalidation.Rules.RangeLength(3, 5));
+  });
+  
+  it('defines the name', function () {
+    expect(theHarness.rule.name).toEqual('rangelength');
   });
 
   it('registers a message when the string is too long', function () {
@@ -127,6 +143,10 @@ describe('MinRuleTester', function () {
   beforeEach(function () {
     theHarness = new RuleHarness(new $.fubuvalidation.Rules.Min(5));
   });
+  
+  it('defines the name', function () {
+    expect(theHarness.rule.name).toEqual('min');
+  });
 
   it('registers a message when the value is too small', function () {
     expect(theHarness.messagesFor('1').length).toEqual(1);
@@ -147,6 +167,10 @@ describe('MaxRuleTester', function () {
   beforeEach(function () {
     theHarness = new RuleHarness(new $.fubuvalidation.Rules.Max(10));
   });
+  
+  it('defines the name', function () {
+    expect(theHarness.rule.name).toEqual('max');
+  });
 
   it('registers a message when the value is too large', function () {
     expect(theHarness.messagesFor('11').length).toEqual(1);
@@ -166,6 +190,10 @@ describe('EmailRuleTester', function () {
 
   beforeEach(function () {
     theHarness = new RuleHarness($.fubuvalidation.Rules.Email);
+  });
+
+  it('defines the name', function () {
+    expect(theHarness.rule.name).toEqual('email');
   });
 
   it('registers a message for invalid emails', function () {
@@ -192,6 +220,10 @@ describe('DateRuleTester', function () {
 
   beforeEach(function () {
     theHarness = new RuleHarness($.fubuvalidation.Rules.Date);
+  });
+  
+  it('defines the name', function () {
+    expect(theHarness.rule.name).toEqual('date');
   });
 
   it('registers a message for invalid dates', function () {
@@ -226,6 +258,10 @@ describe('RegularExpressionRuleTester', function () {
   beforeEach(function () {
     theHarness = new RuleHarness(new $.fubuvalidation.Rules.RegularExpression('[a-zA-Z0-9]+$'));
   });
+  
+  it('defines the name', function () {
+    expect(theHarness.rule.name).toEqual('regularexpression');
+  });
 
   it('registers a message when string does not match', function () {
     expect(theHarness.messagesFor('hello//').length).toEqual(1);
@@ -248,6 +284,10 @@ describe('FieldEqualityRuleTester', function () {
     });
     
     theHarness = new RuleHarness(theRule);
+  });
+  
+  it('defines the name', function () {
+    expect(theHarness.rule.name).toEqual('fieldequality');
   });
 
   it('sets the fields for substitutions', function() {

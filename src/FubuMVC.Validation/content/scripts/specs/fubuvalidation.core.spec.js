@@ -191,43 +191,62 @@ describe('ValidationOptionsTester', function() {
     expect(theOptions.fields).toEqual(hash.fields);
   });
 
-  it('finds the mode for an element', function() {
+  it('uses the passed in fields and rules', function() {
     var hash = {
       fields: [
-        { field: 'field1', mode: 'live' }
+        {
+          field: 'field1', mode: 'live', rules: [
+              { rule: 'required', mode: 'triggered' }
+          ]
+        }
       ]
     };
 
-    var element = $('<input type="text" name="field1" id="field1" />');
     var theOptions = new $.fubuvalidation.Core.Options(hash);
-
-    expect(theOptions.modeFor(element)).toEqual('live');
+    expect(theOptions.fields).toEqual(hash.fields);
   });
   
-  it('should validate live', function () {
+  it('finds the mode for rules', function () {
     var hash = {
       fields: [
-        { field: 'field1', mode: 'live' }
+        {
+          field: 'field1', rules: [
+              { rule: 'required', mode: 'triggered' },
+              { rule: 'email', mode: 'live' }
+          ]
+        }
       ]
     };
 
     var element = $('<input type="text" name="field1" id="field1" />');
     var theOptions = new $.fubuvalidation.Core.Options(hash);
 
-    expect(theOptions.shouldValidateLive(element)).toEqual(true);
+    expect(theOptions.modeFor(element, 'email')).toEqual('live');
+    expect(theOptions.modeFor(element, 'required')).toEqual('triggered');
   });
   
-  it('should NOT validate live', function () {
+  it('should validate', function () {
     var hash = {
       fields: [
-        { field: 'field1', mode: 'triggered' }
+        {
+          field: 'field1', rules: [
+              { rule: 'required', mode: 'triggered' },
+              { rule: 'email', mode: 'live' }
+          ]
+        }
       ]
     };
 
     var element = $('<input type="text" name="field1" id="field1" />');
     var theOptions = new $.fubuvalidation.Core.Options(hash);
+    var mode = $.fubuvalidation.Core.ValidationMode;
 
-    expect(theOptions.shouldValidateLive(element)).toEqual(false);
+    expect(theOptions.shouldValidate(element, 'required', mode.Live)).toEqual(false);
+    expect(theOptions.shouldValidate(element, 'required', mode.Triggered)).toEqual(true);
+    
+    expect(theOptions.shouldValidate(element, 'email', mode.Live)).toEqual(true);
+    // Always want to participate in the triggered validation
+    expect(theOptions.shouldValidate(element, 'email', mode.Triggered)).toEqual(true);
   });
   
   it('builds the options from the data attribute', function () {
@@ -441,8 +460,10 @@ describe('when validating a target', function () {
 
     theTarget = $.fubuvalidation.Core.Target.forElement($('<input type="text" name="Test" />'));
 
+    var options = new $.fubuvalidation.Core.Options();
+
     theValidator = new $.fubuvalidation.Core.Validator([theSource]);
-    theValidator.validate(theTarget);
+    theValidator.validate(theTarget, options, $.fubuvalidation.Core.ValidationMode.Triggered);
   });
 
   it('invokes each rule', function () {
@@ -456,6 +477,56 @@ describe('when validating a target', function () {
   it('pushes the template context for each rule', function () {
     expect(theTemplateContexts[0]).toEqual(r1);
     expect(theTemplateContexts[1]).toEqual(r2);
+  });
+});
+
+describe('when validating a target with mixed modes', function () {
+  var theValidator = null;
+  var r1 = null;
+  var r2 = null;
+  var theTarget = null;
+  var theTemplateContexts = null;
+
+
+  beforeEach(function () {
+    theTemplateContexts = [];
+    var setContext = function (context) {
+      theTemplateContexts.push(context.templateContext);
+    };
+
+    r1 = { name: 'r1', validate: sinon.spy(setContext) };
+    r2 = { name: 'r2', validate: sinon.spy(setContext) };
+
+    var theSource = {
+      rulesFor: function () {
+        return [r1, r2];
+      }
+    };
+
+    var mode = $.fubuvalidation.Core.ValidationMode;
+    var theOptions = new $.fubuvalidation.Core.Options({
+      fields: [
+        {
+          field: 'Test', mode: mode.Live, rules: [
+            {rule:'r1', mode: mode.Triggered }
+          ]
+        }
+      ]
+    });
+
+    theTarget = $.fubuvalidation.Core.Target.forElement($('<input type="text" name="Test" />'));
+
+    theValidator = new $.fubuvalidation.Core.Validator([theSource]);
+    theValidator.validate(theTarget, theOptions, mode.Live);
+  });
+
+  it('does not invoke the triggered rule', function () {
+    expect(r1.validate.called).toEqual(false);
+  });
+
+  it('invokes the live rule', function () {
+    expect(r2.validate.called).toEqual(true);
+    expect(r2.validate.getCall(0).args[0].target).toEqual(theTarget);
   });
 });
 
@@ -836,12 +907,13 @@ describe('Integrated Validator Tests', function () {
   var notificationFor = null;
 
   beforeEach(function () {
+    var options = new $.fubuvalidation.Core.Options();
     theValidator = $.fubuvalidation.Core.Validator.basic();
 
-    notificationFor = function (element) {
+    notificationFor = function(element) {
       var target = $.fubuvalidation.Core.Target.forElement(element);
-      return theValidator.validate(target);
-    }
+      return theValidator.validate(target, options, $.fubuvalidation.Core.ValidationMode.Triggered);
+    };
   });
 
   it('required with message', function () {
@@ -855,6 +927,7 @@ describe('Integrated Continuation Tests', function () {
   var continuationFor = null;
 
   beforeEach(function () {
+
     theValidator = $.fubuvalidation.Core.Validator.basic();
 
     continuationFor = function(element) {

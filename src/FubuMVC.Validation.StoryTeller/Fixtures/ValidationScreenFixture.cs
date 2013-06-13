@@ -3,6 +3,7 @@ using System.Threading;
 using FubuCore;
 using FubuMVC.Validation.Serenity;
 using OpenQA.Selenium;
+using Serenity;
 using Serenity.Fixtures;
 using StoryTeller;
 using StoryTeller.Engine;
@@ -30,6 +31,7 @@ namespace FubuMVC.Validation.StoryTeller.Fixtures
 		[FormatAs("There are no validation messages")]
 		public bool NoMessages()
 		{
+			Wait.Until(() => validation.Hidden);
 			return !validation.AllMessages().Any();
 		}
 

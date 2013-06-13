@@ -107,6 +107,7 @@
     <Compile Include="ValidationGraph.cs" />
     <Compile Include="ValidationKeys.cs" />
     <Compile Include="ValidationAttribute.cs" />
+    <Compile Include="ValidationMode.cs" />
     <Compile Include="ValidationPlan.cs" />
     <Compile Include="ValidationScenario.cs" />
     <Compile Include="ValidationStep.cs" />

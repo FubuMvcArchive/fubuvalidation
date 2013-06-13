@@ -11,6 +11,8 @@ namespace FubuValidation.Fields
 
         void Register(Type type, Accessor accessor, IFieldValidationRule rule);
 
+	    void FindWith(IFieldValidationSource source);
+
         ClassFieldValidationRules RulesFor<T>();
         ClassFieldValidationRules RulesFor(Type type);
     }

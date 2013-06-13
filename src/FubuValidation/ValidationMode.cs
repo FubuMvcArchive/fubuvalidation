@@ -1,4 +1,4 @@
-﻿namespace FubuMVC.Validation
+namespace FubuValidation
 {
 	public class ValidationMode
 	{

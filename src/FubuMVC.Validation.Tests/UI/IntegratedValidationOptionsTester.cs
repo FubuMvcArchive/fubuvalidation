@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
@@ -9,11 +8,14 @@ using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.UI.Forms;
 using FubuMVC.Validation.UI;
 using FubuTestingSupport;
+using FubuValidation;
+using FubuValidation.Fields;
 using HtmlTags;
 using NUnit.Framework;
 
 namespace FubuMVC.Validation.Tests.UI
 {
+	[TestFixture]
 	public class IntegratedValidationOptionsTester
 	{
 		private BehaviorGraph theGraph;
@@ -33,11 +35,22 @@ namespace FubuMVC.Validation.Tests.UI
 			get { return ValidationOptions.For(createRequest()); }
 		}
 
-		private FieldOptions field(Expression<Func<ValidationOptionsTarget, object>> expression, ValidationMode mode)
+		private FieldOptions field(Expression<Func<ValidationOptionsTarget, object>> expression, ValidationMode mode, params FieldRuleOptions[] rules)
 		{
 			return new FieldOptions
 			{
 				field = expression.ToAccessor().Name,
+				mode = mode.Mode,
+				rules = rules
+			};
+		}
+
+		private FieldRuleOptions rule<T>(ValidationMode mode)
+			where T : IFieldValidationRule
+		{
+			return new FieldRuleOptions
+			{
+				rule = RuleAliases.AliasFor(typeof(T)),
 				mode = mode.Mode
 			};
 		}
@@ -46,19 +59,26 @@ namespace FubuMVC.Validation.Tests.UI
 		public void verify_the_fields()
 		{
 			theOptions.fields.ShouldHaveTheSameElementsAs(
+
 				field(x => x.Default, ValidationMode.Live),
 				field(x => x.LiveAttribute, ValidationMode.Live),
-				field(x => x.LiveRule, ValidationMode.Live),
+
+				field(x => x.LiveRule, ValidationMode.Live, 
+					rule<EmailFieldRule>(ValidationMode.Live),
+					rule<RequiredFieldRule>(ValidationMode.Triggered)),
+				
 				field(x => x.TriggeredAttribute, ValidationMode.Triggered),
 				field(x => x.TriggeredRule, ValidationMode.Triggered)
+			
 			);
 		}
-
 
 		private FormRequest createRequest()
 		{
 			var rules = new AccessorRules();
-			new ValidationOptionsTargetOverrides().As<IAccessorRulesRegistration>().AddRules(rules);
+			var overrides = new ValidationOptionsTargetOverrides().As<IAccessorRulesRegistration>();
+			
+			overrides.AddRules(rules);
 
 			var services = new InMemoryServiceLocator();
 			services.Add<IChainResolver>(new ChainResolutionCache(new TypeResolver(), theGraph));
@@ -66,6 +86,11 @@ namespace FubuMVC.Validation.Tests.UI
 			services.Add<ICurrentHttpRequest>(new StandInCurrentHttpRequest());
 			services.Add<ITypeResolver>(new TypeResolver());
 			services.Add<ITypeDescriptorCache>(new TypeDescriptorCache());
+
+			var graph = ValidationGraph.BasicGraph();
+			graph.Fields.FindWith(new AccessorRulesFieldSource(rules));
+
+			services.Add(graph);
 
 			var request = new FormRequest(new ChainSearch { Type = typeof(ValidationOptionsTarget) }, new ValidationOptionsTarget());
 			request.Attach(services);
@@ -101,6 +126,10 @@ namespace FubuMVC.Validation.Tests.UI
 			{
 				Property(x => x.LiveRule).LiveValidation();
 				Property(x => x.TriggeredRule).TriggeredValidation();
+
+				Property(x => x.LiveRule).Email();
+				// Override the default mode for a specific property/rule combination
+				Property(x => x.LiveRule).Required(ValidationMode.Triggered);
 			}
 		}
 	}

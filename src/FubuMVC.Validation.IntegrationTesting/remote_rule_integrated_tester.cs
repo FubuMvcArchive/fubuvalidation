@@ -72,6 +72,8 @@ namespace FubuMVC.Validation.IntegrationTesting
     {
 	    public StringToken Token { get; set; }
 
+		public ValidationMode Mode { get; set; }
+
 	    public void Validate(Accessor accessor, ValidationContext context)
         {
             var service = context.Service<IUserService>();

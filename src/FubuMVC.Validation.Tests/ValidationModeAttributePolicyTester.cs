@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuTestingSupport;
+using FubuValidation;
 using NUnit.Framework;
 
 namespace FubuMVC.Validation.Tests

@@ -6,6 +6,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.UI.Forms;
 using FubuMVC.Validation.UI;
+using FubuValidation;
 
 namespace FubuMVC.Validation
 {

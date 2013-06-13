@@ -87,6 +87,8 @@ namespace FubuMVC.Validation.Tests
     {
 	    public StringToken Token { get; set; }
 
+		public ValidationMode Mode { get; set; }
+
 	    public void Validate(Accessor accessor, ValidationContext context)
         {
             throw new System.NotImplementedException();

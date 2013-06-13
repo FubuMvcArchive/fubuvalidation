@@ -20,6 +20,7 @@ namespace FubuValidation.Fields
 
 		public Regex Expression { get; private set; }
 		public StringToken Token { get; set; }
+		public ValidationMode Mode { get; set; }
 
 		public void Validate(Accessor accessor, ValidationContext context)
 		{

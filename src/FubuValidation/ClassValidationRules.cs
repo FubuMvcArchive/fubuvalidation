@@ -153,45 +153,180 @@ namespace FubuValidation
                 return register(new MaximumLengthRule(length));
             }
 
+			public FieldValidationExpression MaximumLength(int length, StringToken token)
+			{
+				return register(new MaximumLengthRule(length, token));
+			}
+
+			public FieldValidationExpression MaximumLength(int length, ValidationMode mode)
+			{
+				return register(new MaximumLengthRule(length) { Mode = mode});
+			}
+
+			public FieldValidationExpression MaximumLength(int length, StringToken token, ValidationMode mode)
+			{
+				return register(new MaximumLengthRule(length, token) { Mode = mode });
+			}
+
             public FieldValidationExpression GreaterThanZero()
             {
                 return register(new GreaterThanZeroRule());
             }
+
+			public FieldValidationExpression GreaterThanZero(StringToken token)
+			{
+				return register(new GreaterThanZeroRule(token));
+			}
+
+			public FieldValidationExpression GreaterThanZero(ValidationMode mode)
+			{
+				return register(new GreaterThanZeroRule { Mode = mode });
+			}
+
+			public FieldValidationExpression GreaterThanZero(StringToken token, ValidationMode mode)
+			{
+				return register(new GreaterThanZeroRule(token) { Mode = mode });
+			}
 
             public FieldValidationExpression GreaterOrEqualToZero()
             {
                 return register(new GreaterOrEqualToZeroRule());
             }
 
+			public FieldValidationExpression GreaterOrEqualToZero(StringToken token)
+			{
+				return register(new GreaterOrEqualToZeroRule(token));
+			}
+
+			public FieldValidationExpression GreaterOrEqualToZero(ValidationMode mode)
+			{
+				return register(new GreaterOrEqualToZeroRule { Mode = mode});
+			}
+
+			public FieldValidationExpression GreaterOrEqualToZero(StringToken token, ValidationMode mode)
+			{
+				return register(new GreaterOrEqualToZeroRule(token) { Mode = mode });
+			}
+
             public FieldValidationExpression Required()
             {
                 return register(new RequiredFieldRule());
             }
+
+			public FieldValidationExpression Required(StringToken token)
+			{
+				return register(new RequiredFieldRule(token));
+			}
+
+			public FieldValidationExpression Required(ValidationMode mode)
+			{
+				return register(new RequiredFieldRule { Mode = mode});
+			}
+			
+			public FieldValidationExpression Required(StringToken token, ValidationMode mode)
+			{
+				return register(new RequiredFieldRule(token) { Mode = mode});
+			}
 
             public FieldValidationExpression Email()
             {
                 return register(new EmailFieldRule());
             }
 
+			public FieldValidationExpression Email(StringToken token)
+			{
+				return register(new EmailFieldRule(token));
+			}
+
+			public FieldValidationExpression Email(ValidationMode mode)
+			{
+				return register(new EmailFieldRule { Mode = mode});
+			}
+
+			public FieldValidationExpression Email(StringToken token, ValidationMode mode)
+			{
+				return register(new EmailFieldRule(token) { Mode = mode});
+			}
+
             public FieldValidationExpression MinimumLength(int length)
             {
                 return register(new MinimumLengthRule(length));
             }
+
+			public FieldValidationExpression MinimumLength(int length, StringToken token)
+			{
+				return register(new MinimumLengthRule(length, token));
+			}
+
+			public FieldValidationExpression MinimumLength(int length, ValidationMode mode)
+			{
+				return register(new MinimumLengthRule(length) { Mode = mode});
+			}
+
+			public FieldValidationExpression MinimumLength(int length, StringToken token, ValidationMode mode)
+			{
+				return register(new MinimumLengthRule(length, token) { Mode = mode});
+			}
 
             public FieldValidationExpression MinValue(IComparable bounds)
             {
                 return register(new MinValueFieldRule(bounds));
             }
 
+			public FieldValidationExpression MinValue(IComparable bounds, StringToken token)
+			{
+				return register(new MinValueFieldRule(bounds, token));
+			}
+
+			public FieldValidationExpression MinValue(IComparable bounds, ValidationMode mode)
+			{
+				return register(new MinValueFieldRule(bounds) { Mode = mode });
+			}
+
+			public FieldValidationExpression MinValue(IComparable bounds, StringToken token, ValidationMode mode)
+			{
+				return register(new MinValueFieldRule(bounds, token) { Mode = mode});
+			}
+
             public FieldValidationExpression RangeLength(int min, int max)
             {
                 return register(new RangeLengthFieldRule(min, max));
             }
 
+			public FieldValidationExpression RangeLength(int min, int max, StringToken token)
+			{
+				return register(new RangeLengthFieldRule(min, max, token));
+			}
+
+			public FieldValidationExpression RangeLength(int min, int max, ValidationMode mode)
+			{
+				return register(new RangeLengthFieldRule(min, max) { Mode = mode});
+			}
+
+			public FieldValidationExpression RangeLength(int min, int max, StringToken token, ValidationMode mode)
+			{
+				return register(new RangeLengthFieldRule(min, max, token) { Mode = mode});
+			}
+
             public FieldValidationExpression MaxValue(IComparable bounds)
             {
                 return register(new MaxValueFieldRule(bounds));
             }
+
+			public FieldValidationExpression MaxValue(IComparable bounds, StringToken token)
+			{
+				return register(new MaxValueFieldRule(bounds, token));
+			}
+
+			public FieldValidationExpression MaxValue(IComparable bounds, ValidationMode mode)
+			{
+				return register(new MaxValueFieldRule(bounds) { Mode = mode});
+			}
+
+			public FieldValidationExpression MaxValue(IComparable bounds, StringToken token, ValidationMode mode)
+			{
+				return register(new MaxValueFieldRule(bounds, token) { Mode = mode});
+			}
 
 			public FieldValidationExpression RegEx(string expression)
 			{
@@ -201,6 +336,16 @@ namespace FubuValidation
 			public FieldValidationExpression RegEx(string expression, StringToken token)
 			{
 				return register(new RegularExpressionFieldRule(expression, token));
+			}
+
+			public FieldValidationExpression RegEx(string expression, ValidationMode mode)
+			{
+				return register(new RegularExpressionFieldRule(expression) { Mode = mode});
+			}
+
+			public FieldValidationExpression RegEx(string expression, StringToken token, ValidationMode mode)
+			{
+				return register(new RegularExpressionFieldRule(expression, token) { Mode = mode});
 			}
 
 			public FieldEqualityRuleExpression Matches(Expression<Func<T, object>> property)

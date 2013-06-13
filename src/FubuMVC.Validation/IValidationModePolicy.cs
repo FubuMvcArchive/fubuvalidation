@@ -1,5 +1,6 @@
 ﻿using FubuCore;
 using FubuCore.Reflection;
+using FubuValidation;
 
 namespace FubuMVC.Validation
 {

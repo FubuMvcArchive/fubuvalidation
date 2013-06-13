@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.UI.Forms;
+using FubuValidation;
+using FubuValidation.Fields;
 
 namespace FubuMVC.Validation.UI
 {
@@ -35,8 +36,9 @@ namespace FubuMVC.Validation.UI
 
 		public static ValidationOptions For(FormRequest request)
 		{
-			var type = request.Services.GetInstance<ITypeResolver>().ResolveType(request.Input);
-			var cache = request.Services.GetInstance<ITypeDescriptorCache>();
+			var services = request.Services;
+			var type = services.GetInstance<ITypeResolver>().ResolveType(request.Input);
+			var cache = services.GetInstance<ITypeDescriptorCache>();
 			var options = new ValidationOptions();
 			var node = request.Chain.ValidationNode() as IValidationNode;
 
@@ -45,49 +47,43 @@ namespace FubuMVC.Validation.UI
 				return options;
 			}
 
+			// TODO -- Let's query the validation graph and register the rule alias/validation mode pairs here
 			cache.ForEachProperty(type, property =>
 			{
-				var mode = node.DetermineMode(request.Services, new SingleProperty(property));
-				options._fields.Add(new FieldOptions
-				{
-					field = property.Name,
-					mode = mode.Mode
-				});
+				var accessor = new SingleProperty(property);
+
+				fillFields(options, node, services, accessor);
 			});
 
 			return options;
 		}
-	}
 
-	public class FieldOptions
-	{
-		public string field { get; set; }
-		public string mode { get; set; }
-
-		public override string ToString()
+		private static void fillFields(ValidationOptions options, IValidationNode node, IServiceLocator services, Accessor accessor)
 		{
-			return "{0} ({1})".ToFormat(field, mode);
-		}
-
-		protected bool Equals(FieldOptions other)
-		{
-			return string.Equals(field, other.field) && string.Equals(mode, other.mode);
-		}
-
-		public override bool Equals(object obj)
-		{
-			if (ReferenceEquals(null, obj)) return false;
-			if (ReferenceEquals(this, obj)) return true;
-			if (obj.GetType() != this.GetType()) return false;
-			return Equals((FieldOptions) obj);
-		}
-
-		public override int GetHashCode()
-		{
-			unchecked
+			var mode = node.DetermineMode(services, accessor);
+			var field = new FieldOptions
 			{
-				return (field.GetHashCode()*397) ^ mode.GetHashCode();
-			}
+				field = accessor.Name,
+				mode = mode.Mode
+			};
+
+			var graph = services.GetInstance<ValidationGraph>();
+			var rules = graph.FieldRulesFor(accessor);
+			var ruleOptions = new List<FieldRuleOptions>();
+
+			rules.Each(rule =>
+			{
+				var ruleMode = rule.Mode ?? mode;
+				ruleOptions.Add(new FieldRuleOptions
+				{
+					rule = RuleAliases.AliasFor(rule),
+					mode = ruleMode.Mode
+				});
+			});
+
+			field.rules = ruleOptions.ToArray();
+
+			options._fields.Add(field);
 		}
 	}
 }

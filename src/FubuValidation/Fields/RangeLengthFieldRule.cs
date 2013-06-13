@@ -25,6 +25,8 @@ namespace FubuValidation.Fields
 
 	    public StringToken Token { get; set; }
 
+		public ValidationMode Mode { get; set; }
+
         public void Validate(Accessor accessor, ValidationContext context)
         {
             var value = context.GetFieldValue<string>(accessor) ?? string.Empty;

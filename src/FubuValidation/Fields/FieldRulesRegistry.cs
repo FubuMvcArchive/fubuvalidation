@@ -43,7 +43,12 @@ namespace FubuValidation.Fields
             return classRules;
         }
 
-        public ClassFieldValidationRules RulesFor<T>()
+	    public void FindWith(IFieldValidationSource source)
+	    {
+		    _sources.Fill(source);
+	    }
+
+	    public ClassFieldValidationRules RulesFor<T>()
         {
             return _typeRules[typeof (T)];
         }

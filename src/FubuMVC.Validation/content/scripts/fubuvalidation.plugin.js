@@ -4,14 +4,17 @@
   validation.Validator = $.fubuvalidation.Core.Validator.basic();
   validation.Processor = $.fubuvalidation.UI.ValidationProcessor.basic();
 
+  var ValidationMode = validation.Core.ValidationMode;
+
   function submitHandler(form) {
     form = $(form);
     var elements = elementsFor(form);
     var notification = new validation.Core.Notification();
+    var options = validation.Core.Options.fromForm(form);
 
     elements.each(function () {
       var target = validation.Core.Target.forElement($(this), form.attr('id'), form);
-      validation.Validator.validate(target, notification);
+      validation.Validator.validate(target, options, ValidationMode.Triggered, notification);
     });
 
     processNotification(notification, form);
@@ -36,9 +39,10 @@
   function elementHandler(element, form) {
     var notification = form.notification();
     var elementNotification = new validation.Core.Notification();
+    var options = validation.Core.Options.fromForm(form);
 
     var target = validation.Core.Target.forElement(element, form.attr('id'), form);
-    validation.Validator.validate(target, elementNotification);
+    validation.Validator.validate(target, options, ValidationMode.Live, elementNotification);
 
     notification.importForTarget(elementNotification, target);
 
@@ -46,15 +50,9 @@
   }
 
   function bindEvents(form) {
-
-    var options = validation.Core.Options.fromForm(form);
-
     form
         .on("change", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
           var element = $(e.target);
-          if (!options.shouldValidateLive(element)) {
-            return;
-          }
           
           if (element.data("validation-onchange-fired") === true) {
             return;
@@ -65,9 +63,6 @@
         })
         .on("keyup", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
           var element = $(e.target);
-          if (!options.shouldValidateLive(element)) {
-            return;
-          }
 
           if (element.data("validation-onchange-fired") === true) {
             var timeout = element.data("validation-timeout");
@@ -81,9 +76,6 @@
         })
         .on("change", "input:radio:not([disabled]),input:checkbox:not([disabled]),select:not([disabled])", function (e) {
           var element = $(e.target);
-          if (!options.shouldValidateLive(element)) {
-            return;
-          }
           elementHandler(element, form);
         });
   }
@@ -94,7 +86,7 @@
 
   $.fn.notification = function () {
     var notification = $.data(this[0], 'fubu-notification');
-    if (!notification || typeof (notification) == 'undefined') {
+    if (typeof (notification) == 'undefined' || !notification) {
       notification = new validation.Core.Notification();
       this.storeNotification(notification);
     }

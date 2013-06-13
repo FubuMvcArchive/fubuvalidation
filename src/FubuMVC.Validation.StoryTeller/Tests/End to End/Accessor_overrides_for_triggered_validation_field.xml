@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Test name="Accessor overrides for triggered validation field" lifecycle="Acceptance">
+<Test name="Accessor overrides for triggered validation field" lifecycle="Regression">
   <SystemState>
     <NoUsers isStep="True" />
   </SystemState>
@@ -14,8 +14,14 @@
     <EnterNoMoreThanFiveCharacters isStep="True" NoMoreThanFiveCharacters="1234" />
     <EnterRequired isStep="True" Required="Something" />
     <EnterCustom isStep="True" Custom="test" />
-    <EnterTriggered isStep="True" Triggered="-1" />
+    <EnterTriggered isStep="True" Triggered="EMPTY" />
     <EnterEmailCustomMessage isStep="True" EmailCustomMessage="valid@domain.com" />
+    <VerifyValidationMessages isStep="True">
+      <rows>
+        <row isStep="True" Property="Triggered" Message="en-US_Triggered - Required Field" />
+      </rows>
+    </VerifyValidationMessages>
+    <EnterTriggered isStep="True" Triggered="-1" />
     <NoMessages isStep="True" />
     <ClickTheSubmitButton isStep="True" />
     <VerifyValidationMessages isStep="True">

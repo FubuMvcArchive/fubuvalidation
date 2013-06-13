@@ -31,6 +31,8 @@ namespace FubuMVC.Validation.StoryTeller
 
 		public StringToken Token { get; set; }
 
+		public ValidationMode Mode { get; set; }
+
 		public void Validate(Accessor accessor, ValidationContext context)
 		{
 			context.Notification.RegisterMessage(accessor, Token);

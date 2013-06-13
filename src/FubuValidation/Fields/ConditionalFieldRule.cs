@@ -36,6 +36,12 @@ namespace FubuValidation.Fields
 			set { _inner.Token = value; }
 	    }
 
+	    public ValidationMode Mode
+	    {
+		    get { return _inner.Mode; }
+			set { _inner.Mode = value; }
+	    }
+
         public IFieldValidationRule Inner
         {
             get { return _inner; }

@@ -4,6 +4,7 @@ using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Registration;
 using FubuTestingSupport;
+using FubuValidation;
 using NUnit.Framework;
 
 namespace FubuMVC.Validation.Tests

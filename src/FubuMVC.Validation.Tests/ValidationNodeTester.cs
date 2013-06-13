@@ -3,6 +3,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Registration.Nodes;
 using FubuMVC.Validation.Tests.UI;
 using FubuTestingSupport;
+using FubuValidation;
 using NUnit.Framework;
 using Rhino.Mocks;
 

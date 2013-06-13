@@ -23,6 +23,8 @@ namespace FubuValidation.Fields
 
 	    public StringToken Token { get; set; }
 
+		public ValidationMode Mode { get; set; }
+
         public IComparable Bounds { get { return _bounds; }}
 
         public void Validate(Accessor accessor, ValidationContext context)

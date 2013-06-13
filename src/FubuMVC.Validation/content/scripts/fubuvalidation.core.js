@@ -4,6 +4,11 @@
     sources[key] = source;
   };
 
+  var ValidationMode = {
+    Live: 'live',
+    Triggered: 'triggered'
+  };
+
   function ValidationMessage(field, token, element, context) {
     this.field = field;
     this.token = token;
@@ -206,13 +211,21 @@
     registerSource: function (source) {
       this.sources.push(source);
     },
-    validate: function (target, notification) {
+    validate: function (target, options, mode, notification) {
+      options = options || new ValidationOptions({
+        fields: []
+      });
 
       notification = notification || new ValidationNotification();
       var context = new ValidationContext(target, notification);
       var rules = this.rulesFor(target);
 
       _.each(rules, function (rule) {
+        
+        if (!options.shouldValidate(context.target.element, rule.name, mode)) {
+          return;
+        }
+
         context.pushTemplateContext(rule);
         rule.validate(context);
       });
@@ -236,7 +249,7 @@
   }
 
   ValidationOptions.prototype = {
-    modeFor: function(element) {
+    modeFor: function(element, rule) {
       var field;
       _.each(this.fields, function(x) {
         if (x.field == element.attr('name') || x.field == element.attr('id')) {
@@ -245,13 +258,31 @@
       });
       
       if (field) {
-        return field.mode;
+        return this.modeForRule(field, rule);
       }
 
       return this.mode;
     },
-    shouldValidateLive: function(element) {
-      return this.modeFor(element) == 'live';
+    modeForRule: function(field, ruleAlias) {
+      var rule;
+      _.each(field.rules, function (x) {
+        if (x.rule == ruleAlias) {
+          rule = x;
+        }
+      });
+      
+      if (rule) {
+        return rule.mode;
+      }
+
+      return field.mode;
+    },
+    shouldValidate: function (element, rule, mode) {
+      if (mode == ValidationMode.Triggered) {
+        return true;
+      }
+      
+      return this.modeFor(element, rule) == mode;
     }
   };
 
@@ -285,7 +316,7 @@
     registerRule: function (alias, rule) {
       var builder = rule;
       if (typeof (builder) != 'function') {
-        builder = function () { return rule; }
+        builder = function() { return rule; };
       }
       this.rules[alias] = builder;
     }
@@ -298,7 +329,7 @@
   CssValidationRuleSource.prototype = {
     classesFor: function (element) {
       var classes = element.attr('class');
-      if (!classes || classes == '' || typeof (classes) == 'undefined') {
+      if (typeof (classes) == 'undefined' || !classes || classes == '') {
         return [];
       }
 
@@ -426,7 +457,8 @@
       'Options': ValidationOptions,
       'Validator': Validator,
       'Target': ValidationTarget,
-      'CssAliasRegistry': CssValidationAliasRegistry
+      'CssAliasRegistry': CssValidationAliasRegistry,
+      'ValidationMode': ValidationMode
     },
     'Sources': sources
   });

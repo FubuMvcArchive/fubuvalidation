@@ -3,6 +3,7 @@ using FubuMVC.Core.Assets;
 using FubuMVC.Core.Continuations;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.UI;
+using FubuValidation;
 using HtmlTags;
 
 namespace FubuMVC.Validation.StoryTeller
@@ -54,8 +55,9 @@ namespace FubuMVC.Validation.StoryTeller
 
             Property(x => x.Custom).Add<UniqueUsernameRule>();
 
-			Property(x => x.Triggered).GreaterThanZero();
 			Property(x => x.Triggered).TriggeredValidation();
+			Property(x => x.Triggered).GreaterThanZero();
+			Property(x => x.Triggered).Required(ValidationMode.Live);
         }
     }
 

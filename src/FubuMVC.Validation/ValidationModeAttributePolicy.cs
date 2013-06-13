@@ -2,6 +2,7 @@
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.UI.Elements;
+using FubuValidation;
 
 namespace FubuMVC.Validation
 {

@@ -25,7 +25,13 @@
       var context = this.context;
 
       if (this.element) {
-        message = message.replace('{field}', this.element.attr('name'));
+        var label = this.element.data('localized-label');
+        if (typeof (label) != 'undefined') {
+            message = message.replace('{field}', label);
+        }
+        else {
+            message = message.replace('{field}', this.element.attr('name'));
+        }
       }
 
       for (var key in context) {

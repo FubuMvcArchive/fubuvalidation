@@ -153,11 +153,11 @@ describe('when finding an element', function () {
 
         theElement = { id: 1029 };
         f1 = sinon.spy(function (context) {
-            context.element = theElement;
+            context.error.element = theElement;
         });
 
         theContinuation = {};
-
+      
         f2 = sinon.spy();
 
         theProcessor.findElementsWith(f1);
@@ -174,6 +174,7 @@ describe('when finding an element', function () {
     it('returns the element from the context', function () {
         expect(theActualElement).toEqual(theElement);
     });
+  
 });
 
 describe('Basic ValidationProcessor Tests', function () {
@@ -192,6 +193,16 @@ describe('Basic ValidationProcessor Tests', function () {
         processor.findElement({ form: $('#FinderForm') }, 'FirstName', error);
 
         expect(error.element).toEqual($('input[name="FirstName"]', '#FinderForm'));
+    });
+
+    it('basic finders add to search context error', function () {
+        var error = {},
+            theSearchContext = {},
+            processor = $.fubuvalidation.UI.ValidationProcessor.basic();
+        processor.searchContext = theSearchContext;
+        processor.findElement({ form: $('#FinderForm') }, 'FirstName', error);
+
+        expect(theSearchContext.error.element).toEqual($('input[name="FirstName"]', '#FinderForm'));
     });
 });
 

@@ -54,6 +54,7 @@
     }
 
     ValidationProcessor.prototype = {
+        searchContext: {},
         useValidationHandler: function (handler) {
             this.handler = handler;
         },
@@ -61,18 +62,16 @@
             this.finders.push(finder);
         },
         findElement: function (continuation, key, error) {
-            var searchContext = {
-                key: key,
-                error: error,
-                form: continuation.form
-            };
+            this.searchContext.key = key;
+            this.searchContext.error = error;
+            this.searchContext.form = continuation.form;
 
             for (var i = 0; i < this.finders.length; i++) {
                 var finder = this.finders[i];
-                finder(searchContext);
+                finder(this.searchContext);
             }
 
-            return searchContext.element;
+            return this.searchContext.error.element;
         },
         fillElements: function (continuation) {
             for (var i = 0; i < continuation.errors.length; i++) {
@@ -109,7 +108,7 @@
 
         processor.findElementsWith(function (context) {
             if (context.error.element) return;
-
+          
             var element = context.form.find('#' + context.key);
             if (element.size() == 1) {
                 context.error.element = element;

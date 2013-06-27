@@ -7,6 +7,7 @@ using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI.Forms;
+using FubuMVC.Core.Urls;
 using FubuMVC.Validation.UI;
 using FubuTestingSupport;
 using FubuValidation;
@@ -45,7 +46,7 @@ namespace FubuMVC.Validation.Tests.UI
 			var services = new InMemoryServiceLocator();
 			services.Add<IChainResolver>(new ChainResolutionCache(new TypeResolver(), theGraph));
 			services.Add(theRequirements);
-			services.Add<ICurrentHttpRequest>(new StandInCurrentHttpRequest());
+			services.Add<IChainUrlResolver>(new ChainUrlResolver(new StandInCurrentHttpRequest()));
 
 			theRequest = new InMemoryFubuRequest();
 			theNotification = Notification.Valid();

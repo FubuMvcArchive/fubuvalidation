@@ -31,13 +31,13 @@ namespace FubuMVC.Validation.IntegrationTesting
 				"_content/scripts/jquery-1.8.2.min.js",
 				"_content/scripts/underscore-min.js",
 				"_content/scripts/fubuvalidation.localization.js",
-				"_content/scripts/fubuvalidation.ui.js",
 				"_content/scripts/jquery.continuations.js",
 				"_content/scripts/jquery.form.js",
 				"_content/scripts/ajax-diagnostics.js",
 				"_content/scripts/fubuvalidation.rules.js",
 				"_content/scripts/fubuvalidation.core.js",
 				"_content/scripts/jquery.continuations.forms.js",
+				"_content/scripts/fubuvalidation.ui.js",
 				"_content/scripts/fubuvalidation.plugin.js",
 				
 			};

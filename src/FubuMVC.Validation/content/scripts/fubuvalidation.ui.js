@@ -1,4 +1,4 @@
-﻿(function ($) {
+﻿(function ($, validation) {
     var exports = {
         Strategies: {}
     };
@@ -242,11 +242,108 @@
             }
         }
     };
+    
+    function ValidationFormController(validator, processor) {
+        this.validator = validator;
+        this.processor = processor;
+    }
+    
+    ValidationFormController.prototype = {
+        submitHandler: function(form) {
+            form = $(form);
+            var notification = this.validateForm(form);
+            this.processNotification(notification, form);
+            return notification.isValid();
+        },
+        elementsFor: function(form) {
+            return form.find("input, select, textarea").not(":submit, :reset, :image, [disabled]");
+        },
+        validateForm: function(form) {
+            var self = this;
+            var elements = this.elementsFor(form);
+            var notification = new validation.Core.Notification();
+            var options = validation.Core.Options.fromForm(form);
+
+            elements.each(function () {
+              var target = validation.Core.Target.forElement($(this), form.attr('id'), form);
+              self.validator.validate(target, options, validation.Core.ValidationMode.Triggered, notification);
+            });
+
+            return notification;
+        },
+        processNotification: function(notification, form, element) {
+            var continuation = notification.toContinuation();
+            continuation.form = form;
+            continuation.element = element;
+            this.processor.process(continuation);
+
+            form.storeNotification(notification);
+            form.trigger('validation:processed', [continuation]);
+        },
+        elementHandler: function(element, form) {
+            var notification = form.notification();
+            var elementNotification = new validation.Core.Notification();
+            var options = validation.Core.Options.fromForm(form);
+
+            var target = validation.Core.Target.forElement(element, form.attr('id'), form);
+            this.validator.validate(target, options, validation.Core.ValidationMode.Live, elementNotification);
+
+            notification.importForTarget(elementNotification, target);
+
+            this.processNotification(notification, form, element);
+        },
+        bindEvents: function(form) {
+            var self = this;
+            form
+                .on("change", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
+                  var element = $(e.target);
+                  
+                  if (element.data("validation-onchange-fired") === true) {
+                    return;
+                  }
+
+                  self.elementHandler(element, form);
+                  element.data("validation-onchange-fired", true);
+                })
+                .on("keyup", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
+                  var element = $(e.target);
+
+                  if (element.data("validation-onchange-fired") === true) {
+                    var timeout = element.data("validation-timeout");
+                    if (timeout != undefined) {
+                      clearTimeout(timeout);
+                    }
+                    element.data("validation-timeout", setTimeout(function () {
+                      self.elementHandler(element, form);
+                    }, 500));
+                  }
+                })
+                .on("change", "input:radio:not([disabled]),input:checkbox:not([disabled]),select:not([disabled])", function (e) {
+                  var element = $(e.target);
+                  self.elementHandler(element, form);
+                });
+        }
+    };
+    
+    $.fn.storeNotification = function (notification) {
+        $.data(this[0], 'fubu-notification', notification);
+    };
+
+    $.fn.notification = function () {
+        var notification = $.data(this[0], 'fubu-notification');
+        if (typeof (notification) == 'undefined' || !notification) {
+            notification = new validation.Core.Notification();
+            this.storeNotification(notification);
+        }
+
+        return notification;
+    };
 
 
     defineCore('DefaultHandler', DefaultHandler);
     defineCore('ValidationProcessor', ValidationProcessor);
     defineCore('TokenFor', tokenFor);
+    defineCore('Controller', ValidationFormController);
 
     defineStrategy('Summary', ValidationSummaryStrategy);
     defineStrategy('Highlighting', ElementHighlightingStrategy);
@@ -254,4 +351,4 @@
 
     $.extend(true, $, { 'fubuvalidation': { 'UI': exports } });
 
-}(jQuery));
+}(jQuery, jQuery.fubuvalidation));

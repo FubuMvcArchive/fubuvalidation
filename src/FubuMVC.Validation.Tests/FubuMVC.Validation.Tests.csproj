@@ -148,6 +148,7 @@
     <Compile Include="UI\ValidationNodeTester.cs" />
     <Compile Include="UI\IntegratedValidationOptionsTester.cs" />
     <Compile Include="ValidationActionFilterTester.cs" />
+    <Compile Include="ValidationAjaxExtensionsTester.cs" />
     <Compile Include="ValidationBehaviorChainExtensionsTester.cs" />
     <Compile Include="ValidationConventionTester.cs" />
     <Compile Include="ValidationFilterTester.cs" />

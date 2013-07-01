@@ -133,6 +133,7 @@
     <Compile Include="UI\RuleAliases.cs" />
     <Compile Include="UI\ValidationOptions.cs" />
     <Compile Include="UI\ValidationSummarySource.cs" />
+    <Compile Include="ValidationAjaxExtensions.cs" />
     <Compile Include="ValidationBehaviorChainExtensions.cs" />
     <Compile Include="IHaveValidation.cs" />
     <Compile Include="ValidationModeAttributePolicy.cs" />

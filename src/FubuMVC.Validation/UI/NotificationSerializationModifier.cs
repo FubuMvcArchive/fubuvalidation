@@ -22,6 +22,7 @@ namespace FubuMVC.Validation.UI
 			if (notification.IsValid()) return;
 
 			var continuation = request.Services.GetInstance<IAjaxContinuationResolver>().Resolve(notification);
+			continuation.ValidationOrigin(ValidationOrigin.Server);
 			request.CurrentTag.Data("validation-results", continuation.ToDictionary());
 
 			writeScriptRequirements(request);

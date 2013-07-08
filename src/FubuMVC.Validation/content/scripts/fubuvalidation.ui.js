@@ -297,26 +297,18 @@
             form
                 .on("change", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
                   var element = $(e.target);
-                  
-                  if (element.data("validation-onchange-fired") === true) {
-                    return;
-                  }
-
                   self.elementHandler(element, form);
-                  element.data("validation-onchange-fired", true);
                 })
                 .on("keyup", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
                   var element = $(e.target);
-
-                  if (element.data("validation-onchange-fired") === true) {
-                    var timeout = element.data("validation-timeout");
-                    if (timeout != undefined) {
-                      clearTimeout(timeout);
-                    }
-                    element.data("validation-timeout", setTimeout(function () {
-                      self.elementHandler(element, form);
-                    }, 500));
+                  var timeout = element.data("validation-timeout");
+                  if (timeout != undefined) {
+                    clearTimeout(timeout);
                   }
+                  
+                  element.data("validation-timeout", setTimeout(function () {
+                    self.elementHandler(element, form);
+                  }, 500));
                 })
                 .on("change", "input:radio:not([disabled]),input:checkbox:not([disabled]),select:not([disabled])", function (e) {
                   var element = $(e.target);

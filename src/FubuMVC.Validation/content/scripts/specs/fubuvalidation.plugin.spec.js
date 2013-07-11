@@ -10,7 +10,7 @@
 
   this.server = sinon.fakeServer.create();
   var self = this;
-  $.continuations.bind('AjaxStarted', function (request) {
+  $fubu.continuations.bind('AjaxStarted', function (request) {
     self.posted = true;
     self.server.respondWith([200,
     { 'Content-Type': 'application/json', 'X-Correlation-Id': request.correlationId }, '{"success":"true"}'

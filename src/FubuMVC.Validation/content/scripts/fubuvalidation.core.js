@@ -96,7 +96,7 @@
     },
 
     toContinuation: function () {
-      var continuation = new $.continuations.continuation();
+      var continuation = new $fubu.continuations.continuation();
       continuation.success = this.isValid();
 
       var messages = this.allMessages();

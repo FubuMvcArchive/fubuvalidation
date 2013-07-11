@@ -147,7 +147,7 @@ describe('Transforming a ValidationNotification to an AjaxContinuation', functio
   });
 
   it('renders the message', function () {
-    expect(new $.continuations.continuation().errors.length).toEqual(0);
+    expect(new $fubu.continuations.continuation().errors.length).toEqual(0);
 
     var theElement = $('<input type="text" name="FirstName" data-localized-label="First Name" />');
     var token = new $.fubuvalidation.StringToken('FirstName', '{Property} is required');
@@ -164,7 +164,7 @@ describe('Transforming a ValidationNotification to an AjaxContinuation', functio
   });
 
   it('renders the label with no localized label', function () {
-    expect(new $.continuations.continuation().errors.length).toEqual(0);
+    expect(new $fubu.continuations.continuation().errors.length).toEqual(0);
 
     var theElement = $('<input type="text" name="FirstName" />');
     var token = new $.fubuvalidation.StringToken('FirstName', '{Property} is required');

@@ -82,4 +82,4 @@
     }
   });
 
-}(jQuery, jQuery.fubuvalidation, jQuery.continuations));
+}(jQuery, jQuery.fubuvalidation, $fubu.continuations));

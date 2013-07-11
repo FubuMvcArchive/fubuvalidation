@@ -1,13 +1,11 @@
 ﻿$(document).ready(function () {
-    $('form').each(function () {
-        var results = $(this).data('validationResults');
-    	if(typeof (results) == 'undefined') return;
+  $('form').each(function () {
+    var results = $(this).data('validationResults');
+    if (typeof (results) == 'undefined') return;
 
-		// Make it a canonical continuation. Probably need to make a helper in jquery.continuations
-    	var continuation = new $.continuations.continuation();
-    	$.extend(true, continuation, results);
+    var continuation = new $fubu.continuations.create(results);
 
-    	continuation.form = $(this);
-    	$.fubuvalidation.Processor.process(continuation);
-    });
+    continuation.form = $(this);
+    $.fubuvalidation.Processor.process(continuation);
+  });
 });

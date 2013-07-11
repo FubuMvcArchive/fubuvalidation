@@ -3,7 +3,7 @@
     <Role>module</Role>
     <Name>FubuMVC.Validation</Name>
     <assembly>FubuMVC.Validation</assembly>
-    <ContentFileSet Include="Content\*.*;*.config">
+    <ContentFileSet Include="Content\*.*;*.config" Exclude="Content\scripts\specs\*.*;validationtests.asset.config">
         <DeepSearch>true</DeepSearch>
     </ContentFileSet>
 </package>

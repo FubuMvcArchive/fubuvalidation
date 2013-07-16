@@ -33,7 +33,7 @@ namespace FubuValidation.Tests.Fields
         [Test]
         public void default_token_is_email_key()
         {
-	         new EmailFieldRule().Token.ShouldEqual(ValidationKeys.Email);
+            new EmailFieldRule().Token.ShouldEqual(ValidationKeys.Email);
         }
 
         [Test]
@@ -54,16 +54,23 @@ namespace FubuValidation.Tests.Fields
             messages.Single().StringToken.ShouldEqual(ValidationKeys.Email);
         }
 
-		  [Test]
-		  public void no_message_if_email_is_empty()
-		  {
-           AssertEmailValidationReturnsNoMessage(string.Empty).ShouldBeTrue();
-		  }
+        [Test]
+        public void uppercase_letters_are_valid()
+        {
+            theTarget.Email = "Something@there.com";
+            theNotification.MessagesFor<EmailTarget>(x => x.Email).Any().ShouldBeFalse();
+        }
+        
+        [Test]
+        public void no_message_if_email_is_empty()
+        {
+            AssertEmailValidationReturnsNoMessage(string.Empty).ShouldBeTrue();
+        }
 
         private bool AssertEmailValidationReturnsNoMessage(string email)
         {
-           theTarget.Email = email;
-           return theNotification.MessagesFor<EmailTarget>(x => x.Email).Any() == false;
+            theTarget.Email = email;
+            return theNotification.MessagesFor<EmailTarget>(x => x.Email).Any() == false;
         }
 
         public class EmailTarget

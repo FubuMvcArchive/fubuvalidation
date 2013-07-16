@@ -206,6 +206,7 @@ describe('EmailRuleTester', function () {
     expect(theHarness.messagesFor('user@sub.domain.com').length).toEqual(0);
     expect(theHarness.messagesFor('first.last@sub.domain.com').length).toEqual(0);
     expect(theHarness.messagesFor('gmail+style@sub.domain.com').length).toEqual(0);
+    expect(theHarness.messagesFor('Uppercase@sub.domain.com').length).toEqual(0);
   });
 
   it('no message for an empty email', function () {

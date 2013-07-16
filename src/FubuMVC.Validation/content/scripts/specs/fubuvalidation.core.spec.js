@@ -932,7 +932,7 @@ describe('Integrated Continuation Tests', function () {
 
     continuationFor = function(element) {
       var target = $.fubuvalidation.Core.Target.forElement(element);
-      return theValidator.validate(target).toContinuation();
+      return theValidator.validate(target, null, 'live').toContinuation();
     };
   });
 

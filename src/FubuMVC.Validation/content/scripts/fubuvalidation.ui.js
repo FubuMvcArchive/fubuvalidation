@@ -273,11 +273,14 @@
         },
         processNotification: function(notification, form, element) {
             var continuation = notification.toContinuation();
+            form.storeNotification(notification);
+            this.processContinuation(continuation, form, element);
+        },
+        processContinuation: function(continuation, form, element) {
             continuation.form = form;
             continuation.element = element;
             this.processor.process(continuation);
-
-            form.storeNotification(notification);
+            
             form.trigger('validation:processed', [continuation]);
         },
         elementHandler: function(element, form) {

@@ -251,6 +251,7 @@
   };
   
   function ValidationOptions(options) {
+    this.mode = ValidationMode.Live;
     $.extend(true, this, options);
   }
 

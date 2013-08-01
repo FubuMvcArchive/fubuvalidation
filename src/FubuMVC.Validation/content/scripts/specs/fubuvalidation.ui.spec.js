@@ -475,3 +475,200 @@ describe('InlineErrorStrategy rendering tests', function () {
         expect($('[data-inline-error="FirstName"]', '#InlineErrorStrategy').size()).toEqual(0);
     });
 });
+
+describe('validating a form', function() {
+  var theValidator = null;
+  var theProcessor = null;
+  var theController = null;
+  var thePromises = null;
+
+  beforeEach(function() {
+
+    thePromises = [];
+    
+    theProcessor = {};
+
+    theNotification = { id: '123' };
+
+    theValidator = {
+      validate: sinon.spy(function() {
+        var promise = $.Deferred();
+        thePromises.push(promise);
+
+        return promise;
+      })
+    };
+
+    theController = new $.fubuvalidation.UI.Controller(theValidator, theProcessor);
+  });
+
+  it('aggregates the promises from validating each element', function() {
+    var elements = $(['e1', 'e2']);
+    theController.elementsFor = function() {
+      return elements;
+    };
+
+    var theNotification = null;
+    var form = $('<form></form>');
+    
+    var aggregate = theController.validateForm(form).done(function(notification) {
+      theNotification = notification;
+    });
+
+    _.each(thePromises, function(promise) {
+      promise.resolve();
+    });
+
+    waitsFor(function() {
+      return aggregate.state() == 'resolved';
+    });
+
+    expect(theNotification).not.toBeNull();
+  });
+
+});
+
+describe('Controller submit handler', function () {
+  var theValidator = null;
+  var theProcessor = null;
+  var theController = null;
+  var theForm = null;
+
+  var theValidationPromise;
+
+  beforeEach(function () {
+    theProcessor = {};
+    theNotification = { id: '123' };
+    theValidator = {};
+
+    theForm = $("<form></form>");
+
+    theValidationPromise = $.Deferred();
+
+    theController = new $.fubuvalidation.UI.Controller(theValidator, theProcessor);
+    theController.validateForm = function() {
+      return theValidationPromise;
+    };
+    theController.processNotification = sinon.spy();
+  });
+
+  it('chains the process notification call to the promise', function () {
+
+    var invoked = false;
+    theController.submitHandler(theForm).done(function() {
+      invoked = true;
+    });
+
+    theValidationPromise.resolve(theNotification);
+    
+    waitsFor(function () {
+      return theValidationPromise.state() == 'resolved';
+    });
+
+    expect(invoked).toEqual(true);
+
+    var process = theController.processNotification;
+    expect(process.called).toEqual(true);
+    expect(process.getCall(0).args[0]).toEqual(theNotification);
+    expect(process.getCall(0).args[1]).toEqual(theForm);
+  });
+
+});
+
+describe('Controller element handler', function () {
+  var theValidator = null;
+  var theProcessor = null;
+  var theController = null;
+  var theForm = null;
+  var theElement = null;
+  var thePromise = null;
+
+  beforeEach(function () {
+    theProcessor = {};
+    theNotification = new $.fubuvalidation.Core.Notification();
+
+    theForm = $("<form></form>");
+    theElement = $("<input />");
+
+    thePromise = $.Deferred();
+    theValidator = {
+      validate: function() {
+        return thePromise;
+      }
+    };
+
+    theController = new $.fubuvalidation.UI.Controller(theValidator, theProcessor);
+    theController.processNotification = sinon.spy();
+    theController.targetValidated = sinon.spy();
+  });
+
+  it('chains the process notification call to the promise', function () {
+
+    var invoked = false;
+    theController.elementHandler(theElement, theForm).done(function () {
+      invoked = true;
+    });
+
+    thePromise.resolve(theNotification);
+
+    waitsFor(function () {
+      return thePromise.state() == 'resolved';
+    });
+
+    expect(invoked).toEqual(true);
+
+    expect(theController.targetValidated.called).toEqual(true);
+
+    var process = theController.processNotification;
+    expect(process.called).toEqual(true);
+    
+    expect(process.getCall(0).args[0]).toEqual(theNotification);
+    expect(process.getCall(0).args[1]).toEqual(theForm);
+  });
+
+});
+
+describe('ValidationFormController', function() {
+  var theController = null;
+
+  beforeEach(function() {
+    theController = new $.fubuvalidation.UI.Controller(null, null);
+  });
+
+  it('caches the targets by hash', function() {
+    var element = $('<input type="text" value="Test" />');
+    var target = $.fubuvalidation.Core.Target.forElement(element, '123');
+
+    theController.targetValidated(target);
+
+    expect(theController.targetCache[target.toHash()]).toEqual('Test');
+  });
+
+  it('should validate when no value is found', function() {
+    var element = $('<input type="text" value="Test" />');
+    var target = $.fubuvalidation.Core.Target.forElement(element, '123');
+
+    expect(theController.shouldValidate(target)).toEqual(true);
+  });
+
+  it('should validate when the values are different', function() {
+    var element = $('<input type="text" value="Test" />');
+    var target = $.fubuvalidation.Core.Target.forElement(element, '123');
+
+    theController.targetValidated(target);
+
+    element.val('Testing...');
+
+    expect(theController.shouldValidate(target)).toEqual(true);
+  });
+
+  it('should not validate when the values are the same', function() {
+    var element = $('<input type="text" value="Test" />');
+    var target = $.fubuvalidation.Core.Target.forElement(element, '123');
+
+    theController.targetValidated(target);
+
+    expect(theController.shouldValidate(target)).toEqual(false);
+  });
+
+});

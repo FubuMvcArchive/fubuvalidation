@@ -9,6 +9,9 @@
     Triggered: 'triggered'
   };
 
+  // Notification structures
+  // -----------------------
+
   function ValidationMessage(field, token, element, context) {
     this.field = field;
     this.token = token;
@@ -17,20 +20,20 @@
   }
 
   ValidationMessage.prototype = {
-    toHash: function() {
+    toHash: function () {
       return this.field + ':' + this.token.toString();
     },
-    toString: function() {
+    toString: function () {
       var message = this.token.toString();
       var context = this.context;
 
       if (this.element) {
         var label = this.element.data('localized-label');
         if (typeof (label) != 'undefined') {
-            message = message.replace('{field}', label);
+          message = message.replace('{field}', label);
         }
         else {
-            message = message.replace('{field}', this.element.attr('name'));
+          message = message.replace('{field}', this.element.attr('name'));
         }
       }
 
@@ -60,7 +63,7 @@
     registerMessage: function (field, token, element, context) {
       var message = new ValidationMessage(field, token, element, context);
       var existing = null;
-      this.eachMessage(function(msg) {
+      this.eachMessage(function (msg) {
         if (message.toHash() == msg.toHash()) {
           existing = msg;
         }
@@ -70,19 +73,19 @@
 
       var messages = this.messagesFor(field);
       messages.push(message);
-      
+
       return message;
     },
 
     allMessages: function () {
       var messages = [];
 
-      this.eachMessage(function(msg) { messages.push(msg); });
+      this.eachMessage(function (msg) { messages.push(msg); });
 
       return messages;
     },
 
-    eachMessage: function(action) {
+    eachMessage: function (action) {
       for (var key in this.messages) {
         var values = this.messages[key];
         _.each(values, function (value) {
@@ -124,6 +127,9 @@
     }
   };
 
+  // Helpers used for tracking validation context
+  // -------------
+
   function ValidationTarget(fieldName, value, correlationId) {
     this.fieldName = fieldName;
     this.rawValue = value;
@@ -132,7 +138,7 @@
   };
 
   ValidationTarget.prototype = {
-    useLocalizationMessages: function(messages) {
+    useLocalizationMessages: function (messages) {
       this.messages = messages;
     },
     localizedMessageFor: function (key) {
@@ -177,8 +183,11 @@
   };
 
   ValidationContext.prototype = {
-    pushTemplateContext: function (context) {
-      this.templateContext = context;
+    withTemplateContext: function (context) {
+      var clone = new ValidationContext(this.target, this.notification);
+      clone.templateContext = context;
+
+      return clone;
     },
     registerMessage: function (token) {
       return this.registerMessageForElement(token, this.target.fieldName, this.target.element);
@@ -196,6 +205,58 @@
       return this.notification.registerMessage(fieldName, message, element, this.templateContext);
     }
   };
+
+  // Essentially a Settings class for the Validator
+
+  function ValidationOptions(options) {
+    this.mode = ValidationMode.Live;
+    $.extend(true, this, options);
+  }
+
+  ValidationOptions.prototype = {
+    modeFor: function (element, rule) {
+      var field;
+      _.each(this.fields, function (x) {
+        if (x.field == element.attr('name') || x.field == element.attr('id')) {
+          field = x;
+        }
+      });
+
+      if (field) {
+        return this.modeForRule(field, rule);
+      }
+
+      return this.mode;
+    },
+    modeForRule: function (field, ruleAlias) {
+      var rule;
+      _.each(field.rules, function (x) {
+        if (x.rule == ruleAlias) {
+          rule = x;
+        }
+      });
+
+      if (rule) {
+        return rule.mode;
+      }
+
+      return field.mode;
+    },
+    shouldValidate: function (element, rule, mode) {
+      if (mode == ValidationMode.Triggered) {
+        return true;
+      }
+
+      return this.modeFor(element, rule) == mode;
+    }
+  };
+
+  ValidationOptions.fromForm = function (form) {
+    var hash = form.data('validationOptions');
+    return new ValidationOptions(hash);
+  };
+
+  // The main Validator
 
   function Validator(sources) {
     this.sources = sources || [];
@@ -223,20 +284,31 @@
       });
 
       notification = notification || new ValidationNotification();
+      var self = this;
       var context = new ValidationContext(target, notification);
       var rules = this.rulesFor(target);
+      var plan = new ValidationPlan(context);
+
 
       _.each(rules, function (rule) {
-        
+
         if (!options.shouldValidate(context.target.element, rule.name, mode)) {
           return;
         }
 
-        context.pushTemplateContext(rule);
-        rule.validate(context);
+        var ruleContext = context.withTemplateContext(rule);
+        var runner = self.runnerFor(rule, ruleContext);
+        plan.queueRunner(runner);
       });
 
-      return notification;
+      return plan.execute();
+    },
+    runnerFor: function(rule, context) {
+      if (rule.async === true) {
+        return new AsyncRuleRunner(rule, context);
+      }
+
+      return new RuleRunner(rule, context);
     }
   };
 
@@ -249,55 +321,63 @@
     return new Validator(validationSources);
 
   };
-  
-  function ValidationOptions(options) {
-    this.mode = ValidationMode.Live;
-    $.extend(true, this, options);
+
+  // Execution Model
+  // ---------------
+
+  // Synchronous Runner
+  function RuleRunner(rule, context) {
+    this.rule = rule;
+    this.context = context;
   }
 
-  ValidationOptions.prototype = {
-    modeFor: function(element, rule) {
-      var field;
-      _.each(this.fields, function(x) {
-        if (x.field == element.attr('name') || x.field == element.attr('id')) {
-          field = x;
-        }
-      });
-      
-      if (field) {
-        return this.modeForRule(field, rule);
-      }
-
-      return this.mode;
-    },
-    modeForRule: function(field, ruleAlias) {
-      var rule;
-      _.each(field.rules, function (x) {
-        if (x.rule == ruleAlias) {
-          rule = x;
-        }
-      });
-      
-      if (rule) {
-        return rule.mode;
-      }
-
-      return field.mode;
-    },
-    shouldValidate: function (element, rule, mode) {
-      if (mode == ValidationMode.Triggered) {
-        return true;
-      }
-      
-      return this.modeFor(element, rule) == mode;
+  RuleRunner.prototype = {
+    run: function () {
+      this.rule.validate(this.context);
+      return {};
     }
   };
 
-  ValidationOptions.fromForm = function (form) {
-    var hash = form.data('validationOptions');
-    return new ValidationOptions(hash);
+  // Asynchronous Runner
+  function AsyncRuleRunner(rule, context) {
+    this.rule = rule;
+    this.context = context;
+  }
+
+  AsyncRuleRunner.prototype = {
+    run: function () {
+      return this.rule.validate(this.context);
+    }
+  };
+  
+  function ValidationPlan(context) {
+    this.runners = [];
+    this.context = context;
+  }
+
+  ValidationPlan.prototype = {
+    queueRunner: function(runner) {
+      this.runners.push(runner);
+    },
+    execute: function() {
+      var self = this;
+      var promise = $.Deferred();
+
+      var promises = _.map(this.runners, function(runner) {
+        return runner.run();
+      });
+      
+      $.when.apply($, promises).always(function () {
+        promise.resolve(self.context.notification);
+      });
+
+      return promise;
+    }
   };
 
+  // Validation Sources
+  // ---------------
+  
   function CssValidationAliasRegistry() {
     this.rules = {};
     this.registerDefaults();
@@ -323,7 +403,7 @@
     registerRule: function (alias, rule) {
       var builder = rule;
       if (typeof (builder) != 'function') {
-        builder = function() { return rule; };
+        builder = function () { return rule; };
       }
       this.rules[alias] = builder;
     }
@@ -424,11 +504,11 @@
   defineSource('FieldEquality', {
     rulesFor: function (target) {
       if (!target.form) return [];
-      
+
       var data = target.form.data('fieldEquality');
       var rules = [];
 
-      if (typeof(data) != 'undefined') {
+      if (typeof (data) != 'undefined') {
         _.each(data.rules, function (ruleDef) {
           if (ruleDef.property1.field == target.fieldName || ruleDef.property2.field == target.fieldName) {
             rules.push(new validation.Rules.FieldEquality(ruleDef));
@@ -465,7 +545,10 @@
       'Validator': Validator,
       'Target': ValidationTarget,
       'CssAliasRegistry': CssValidationAliasRegistry,
-      'ValidationMode': ValidationMode
+      'ValidationMode': ValidationMode,
+      'RuleRunner': RuleRunner,
+      'AsyncRuleRunner': AsyncRuleRunner,
+      'ValidationPlan': ValidationPlan
     },
     'Sources': sources
   });

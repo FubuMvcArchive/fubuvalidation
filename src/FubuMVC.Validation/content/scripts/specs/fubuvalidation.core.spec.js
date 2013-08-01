@@ -29,7 +29,7 @@ describe('ValidationMessage Tests', function () {
     expect(message.toString()).toEqual('Test is required');
   });
 
-  it('creates a predictable hash', function() {
+  it('creates a predictable hash', function () {
     var msg1 = new $.fubuvalidation.Core.Message('field1', '{field} is required', null, null);
     var msg2 = new $.fubuvalidation.Core.Message('field1', '{field} is required', null, null);
 
@@ -75,7 +75,7 @@ describe('ValidationNotificationTester', function () {
     expect(theNotification.allMessages().length).toEqual(2);
   });
 
-  it('only adds unique messages', function() {
+  it('only adds unique messages', function () {
     theNotification.registerMessage('f1', '{field} is required');
     theNotification.registerMessage('f1', '{field} is required');
     theNotification.registerMessage('f2', '{field} is required');
@@ -178,9 +178,9 @@ describe('Transforming a ValidationNotification to an AjaxContinuation', functio
 
 });
 
-describe('ValidationOptionsTester', function() {
+describe('ValidationOptionsTester', function () {
 
-  it('uses the passed in fields', function() {
+  it('uses the passed in fields', function () {
     var hash = {
       fields: [
         { field: 'field1', mode: 'live' }
@@ -191,7 +191,7 @@ describe('ValidationOptionsTester', function() {
     expect(theOptions.fields).toEqual(hash.fields);
   });
 
-  it('uses the passed in fields and rules', function() {
+  it('uses the passed in fields and rules', function () {
     var hash = {
       fields: [
         {
@@ -205,7 +205,7 @@ describe('ValidationOptionsTester', function() {
     var theOptions = new $.fubuvalidation.Core.Options(hash);
     expect(theOptions.fields).toEqual(hash.fields);
   });
-  
+
   it('finds the mode for rules', function () {
     var hash = {
       fields: [
@@ -224,7 +224,7 @@ describe('ValidationOptionsTester', function() {
     expect(theOptions.modeFor(element, 'email')).toEqual('live');
     expect(theOptions.modeFor(element, 'required')).toEqual('triggered');
   });
-  
+
   it('should validate', function () {
     var hash = {
       fields: [
@@ -243,19 +243,19 @@ describe('ValidationOptionsTester', function() {
 
     expect(theOptions.shouldValidate(element, 'required', mode.Live)).toEqual(false);
     expect(theOptions.shouldValidate(element, 'required', mode.Triggered)).toEqual(true);
-    
+
     expect(theOptions.shouldValidate(element, 'email', mode.Live)).toEqual(true);
     // Always want to participate in the triggered validation
     expect(theOptions.shouldValidate(element, 'email', mode.Triggered)).toEqual(true);
   });
-  
+
   it('builds the options from the data attribute', function () {
     var hash = {
       fields: [
         { field: 'field1', mode: 'live' }
       ]
     };
-    
+
     var options = new $.fubuvalidation.Core.Options(hash);
 
     var form = $('<form>');
@@ -317,7 +317,7 @@ describe('ValidationTargetTester', function () {
     expect(theTarget.localizedMessageFor('required')).toEqual('Required Field');
   });
 
-  it('uses the explicitly defined localization message', function() {
+  it('uses the explicitly defined localization message', function () {
     var theElement = $('<input type="text" value="test-test-test" />');
 
     var theTarget = new $.fubuvalidation.Core.Target.forElement(theElement);
@@ -352,10 +352,10 @@ describe('ValidationContextTester', function () {
   beforeEach(function () {
     theElement = $('<input type="text" name="Test" value="Value" />');
     theTarget = $.fubuvalidation.Core.Target.forElement(theElement);
-    theContext = new $.fubuvalidation.Core.Context(theTarget);
+    var context = new $.fubuvalidation.Core.Context(theTarget);
     theRule = $.fubuvalidation.Rules.Required;
 
-    theContext.pushTemplateContext(theRule);
+    theContext = context.withTemplateContext(theRule);
     theContext.registerMessage($.fubuvalidation.ValidationKeys.Required);
 
     var messages = theContext.notification.messagesFor('Test');
@@ -433,6 +433,21 @@ describe('ValidatorTests', function () {
 
     expect(theValidator.rulesFor(theTarget)).toEqual([r1, r2]);
   })
+
+  it('determines runner for sync rule', function() {
+    var rule = {}; // just default the async property to false
+    var runner = theValidator.runnerFor(rule, {});
+
+    expect(runner instanceof $.fubuvalidation.Core.RuleRunner).toBeTruthy();
+  });
+
+  it('determines runner for async rule', function() {
+    var rule = {async:true};
+    var runner = theValidator.runnerFor(rule, {});
+
+    expect(runner instanceof $.fubuvalidation.Core.AsyncRuleRunner).toBeTruthy();
+  });
+  
 });
 
 describe('when validating a target', function () {
@@ -508,7 +523,7 @@ describe('when validating a target with mixed modes', function () {
       fields: [
         {
           field: 'Test', mode: mode.Live, rules: [
-            {rule:'r1', mode: mode.Triggered }
+            { rule: 'r1', mode: mode.Triggered }
           ]
         }
       ]
@@ -777,7 +792,7 @@ describe('RegularExpressionSourceTester', function () {
   });
 });
 
-describe('FieldEqualitySourceTester', function() {
+describe('FieldEqualitySourceTester', function () {
   var theSource = null;
   var rulesFor = null;
 
@@ -910,9 +925,19 @@ describe('Integrated Validator Tests', function () {
     var options = new $.fubuvalidation.Core.Options();
     theValidator = $.fubuvalidation.Core.Validator.basic();
 
-    notificationFor = function(element) {
+    notificationFor = function (element) {
       var target = $.fubuvalidation.Core.Target.forElement(element);
-      return theValidator.validate(target, options, $.fubuvalidation.Core.ValidationMode.Triggered);
+      var notification = new $.fubuvalidation.Core.Notification();
+      var result = theValidator.validate(target, options, $.fubuvalidation.Core.ValidationMode.Triggered);
+      result.done(function(x) {
+        notification = x;
+      });
+
+      waitsFor(function() {
+        return result.state() == 'resolved';
+      });
+
+      return notification;
     };
   });
 
@@ -930,9 +955,20 @@ describe('Integrated Continuation Tests', function () {
 
     theValidator = $.fubuvalidation.Core.Validator.basic();
 
-    continuationFor = function(element) {
+    continuationFor = function (element) {
       var target = $.fubuvalidation.Core.Target.forElement(element);
-      return theValidator.validate(target, null, 'live').toContinuation();
+      var notification = new $.fubuvalidation.Core.Notification();
+      var result = theValidator.validate(target, null, 'live');
+      
+      result.done(function (x) {
+        notification = x;
+      });
+
+      waitsFor(function () {
+        return result.state() == 'resolved';
+      });
+
+      return notification.toContinuation();
     };
   });
 
@@ -941,4 +977,106 @@ describe('Integrated Continuation Tests', function () {
     expect(theContinuation.errors[0].message).toEqual($.fubuvalidation.ValidationKeys.Required.toString());
     expect(theContinuation.errors[0].source).toEqual($.fubuvalidation.Rules.Required);
   });
+});
+
+describe('RuleRunner Tests', function () {
+  var theRule = null;
+  var theContext = null;
+  var theRunner = null;
+
+  beforeEach(function () {
+    theRule = {
+      validate: sinon.stub()
+    };
+
+    theContext = { id: '123' };
+
+    theRunner = new $.fubuvalidation.Core.RuleRunner(theRule, theContext);
+  });
+
+  it('validates the rule', function() {
+    theRunner.run();
+    expect(theRule.validate.called).toEqual(true);
+    expect(theRule.validate.getCall(0).args[0]).toEqual(theContext);
+  });
+
+  it('returns an empty object', function() {
+    // jQuery's when treats the plain object as a resolved Deferred
+    expect(theRunner.run()).toEqual({});
+  });
+
+});
+
+describe('AsyncRuleRunner', function() {
+  var theRule = null;
+  var thePromise = null;
+  var theContext = null;
+  var theRunner = null;
+
+  beforeEach(function() {
+    // just for the equality check
+    thePromise = { id: '123434' };
+
+    theRule = {
+      validate: function(context) {
+        if (context == theContext) {
+          return thePromise;
+        }
+      }
+    };
+
+    theContext = { id: '123' };
+
+    theRunner = new $.fubuvalidation.Core.AsyncRuleRunner(theRule, theContext);
+  });
+
+  it('returns the promise from the rule', function() {
+    expect(theRunner.run()).toEqual(thePromise);
+  });
+});
+
+describe('ValidationPlanTester', function() {
+  var theContext = null;
+  var thePlan = null;
+  var thePromise = null;
+
+  beforeEach(function() {
+    theContext = {
+      id: 'test',
+      notification: new $.fubuvalidation.Core.Notification()
+    };
+    
+    thePlan = new $.fubuvalidation.Core.ValidationPlan(theContext);
+
+    thePromise = $.Deferred();
+
+    thePlan.queueRunner({
+      run: function() {
+        var nestedPromise = $.Deferred();
+        thePromise.then(function() {
+          theContext.notification.registerMessage('test', 'Test');
+          nestedPromise.resolve();
+        });
+
+        return nestedPromise;
+      }
+    });
+  });
+
+  it('waits on the inner promise', function() {
+    var theNotification = null;
+    var result = thePlan.execute().done(function(notification) {
+      theNotification = notification;
+    });
+
+    thePromise.resolve();
+
+    waitsFor(function() {
+      return result.state() == 'resolved';
+    });
+
+    expect(theNotification).not.toBe(null);
+    expect(theNotification.isValid()).toEqual(false);
+  });
+
 });

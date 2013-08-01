@@ -18,9 +18,24 @@
       validation.Controller.bindEvents($(this));
 
       settings = $.extend(true, settings, options);
+      
+      function waitForNotification(promise) {
+        var notification = null;
+        promise.done(function (n) {
+          notification = n;
+        });
+        while (promise.state() == 'pending') {
+          // wait
+        }
+
+        return notification;
+      }
 
       $(this).submit(function () {
-        if (!validation.Controller.submitHandler(this)) {
+        var promise = validation.Controller.submitHandler(this);
+        var notification = waitForNotification(promise);
+        
+        if (!notification || !notification.isValid()) {
           return false;
         }
 

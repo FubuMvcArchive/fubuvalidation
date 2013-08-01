@@ -104,6 +104,7 @@
     this.name = 'remote';
     this.url = url;
     this.hash = hash;
+    this.async = true;
   }
 
   RemoteRule.prototype = {
@@ -111,7 +112,7 @@
       var target = context.target;
       var hash = this.hash;
 
-      $.ajax({
+      return $.ajax({
         url: this.url,
         data: { Hash: hash, Value: target.value() },
         async: false,

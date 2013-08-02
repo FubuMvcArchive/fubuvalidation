@@ -16,7 +16,6 @@
     <ClickCreate isStep="True" />
     <NoMessages isStep="True" />
     <ClickCreate isStep="True" />
-    <ClickCreate isStep="True" />
     <VerifyTheUsers isStep="True">
       <rows>
         <row isStep="True" Username="Test" />

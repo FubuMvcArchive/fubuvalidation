@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using FubuMVC.Validation.Serenity;
 using OpenQA.Selenium;
+using Serenity;
 using Serenity.Fixtures;
 using StoryTeller;
 using StoryTeller.Engine;
@@ -56,7 +57,11 @@ namespace FubuMVC.Validation.StoryTeller.Fixtures
 
         public IGrammar VerifyTheUsers()
         {
-            return VerifySetOf(() => _users.All())
+            return VerifySetOf(() =>
+                {
+                    Wait.Until(() => _users.All().Any());
+                    return _users.All();
+                })
                 .Titled("Verify the users")
                 .MatchOn(x => x.Username);
         }

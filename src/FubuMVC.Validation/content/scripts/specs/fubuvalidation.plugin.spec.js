@@ -1,11 +1,21 @@
-﻿function ValidationHarness(callback) {
+﻿var initialized = false;
+function ValidationHarness(callback) {
   this.form = $('#EndToEnd');
   this.container = $('.validation-container', this.form);
   this.posted = false;
 
-  this.form.validate({
-    continuationSuccess: callback
+  if (!initialized) {
+    this.form.validate({
+      ajax: true
+    });
+    initialized = true;
+  }
+
+  this.form.off('validation:processed');
+  this.form.on('validation:processed', function(e, continuation) {
+    callback(continuation);
   });
+
   this.form.resetForm();
 
   this.server = sinon.fakeServer.create();
@@ -28,6 +38,7 @@ ValidationHarness.prototype = {
   dispose: function () {
     this.form.resetForm();
     this.server.restore();
+    $.fubuvalidation.Controller.targetCache = {};
   }
 };
 
@@ -36,6 +47,7 @@ describe('when submitting an invalid form', function () {
   var theCallback = null;
 
   beforeEach(function () {
+    $.fubuvalidation.Controller.targetCache = {};
     theCallback = sinon.spy();
     theHarness = new ValidationHarness(theCallback);
 
@@ -61,32 +73,7 @@ describe('when submitting an invalid form', function () {
     expect(theHarness.elementFor('Email').hasClass('error')).toEqual(true);
   });
 
-  it('does not invoke the callback', function () {
-    expect(theCallback.called).toEqual(false);
-  });
-});
-
-describe('when submitting a valid form', function () {
-  var theHarness = null;
-  var theCallback = null;
-
-  beforeEach(function () {
-    theCallback = sinon.spy();
-    theHarness = new ValidationHarness(theCallback);
-
-    $('#Name', '#EndToEnd').val('Joel');
-    $('#Email', '#EndToEnd').val('joel@fubu-project.org');
-
-    theHarness.submit();
-
-    theHarness.server.respond();
-  });
-
-  afterEach(function () {
-    theHarness.dispose();
-  });
-
-  it('invokes the callback', function () {
+  it('invokes the processed callback', function () {
     expect(theCallback.called).toEqual(true);
   });
 });

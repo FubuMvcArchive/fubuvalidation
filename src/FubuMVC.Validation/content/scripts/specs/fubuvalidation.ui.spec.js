@@ -503,7 +503,7 @@ describe('validating a form', function() {
   });
 
   it('aggregates the promises from validating each element', function() {
-    var elements = $(['e1', 'e2']);
+    var elements = $([$('<input type="text" value="Test1" />'), $('<input type="text" value="Test2" />')]);
     theController.elementsFor = function() {
       return elements;
     };

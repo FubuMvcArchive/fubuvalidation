@@ -254,7 +254,7 @@
       form = $(form);
       var self = this;
 
-      return this.validateForm(form).done(function(notification) {
+      return this.validateForm(form).done(function (notification) {
         self.processNotification(notification, form);
       });
     },
@@ -264,7 +264,7 @@
     validateForm: function (form) {
       var self = this;
       var elements = this.elementsFor(form);
-      var notification = new validation.Core.Notification();
+      var notification = new $.fubuvalidation.Core.Notification();
       var options = validation.Core.Options.fromForm(form);
 
       var results = [];
@@ -272,12 +272,20 @@
         var target = validation.Core.Target.forElement($(this), form.attr('id'), form);
         var mode = validation.Core.ValidationMode.Triggered;
 
+        if (!self.shouldValidate(target)) {
+          return;
+        }
+
         var result = self.validator.validate(target, options, mode, notification);
+        result.done(function () {
+          self.targetValidated(target);
+        });
+        
         results.push(result);
       });
 
       var promise = $.Deferred();
-      $.when.apply($, results).always(function() {
+      $.when.apply($, results).always(function () {
         promise.resolve(notification);
       });
 
@@ -300,7 +308,7 @@
       var options = validation.Core.Options.fromForm(form);
       var target = validation.Core.Target.forElement(element, form.attr('id'), form);
       var self = this;
-      
+
       if (!this.shouldValidate(target)) {
         return $.when({});
       }
@@ -342,7 +350,7 @@
     },
     shouldValidate: function (target) {
       var key = target.toHash();
-      if (typeof(this.targetCache[key]) === 'undefined') {
+      if (typeof (this.targetCache[key]) === 'undefined') {
         return true;
       }
 

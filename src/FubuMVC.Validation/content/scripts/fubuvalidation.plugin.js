@@ -57,7 +57,7 @@
     continuation.success = true;
     continuation.form = $(this);
 
-    validation.Processor.reset(continuation);
+    validation.Controller.processContinuation(continuation);
 
     return _reset.call(this);
   };
@@ -93,7 +93,7 @@
         continuation.errors = [];
       }
 
-      validation.Processor.process(continuation);
+      validation.Controller.processContinuation(continuation);
     }
   });
 

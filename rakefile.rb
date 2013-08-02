@@ -56,6 +56,12 @@ task :storyteller do
     serenity "storyteller src/FubuMVC.Validation.StoryTeller/validation.xml results/Storyteller.html -b Phantom"
 end
 
+desc "Smoke test"
+task :smoke => [:default] do
+    sh "rm -rf src/FubuMVC.Validation.StoryTeller/fubu-content"
+    serenity "storyteller src/FubuMVC.Validation.StoryTeller/validation.xml results/Storyteller.html -b Phantom"
+end
+
 def self.serenity(args)
   serenity = Platform.runtime(Nuget.tool("Serenity", "SerenityRunner.exe"), "v4.0.30319")
   sh "#{serenity} #{args}"

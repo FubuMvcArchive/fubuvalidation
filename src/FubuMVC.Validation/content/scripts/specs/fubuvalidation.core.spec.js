@@ -138,6 +138,11 @@ describe('Transforming a ValidationNotification to an AjaxContinuation', functio
     expect(theNotification.toContinuation().success).toEqual(false);
   });
 
+  it('sets the mode', function() {
+    theNotification.mode = 'test';
+    expect(theNotification.toContinuation().mode).toEqual('test');
+  });
+
   it('sets the element on the error', function () {
     var theElement = $('<input type="text" name="Test" />');
     theNotification.registerMessage('field', $.fubuvalidation.ValidationKeys.Required, theElement);
@@ -1039,14 +1044,18 @@ describe('ValidationPlanTester', function() {
   var theContext = null;
   var thePlan = null;
   var thePromise = null;
+  var theRootNotification = null;
 
   beforeEach(function() {
     theContext = {
       id: 'test',
+      target: {fieldName:'test'},
       notification: new $.fubuvalidation.Core.Notification()
     };
+
+    theRootNotification = new $.fubuvalidation.Core.Notification();
     
-    thePlan = new $.fubuvalidation.Core.ValidationPlan(theContext);
+    thePlan = new $.fubuvalidation.Core.ValidationPlan(theRootNotification, theContext);
 
     thePromise = $.Deferred();
 
@@ -1077,6 +1086,56 @@ describe('ValidationPlanTester', function() {
 
     expect(theNotification).not.toBe(null);
     expect(theNotification.isValid()).toEqual(false);
+  });
+
+});
+
+describe('Executing validation plan for an existing notification', function () {
+  var theContext = null;
+  var thePlan = null;
+  var thePromise = null;
+  var theRootNotification = null;
+
+  beforeEach(function () {
+    theContext = {
+      id: 'test',
+      target: { fieldName: 'test' },
+      notification: new $.fubuvalidation.Core.Notification()
+    };
+
+    theRootNotification = new $.fubuvalidation.Core.Notification();
+    theRootNotification.registerMessage('test', 'Error', {}, {});
+
+    thePlan = new $.fubuvalidation.Core.ValidationPlan(theRootNotification, theContext);
+
+    thePromise = $.Deferred();
+
+    thePlan.queueRunner({
+      run: function () {
+        var nestedPromise = $.Deferred();
+        thePromise.then(function () {
+          // No message registered (valid)
+          nestedPromise.resolve();
+        });
+
+        return nestedPromise;
+      }
+    });
+  });
+
+  it('clears out the original messages', function () {
+    var theNotification = null;
+    var result = thePlan.execute().done(function (notification) {
+      theNotification = notification;
+    });
+
+    thePromise.resolve();
+
+    waitsFor(function () {
+      return result.state() == 'resolved';
+    });
+
+    expect(theNotification.isValid()).toEqual(true);
   });
 
 });

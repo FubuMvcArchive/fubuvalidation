@@ -47,7 +47,7 @@ namespace FubuMVC.Validation.StoryTeller
             Property(x => x.NoMoreThanFiveCharacters).MaximumLength(5);
             Property(x => x.AtLeastFiveButNotTen).RangeLength(5, 10);
             Property(x => x.GreaterThanFive).MinValue(5);
-            Property(x => x.LessThanFifteen).MaxValue(15);
+            Property(x => x.LessThanFifteen).MaxValue(15d);
             Property(x => x.Email).Email();
             Property(x => x.Required).Required();
 

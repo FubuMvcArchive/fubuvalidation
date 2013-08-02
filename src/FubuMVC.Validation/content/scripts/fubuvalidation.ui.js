@@ -11,6 +11,51 @@
     exports.Strategies[name] = clazz;
   }
 
+  function RenderingContext(continuation, element, mode) {
+    this.continuation = continuation;
+    this.element = element;
+    this.mode = mode;
+  }
+
+  RenderingContext.prototype = {
+    isValid: function () {
+      return this.continuation.success && this.continuation.errors.length == 0;
+    },
+    isTriggered: function () {
+      return this.mode === validation.Core.ValidationMode.Triggered;
+    },
+    isLive: function () {
+      return this.mode === validation.Core.ValidationMode.Live;
+    },
+    isServerGenerated: function () {
+      return this.continuation.validationOrigin === 'server';
+    },
+    isEntireForm: function () {
+      return !this.element || typeof (this.element) === 'undefined';
+    },
+    eachError: function (action) {
+      if (!this.element) {
+        var errors = this.continuation.errors;
+        for (var i = 0; i < errors.length; i++) {
+          action(errors[i]);
+        }
+
+        return;
+      }
+
+      this.errorsForElement(action);
+    },
+    errorsForElement: function (action) {
+      var errors = this.continuation.errors;
+      for (var i = 0; i < errors.length; i++) {
+        var error = errors[i];
+        if (error.element == this.element) {
+          action(error);
+        }
+      }
+    }
+  };
+
   function DefaultHandler() {
     this.strategies = [];
   }
@@ -19,22 +64,22 @@
     registerStrategy: function (strategy) {
       this.strategies.push(strategy);
     },
-    strategiesMatching: function (continuation, action) {
+    strategiesMatching: function (context, action) {
       _.each(this.strategies, function (strategy) {
-        if (strategy.matches(continuation)) {
+        if (strategy.matches(context)) {
           action(strategy);
         }
       });
     },
-    process: function (continuation) {
-      this.reset(continuation);
-      this.strategiesMatching(continuation, function (strategy) {
-        strategy.render(continuation);
+    process: function (context) {
+      this.reset(context);
+      this.strategiesMatching(context, function (strategy) {
+        strategy.render(context);
       });
     },
-    reset: function (continuation) {
-      this.strategiesMatching(continuation, function (strategy) {
-        strategy.reset(continuation);
+    reset: function (context) {
+      this.strategiesMatching(context, function (strategy) {
+        strategy.reset(context);
       });
     }
   };
@@ -81,17 +126,17 @@
         }
       }
     },
-    process: function (continuation) {
-      this.fillElements(continuation);
-      this.handler.process(continuation);
+    process: function (context) {
+      this.fillElements(context.continuation);
+      this.handler.process(context);
     },
     registerStrategy: function (strategy) {
       if (typeof (this.handler.registerStrategy) == 'function') {
         this.handler.registerStrategy(strategy);
       }
     },
-    reset: function (continuation) {
-      this.handler.reset(continuation);
+    reset: function (context) {
+      this.handler.reset(context);
     }
   };
 
@@ -126,7 +171,8 @@
   }
 
   ValidationSummaryStrategy.prototype = {
-    matches: function (continuation) {
+    matches: function (context) {
+      var continuation = context.continuation;
       var value = continuation.form.data('validationSummary');
       return typeof (value) != 'undefined';
     },
@@ -137,38 +183,40 @@
         summary: container.find('ul.validation-summary')
       };
     },
-    reset: function (continuation, context) {
-      if (!context) {
-        context = this.summaryContext(continuation);
+    reset: function (renderingContext, summaryContext) {
+      var continuation = renderingContext.continuation;
+      if (!summaryContext) {
+        summaryContext = this.summaryContext(continuation);
       }
 
-      context.summary.html('');
-      context.container.hide();
+      summaryContext.summary.html('');
+      summaryContext.container.hide();
     },
-    render: function (continuation) {
-      var context = this.summaryContext(continuation);
+    render: function (context) {
+      var continuation = context.continuation;
+      var summaryContext = this.summaryContext(continuation);
       if (continuation.errors.length == 0) {
         return;
       }
 
-      context.container.show();
+      summaryContext.container.show();
 
       for (var i = 0; i < continuation.errors.length; i++) {
         var error = continuation.errors[i];
-        this.append(context, error);
+        this.append(summaryContext, error);
       }
     },
     append: function (context, error) {
       var found = false;
       context
-  .summary
-          .find("li[data-field='" + error.field + "']")
-          .each(function () {
-            if (found) return;
-            if ($(this).find('a').html() == error.message) {
-              found = true;
-            }
-          });
+        .summary
+        .find("li[data-field='" + error.field + "']")
+        .each(function () {
+          if (found) return;
+          if ($(this).find('a').html() == error.message) {
+            found = true;
+          }
+        });
 
       if (!found) {
         var token = tokenFor(error);
@@ -189,57 +237,54 @@
   }
 
   ElementHighlightingStrategy.prototype = {
-    matches: function (continuation) {
+    matches: function (context) {
+      var continuation = context.continuation;
       var value = continuation.form.data('validationHighlight');
       return typeof (value) != 'undefined';
     },
-    reset: function (continuation) {
-      continuation.form.find('.error').each(function () {
-        $(this).removeClass('error');
-      });
+    reset: function (context) {
+      var continuation = context.continuation;
+      if (context.isEntireForm()) {
+        continuation.form.find('.error').each(function () {
+          $(this).removeClass('error');
+        });
+      }
+      else {
+        context.eachError(function (error) {
+          if (error.element) {
+            error.element.removeClass('error');
+          }
+        });
+      }
     },
-    render: function (continuation) {
-      this.eachError(continuation, function (error) {
+    render: function (context) {
+      context.eachError(function (error) {
         error.element.addClass('error');
       });
     },
-    eachError: function (continuation, action) {
-      for (var i = 0; i < continuation.errors.length; i++) {
-        var error = continuation.errors[i];
-        if (error.element) {
-          action(error);
-        }
-      }
-    }
   };
 
   function InlineErrorStrategy() {
   }
 
   InlineErrorStrategy.prototype = {
-    matches: function (continuation) {
+    matches: function (context) {
+      var continuation = context.continuation;
       var value = continuation.form.data('validationInline');
       return typeof (value) != 'undefined';
     },
-    reset: function (continuation) {
+    reset: function (context) {
+      var continuation = context.continuation;
       continuation.form.find('.fubu-inline-error').each(function () {
         $(this).remove();
       });
     },
-    render: function (continuation) {
-      this.eachError(continuation, function (error) {
+    render: function (context) {
+      context.eachError(function (error) {
         var message = $('<span class="help-inline fubu-inline-error" data-field="' + error.field + '">' + error.message + '</span>');
 
         error.element.after(message);
       });
-    },
-    eachError: function (continuation, action) {
-      for (var i = 0; i < continuation.errors.length; i++) {
-        var error = continuation.errors[i];
-        if (error.element) {
-          action(error);
-        }
-      }
     }
   };
 
@@ -264,7 +309,7 @@
     validateForm: function (form) {
       var self = this;
       var elements = this.elementsFor(form);
-      var notification = new $.fubuvalidation.Core.Notification();
+      var notification = form.notification();
       var options = validation.Core.Options.fromForm(form);
 
       var results = [];
@@ -272,15 +317,15 @@
         var target = validation.Core.Target.forElement($(this), form.attr('id'), form);
         var mode = validation.Core.ValidationMode.Triggered;
 
-        if (!self.shouldValidate(target)) {
+        if (!self.shouldValidate(target, mode)) {
           return;
         }
 
         var result = self.validator.validate(target, options, mode, notification);
         result.done(function () {
-          self.targetValidated(target);
+          self.targetValidated(target, mode);
         });
-        
+
         results.push(result);
       });
 
@@ -297,27 +342,36 @@
       this.processContinuation(continuation, form, element);
     },
     processContinuation: function (continuation, form, element) {
-      continuation.form = form;
-      continuation.element = element;
-      this.processor.process(continuation);
+      if (form) {
+        continuation.form = form;
+      }
 
-      form.trigger('validation:processed', [continuation]);
+      continuation.element = element;
+
+      var context = new RenderingContext(continuation, element, continuation.mode);
+      this.processor.process(context);
+
+      var formToTrigger = form || continuation.form;
+      if (formToTrigger) {
+        formToTrigger.trigger('validation:processed', [continuation]);
+      }
     },
     elementHandler: function (element, form) {
       var notification = form.notification();
       var options = validation.Core.Options.fromForm(form);
       var target = validation.Core.Target.forElement(element, form.attr('id'), form);
+      var mode = validation.Core.ValidationMode.Live;
       var self = this;
 
-      if (!this.shouldValidate(target)) {
+      if (!this.shouldValidate(target, mode)) {
         return $.when({});
       }
 
-      var result = this.validator.validate(target, options, validation.Core.ValidationMode.Live);
+      var result = this.validator.validate(target, options, mode);
       result.done(function (elementNotification) {
         notification.importForTarget(elementNotification, target);
         self.processNotification(notification, form, element);
-        self.targetValidated(target);
+        self.targetValidated(target, mode);
       });
 
       return result;
@@ -345,16 +399,20 @@
             self.elementHandler(element, form);
           });
     },
-    targetValidated: function (target) {
-      this.targetCache[target.toHash()] = target.value();
+    targetValidated: function (target, mode) {
+      var key = this.hashFor(target, mode);
+      this.targetCache[key] = target.value();
     },
-    shouldValidate: function (target) {
-      var key = target.toHash();
+    shouldValidate: function (target, mode) {
+      var key = this.hashFor(target, mode);
       if (typeof (this.targetCache[key]) === 'undefined') {
         return true;
       }
 
       return this.targetCache[key] != target.value();
+    },
+    hashFor: function (target, mode) {
+      return target.toHash() + '&mode=' + mode;
     }
   };
 
@@ -372,7 +430,7 @@
     return notification;
   };
 
-
+  defineCore('RenderingContext', RenderingContext);
   defineCore('DefaultHandler', DefaultHandler);
   defineCore('ValidationProcessor', ValidationProcessor);
   defineCore('TokenFor', tokenFor);

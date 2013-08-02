@@ -101,6 +101,7 @@
     toContinuation: function () {
       var continuation = new $fubu.continuations.continuation();
       continuation.success = this.isValid();
+      continuation.mode = this.mode;
 
       var messages = this.allMessages();
       for (var i = 0; i < messages.length; i++) {
@@ -283,11 +284,15 @@
         fields: []
       });
 
-      notification = notification || new ValidationNotification();
+      var root = notification || new ValidationNotification();
+      root.mode = mode;
+      
+      var elementNotification = new ValidationNotification();
+      
       var self = this;
-      var context = new ValidationContext(target, notification);
+      var context = new ValidationContext(target, elementNotification);
       var rules = this.rulesFor(target);
-      var plan = new ValidationPlan(context);
+      var plan = new ValidationPlan(root, context);
 
 
       _.each(rules, function (rule) {
@@ -350,7 +355,8 @@
     }
   };
   
-  function ValidationPlan(context) {
+  function ValidationPlan(root, context) {
+    this.root = root;
     this.runners = [];
     this.context = context;
   }
@@ -368,7 +374,8 @@
       });
       
       $.when.apply($, promises).always(function () {
-        promise.resolve(self.context.notification);
+        self.root.importForTarget(self.context.notification, self.context.target);
+        promise.resolve(self.root);
       });
 
       return promise;

@@ -4,8 +4,6 @@
     if (typeof (results) == 'undefined') return;
 
     var continuation = new $fubu.continuations.create(results);
-
-    continuation.form = $(this);
-    $.fubuvalidation.Processor.process(continuation);
+    $.fubuvalidation.Controller.processContinuation(continuation, $(this));
   });
 });

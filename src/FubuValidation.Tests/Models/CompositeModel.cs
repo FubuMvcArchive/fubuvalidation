@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace FubuValidation.Tests.Models
 {
     public class CompositeModel
@@ -6,5 +8,6 @@ namespace FubuValidation.Tests.Models
         [ContinueValidation]
         public ContactModel Contact { get; set; }
         public ContactModel RestrictedContact { get; set; }
+        public IList<ContactModel> Contacts { get; set; }
     }
 }

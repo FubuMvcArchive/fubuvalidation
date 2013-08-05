@@ -51,9 +51,10 @@ namespace FubuValidation.Fields
 
             var accessors = propertyValueGetters
                 .Take(propertyValueGetters.Length - 1)
-                .Select(p => new SingleProperty(p.PropertyInfo));
+                .Select(p => new SingleProperty(p.PropertyInfo))
+                .ToList();
 
-            return accessors.All(HasRule<ContinuationFieldRule>);
+            return accessors.Any() && accessors.All(HasRule<ContinuationFieldRule>);
         }
 
         public bool HasRule<T>(Accessor accessor) where T : IFieldValidationRule

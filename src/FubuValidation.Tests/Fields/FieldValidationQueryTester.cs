@@ -76,5 +76,13 @@ namespace FubuValidation.Tests.Fields
                 .ForRule<RequiredFieldRule>(accessor, rule => { found = true; });
             found.ShouldBeTrue();
         }
+
+        [Test]
+        public void should_not_get_rules_for_ancillary_objects_in_collection()
+        {
+            _query
+                .RulesFor<CompositeModel>(m => m.Contacts[0])
+                .ShouldHaveCount(0);
+        }
     }
 }

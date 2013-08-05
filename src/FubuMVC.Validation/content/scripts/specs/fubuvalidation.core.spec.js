@@ -108,6 +108,7 @@ describe('importing a notification with similar and different messages', functio
     var theNewNotification = new $.fubuvalidation.Core.Notification();
     theNewNotification.registerMessage('Test', 'User-friendly message', '123', theContext);
     theNewNotification.registerMessage('Test 2', 'Another message for this field', '125', theContext);
+    theNewNotification.mode = 'live';
 
     theTarget = new $.fubuvalidation.Core.Target('Test 2', 'blah', 'blah');
 
@@ -119,6 +120,10 @@ describe('importing a notification with similar and different messages', functio
     var m2 = { field: 'Test 2', token: 'Another message for this field', element: '125', context: theContext };
 
     expect(theNotification.allMessages().length).toEqual(2);
+  });
+  
+  it('sets the root mode', function() {
+    expect(theNotification.mode).toEqual('live');
   });
 });
 

@@ -124,6 +124,7 @@
     },
 
     importForTarget: function (notification, target) {
+      this.mode = notification.mode;
       this.messages[target.fieldName] = notification.messagesFor(target.fieldName);
     }
   };
@@ -288,6 +289,7 @@
       root.mode = mode;
       
       var elementNotification = new ValidationNotification();
+      elementNotification.mode = mode;
       
       var self = this;
       var context = new ValidationContext(target, elementNotification);

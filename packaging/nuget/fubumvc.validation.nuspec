@@ -13,8 +13,9 @@
     <tags>fubumvc mvc fubu validation conventional</tags>
     <dependencies>
       <dependency id="FubuMVC.Core" version="0.9.9.1366" />
-	  <dependency id="FubuMVC.Core.Assets" version="0.9.9.94" />
+      <dependency id="FubuMVC.Core.Assets" version="0.9.9.94" />
       <dependency id="FubuMVC.Core.UI" version="0.9.9.109" />
+      <dependency id="FubuMVC.Ajax" version="0.1.0.399" />
       <dependency id="FubuValidation" />
       <dependency id="FubuCore" version="0.9.9.151" />
     </dependencies>

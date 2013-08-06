@@ -212,6 +212,7 @@
 
   function ValidationOptions(options) {
     this.mode = ValidationMode.Live;
+    this.elementTimeout = 500;
     $.extend(true, this, options);
   }
 

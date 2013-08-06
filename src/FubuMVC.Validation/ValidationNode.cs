@@ -10,67 +10,73 @@ using FubuValidation;
 
 namespace FubuMVC.Validation
 {
-	public interface IValidationNode
-	{
-		void Modify(FormRequest request);
+    public interface IValidationNode
+    {
+        void Modify(FormRequest request);
 
-		ValidationMode DetermineMode(IServiceLocator services, Accessor accessor);
-	}
+        ValidationMode DetermineMode(IServiceLocator services, Accessor accessor);
+    }
 
     public class ValidationNode : IValidationNode, IEnumerable<IRenderingStrategy>
     {
-	    private ValidationMode _mode;
+        public const int DefaultTimeout = 500;
+
+        private ValidationMode _mode;
         private readonly IList<IRenderingStrategy> _strategies = new List<IRenderingStrategy>();
-		private readonly IList<IValidationModePolicy> _policies = new List<IValidationModePolicy>();
+        private readonly IList<IValidationModePolicy> _policies = new List<IValidationModePolicy>();
 
-	    public ValidationNode()
-	    {
-		    DefaultMode(ValidationMode.Live);
+        public ValidationNode()
+        {
+            DefaultMode(ValidationMode.Live);
 
-			RegisterPolicy(new ValidationModeAttributePolicy());
-			RegisterPolicy(new AccessorRulesValidationModePolicy());
-	    }
+            ElementTimeout = DefaultTimeout;
 
-	    public ValidationMode Mode
-	    {
-		    get { return _mode; }
-	    }
+            RegisterPolicy(new ValidationModeAttributePolicy());
+            RegisterPolicy(new AccessorRulesValidationModePolicy());
+        }
 
-	    public void DefaultMode(ValidationMode mode)
-		{
-			_mode = mode;
-		}
+        public int ElementTimeout { get; set; }
 
-		public bool IsEmpty()
-		{
-			return !_strategies.Any();
-		}
+        public ValidationMode Mode
+        {
+            get { return _mode; }
+        }
 
-		void IValidationNode.Modify(FormRequest request)
-		{
-			Each(x => x.Modify(request));
-		}
+        public void DefaultMode(ValidationMode mode)
+        {
+            _mode = mode;
+        }
 
-		ValidationMode IValidationNode.DetermineMode(IServiceLocator services, Accessor accessor)
-		{
-			var policy = _policies.LastOrDefault(x => x.Matches(services, accessor));
-			if (policy != null)
-			{
-				return policy.DetermineMode(services, accessor);
-			}
+        public bool IsEmpty()
+        {
+            return !_strategies.Any();
+        }
 
-			return _mode;
-		}
+        void IValidationNode.Modify(FormRequest request)
+        {
+            Each(x => x.Modify(request));
+        }
+
+        ValidationMode IValidationNode.DetermineMode(IServiceLocator services, Accessor accessor)
+        {
+            var policy = _policies.LastOrDefault(x => x.Matches(services, accessor));
+            if (policy != null)
+            {
+                return policy.DetermineMode(services, accessor);
+            }
+
+            return _mode;
+        }
 
         public void RegisterStrategy(IRenderingStrategy strategy)
         {
             _strategies.Fill(strategy);
         }
 
-		public void RegisterPolicy(IValidationModePolicy policy)
-		{
-			_policies.Fill(policy);
-		}
+        public void RegisterPolicy(IValidationModePolicy policy)
+        {
+            _policies.Fill(policy);
+        }
 
         public void Each(Action<IRenderingStrategy> action)
         {
@@ -82,17 +88,17 @@ namespace FubuMVC.Validation
             _strategies.Clear();
         }
 
-	    public IEnumerator<IRenderingStrategy> GetEnumerator()
-	    {
-		    return _strategies.GetEnumerator();
-	    }
+        public IEnumerator<IRenderingStrategy> GetEnumerator()
+        {
+            return _strategies.GetEnumerator();
+        }
 
-	    public override bool Equals(object obj)
+        public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((ValidationNode) obj);
+            return Equals((ValidationNode)obj);
         }
 
         protected bool Equals(ValidationNode other)
@@ -108,12 +114,12 @@ namespace FubuMVC.Validation
             }
         }
 
-	    IEnumerator IEnumerable.GetEnumerator()
-	    {
-		    return GetEnumerator();
-	    }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
 
-	    public static ValidationNode Empty()
+        public static ValidationNode Empty()
         {
             return new ValidationNode();
         }

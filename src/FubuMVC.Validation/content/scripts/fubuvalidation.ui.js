@@ -378,6 +378,7 @@
     },
     bindEvents: function (form) {
       var self = this;
+      var options = validation.Core.Options.fromForm(form);
       form
           .on("change", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
             var element = $(e.target);
@@ -392,7 +393,7 @@
 
             element.data("validation-timeout", setTimeout(function () {
               self.elementHandler(element, form);
-            }, 500));
+            }, options.elementTimeout));
           })
           .on("change", "input:radio:not([disabled]),input:checkbox:not([disabled]),select:not([disabled])", function (e) {
             var element = $(e.target);

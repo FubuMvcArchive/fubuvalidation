@@ -60,6 +60,7 @@
     <Compile Include="Fields\ClassFieldValidationRules.cs" />
     <Compile Include="Fields\CollectionLengthRule.cs" />
     <Compile Include="Fields\ContinuationFieldRule.cs" />
+    <Compile Include="Fields\CustomFieldValidationRule.cs" />
     <Compile Include="Fields\EmailFieldRule.cs" />
     <Compile Include="Fields\FieldRuleSource.cs" />
     <Compile Include="Fields\FieldRulesRegistry.cs" />

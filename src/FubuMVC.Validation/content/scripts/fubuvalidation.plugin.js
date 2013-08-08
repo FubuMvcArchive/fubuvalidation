@@ -34,8 +34,11 @@
       $(this).submit(function () {
         var promise = validation.Controller.submitHandler(this);
         var notification = waitForNotification(promise);
+
+        var formValidated = new validation.UI.FormValidated(notification);
+        $(this).trigger('validation:onsubmission', [formValidated]);
         
-        if (!notification || !notification.isValid()) {
+        if (!formValidated.shouldSubmit()) {
           return false;
         }
 

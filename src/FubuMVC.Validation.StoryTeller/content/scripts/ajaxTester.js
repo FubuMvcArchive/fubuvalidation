@@ -7,6 +7,11 @@
     },
     allMessages: function() {
       return messages;
+    },
+    preventSubmission: function() {
+      $('#AjaxForm').on('validation:onsubmission', function(event, validation) {
+        validation.preventSubmission();
+      });
     }
   };
 }());

@@ -871,3 +871,35 @@ describe('Processing a continuation', function() {
   });
 
 });
+
+describe('FormValidated', function() {
+  var theEvent = null;
+  var theNotification = null;
+  var isValid = null;
+
+  beforeEach(function() {
+    theNotification = {
+      isValid: function() {
+        return isValid;
+      }
+    };
+    theEvent = new $.fubuvalidation.UI.FormValidated(theNotification);
+  });
+
+  it('shouldSubmit defaults to notification validity', function () {
+    isValid = true;
+    expect(theEvent.shouldSubmit()).toEqual(true);
+  });
+  
+  it('shouldSubmit defaults to notification validity (negative)', function () {
+    isValid = false;
+    expect(theEvent.shouldSubmit()).toEqual(false);
+  });
+
+  it('prevents the submission', function() {
+    isValid = true;
+    theEvent.preventSubmission();
+    expect(theEvent.shouldSubmit()).toEqual(false);
+  });
+
+});

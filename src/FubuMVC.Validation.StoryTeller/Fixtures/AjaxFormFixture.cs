@@ -7,50 +7,56 @@ using StoryTeller.Engine;
 
 namespace FubuMVC.Validation.StoryTeller.Fixtures
 {
-	// TODO -- Come back and add a test to use this after we figure out the Bottles issue
-	public class AjaxFormFixture : ScreenFixture<AjaxModel>
-	{
-		public AjaxFormFixture()
-		{
-			Title = "Ajax Form";
+    // TODO -- Come back and add a test to use this after we figure out the Bottles issue
+    public class AjaxFormFixture : ScreenFixture<AjaxModel>
+    {
+        public AjaxFormFixture()
+        {
+            Title = "Ajax Form";
 
-			EditableElementsForAllImmediateProperties();
-		}
+            EditableElementsForAllImmediateProperties();
+        }
 
-		protected override void beforeRunning()
-		{
-			Navigation.NavigateTo(new AjaxModel());
-		}
+        protected override void beforeRunning()
+        {
+            Navigation.NavigateTo(new AjaxModel());
+        }
 
-		[FormatAs("Submit the form")]
-		public void Submit()
-		{
-			Driver.FindElement(By.Id("Submit")).Click();
-		}
+        [FormatAs("Submit the form")]
+        public void Submit()
+        {
+            Driver.FindElement(By.Id("Submit")).Click();
+        }
 
-		[FormatAs("No messages were recorded")]
-		public bool NoMessages()
-		{
-			return !messages().Any();
-		}
+        [FormatAs("No messages were recorded")]
+        public bool NoMessages()
+        {
+            return !messages().Any();
+        }
 
-		public IGrammar VerifyTheMessages()
-		{
-			return VerifySetOf(messages)
-				.Titled("Verify the messages")
-				.MatchOn(x => x.Message);
-		}
+        public IGrammar VerifyTheMessages()
+        {
+            return VerifySetOf(messages)
+                .Titled("Verify the messages")
+                .MatchOn(x => x.Message);
+        }
 
-		private IEnumerable<RecordedMessage> messages()
-		{
-			return Driver.InjectJavascript<IEnumerable<object>>("return AjaxController.allMessages()")
-				.Cast<string>()
-				.Select(x => new RecordedMessage { Message = x});
-		}
+        [FormatAs("Add a listener to prevent the form from being submitted")]
+        public void PreventTheForm()
+        {
+            Driver.As<IJavaScriptExecutor>().ExecuteScript("AjaxController.preventSubmission()");
+        }
 
-		public class RecordedMessage
-		{
-			public string Message { get; set; }
-		}
-	}
+        private IEnumerable<RecordedMessage> messages()
+        {
+            return Driver.InjectJavascript<IEnumerable<object>>("return AjaxController.allMessages()")
+                .Cast<string>()
+                .Select(x => new RecordedMessage { Message = x });
+        }
+
+        public class RecordedMessage
+        {
+            public string Message { get; set; }
+        }
+    }
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Test name="Preventing submission" lifecycle="Acceptance">
+  <AjaxForm>
+    <EnterName isStep="True" Name="User 1" />
+    <PreventTheForm isStep="True" />
+    <Submit isStep="True" />
+    <NoMessages isStep="True" />
+  </AjaxForm>
+</Test>

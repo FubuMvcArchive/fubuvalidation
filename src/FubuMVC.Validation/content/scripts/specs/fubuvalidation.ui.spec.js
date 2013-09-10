@@ -515,7 +515,12 @@ describe('ElementHighlightingStrategy tests', function () {
         label: 'FirstName',
         message: 'First Name is required',
         element: $('#FirstName', '#ElementHighlightingStrategy')
-      }]
+        }, {
+            field: null,
+            label: null,
+            message: 'Something bad happened',
+            element: null
+        }]
     };
     
     theContext = new $.fubuvalidation.UI.RenderingContext(theContinuation);

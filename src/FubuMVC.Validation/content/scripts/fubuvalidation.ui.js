@@ -259,7 +259,9 @@
     },
     render: function (context) {
       context.eachError(function (error) {
-        error.element.addClass('error');
+          if (error.element) {
+              error.element.addClass('error');
+          }
       });
     }
   };

@@ -170,7 +170,10 @@
       var value2 = element2.val();
 
       if (value1 == '' && value2 == '') return;
-      if (value1 == value2) return;
+      if (value1 == value2) {
+        element2.trigger('validation:bustCache');
+        return; 
+      }
 
       if (this.options.message) {
         context.target.useLocalizationMessages({ 'fieldequality': this.options.message });

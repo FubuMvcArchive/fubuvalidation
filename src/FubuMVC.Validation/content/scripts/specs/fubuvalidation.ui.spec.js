@@ -840,6 +840,24 @@ describe('ValidationFormController', function() {
     expect(theController.shouldValidate(target)).toEqual(false);
   });
 
+  it('invalidate target erases targetcache on key', function() {
+    var element = $('<input type="text" value"Text" />');
+    var target = $.fubuvalidation.Core.Target.forElement(element, '123');
+    var key = theController.hashFor(target, 'live');
+    theController.targetCache[key] = 'Test';
+    theController.invalidateTarget(target, 'live');
+    expect(theController.targetCache[key]).toEqual(undefined);
+  });
+
+  it('invalidate target does nothing when targetcache key undefined', function () {
+    var element = $('<input type="text" value"Text" />');
+    var target = $.fubuvalidation.Core.Target.forElement(element, '123');
+    var key = theController.hashFor(target, 'live');
+    theController.targetCache[key] = undefined;
+    theController.invalidateTarget(target, 'live');
+    expect(theController.targetCache[key]).toEqual(undefined);
+  });
+
 });
 
 describe('Processing a continuation', function() {

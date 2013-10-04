@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<Test name="Password validation corner case test" lifecycle="Acceptance">
+  <SystemState>
+    <TheUsersAre isStep="True">
+      <Rows>
+        <row isStep="True" Username="test" />
+      </Rows>
+    </TheUsersAre>
+  </SystemState>
+  <ClassValidationScreen>
+    <ClickTheSubmitButton isStep="True" />
+    <EnterPassword isStep="True" Password="aa" />
+    <EnterConfirmPassword isStep="True" ConfirmPassword="aaa" />
+    <EnterPassword isStep="True" Password="aaa" />
+    <Delay isStep="True" milliseconds="2000" />
+    <VerifyValidationMessages isStep="True">
+      <rows>
+        <row isStep="True" Property="LongerThanTen" Message="en-US_LongerThanTen - Minimum length not met. Must be greater than or equal to 10" />
+        <row isStep="True" Property="AtLeastFiveButNotTen" Message="en-US_AtLeastFiveButNotTen - Value must be between 5 and 10 characters" />
+        <row isStep="True" Property="GreaterThanFive" Message="en-US_GreaterThanFive - Value must be greater than or equal to 5" />
+        <row isStep="True" Property="Required" Message="en-US_Required - Required Field" />
+      </rows>
+    </VerifyValidationMessages>
+  </ClassValidationScreen>
+</Test>

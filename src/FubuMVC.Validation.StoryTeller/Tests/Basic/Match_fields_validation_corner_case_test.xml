@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Test name="Password validation corner case test" lifecycle="Acceptance">
+<Test name="Password validation corner case test" lifecycle="Regression">
   <SystemState>
     <TheUsersAre isStep="True">
       <Rows>

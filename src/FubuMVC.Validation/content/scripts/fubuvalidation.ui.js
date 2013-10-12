@@ -261,7 +261,7 @@
       context.eachError(function (error) {
         error.element.addClass('error');
       });
-    },
+    }
   };
 
   function InlineErrorStrategy() {

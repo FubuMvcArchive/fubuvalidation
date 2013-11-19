@@ -5,7 +5,7 @@ namespace FubuMVC.HelloValidation
 {
     public static class TagExtensions
     {
-        public static FormTag WithValidationSummary<T>(this FormTag form)
+		public static HtmlTag WithValidationSummary<T>(this HtmlTag form)
         {
             form.Id(typeof(T).Name);
             var summary = new HtmlTag("div")

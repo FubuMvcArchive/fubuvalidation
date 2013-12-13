@@ -76,52 +76,56 @@
     <Compile Include="AccessorRulesExtensions.cs" />
     <Compile Include="AccessorRulesFieldSource.cs" />
     <Compile Include="AccessorRulesValidationModePolicy.cs" />
-    <Compile Include="AjaxValidation.cs" />
     <Compile Include="AjaxContinuationResolver.cs" />
+    <Compile Include="AjaxValidation.cs" />
+    <Compile Include="AjaxValidationBehavior.cs" />
+    <Compile Include="AjaxValidationNode.cs" />
+    <Compile Include="CompositeChainFilter.cs" />
+    <Compile Include="DefaultValidationChainFilter.cs" />
     <Compile Include="Diagnostics\ValidationDiagnostics.cs" />
     <Compile Include="Diagnostics\ValidationDiagnosticsSource.cs" />
+    <Compile Include="FubuMvcValidation.cs" />
     <Compile Include="FubuMvcValidationServices.cs" />
     <Compile Include="FubuValidationServiceRegistry.cs" />
+    <Compile Include="HasInputType.cs" />
+    <Compile Include="IAjaxValidationFailureHandler.cs" />
+    <Compile Include="IHaveValidation.cs" />
     <Compile Include="IValidationModePolicy.cs" />
+    <Compile Include="ModelBindingErrors.cs" />
     <Compile Include="NotValidatedAttribute.cs" />
     <Compile Include="NotValidatedAttributeFilter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterRemoteRuleQuery.cs" />
-    <Compile Include="RemoteRuleExpression.cs" />
     <Compile Include="Remote\IRemoteFieldValidationRule.cs" />
     <Compile Include="Remote\IRemoteRuleFilter.cs" />
     <Compile Include="Remote\IRemoteRuleQuery.cs" />
+    <Compile Include="Remote\IRuleRunner.cs" />
+    <Compile Include="Remote\IValidationTargetResolver.cs" />
     <Compile Include="Remote\RemoteAttribute.cs" />
+    <Compile Include="Remote\RemoteFieldRule.cs" />
+    <Compile Include="Remote\RemoteRuleGraph.cs" />
+    <Compile Include="Remote\RemoteRuleGraphActivator.cs" />
+    <Compile Include="Remote\ValidateField.cs" />
+    <Compile Include="RemoteRuleExpression.cs" />
     <Compile Include="UI\AttachDefaultValidationSummary.cs" />
     <Compile Include="UI\CssValidationAnnotationStrategy.cs" />
     <Compile Include="UI\DateElementModifier.cs" />
     <Compile Include="UI\DefaultValidationSummaryNode.cs" />
     <Compile Include="UI\DefaultValidationSummaryWriter.cs" />
+    <Compile Include="UI\ElementLocalizationMessages.cs" />
     <Compile Include="UI\FieldEqualityFormModifier.cs" />
     <Compile Include="UI\FieldOptions.cs" />
     <Compile Include="UI\FieldValidationElementModifier.cs" />
     <Compile Include="UI\FormValidationModifier.cs" />
     <Compile Include="UI\FormValidationSummaryModifier.cs" />
     <Compile Include="UI\IFieldValidationModifier.cs" />
-    <Compile Include="IAjaxValidationFailureHandler.cs" />
-    <Compile Include="AjaxValidationBehavior.cs" />
-    <Compile Include="CompositeChainFilter.cs" />
-    <Compile Include="DefaultValidationChainFilter.cs" />
-    <Compile Include="HasInputType.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Remote\IRuleRunner.cs" />
-    <Compile Include="Remote\IValidationTargetResolver.cs" />
-    <Compile Include="Remote\RemoteFieldRule.cs" />
-    <Compile Include="Remote\RemoteRuleGraph.cs" />
-    <Compile Include="Remote\RemoteRuleGraphActivator.cs" />
-    <Compile Include="Remote\ValidateField.cs" />
     <Compile Include="UI\InputElementModifier.cs" />
     <Compile Include="UI\IRenderingStrategy.cs" />
     <Compile Include="UI\IValidationAnnotationStrategy.cs" />
     <Compile Include="UI\LocalizationAnnotationStrategy.cs" />
-    <Compile Include="UI\ElementLocalizationMessages.cs" />
     <Compile Include="UI\LocalizationLabelModifier.cs" />
-    <Compile Include="UI\MaxValueModifier.cs" />
     <Compile Include="UI\MaximumLengthModifier.cs" />
+    <Compile Include="UI\MaxValueModifier.cs" />
     <Compile Include="UI\MinimumLengthModifier.cs" />
     <Compile Include="UI\MinValueModifier.cs" />
     <Compile Include="UI\NotificationSerializationModifier.cs" />
@@ -133,23 +137,19 @@
     <Compile Include="UI\RuleAliases.cs" />
     <Compile Include="UI\ValidationOptions.cs" />
     <Compile Include="UI\ValidationSummarySource.cs" />
+    <Compile Include="ValidationActionFilter.cs" />
     <Compile Include="ValidationAjaxExtensions.cs" />
     <Compile Include="ValidationBehaviorChainExtensions.cs" />
-    <Compile Include="IHaveValidation.cs" />
+    <Compile Include="ValidationConvention.cs" />
+    <Compile Include="ValidationFilter.cs" />
     <Compile Include="ValidationModeAttributePolicy.cs" />
     <Compile Include="ValidationNode.cs" />
     <Compile Include="ValidationNodeModification.cs" />
     <Compile Include="ValidationRegistrationActivator.cs" />
+    <Compile Include="ValidationSettings.cs" />
     <Compile Include="ValidationSettingsRegistry.cs" />
     <Compile Include="ValidationSummary.cs" />
     <Compile Include="ValidationUrlRegistryExtensions.cs" />
-    <Compile Include="ValidationConvention.cs" />
-    <Compile Include="ValidationFilter.cs" />
-    <Compile Include="ModelBindingErrors.cs" />
-    <Compile Include="FubuMvcValidation.cs" />
-    <Compile Include="ValidationActionFilter.cs" />
-    <Compile Include="AjaxValidationNode.cs" />
-    <Compile Include="ValidationSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuValidation\FubuValidation.csproj">
@@ -159,20 +159,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".package-manifest" />
-    <Content Include="content\scripts\ValidationResultsActivator.js" />
-    <Content Include="content\scripts\fubuvalidation.ui.js" />
     <Content Include="content\scripts\fubuvalidation.core.js" />
+    <Content Include="content\scripts\fubuvalidation.localization.js" />
     <Content Include="content\scripts\fubuvalidation.plugin.js" />
     <Content Include="content\scripts\fubuvalidation.rules.js" />
-    <Content Include="content\scripts\fubuvalidation.localization.js" />
-    <Content Include="content\scripts\specs\fubuvalidation.ui.fixture.html" />
-    <Content Include="content\scripts\specs\fubuvalidation.plugin.fixture.html" />
+    <Content Include="content\scripts\fubuvalidation.ui.js" />
+    <Content Include="content\scripts\specs\fubuvalidation.core.spec.js" />
     <Content Include="content\scripts\specs\fubuvalidation.localization.spec.js" />
+    <Content Include="content\scripts\specs\fubuvalidation.plugin.fixture.html" />
     <Content Include="content\scripts\specs\fubuvalidation.plugin.spec.js" />
     <Content Include="content\scripts\specs\fubuvalidation.rules.spec.js" />
-    <Content Include="content\scripts\specs\fubuvalidation.core.spec.js" />
+    <Content Include="content\scripts\specs\fubuvalidation.ui.fixture.html" />
     <Content Include="content\scripts\specs\fubuvalidation.ui.spec.js" />
     <Content Include="content\scripts\ValidationActivator.js" />
+    <Content Include="content\scripts\ValidationResultsActivator.js" />
     <Content Include="ripple.dependencies.config">
       <SubType>Designer</SubType>
     </Content>
@@ -198,9 +198,5 @@
     <EmbeddedResource Include="pak-WebContent.zip" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="pak-Data.zip" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="pak-Config.zip" />
   </ItemGroup>
 </Project>

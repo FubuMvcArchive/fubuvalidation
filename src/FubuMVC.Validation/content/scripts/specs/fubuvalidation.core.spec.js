@@ -1093,6 +1093,15 @@ describe('ValidationPlanTester', function() {
     expect(theNotification.isValid()).toEqual(false);
   });
 
+    it('is empty', function() {
+        thePlan = new $.fubuvalidation.Core.ValidationPlan(theRootNotification, theContext);
+        expect(thePlan.isEmpty()).toEqual(true);
+    });
+
+    it('is not empty', function() {
+        expect(thePlan.isEmpty()).toEqual(false);
+    });
+
 });
 
 describe('Executing validation plan for an existing notification', function () {

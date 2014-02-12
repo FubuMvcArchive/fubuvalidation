@@ -23,7 +23,7 @@ end
 	sln.fubudocs_enabled = true
     
     sln.assembly_bottle 'FubuMVC.Validation'
-    sln.ci_steps = ['run_phantom', 'storyteller']
+    sln.ci_steps = ['run_phantom', 'st:run']
     sln.defaults = [:run]
 end
 
@@ -51,15 +51,30 @@ task :run_phantom => [:compile] do
     serenity "jasmine run --verbose --timeout 60 src/serenity.txt -b Phantom"
 end
 
-desc "Runs the ST suite"
-task :storyteller do
-    serenity "storyteller src/FubuMVC.Validation.StoryTeller/validation.xml results/Storyteller.html -b Phantom"
-end
+FubuRake::Storyteller.new({
+  :path => 'src/FubuMVC.Validation.StoryTeller',
+  :profile => 'Firefox',
+  :compilemode => @solution.compilemode
+})
+
+FubuRake::Storyteller.new({
+  :path => 'src/FubuMVC.Validation.StoryTeller',
+  :prefix => 'st:phantom',
+  :profile => 'Phantom',
+  :compilemode => @solution.compilemode
+})
+
+FubuRake::Storyteller.new({
+  :path => 'src/FubuMVC.Validation.StoryTeller',
+  :prefix => 'st:chrome',
+  :profile => 'Chrome',
+  :compilemode => @solution.compilemode
+})
 
 desc "Smoke test"
 task :smoke => [:default] do
     sh "rm -rf src/FubuMVC.Validation.StoryTeller/fubu-content"
-    serenity "storyteller src/FubuMVC.Validation.StoryTeller/validation.xml results/Storyteller.html -b Phantom"
+    serenity "storyteller src/FubuMVC.Validation.StoryTeller/validation.xml -b Phantom"
 end
 
 def self.serenity(args)

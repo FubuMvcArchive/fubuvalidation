@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Test name="ValidationElementHandler matches validation fields only" lifecycle="Acceptance">
+  <ValidationElementHandler>
+    <ValidationElementHandlerMatches isStep="True" name="AjaxValueFast" matches="true" />
+    <ValidationElementHandlerMatches isStep="True" name="AjaxValueSlow" matches="true" />
+    <ValidationElementHandlerMatches isStep="True" name="AjaxValueReallySlow" matches="true" />
+    <ValidationElementHandlerMatches isStep="True" name="SynchronousValue" matches="true" />
+    <ValidationElementHandlerMatches isStep="True" name="NoValidation" matches="false" />
+  </ValidationElementHandler>
+</Test>

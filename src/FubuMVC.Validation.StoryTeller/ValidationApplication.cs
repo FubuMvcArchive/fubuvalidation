@@ -24,6 +24,7 @@ namespace FubuMVC.Validation.StoryTeller
                 AlterSettings<ValidationSettings>(validation =>
                 {
                     validation.Remotes.Include<UniqueUsernameRule>();
+                    validation.Remotes.Include<ThrottledRule>();
 
                     //validation.ForInputType<InlineModel>(x => x.RegisterStrategy(RenderingStrategies.Inline));
                     validation.Import<CustomizeValidation>();

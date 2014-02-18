@@ -1,0 +1,2 @@
+#!/bin/bash
+src/packages/Storyteller2/tools/StoryTellerUI.exe src/FubuMVC.Validation.StoryTeller/validation.xml $@ &

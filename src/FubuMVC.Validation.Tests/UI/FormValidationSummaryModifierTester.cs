@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FubuCore;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
@@ -18,7 +19,8 @@ namespace FubuMVC.Validation.Tests.UI
     {
         private BehaviorGraph theGraph;
         private FormRequest theRequest;
-        private string theValidationSummary;
+
+        private const string theValidationSummary = "<div>summary</div>";
 
         protected override void beforeEach()
         {
@@ -26,7 +28,8 @@ namespace FubuMVC.Validation.Tests.UI
             Services.Inject<IChainResolver>(new ChainResolutionCache(new TypeResolver(), theGraph));
 
 
-            theRequest = new FormRequest(new ChainSearch { Type = typeof(ValidationSummaryTarget) }, new ValidationSummaryTarget());
+            theRequest = new FormRequest(new ChainSearch {Type = typeof (ValidationSummaryTarget)},
+                new ValidationSummaryTarget());
             theRequest.Attach(new StructureMapServiceLocator(Services.Container));
 
             ValidationConvention.ApplyValidation(theRequest.Chain.FirstCall(), new ValidationSettings());
@@ -38,28 +41,32 @@ namespace FubuMVC.Validation.Tests.UI
 
             theRequest.ReplaceTag(theForm);
 
-            theValidationSummary = "<div>summary</div>";
             MockFor<IPartialInvoker>().Stub(x => x.Invoke<ValidationSummary>()).Return(theValidationSummary);
         }
 
-		[Test]
-		public void no_summary_if_the_summary_strategy_is_not_registered()
-		{
-			theRequest.Chain.ValidationNode().Clear();
-			ClassUnderTest.Modify(theRequest);
-			theRequest.CurrentTag.ToString()
-				.ShouldEqual("<form method=\"post\" action=\"test\"><input type=\"text\" name=\"Name\" />");
-		}
+        [Test]
+        public void no_summary_if_the_summary_strategy_is_not_registered()
+        {
+            theRequest.Chain.ValidationNode().Clear();
+            ClassUnderTest.Modify(theRequest);
+            theRequest.CurrentTag.Children.Count.ShouldEqual(1);
+            theRequest.CurrentTag.Children[0].TagName().ShouldEqual("input");
+        }
 
         [Test]
         public void prepends_the_validation_summary()
         {
-			ClassUnderTest.Modify(theRequest);
-            theRequest.CurrentTag.ToString()
-                .ShouldEqual("<form method=\"post\" action=\"test\"><div>summary</div><input type=\"text\" name=\"Name\" />");
+            ClassUnderTest.Modify(theRequest);
+            theRequest.CurrentTag.Children.Count.ShouldEqual(2);
+
+            theRequest.CurrentTag.Children[0].ToString().ShouldEqual(theValidationSummary);
+
+            theRequest.CurrentTag.Children[1].TagName().ShouldEqual("input");
         }
 
-        public class ValidationSummaryTarget { }
+        public class ValidationSummaryTarget
+        {
+        }
 
         public class ValidationSummaryTargetEndpoint
         {

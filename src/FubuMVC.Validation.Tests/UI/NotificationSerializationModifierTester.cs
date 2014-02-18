@@ -75,7 +75,7 @@ namespace FubuMVC.Validation.Tests.UI
             var request = requestFor<LoFiTarget>();
             theModifier.Modify(request);
 
-            request.CurrentTag.ToString().ShouldEqual("<form method=\"post\" action=\"test\">");
+            request.CurrentTag.Data("validation-results").ShouldBeNull();
         }
 
         [Test]

@@ -91,8 +91,7 @@ namespace FubuMVC.Validation.Tests.UI
             var modifier = new FormValidationModifier();
             modifier.Modify(theRequest);
 
-            theRequest.CurrentTag.ToString()
-                .ShouldEqual("<form method=\"post\" action=\"test\">");
+            theRequest.CurrentTag.HasClass("validated-form").ShouldBeFalse();
         }
 
         [Test]

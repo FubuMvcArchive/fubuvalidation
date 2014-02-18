@@ -1,4 +1,5 @@
-﻿using FubuMVC.Core.Registration.Querying;
+﻿using FubuCore;
+using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.UI.Forms;
 using FubuMVC.Validation.UI;
 using FubuTestingSupport;
@@ -24,24 +25,21 @@ namespace FubuMVC.Validation.Tests.UI
         public void summary_strategy_adds_the_validation_summary_attribute()
         {
             RenderingStrategies.Summary.Modify(theRequest);
-            theRequest.CurrentTag.ToString()
-                .ShouldEqual("<form method=\"post\" action=\"test\" data-validation-summary=\"true\">");
+            theRequest.CurrentTag.Data("validation-summary").As<bool>().ShouldBeTrue();
         }
 
         [Test]
         public void highlight_strategy_adds_the_validation_highlight_attribute()
         {
             RenderingStrategies.Highlight.Modify(theRequest);
-            theRequest.CurrentTag.ToString()
-                .ShouldEqual("<form method=\"post\" action=\"test\" data-validation-highlight=\"true\">");
+            theRequest.CurrentTag.Data("validation-highlight").As<bool>().ShouldBeTrue();
         }
 
         [Test]
         public void inline_strategy_adds_the_validation_inline_attribute()
         {
             RenderingStrategies.Inline.Modify(theRequest);
-            theRequest.CurrentTag.ToString()
-                .ShouldEqual("<form method=\"post\" action=\"test\" data-validation-inline=\"true\">");
+            theRequest.CurrentTag.Data("validation-inline").As<bool>().ShouldBeTrue();
         }
     }
 }

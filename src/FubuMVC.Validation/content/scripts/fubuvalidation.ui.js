@@ -71,6 +71,17 @@
                 }
             });
         },
+        init: function(element) {
+            var context = {
+              element: element
+            };
+
+            this.strategiesMatching(context, function (strategy) {
+                if (typeof strategy.init === 'function') {
+                    strategy.init(context);
+                }
+            });
+        },
         process: function (context) {
             this.reset(context);
             this.strategiesMatching(context, function (strategy) {
@@ -89,6 +100,7 @@
         handler.registerStrategy(new ValidationSummaryStrategy());
         handler.registerStrategy(new ElementHighlightingStrategy());
         handler.registerStrategy(new InlineErrorStrategy());
+        handler.registerStrategy(new CountStrategy());
 
         return handler;
     };
@@ -172,6 +184,9 @@
 
     ValidationSummaryStrategy.prototype = {
         matches: function (context) {
+            if (!context.continuation) {
+              return false;
+            }
             var continuation = context.continuation;
             var value = continuation.form.data('validationSummary');
             return typeof (value) != 'undefined';
@@ -238,6 +253,9 @@
 
     ElementHighlightingStrategy.prototype = {
         matches: function (context) {
+            if (!context.continuation) {
+              return false;
+            }
             var continuation = context.continuation;
             var value = continuation.form.data('validationHighlight');
             return typeof (value) != 'undefined';
@@ -271,6 +289,9 @@
 
     InlineErrorStrategy.prototype = {
         matches: function (context) {
+            if (!context.continuation) {
+              return false;
+            }
             var continuation = context.continuation;
             var value = continuation.form.data('validationInline');
             return typeof (value) != 'undefined';
@@ -288,6 +309,34 @@
                 error.element.after(message);
             });
         }
+    };
+
+    function CountStrategy() {
+      // jQuery $(<selector>).data('validation-count', <value>) will not update the DOM. One of the primary reasons for this strategy is for
+      // a WebDriver ElementHandler to wait for validation to complete before proceeding. We will need the attribute set on the DOM so that
+      // element handler can retrieve the value.
+      this.dataKey = 'data-validation-count';
+    };
+
+    CountStrategy.prototype = {
+      matches: function (context) {
+        return true;
+      },
+      init: function(context) {
+        context.element.attr(this.dataKey, 0);
+      },
+      reset: function (context) {
+      },
+      render: function (context) {
+        if (!context.element) {
+          return;
+        }
+
+        var element = context.element,
+            version = (element.attr(this.dataKey) || 0) + 1;
+
+        element.attr(this.dataKey, version);
+      }
     };
 
     function FormValidated(notification) {
@@ -399,7 +448,15 @@
             var self = this;
             var options = validation.Core.Options.fromForm(form);
             var mode = validation.Core.ValidationMode.Live;
-            form
+            var initSelector = "input:not(:submit,:reset,:image,[disabled]),textarea:not([disabled])";
+            var init = function() {
+                var element = $(this);
+                self.processor.handler.init(element);
+            };
+
+          form.find(initSelector).each(init);
+
+          form
               .on("change", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
                   var element = $(e.target);
                   self.elementHandler(element, form);
@@ -423,7 +480,8 @@
               .on("change", "input:radio:not([disabled]),input:checkbox:not([disabled]),select:not([disabled])", function (e) {
                   var element = $(e.target);
                   self.elementHandler(element, form);
-              });
+              })
+              .on("load", initSelector, init);
         },
         targetValidated: function (target, mode) {
             var key = this.hashFor(target, mode);
@@ -473,6 +531,7 @@
     defineStrategy('Summary', ValidationSummaryStrategy);
     defineStrategy('Highlighting', ElementHighlightingStrategy);
     defineStrategy('Inline', InlineErrorStrategy);
+    defineStrategy('Count', CountStrategy);
 
     $.extend(true, $, { 'fubuvalidation': { 'UI': exports } });
 

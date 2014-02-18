@@ -33,13 +33,14 @@ $METHODS$
         }</MethodTemplate>
     <TargetFile>StoryTellerDebug.cs</TargetFile>
   </Options>
-  <Workspaces />
   <BinaryFolder>bin\debug</BinaryFolder>
+  <Profile>Chrome</Profile>
   <NumberOfTestRetries>0</NumberOfTestRetries>
   <TestFolder>Tests</TestFolder>
-  <FileName>C:\code\FubuValidation\src\FubuMVC.Validation.StoryTeller\validation.xml</FileName>
+  <CompileTarget>debug</CompileTarget>
+  <FileName>src/FubuMVC.Validation.StoryTeller/validation.xml</FileName>
   <TimeoutInSeconds>120</TimeoutInSeconds>
   <SystemTypeName>FubuMVC.Validation.StoryTeller.ValidationSystem,FubuMVC.Validation.StoryTeller</SystemTypeName>
-  <ConfigurationFileName>Web.config</ConfigurationFileName>
   <Name>Validation</Name>
+  <ConfigurationFileName>Web.config</ConfigurationFileName>
 </Project>

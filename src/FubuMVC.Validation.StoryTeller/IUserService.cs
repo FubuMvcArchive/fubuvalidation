@@ -53,20 +53,21 @@ namespace FubuMVC.Validation.StoryTeller
 
     public class UniqueUsernameRule : IFieldValidationRule
     {
-	    public StringToken Token { get; set; }
+        public StringToken Token { get; set; }
 
-		public ValidationMode Mode { get; set; }
+        public ValidationMode Mode { get; set; }
 
-	    public void Validate(Accessor accessor, ValidationContext context)
+        public void Validate(Accessor accessor, ValidationContext context)
         {
             var username = context.GetFieldValue<string>(accessor);
             var users = context.Service<IUserService>();
 
-            if(users.UsernameExists(username))
+            if (users.UsernameExists(username))
             {
-                context.Notification.RegisterMessage(accessor, StringToken.FromKeyString("Validation:Username", "Username '{username}' already exists"), TemplateValue.For("username", username));
+                context.Notification.RegisterMessage(accessor,
+                    StringToken.FromKeyString("Validation:Username", "Username '{username}' already exists"),
+                    TemplateValue.For("username", username));
             }
-
         }
     }
 }

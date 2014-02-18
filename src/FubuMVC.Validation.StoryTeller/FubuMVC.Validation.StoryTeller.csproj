@@ -130,6 +130,7 @@
   <ItemGroup>
     <Compile Include="AccessorOverridesModel.cs" />
     <Compile Include="ClassValidationModel.cs" />
+    <Compile Include="ElementHandler.cs" />
     <Compile Include="Fixtures\AccessorOverridesScreenFixture.cs" />
     <Compile Include="Fixtures\AjaxFormFixture.cs" />
     <Compile Include="Fixtures\ClassValidationScreenFixture.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Fixtures\IntegrationScreenFixture.cs" />
     <Compile Include="Fixtures\ServerSideScreenFixture.cs" />
     <Compile Include="Fixtures\SystemStateFixture.cs" />
+    <Compile Include="Fixtures\ValidationElementHandlerFixture.cs" />
     <Compile Include="Fixtures\ValidationScreenFixture.cs" />
     <Compile Include="IgnoredModel.cs" />
     <Compile Include="InlineModel.cs" />
@@ -186,6 +188,9 @@
     <Content Include="validation.xml">
       <SubType>Designer</SubType>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests\ValidationElementHandler\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

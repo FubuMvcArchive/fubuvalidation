@@ -18,26 +18,26 @@ namespace FubuMVC.Validation.StoryTeller
         {
             public ValidationStoryTellerRegistry()
             {
-            	Actions.IncludeClassesSuffixedWithEndpoint();
+                Actions.IncludeClassesSuffixedWithEndpoint();
 
                 Import<HtmlConventionRegistry>(x => x.Editors.IfPropertyIs<SimpleList>().BuildBy<SimpleListBuilder>());
                 AlterSettings<ValidationSettings>(validation =>
-	            {
-		            validation.Remotes.Include<UniqueUsernameRule>();
+                {
+                    validation.Remotes.Include<UniqueUsernameRule>();
 
-					//validation.ForInputType<InlineModel>(x => x.RegisterStrategy(RenderingStrategies.Inline));
-					validation.Import<CustomizeValidation>();
-	            });
+                    //validation.ForInputType<InlineModel>(x => x.RegisterStrategy(RenderingStrategies.Inline));
+                    validation.Import<CustomizeValidation>();
+                });
             }
         }
     }
 
-	public class CustomizeValidation : ValidationSettingsRegistry
-	{
-		public CustomizeValidation()
-		{
-			//ForChainsMatching<CustomChainFilter>(x => ...);
-			ForInputTypesMatching(x => x.Name.Contains("Inline"), x => x.RegisterStrategy(RenderingStrategies.Inline));
-		}
-	}
+    public class CustomizeValidation : ValidationSettingsRegistry
+    {
+        public CustomizeValidation()
+        {
+            //ForChainsMatching<CustomChainFilter>(x => ...);
+            ForInputTypesMatching(x => x.Name.Contains("Inline"), x => x.RegisterStrategy(RenderingStrategies.Inline));
+        }
+    }
 }

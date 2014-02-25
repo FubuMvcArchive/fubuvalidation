@@ -21,7 +21,6 @@ namespace FubuMVC.Validation.StoryTeller.Fixtures
         protected override void beforeRunning()
         {
             Navigation.NavigateTo(new User());
-
             _users = Retrieve<IUserService>();
         }
 

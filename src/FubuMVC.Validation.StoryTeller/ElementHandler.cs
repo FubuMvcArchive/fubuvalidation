@@ -66,7 +66,7 @@ namespace FubuMVC.Validation.StoryTeller
             _page = page;
         }
 
-        public FubuHtmlDocument<ElementHandler> get_users_create(ElementHandler request)
+        public FubuHtmlDocument<ElementHandler> get_elementHandlers_create(ElementHandler request)
         {
             _page.Add(new HtmlTag("h1").Text("ValidationElementHandler test cases"));
             _page.Add(createForm());
@@ -75,7 +75,7 @@ namespace FubuMVC.Validation.StoryTeller
             return _page;
         }
 
-        public FubuContinuation post_users_create(ElementHandler user)
+        public FubuContinuation post_elementHandlers_create(ElementHandler user)
         {
             return FubuContinuation.RedirectTo(new ElementHandler());
         }

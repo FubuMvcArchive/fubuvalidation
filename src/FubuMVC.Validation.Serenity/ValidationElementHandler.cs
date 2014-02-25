@@ -18,8 +18,16 @@ namespace FubuMVC.Validation.Serenity
 
         public override void EnterData(ISearchContext context, IWebElement element, object data)
         {
+            if ((data as string).IsEmpty() && GetData(context, element).IsEmpty())
+            {
+                EnterDataNested(context, element, data);
+                return;
+            }
+
             var beginingCount = int.Parse(element.GetAttribute(ValidationCountKey));
+
             EnterDataNested(context, element, data);
+
             var timedout = !Wait.Until(() => int.Parse(element.GetAttribute(ValidationCountKey)) > beginingCount);
             StoryTellerAssert.Fail(timedout, "Validation for {0} took longer than expected".ToFormat(element));
         }

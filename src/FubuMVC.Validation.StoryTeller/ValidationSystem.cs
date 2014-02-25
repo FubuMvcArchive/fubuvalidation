@@ -8,7 +8,7 @@ namespace FubuMVC.Validation.StoryTeller
     {
         public ValidationSystem()
         {
-//            ElementHandlers.Handlers.Add(new ValidationElementHandler());
+            ElementHandlers.Handlers.Add(new ValidationElementHandler());
         }
     }
 }

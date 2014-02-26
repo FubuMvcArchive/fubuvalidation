@@ -12,7 +12,6 @@
     <EnterPassword isStep="True" Password="aa" />
     <EnterConfirmPassword isStep="True" ConfirmPassword="aaa" />
     <EnterPassword isStep="True" Password="aaa" />
-    <Delay isStep="True" milliseconds="2000" />
     <VerifyValidationMessages isStep="True">
       <rows>
         <row isStep="True" Property="LongerThanTen" Message="en-US_LongerThanTen - Minimum length not met. Must be greater than or equal to 10" />

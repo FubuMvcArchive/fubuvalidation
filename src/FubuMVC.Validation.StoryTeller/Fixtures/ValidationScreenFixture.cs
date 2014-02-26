@@ -65,12 +65,6 @@ namespace FubuMVC.Validation.StoryTeller.Fixtures
 			
 		}
 
-	    [FormatAs("Delay {milliseconds}")]
-	    public void Delay(int milliseconds)
-	    {
-	        Thread.Sleep(milliseconds);
-	    }
-
 		public IGrammar VerifyValidationMessages()
 		{
 			return VerifySetOf(() => validation.AllMessages())

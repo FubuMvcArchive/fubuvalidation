@@ -71,9 +71,11 @@
                 }
             });
         },
-        init: function(element) {
+        init: function(element, target, rules) {
             var context = {
-              element: element
+              element: element,
+              target: target,
+              rules: rules
             };
 
             this.strategiesMatching(context, function (strategy) {
@@ -320,7 +322,8 @@
 
     CountStrategy.prototype = {
       matches: function (context) {
-        return true;
+        return (context.rules && context.rules.length > 0) ||
+               context.continuation;
       },
       init: function(context) {
         context.element.attr(this.dataKey, 0);
@@ -450,8 +453,11 @@
             var mode = validation.Core.ValidationMode.Live;
             var initSelector = "input:not(:submit,:reset,:image,[disabled]),textarea:not([disabled])";
             var init = function() {
-                var element = $(this);
-                self.processor.handler.init(element);
+              var element = $(this)
+                , target = validation.Core.Target.forElement(element, form.attr('id'), form)
+                , rules = self.validator.rulesFor(target);
+
+              self.processor.handler.init(element, target, rules);
             };
 
           form.find(initSelector).each(init);

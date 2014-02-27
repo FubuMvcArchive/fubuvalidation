@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using FubuMVC.Validation.StoryTeller.Endpoints.Ignored;
+using OpenQA.Selenium;
 using StoryTeller.Engine;
 
 namespace FubuMVC.Validation.StoryTeller.Fixtures

@@ -1,6 +1,8 @@
 ﻿using FubuMVC.Core;
 using FubuMVC.Core.UI;
 using FubuMVC.StructureMap;
+using FubuMVC.Validation.StoryTeller.Endpoints.User;
+using FubuMVC.Validation.StoryTeller.Endpoints.ValidationElementHandler;
 using FubuMVC.Validation.UI;
 
 namespace FubuMVC.Validation.StoryTeller

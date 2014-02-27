@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FubuMVC.Validation.StoryTeller.Endpoints.Ajax;
+using FubuMVC.Validation.StoryTeller.Endpoints.Integration;
 using OpenQA.Selenium;
 using Serenity.Fixtures;
 using StoryTeller;

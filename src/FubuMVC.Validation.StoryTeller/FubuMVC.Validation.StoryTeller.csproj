@@ -128,9 +128,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccessorOverridesModel.cs" />
-    <Compile Include="ClassValidationModel.cs" />
-    <Compile Include="ElementHandler.cs" />
+    <Compile Include="Endpoints\AccessorOverrides\AccessorOverridesEndpoint.cs" />
+    <Compile Include="Endpoints\AccessorOverrides\AccessorOverridesModel.cs" />
+    <Compile Include="Endpoints\AccessorOverrides\AccessorOverridesModelRules.cs" />
+    <Compile Include="Endpoints\AccessorOverrides\CustomValidationKeys.cs" />
+    <Compile Include="Endpoints\ClassValidation\ClassValidationEndpoint.cs" />
+    <Compile Include="Endpoints\ClassValidation\ClassValidationModel.cs" />
+    <Compile Include="Endpoints\ClassValidation\ClassValidationModelRules.cs" />
+    <Compile Include="Endpoints\Ignored\IgnoredEndpoint.cs" />
+    <Compile Include="Endpoints\Inline\InlineModelEndpoint.cs" />
+    <Compile Include="Endpoints\Ajax\AjaxEndpoint.cs" />
+    <Compile Include="Endpoints\Ajax\AjaxModel.cs" />
+    <Compile Include="Endpoints\SelectTag\SimpleList.cs" />
+    <Compile Include="Endpoints\SelectTag\SimpleListBuilder.cs" />
+    <Compile Include="Endpoints\ServerSide\ServerSideEndpoint.cs" />
+    <Compile Include="Endpoints\ServerSide\ServerSideRule.cs" />
+    <Compile Include="Endpoints\ServerSide\ServerSideRules.cs" />
+    <Compile Include="Endpoints\User\CreateUserEndpoint.cs" />
+    <Compile Include="Endpoints\ValidationElementHandler\ElementHandler.cs" />
+    <Compile Include="Endpoints\ValidationElementHandler\ElementHandlerEndpoint.cs" />
+    <Compile Include="Endpoints\ValidationElementHandler\ThrottledAttribute.cs" />
+    <Compile Include="Endpoints\ValidationElementHandler\ThrottledRule.cs" />
     <Compile Include="Fixtures\AccessorOverridesScreenFixture.cs" />
     <Compile Include="Fixtures\AjaxFormFixture.cs" />
     <Compile Include="Fixtures\ClassValidationScreenFixture.cs" />
@@ -142,15 +160,15 @@
     <Compile Include="Fixtures\SystemStateFixture.cs" />
     <Compile Include="Fixtures\ValidationElementHandlerFixture.cs" />
     <Compile Include="Fixtures\ValidationScreenFixture.cs" />
-    <Compile Include="IgnoredModel.cs" />
-    <Compile Include="InlineModel.cs" />
-    <Compile Include="IntegrationEndpoint.cs" />
-    <Compile Include="IntegrationModel.cs" />
-    <Compile Include="SelectTagModel.cs" />
-    <Compile Include="ServerSideModel.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Endpoints\Ignored\IgnoredModel.cs" />
+    <Compile Include="Endpoints\Inline\InlineModel.cs" />
+    <Compile Include="Endpoints\Integration\IntegrationEndpoint.cs" />
+    <Compile Include="Endpoints\Integration\IntegrationModel.cs" />
+    <Compile Include="Endpoints\SelectTag\SelectTagModel.cs" />
+    <Compile Include="Endpoints\ServerSide\ServerSideModel.cs" />
+    <Compile Include="Endpoints\User\User.cs" />
     <Compile Include="Fixtures\CreateUserScreenFixture.cs" />
-    <Compile Include="IUserService.cs" />
+    <Compile Include="Endpoints\User\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidationApplication.cs" />
     <Compile Include="ValidationSystem.cs" />

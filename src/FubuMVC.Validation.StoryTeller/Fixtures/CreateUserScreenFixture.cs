@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using FubuMVC.Validation.Serenity;
+using FubuMVC.Validation.StoryTeller.Endpoints.User;
 using OpenQA.Selenium;
 using Serenity;
 using Serenity.Fixtures;

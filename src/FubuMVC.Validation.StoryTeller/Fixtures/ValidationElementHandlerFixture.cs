@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using FubuCore;
 using FubuMVC.Validation.Serenity;
+using FubuMVC.Validation.StoryTeller.Endpoints.ValidationElementHandler;
 using OpenQA.Selenium;
 using Serenity.Fixtures;
 using Serenity.Fixtures.Handlers;

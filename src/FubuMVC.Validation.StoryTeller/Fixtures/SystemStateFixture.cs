@@ -1,4 +1,5 @@
-﻿using StoryTeller;
+﻿using FubuMVC.Validation.StoryTeller.Endpoints.User;
+using StoryTeller;
 using StoryTeller.Engine;
 
 namespace FubuMVC.Validation.StoryTeller.Fixtures

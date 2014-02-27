@@ -78,9 +78,12 @@
               rules: rules
             };
 
-            this.strategiesMatching(context, function (strategy) {
-                if (typeof strategy.init === 'function') {
-                    strategy.init(context);
+            _.each(this.strategies, function (strategy) {
+              if (_.isFunction(strategy.initMatches) &&
+                  strategy.initMatches(context) &&
+                  _.isFunction(strategy.init)) {
+
+                  strategy.init(context);
                 }
             });
         },
@@ -186,9 +189,6 @@
 
     ValidationSummaryStrategy.prototype = {
         matches: function (context) {
-            if (!context.continuation) {
-              return false;
-            }
             var continuation = context.continuation;
             var value = continuation.form.data('validationSummary');
             return typeof (value) != 'undefined';
@@ -255,9 +255,6 @@
 
     ElementHighlightingStrategy.prototype = {
         matches: function (context) {
-            if (!context.continuation) {
-              return false;
-            }
             var continuation = context.continuation;
             var value = continuation.form.data('validationHighlight');
             return typeof (value) != 'undefined';
@@ -291,9 +288,6 @@
 
     InlineErrorStrategy.prototype = {
         matches: function (context) {
-            if (!context.continuation) {
-              return false;
-            }
             var continuation = context.continuation;
             var value = continuation.form.data('validationInline');
             return typeof (value) != 'undefined';
@@ -321,9 +315,11 @@
     };
 
     CountStrategy.prototype = {
+      initMatches: function (context) {
+        return context.rules && context.rules.length > 0;
+      },
       matches: function (context) {
-        return (context.rules && context.rules.length > 0) ||
-               context.continuation;
+        return true;
       },
       init: function(context) {
         context.element.attr(this.dataKey, 0);

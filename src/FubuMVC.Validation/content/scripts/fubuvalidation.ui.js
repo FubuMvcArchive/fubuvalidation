@@ -316,7 +316,7 @@
 
     CountStrategy.prototype = {
       initMatches: function (context) {
-        return context.rules && context.rules.length > 0;
+        return context.rules !== undefined && context.rules.length > 0;
       },
       matches: function (context) {
         return true;
@@ -332,7 +332,7 @@
         }
 
         var element = context.element,
-            version = (element.attr(this.dataKey) || 0) + 1;
+            version = parseInt(element.attr(this.dataKey)) + 1;
 
         element.attr(this.dataKey, version);
       }

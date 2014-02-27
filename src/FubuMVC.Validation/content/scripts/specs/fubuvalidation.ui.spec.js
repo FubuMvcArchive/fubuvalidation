@@ -958,3 +958,64 @@ describe('FormValidated', function () {
     });
 
 });
+
+describe('CountStrategy tests', function() {
+  var theStrategy = null;
+
+  beforeEach(function() {
+    theStrategy = new $.fubuvalidation.UI.Strategies.Count();
+  });
+
+  it('does not match init when context has no rules defined', function() {
+    var context = { };
+
+    expect(theStrategy.initMatches(context)).toEqual(false);
+  });
+
+  it('does not match init when context has no rules', function() {
+    var context = {
+      rules: []
+    };
+
+    expect(theStrategy.initMatches(context)).toEqual(false);
+  });
+
+  it('matches init when context has at least one rule', function() {
+    var context = {
+      rules: [{}]
+    };
+
+    expect(theStrategy.initMatches(context)).toEqual(true);
+  });
+
+  it('matches all the time', function() {
+    expect(theStrategy.matches()).toEqual(true);
+  });
+
+  it('initializes a default validation count of zero', function() {
+    var context = {
+      element: $('<input type="text" />')
+    };
+
+    theStrategy.init(context);
+
+    expect(parseInt(context.element.attr(theStrategy.dataKey))).toEqual(0);
+  });
+
+  it('initializes a default validation count of zero', function() {
+    var context = {
+      element: $('<input type="text" data-validation-count="0" />')
+    };
+
+    theStrategy.render(context);
+    expect(parseInt(context.element.attr(theStrategy.dataKey))).toEqual(1);
+
+    theStrategy.render(context);
+    expect(parseInt(context.element.attr(theStrategy.dataKey))).toEqual(2);
+  });
+
+  it('does not fail if there is no element on the context', function() {
+    var context = { };
+    theStrategy.render(context);
+  });
+});

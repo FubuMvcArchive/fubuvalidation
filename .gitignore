@@ -53,5 +53,5 @@ history.xml
 logs
 Gemfile.lock
 st-results/
-src/FubuMVC.Validation.Docs/snippets/
+snippets/
 Images/

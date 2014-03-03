@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<Test name="ValidationElementHandler waits for validation to complete before proceeding" lifecycle="Regression">
+<Test name="ValidationElementHandler waits for validation to complete before proceeding" lifecycle="Regression" retryAttemptNumber="0">
   <ValidationElementHandler>
     <ValidationElementHandlerEnterDataWithWait isStep="True" name="AjaxValueFast" min="0" max="1000" />
     <ValidationElementHandlerEnterDataWithWait isStep="True" name="AjaxValueSlow" min="3000" max="4000" />
-    <ValidationElementHandlerEnterDataWithWait isStep="True" name="SynchronousValue" min="0" max="1000" />
     <ValidationElementHandlerEnterDataWithWaitFailsWithTimeout isStep="True" name="AjaxValueReallySlow" />
+    <ValidationElementHandlerEnterDataWithWait isStep="True" name="SynchronousValue" min="0" max="1000" />
   </ValidationElementHandler>
 </Test>

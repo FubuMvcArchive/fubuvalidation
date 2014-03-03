@@ -23,7 +23,7 @@ end
 	sln.fubudocs_enabled = true
     
     sln.assembly_bottle 'FubuMVC.Validation'
-    sln.ci_steps = ['run_phantom', 'st:run']
+    sln.ci_steps = ['run_phantom', 'st:run', 'st:chrome:run']
     sln.defaults = [:run]
 end
 

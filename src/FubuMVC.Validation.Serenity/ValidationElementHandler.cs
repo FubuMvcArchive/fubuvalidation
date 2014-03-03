@@ -1,4 +1,6 @@
-﻿using FubuCore;
+﻿using System;
+using System.Diagnostics;
+using FubuCore;
 using OpenQA.Selenium;
 using Serenity;
 using Serenity.Fixtures;
@@ -18,18 +20,26 @@ namespace FubuMVC.Validation.Serenity
 
         public override void EnterData(ISearchContext context, IWebElement element, object data)
         {
-            if ((data as string).IsEmpty() && GetData(context, element).IsEmpty())
+            if (GetData(context, element).Equals(data))
             {
                 EnterDataNested(context, element, data);
                 return;
             }
 
-            var beginingCount = int.Parse(element.GetAttribute(ValidationCountKey));
+            var beginningCount = int.Parse(element.GetAttribute(ValidationCountKey));
 
+            var stopwatch = Stopwatch.StartNew();
             EnterDataNested(context, element, data);
 
-            var timedout = !Wait.Until(() => int.Parse(element.GetAttribute(ValidationCountKey)) > beginingCount);
-            StoryTellerAssert.Fail(timedout, "Validation for {0} took longer than expected".ToFormat(element));
+            // Trigger validation quicker
+            element.SendKeys(Keys.Tab);
+
+            var timedout = !Wait.Until(() => int.Parse(element.GetAttribute(ValidationCountKey)) > beginningCount);
+
+            stopwatch.Stop();
+            timedout = timedout || stopwatch.Elapsed > TimeSpan.FromSeconds(10);
+
+            StoryTellerAssert.Fail(timedout, "Validation for {0} either took longer than expected, or did not occur at all".ToFormat(element));
         }
 
         public override string GetData(ISearchContext context, IWebElement element)

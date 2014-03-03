@@ -38,6 +38,7 @@ namespace FubuValidation.StructureMap
                 _container = container;
             }
 
+            [Obsolete("Usage of ObjectFactory.Container is not recommended")]
             public void StructureMapObjectFactory()
             {
                 StructureMap(ObjectFactory.Container);

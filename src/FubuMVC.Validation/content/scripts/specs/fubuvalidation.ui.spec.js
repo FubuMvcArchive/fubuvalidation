@@ -966,30 +966,105 @@ describe('CountStrategy tests', function() {
     theStrategy = new $.fubuvalidation.UI.Strategies.Count();
   });
 
-  it('does not match init when context has no rules defined', function() {
-    var context = { };
-
-    expect(theStrategy.initMatches(context)).toEqual(false);
-  });
-
-  it('does not match init when context has no rules', function() {
+  it('does not match init when context has no fields defined', function() {
     var context = {
-      rules: []
+      target: {
+        fieldName: 'TestName'
+      },
+      options: {
+        fields: []
+      }
     };
 
     expect(theStrategy.initMatches(context)).toEqual(false);
   });
 
-  it('matches init when context has at least one rule', function() {
+  it('does not match init when context does not define options for field of interest', function() {
     var context = {
-      rules: [{}]
+      target: {
+        fieldName: 'TestName'
+      },
+      options: {
+        fields: [{
+          field: 'OtherField'
+        }]
+      }
+    };
+
+    expect(theStrategy.initMatches(context)).toEqual(false);
+  });
+
+  it('does not match init field is triggered validation', function() {
+    var context = {
+      target: {
+        fieldName: 'TestName'
+      },
+      options: {
+        fields: [{
+          field: 'TestName',
+          mode: 'triggered'
+        }]
+      }
+    };
+
+    expect(theStrategy.initMatches(context)).toEqual(false);
+  });
+
+  it('does not match init when field is live validation with no plan runners', function() {
+    var context = {
+      target: {
+        fieldName: 'TestName'
+      },
+      options: {
+        fields: [{
+          field: 'TestName',
+          mode: 'live',
+          rules: []
+        }]
+      }
+    };
+
+    expect(theStrategy.initMatches(context)).toEqual(false);
+  });
+
+  it('matches init when field is live validation with plan runners', function() {
+    var context = {
+      target: {
+        fieldName: 'TestName'
+      },
+      options: {
+        fields: [{
+          field: 'TestName',
+          mode: 'live'
+        }]
+      },
+      plan: {
+        runners: [{}]
+      }
     };
 
     expect(theStrategy.initMatches(context)).toEqual(true);
   });
 
-  it('matches all the time', function() {
-    expect(theStrategy.matches()).toEqual(true);
+  it('does not match when no element provided', function() {
+    var context = { };
+    expect(theStrategy.matches(context)).toEqual(false);
+  });
+
+  it('does not match when element does not have count attr', function() {
+    var context = {
+      element: $('<input type="text" />')
+    };
+
+    expect(theStrategy.matches(context)).toEqual(false);
+  });
+
+  it('matches when element has count attr', function() {
+    var context = {
+      element: $('<input type="text" data-validation-count="0" />')
+    };
+
+    expect(theStrategy.matches(context)).toEqual(true);
   });
 
   it('initializes a default validation count of zero', function() {

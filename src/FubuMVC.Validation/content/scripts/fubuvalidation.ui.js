@@ -71,13 +71,7 @@
                 }
             });
         },
-        init: function(element, target, rules) {
-            var context = {
-              element: element,
-              target: target,
-              rules: rules
-            };
-
+        init: function(context) {
             _.each(this.strategies, function (strategy) {
               if (_.isFunction(strategy.initMatches) &&
                   strategy.initMatches(context) &&
@@ -316,10 +310,21 @@
 
     CountStrategy.prototype = {
       initMatches: function (context) {
-        return context.rules !== undefined && context.rules.length > 0;
+        var field = context.target.fieldName;
+
+        return _.any(context.options.fields, function(x) {
+          return x.field === field &&
+                 x.mode === 'live' &&
+                 ((x.rules && x.rules.length > 0) ||
+                  (context.plan && context.plan.runners && context.plan.runners.length > 0));
+        });
       },
       matches: function (context) {
-        return true;
+        if (!context.element) {
+          return false;
+        }
+
+        return context.element.is('[' + this.dataKey + ']');
       },
       init: function(context) {
         context.element.attr(this.dataKey, 0);
@@ -449,11 +454,16 @@
             var mode = validation.Core.ValidationMode.Live;
             var initSelector = "input:not(:submit,:reset,:image,[disabled]),textarea:not([disabled])";
             var init = function() {
-              var element = $(this)
-                , target = validation.Core.Target.forElement(element, form.attr('id'), form)
-                , rules = self.validator.rulesFor(target);
+              var element = $(this),
+                  target = validation.Core.Target.forElement(element, form.attr('id'), form),
+                  context = {
+                    element: element,
+                    target: target,
+                    options: options,
+                    plan: self.validator.planFor(target, options, validation.Core.ValidationMode.Live)
+                  };
 
-              self.processor.handler.init(element, target, rules);
+              self.processor.handler.init(context);
             };
 
           form.find(initSelector).each(init);

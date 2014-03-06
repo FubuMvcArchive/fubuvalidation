@@ -11,9 +11,10 @@ namespace FubuMVC.Validation.StoryTeller.Endpoints.ValidationElementHandler
     {
         private readonly TimeSpan _throttle;
 
-        public ThrottledRule(TimeSpan throttle)
+        public ThrottledRule(TimeSpan throttle, ValidationMode mode)
         {
             _throttle = throttle;
+            Mode = mode;
         }
 
         public StringToken Token { get; set; }

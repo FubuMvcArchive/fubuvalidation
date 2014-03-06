@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
-<Test name="ValidationElementHandler matches validation fields only" lifecycle="Regression">
+<Test name="ValidationElementHandler matches validation fields only" lifecycle="Regression" retryAttemptNumber="0">
   <ValidationElementHandler>
     <ValidationElementHandlerMatches isStep="True" name="AjaxValueFast" matches="true" />
     <ValidationElementHandlerMatches isStep="True" name="AjaxValueSlow" matches="true" />
     <ValidationElementHandlerMatches isStep="True" name="AjaxValueReallySlow" matches="true" />
+    <ValidationElementHandlerMatches isStep="True" name="AjaxValueTriggeredReallySlow" matches="false" />
     <ValidationElementHandlerMatches isStep="True" name="SynchronousValue" matches="true" />
     <ValidationElementHandlerMatches isStep="True" name="NoValidation" matches="false" />
   </ValidationElementHandler>

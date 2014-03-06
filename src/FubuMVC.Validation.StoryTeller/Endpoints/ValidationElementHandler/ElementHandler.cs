@@ -10,6 +10,9 @@ namespace FubuMVC.Validation.StoryTeller.Endpoints.ValidationElementHandler
         public string AjaxValueSlow { get; set; }
         [Required, Throttled(10)]
         public string AjaxValueReallySlow { get; set; }
+        [TriggeredValidation]
+        [Throttled(10, "triggered")]
+        public string AjaxValueTriggeredReallySlow { get; set; }
         [Required]
         public string SynchronousValue { get; set; }
     }

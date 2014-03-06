@@ -35,6 +35,7 @@ namespace FubuMVC.Validation.StoryTeller.Endpoints.ValidationElementHandler
                 form.Append(_page.Edit(x => x.AjaxValueFast));
                 form.Append(_page.Edit(x => x.AjaxValueSlow));
                 form.Append(_page.Edit(x => x.AjaxValueReallySlow));
+                form.Append(_page.Edit(x => x.AjaxValueTriggeredReallySlow));
                 form.Append(_page.Edit(x => x.SynchronousValue));
                 form.Append(new HtmlTag("input").Attr("type", "submit").Attr("value", "Submit").Id("ElementHandler"));
                 form.Id("ElementHandlerForm");

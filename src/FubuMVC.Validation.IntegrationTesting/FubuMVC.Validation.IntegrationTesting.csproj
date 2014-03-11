@@ -136,6 +136,8 @@
   <ItemGroup>
     <Compile Include="Ajax\IntegratedAjaxEndpoint.cs" />
     <Compile Include="Ajax\IntegratedAjaxTester.cs" />
+    <Compile Include="LoFi_diff_models\IntegratedLoFi_diff_models_Endpoint.cs" />
+    <Compile Include="LoFi_diff_models\IntegratedLoFi_diff_models_Tester.cs" />
     <Compile Include="LoFi\IntegratedLoFiEndpoint.cs" />
     <Compile Include="LoFi\IntegratedLoFiTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

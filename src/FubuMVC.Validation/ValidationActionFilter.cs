@@ -23,11 +23,16 @@ namespace FubuMVC.Validation
 		}
 	}
 
+    public interface IOverrideInputModelForWhenValidationFails<T>
+    {
+        object GetInputModelForValidationFail(T inputModel);
+    }
+
     public class ValidationActionFilter<T>
     {
         private readonly IValidationFilter<T> _filter;
         private readonly IFubuRequest _request;
-
+        
         public ValidationActionFilter(IValidationFilter<T> filter, IFubuRequest request)
         {
             _filter = filter;
@@ -41,9 +46,13 @@ namespace FubuMVC.Validation
             {
                 return FubuContinuation.NextBehavior();
             }
-
             _request.Set(notification);
-            return FubuContinuation.TransferTo(input, categoryOrHttpMethod: "GET");
+
+            var inputAsOverride = input as IOverrideInputModelForWhenValidationFails<T>;
+            if (inputAsOverride == null) return FubuContinuation.TransferTo(input, categoryOrHttpMethod: "GET");
+
+            var typeWithAttributeValue = inputAsOverride.GetInputModelForValidationFail(input);
+            return FubuContinuation.TransferTo(typeWithAttributeValue, categoryOrHttpMethod: "GET");
         }
     }
 }

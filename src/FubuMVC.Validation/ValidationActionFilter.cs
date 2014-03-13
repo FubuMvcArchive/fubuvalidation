@@ -25,7 +25,7 @@ namespace FubuMVC.Validation
 
     public interface IOverrideInputModelForWhenValidationFails<T>
     {
-        object GetInputModelForValidationFail(T inputModel);
+        FubuContinuation GetFubuContinuationForWhenValidationFails(T inputModel);
     }
 
     public class ValidationActionFilter<T>
@@ -51,8 +51,9 @@ namespace FubuMVC.Validation
             var inputAsOverride = input as IOverrideInputModelForWhenValidationFails<T>;
             if (inputAsOverride == null) return FubuContinuation.TransferTo(input, categoryOrHttpMethod: "GET");
 
-            var typeWithAttributeValue = inputAsOverride.GetInputModelForValidationFail(input);
-            return FubuContinuation.TransferTo(typeWithAttributeValue, categoryOrHttpMethod: "GET");
+            var continuation = inputAsOverride.GetFubuContinuationForWhenValidationFails(input);
+            if (continuation.Type != ContinuationType.Transfer) throw new Exception("The overriden FubuContinuation must be a TransferTo to give validation details.");
+            return continuation;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using FubuValidation;
+﻿using FubuMVC.Core.Continuations;
+using FubuValidation;
 
 namespace FubuMVC.Validation.IntegrationTesting.LoFi_diff_models
 {
@@ -29,9 +30,9 @@ namespace FubuMVC.Validation.IntegrationTesting.LoFi_diff_models
         [Required]
         public string Name { get; set; }
 
-        public object GetInputModelForValidationFail(LoFiInput_post inputModel)
+        public FubuContinuation GetFubuContinuationForWhenValidationFails(LoFiInput_post inputModel)
         {
-            return new LoFiInput_get(){Name = inputModel.Name};
+            return FubuContinuation.TransferTo(new LoFiInput_get(){Name = inputModel.Name});
         }
     }
 }

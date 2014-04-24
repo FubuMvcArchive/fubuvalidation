@@ -28,6 +28,10 @@ namespace FubuMVC.Validation
         public ValidationSettings()
         {
             FailAjaxRequestsWith(HttpStatusCode.BadRequest);
+
+            Remotes
+                    .FindWith<RemoteRuleAttributeFilter>()
+                    .FindWith<RemoteFieldValidationRuleFilter>();
         }
 
         public HttpStatusCode StatusCode { get; private set; }

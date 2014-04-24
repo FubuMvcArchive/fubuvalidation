@@ -5,7 +5,6 @@ using FubuMVC.Validation.Remote;
 
 namespace FubuMVC.Validation
 {
-    [ConfigurationType(ConfigurationType.Discovery)]
     public class RegisterRemoteRuleQuery : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

@@ -1,4 +1,5 @@
 ﻿using FubuCore;
+using FubuMVC.Core;
 using FubuMVC.Core.Runtime;
 using FubuMVC.Validation.UI;
 using FubuTestingSupport;
@@ -25,7 +26,7 @@ namespace FubuMVC.Validation.Tests.UI
             var theTag = new LiteralTag("testing");
             Services.PartialMockTheClassUnderTest();
             ClassUnderTest.Stub(x => x.BuildSummary()).Return(theTag);
-            ClassUnderTest.Write(MimeType.Html.Value, new ValidationSummary());
+            ClassUnderTest.Write(MimeType.Html.Value, Container.GetInstance<FubuRequestContext>(), new ValidationSummary());
 
             MockFor<IOutputWriter>().AssertWasCalled(x => x.Write(MimeType.Html.ToString(), theTag.ToString()));
         }

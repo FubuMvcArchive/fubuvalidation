@@ -1,14 +1,15 @@
 ﻿using FubuMVC.Core.Urls;
-using FubuMVC.TestingHarness;
 using StructureMap;
 
 namespace FubuMVC.Validation.IntegrationTesting
 {
-    public class ValidationHarness : FubuRegistryHarness
+    public class ValidationHarness
     {
+
+
         private IContainer theContainer;
 
-        protected override void configureContainer(IContainer container)
+        protected virtual void configureContainer(IContainer container)
         {
             theContainer = container;
         }

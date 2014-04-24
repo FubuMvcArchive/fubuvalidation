@@ -2,6 +2,7 @@
 using FubuCore;
 using FubuLocalization;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.UI.Forms;
@@ -54,7 +55,7 @@ namespace FubuMVC.Validation.Tests.UI
 			var services = new InMemoryServiceLocator();
 			services.Add<IChainResolver>(new ChainResolutionCache(new TypeResolver(), theGraph));
 			services.Add(theValidationGraph);
-			services.Add<IChainUrlResolver>(new ChainUrlResolver(new StandInCurrentHttpRequest()));
+			services.Add<IChainUrlResolver>(new ChainUrlResolver(new OwinHttpRequest()));
 
 			var request = new FormRequest(new ChainSearch { Type = typeof(T) }, new T());
 			request.Attach(services);

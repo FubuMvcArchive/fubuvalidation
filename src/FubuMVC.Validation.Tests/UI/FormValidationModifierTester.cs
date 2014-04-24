@@ -4,6 +4,7 @@ using FubuCore.Reflection;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.UI.Forms;
@@ -20,14 +21,14 @@ namespace FubuMVC.Validation.Tests.UI
     public class FormValidationModifierTester
     {
         private BehaviorGraph theGraph;
-        private IAssetRequirements theRequirements;
+        private IAssetTagBuilder theRequirements;
         private ValidationSettings theSettings;
 
         [SetUp]
         public void SetUp()
         {
             theSettings = new ValidationSettings();
-            theRequirements = MockRepository.GenerateStub<IAssetRequirements>();
+            theRequirements = MockRepository.GenerateStub<IAssetTagBuilder>();
             theGraph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeType<FormValidationModeEndpoint>();
@@ -40,7 +41,7 @@ namespace FubuMVC.Validation.Tests.UI
             var services = new InMemoryServiceLocator();
             services.Add<IChainResolver>(new ChainResolutionCache(new TypeResolver(), theGraph));
             services.Add(theRequirements);
-            services.Add<IChainUrlResolver>(new ChainUrlResolver(new StandInCurrentHttpRequest()));
+            services.Add<IChainUrlResolver>(new ChainUrlResolver(new OwinHttpRequest()));
             services.Add<ITypeResolver>(new TypeResolver());
             services.Add(new AccessorRules());
             services.Add<ITypeDescriptorCache>(new TypeDescriptorCache());
@@ -79,7 +80,7 @@ namespace FubuMVC.Validation.Tests.UI
             theRequest.CurrentTag.Data("validation-highlight").ShouldEqual(true);
             theRequest.CurrentTag.HasClass("validated-form").ShouldBeTrue();
 
-            theRequirements.AssertWasNotCalled(x => x.Require("ValidationActivator.js"));
+            theRequirements.AssertWasNotCalled(x => x.RequireScript("ValidationActivator.js"));
         }
 
         [Test]
@@ -113,7 +114,7 @@ namespace FubuMVC.Validation.Tests.UI
             var modifier = new FormValidationModifier();
             modifier.Modify(theRequest);
 
-            theRequirements.AssertWasCalled(x => x.Require("ValidationActivator.js"));
+            theRequirements.AssertWasCalled(x => x.RequireScript("ValidationActivator.js"));
         }
     }
 

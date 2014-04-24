@@ -22,7 +22,7 @@ namespace FubuMVC.Validation.Tests
             Services.Inject(theGraph);
 
             theTypes = new TypePool();
-            theTypes.AddType<RegistrationTargetRules>();
+            theTypes.AddAssembly(typeof(RegistrationTargetRules).Assembly);
 
             Services.PartialMockTheClassUnderTest();
             ClassUnderTest.Stub(x => x.Types()).Return(theTypes);

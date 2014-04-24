@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.UI.Forms;
@@ -84,7 +85,7 @@ namespace FubuMVC.Validation.Tests.UI
 			var services = new InMemoryServiceLocator();
 			services.Add<IChainResolver>(new ChainResolutionCache(new TypeResolver(), theGraph));
 			services.Add(rules);
-			services.Add<IChainUrlResolver>(new ChainUrlResolver(new StandInCurrentHttpRequest()));
+			services.Add<IChainUrlResolver>(new ChainUrlResolver(new OwinHttpRequest()));
 			services.Add<ITypeResolver>(new TypeResolver());
 			services.Add<ITypeDescriptorCache>(new TypeDescriptorCache());
 

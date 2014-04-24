@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
+using FubuMVC.Core;
 using FubuMVC.Core.Resources.Conneg;
 using FubuMVC.Core.Runtime;
 using FubuValidation;
@@ -6,20 +8,9 @@ using HtmlTags;
 
 namespace FubuMVC.Validation.UI
 {
+    [Description("Writes the default html partial for the Validation Summary")]
     public class DefaultValidationSummaryWriter : IMediaWriter<ValidationSummary>
     {
-        private readonly IOutputWriter _writer;
-
-        public DefaultValidationSummaryWriter(IOutputWriter writer)
-        {
-            _writer = writer;
-        }
-
-        public void Write(string mimeType, ValidationSummary resource)
-        {
-            _writer.WriteHtml(BuildSummary());
-        }
-
         public virtual HtmlTag BuildSummary()
         {
             return new HtmlTag("div")
@@ -29,9 +20,18 @@ namespace FubuMVC.Validation.UI
                 .Style("display", "none");
         }
 
+        public void Write(string mimeType, IFubuRequestContext context, ValidationSummary resource)
+        {
+            context.Writer.WriteHtml(BuildSummary());
+        }
+
         public IEnumerable<string> Mimetypes
         {
-            get { yield return MimeType.Html.Value; }
+            get
+            {
+                yield return MimeType.Html.Value;
+                yield return MimeType.HttpFormMimetype;
+            }
         }
     }
 }

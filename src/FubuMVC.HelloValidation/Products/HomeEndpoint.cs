@@ -3,16 +3,16 @@ using System.Linq;
 
 namespace FubuMVC.HelloValidation.Products
 {
-    public class ProductListingEndpoint
+    public class HomeEndpoint
     {
         private readonly IProductsRepository _repository;
 
-        public ProductListingEndpoint(IProductsRepository repository)
+        public HomeEndpoint(IProductsRepository repository)
         {
             _repository = repository;
         }
 
-        public ProductsListViewModel get_products_list(ProductsListRequestModel request)
+        public ProductsListViewModel Index(ProductsListRequestModel request)
         {
             return new ProductsListViewModel
                        {

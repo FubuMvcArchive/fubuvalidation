@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <id>FubuMVC.Validation</id>
     <version>0.0</version>
@@ -12,15 +12,13 @@
     <description>A FubuMVC implementation of FubuValidation</description>
     <tags>fubumvc mvc fubu validation conventional</tags>
     <dependencies>
-      <dependency id="FubuMVC.Core" version="0.9.9.1366" />
-      <dependency id="FubuMVC.Core.Assets" version="0.9.9.94" />
-      <dependency id="FubuMVC.Core.UI" version="0.9.9.109" />
-      <dependency id="FubuMVC.Ajax" version="0.1.0.399" />
+      <dependency id="FubuMVC.Core" version="2.0.0.1764" />
+      <dependency id="FubuMVC.Ajax" version="2.0" />
       <dependency id="FubuValidation" />
-      <dependency id="FubuCore" version="0.9.9.151" />
+      <dependency id="FubuCore" version="1.4.0.282" />
     </dependencies>
   </metadata>
-  <files>
+  <files xmlns="">
     <file src="..\..\src\FubuMVC.Validation\bin\Release\FubuMVC.Validation.*" target="lib" />
   </files>
 </package>

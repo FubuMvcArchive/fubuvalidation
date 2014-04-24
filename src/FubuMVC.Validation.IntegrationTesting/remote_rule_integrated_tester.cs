@@ -7,6 +7,8 @@ using FubuCore.Reflection;
 using FubuLocalization;
 using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
+using FubuMVC.Katana;
+using FubuMVC.StructureMap;
 using FubuMVC.Validation.IntegrationTesting.Ajax;
 using FubuMVC.Validation.Remote;
 using FubuTestingSupport;
@@ -21,9 +23,13 @@ namespace FubuMVC.Validation.IntegrationTesting
     {
         private UserService theUserService;
         private ValidateField theField;
+        private EmbeddedFubuMvcServer theRuntime;
 
-        protected override void configure(FubuRegistry registry)
+        [SetUp]
+        public void SetUp()
         {
+            var registry = new FubuRegistry();
+
             registry.Actions.IncludeType<CreateUserEndpoint>();
             registry.Import<FubuMvcValidation>();
 
@@ -33,13 +39,22 @@ namespace FubuMVC.Validation.IntegrationTesting
             var rule = RemoteFieldRule.For(ReflectionHelper.GetAccessor<CreateUser>(x => x.Username), new UniqueUsernameRule());
             theField = new ValidateField { Hash = rule.ToHash(), Value = "joel_arnold" };
             theUserService.AddUser(theField.Value);
+
+            theRuntime = FubuApplication.For(registry).StructureMap().RunEmbeddedWithAutoPort();
         }
+
+        [TearDown]
+        public void TearDown()
+        {
+            theRuntime.Dispose();
+        }
+
 
         private JsonResponse theContinuation
         {
             get
             {
-                var response = endpoints.PostJson(theField);
+                var response = theRuntime.Endpoints.PostJson(theField);
 
                 try
                 {

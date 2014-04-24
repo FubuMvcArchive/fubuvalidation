@@ -9,7 +9,6 @@ using FubuMVC.Core.Registration.Policies;
 
 namespace FubuMVC.Validation
 {
-    [ConfigurationType(ConfigurationType.InjectNodes)]
     public class ValidationConvention : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)

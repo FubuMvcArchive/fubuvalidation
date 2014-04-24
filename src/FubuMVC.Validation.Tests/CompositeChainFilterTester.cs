@@ -17,7 +17,7 @@ namespace FubuMVC.Validation.Tests
         [SetUp]
         public void SetUp()
         {
-            theFilter = new CompositeChainFilter(new HttpMethodFilter("GET"), new InputTypeIs<int>());
+            theFilter = new CompositeChainFilter(new HttpMethodFilter("GET"), new InputTypeIs<Random>());
         }
 
         [Test]
@@ -25,7 +25,7 @@ namespace FubuMVC.Validation.Tests
         {
             matches(x => x.get_something(null)).ShouldBeFalse();
             matches(x => x.post_something(null)).ShouldBeFalse();
-            matches(x => x.get_something_else(0)).ShouldBeTrue();
+            matches(x => x.get_something_else(null)).ShouldBeTrue();
         }
 
         private BehaviorChain chainFor(Expression<Func<CompositeChainFilterEndpoint, object>> expression)
@@ -53,7 +53,7 @@ namespace FubuMVC.Validation.Tests
                 throw new NotImplementedException();
             }
 
-            public string get_something_else(int input)
+            public string get_something_else(Random input)
             {
                 throw new NotImplementedException();
             }
@@ -63,5 +63,7 @@ namespace FubuMVC.Validation.Tests
                 throw new NotImplementedException();
             }
         }
+
+        public class Random{}
     }
 }

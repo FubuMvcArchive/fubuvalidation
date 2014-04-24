@@ -46,29 +46,11 @@
     <Reference Include="FubuMVC.Core">
       <HintPath>..\packages\FubuMVC.Core\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
-    <Reference Include="FubuMVC.Core.Assets">
-      <HintPath>..\packages\FubuMVC.Core.Assets\lib\net40\FubuMVC.Core.Assets.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.Core.UI">
-      <HintPath>..\packages\FubuMVC.Core.UI\lib\net40\FubuMVC.Core.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.Core.View">
-      <HintPath>..\packages\FubuMVC.Core.View\lib\net40\FubuMVC.Core.View.dll</HintPath>
-    </Reference>
     <Reference Include="FubuMVC.Katana">
       <HintPath>..\packages\FubuMVC.Katana\lib\net40\FubuMVC.Katana.dll</HintPath>
     </Reference>
-    <Reference Include="FubuMVC.OwinHost">
-      <HintPath>..\packages\FubuMVC.OwinHost\lib\net40\FubuMVC.OwinHost.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.SelfHost">
-      <HintPath>..\packages\FubuMVC.SelfHost.0.9.9.1388\lib\net40\FubuMVC.SelfHost.dll</HintPath>
-    </Reference>
     <Reference Include="FubuMVC.StructureMap">
       <HintPath>..\packages\FubuMVC.StructureMap\lib\net40\FubuMVC.StructureMap.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.TestingHarness">
-      <HintPath>..\packages\FubuMVC.TestingHarness\lib\net40\FubuMVC.TestingHarness.dll</HintPath>
     </Reference>
     <Reference Include="FubuTestingSupport">
       <HintPath>..\packages\FubuTestingSupport\lib\FubuTestingSupport.dll</HintPath>
@@ -98,20 +80,11 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Owin.Extensions">
-      <HintPath>..\packages\Owin.Extensions\lib\net40\Owin.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Owin.Types">
-      <HintPath>..\packages\Owin.Types\lib\net40\Owin.Types.dll</HintPath>
-    </Reference>
     <Reference Include="pnunit.framework">
       <HintPath>..\packages\NUnit\lib\pnunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.Mocks">
       <HintPath>..\packages\RhinoMocks\lib\Rhino.Mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="RhinoMocks">
-      <HintPath>..\packages\RhinoMocks.3.6\lib\Rhino.Mocks.dll</HintPath>
     </Reference>
     <Reference Include="structuremap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
@@ -144,7 +117,6 @@
     <Compile Include="ServerHarness.cs" />
     <Compile Include="ValidationHarness.cs" />
     <Compile Include="ValidationTestFubuRegistry.cs" />
-    <Compile Include="validation_assets.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ripple.dependencies.config">

@@ -7,7 +7,6 @@ namespace FubuMVC.HelloValidation
     {
         public HelloValidationFubuRegistry()
         {
-            Routes.HomeIs<ProductListingEndpoint>(h => h.get_products_list(new ProductsListRequestModel()));
         }
     }
 }

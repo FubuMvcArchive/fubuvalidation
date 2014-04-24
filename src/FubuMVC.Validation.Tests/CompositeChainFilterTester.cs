@@ -17,7 +17,7 @@ namespace FubuMVC.Validation.Tests
         [SetUp]
         public void SetUp()
         {
-            theFilter = new CompositeChainFilter(new HttpMethodFilter("GET"), new InputTypeIs<Input2>());
+            theFilter = new CompositeChainFilter(new HttpMethodFilter("GET"), new InputTypeIs<Random>());
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace FubuMVC.Validation.Tests
                 throw new NotImplementedException();
             }
 
-            public string get_something_else(Input2 input)
+            public string get_something_else(Random input)
             {
                 throw new NotImplementedException();
             }
@@ -64,8 +64,6 @@ namespace FubuMVC.Validation.Tests
             }
         }
 
-        public class Input1{}
-        public class Input2{}
-        public class Input3{}
+        public class Random{}
     }
 }

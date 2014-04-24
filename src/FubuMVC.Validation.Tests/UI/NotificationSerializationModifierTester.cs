@@ -3,6 +3,7 @@ using FubuLocalization;
 using FubuMVC.Core.Ajax;
 using FubuMVC.Core.Assets;
 using FubuMVC.Core.Http;
+using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
 using FubuMVC.Core.Runtime;
@@ -21,7 +22,7 @@ namespace FubuMVC.Validation.Tests.UI
     public class NotificationSerializationModifierTester
     {
         private BehaviorGraph theGraph;
-        private IAssetRequirements theRequirements;
+        private IAssetTagBuilder theRequirements;
         private NotificationSerializationModifier theModifier;
         private Notification theNotification;
         private IFubuRequest theRequest;
@@ -31,7 +32,7 @@ namespace FubuMVC.Validation.Tests.UI
         [SetUp]
         public void SetUp()
         {
-            theRequirements = MockRepository.GenerateStub<IAssetRequirements>();
+            theRequirements = MockRepository.GenerateStub<IAssetTagBuilder>();
             theGraph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeType<FormValidationModeEndpoint>();
@@ -46,7 +47,7 @@ namespace FubuMVC.Validation.Tests.UI
             var services = new InMemoryServiceLocator();
             services.Add<IChainResolver>(new ChainResolutionCache(new TypeResolver(), theGraph));
             services.Add(theRequirements);
-            services.Add<IChainUrlResolver>(new ChainUrlResolver(new StandInCurrentHttpRequest()));
+            services.Add<IChainUrlResolver>(new ChainUrlResolver(new OwinHttpRequest()));
 
             theRequest = new InMemoryFubuRequest();
             theNotification = Notification.Valid();
@@ -95,7 +96,7 @@ namespace FubuMVC.Validation.Tests.UI
             theNotification.RegisterMessage(StringToken.FromKeyString("Test", "Test"));
             theModifier.Modify(request);
 
-            theRequirements.AssertWasCalled(x => x.Require("ValidationResultsActivator.js"));
+            theRequirements.AssertWasCalled(x => x.RequireScript("ValidationResultsActivator.js"));
         }
     }
 }

@@ -1,7 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using FubuCore.Reflection;
+using FubuMVC.Core;
 using FubuMVC.Core.Ajax;
+using FubuMVC.Katana;
+using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -11,24 +15,30 @@ namespace FubuMVC.Validation.IntegrationTesting.Ajax
     public class IntegratedAjaxTester : ValidationHarness
     {
         private AjaxRequest theRequest;
+        private EmbeddedFubuMvcServer theRuntime;
 
         [SetUp]
         public void SetUp()
         {
             theRequest = new AjaxRequest();
-        }
 
-        protected override void configure(Core.FubuRegistry registry)
-        {
+            var registry = new FubuRegistry();            
             registry.Actions.IncludeType<IntegratedAjaxEndpoint>();
             registry.Import<FubuMvcValidation>();
+            theRuntime = FubuApplication.For(registry).StructureMap().RunEmbeddedWithAutoPort();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            theRuntime.Dispose();
         }
 
         private JsonResponse theContinuation
         {
             get
             {
-                var response = endpoints.PostJson(theRequest);
+                var response = theRuntime.Endpoints.PostJson(theRequest);
 
                 try
                 {

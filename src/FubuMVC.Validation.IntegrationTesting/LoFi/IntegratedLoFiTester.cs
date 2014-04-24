@@ -1,4 +1,7 @@
-﻿using FubuMVC.Core.Endpoints;
+﻿using FubuMVC.Core;
+using FubuMVC.Core.Endpoints;
+using FubuMVC.Katana;
+using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using NUnit.Framework;
 
@@ -8,22 +11,30 @@ namespace FubuMVC.Validation.IntegrationTesting.LoFi
     public class IntegratedLoFiTester : ValidationHarness
     {
         private LoFiInput theInput;
+        private EmbeddedFubuMvcServer theRuntime;
 
         [SetUp]
         public void SetUp()
         {
             theInput = new LoFiInput();
-        }
 
-        protected override void configure(Core.FubuRegistry registry)
-        {
+            var registry = new FubuRegistry();
+
             registry.Actions.IncludeType<IntegratedLoFiEndpoint>();
             registry.Import<FubuMvcValidation>();
+
+            theRuntime = FubuApplication.For(registry).StructureMap().RunEmbeddedWithAutoPort();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            theRuntime.Dispose();
         }
 
         private HttpResponse theResponse
         {
-            get { return endpoints.PostAsForm(theInput); }
+            get { return theRuntime.Endpoints.PostAsForm(theInput); }
         }
 
         [Test]

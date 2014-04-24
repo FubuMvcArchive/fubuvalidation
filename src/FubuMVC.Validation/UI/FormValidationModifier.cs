@@ -37,7 +37,7 @@ namespace FubuMVC.Validation.UI
 
         private void writeScriptRequirements(FormRequest request)
         {
-            request.Services.GetInstance<IAssetRequirements>().Require("ValidationActivator.js");
+            request.Services.GetInstance<IAssetTagBuilder>().RequireScript("ValidationActivator.js");
         }
     }
 }

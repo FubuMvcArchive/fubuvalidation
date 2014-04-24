@@ -24,7 +24,7 @@ end
     
     sln.assembly_bottle 'FubuMVC.Validation'
     #sln.ci_steps = ['run_phantom', 'st:run']
-    sln.ci_steps = ['st:run']
+    #sln.ci_steps = ['st:run']
     sln.defaults = [:run]
 	
 	
@@ -32,7 +32,7 @@ end
 	sln.options[:nuget_publish_url] = 'https://www.myget.org/F/fubumvc-edge/'
 end
 
-add_dependency 'ripple:publish', 'st:run'
+#add_dependency 'ripple:publish', 'st:run'
 #add_dependency 'ripple:publish', 'run_phantom'
 
 desc "Target used for the CI on mono"

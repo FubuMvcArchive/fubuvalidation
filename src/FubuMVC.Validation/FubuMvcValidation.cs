@@ -37,16 +37,7 @@ namespace FubuMVC.Validation
             });
 
             registry.Policies.Global.Add<ValidationConvention>();
-            registry.Policies.Global.Add<AttachDefaultValidationSummary>();
             registry.Policies.Global.Add<RegisterRemoteRuleQuery>();
-
-            registry.AlterSettings<ValidationSettings>(settings =>
-            {
-                settings
-                    .Remotes
-                    .FindWith<RemoteRuleAttributeFilter>()
-                    .FindWith<RemoteFieldValidationRuleFilter>();
-            });
         }
     }
 }

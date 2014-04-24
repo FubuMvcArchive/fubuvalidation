@@ -101,7 +101,6 @@
     <Compile Include="Remote\RemoteRuleGraphActivator.cs" />
     <Compile Include="Remote\ValidateField.cs" />
     <Compile Include="RemoteRuleExpression.cs" />
-    <Compile Include="UI\AttachDefaultValidationSummary.cs" />
     <Compile Include="UI\CssValidationAnnotationStrategy.cs" />
     <Compile Include="UI\DateElementModifier.cs" />
     <Compile Include="UI\DefaultValidationSummaryWriter.cs" />
@@ -190,5 +189,6 @@
   <ItemGroup>
     <EmbeddedResource Include="pak-WebContent.zip" />
   </ItemGroup>
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
 </Project>

@@ -16,8 +16,13 @@ namespace FubuMVC.Validation.Tests
 
         [SetUp]
         public void SetUp()
+<<<<<<< HEAD
         {
             theFilter = new CompositeChainFilter(new HttpMethodFilter("GET"), new InputTypeIs<Random>());
+=======
+        {
+            theFilter = new CompositeChainFilter(new HttpMethodFilter("GET"), new InputTypeIs<Random>());
+>>>>>>> fully passing against fubumvc 2.0
         }
 
         [Test]
@@ -65,5 +70,6 @@ namespace FubuMVC.Validation.Tests
         }
 
         public class Random{}
+
     }
 }

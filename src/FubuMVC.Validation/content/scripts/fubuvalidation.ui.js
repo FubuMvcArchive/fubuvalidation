@@ -471,18 +471,20 @@
                 return events;
             };
 
-            form.find(initSelector).each(init);
-
             var textInputs = $("input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", form);
             var nonTextInputs = $("input:radio:not([disabled]),input:checkbox:not([disabled]),select:not([disabled])", form);
             var defaultValidationEvent = "change";
             var defaultValidationTimeoutEvent = "keyup";
-            var timeoutAttributeName = "validation-timeout-events";
+            var bustCacheEventName = "validation:bustCache";
+            var timeoutAttributeName = "validation-timeout";
+            var timeoutEventsAttributeName = "validation-timeout-events";
             var eventAttributeName = "validation-events";
+
+            form.find(initSelector).each(init);
 
             textInputs.each(function () {
                 var control = $(this);
-                var timeoutEvents = determineEvents(control, timeoutAttributeName, defaultValidationTimeoutEvent);
+                var timeoutEvents = determineEvents(control, timeoutEventsAttributeName, defaultValidationTimeoutEvent);
                 var events = determineEvents(control, eventAttributeName, defaultValidationEvent);
                 control
                   .on(events, function (e) {
@@ -496,7 +498,7 @@
                           clearTimeout(timeout);
                       }
 
-                      element.data("validation-timeout", setTimeout(function () {
+                      element.data(timeoutAttributeName, setTimeout(function () {
                           self.elementHandler(element, form);
                       }, options.elementTimeout));
                   });
@@ -511,8 +513,8 @@
                 });
             });
 
-            form
-                .on("validation:bustCache", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
+            textInputs
+                .on(bustCacheEventName, function (e) {
                     var element = $(e.target);
                     var target = validation.Core.Target.forElement(element, form.attr('id'), form);
                     self.invalidateTarget(target, mode);

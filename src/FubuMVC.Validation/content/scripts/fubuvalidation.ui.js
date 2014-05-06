@@ -453,47 +453,73 @@
             var options = validation.Core.Options.fromForm(form);
             var mode = validation.Core.ValidationMode.Live;
             var initSelector = "input:not(:submit,:reset,:image,[disabled]),textarea:not([disabled])";
-            var init = function() {
-              var element = $(this),
-                  target = validation.Core.Target.forElement(element, form.attr('id'), form),
-                  context = {
-                    element: element,
-                    target: target,
-                    options: options,
-                    plan: self.validator.planFor(target, options, validation.Core.ValidationMode.Live)
-                  };
+            var init = function () {
+                var element = $(this),
+                    target = validation.Core.Target.forElement(element, form.attr('id'), form),
+                    context = {
+                        element: element,
+                        target: target,
+                        options: options,
+                        plan: self.validator.planFor(target, options, validation.Core.ValidationMode.Live)
+                    };
 
-              self.processor.handler.init(context);
+                self.processor.handler.init(context);
+            };
+            var determineEvents = function (element, attributeName, defaultEvent) {
+                var events = element.data(attributeName);
+                if (typeof events === "undefined") events = defaultEvent;
+                return events;
             };
 
-          form.find(initSelector).each(init);
+            var textInputs = $("input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", form);
+            var nonTextInputs = $("input:radio:not([disabled]),input:checkbox:not([disabled]),select:not([disabled])", form);
+            var defaultValidationEvent = "change";
+            var defaultValidationTimeoutEvent = "keyup";
+            var bustCacheEventName = "validation:bustCache";
+            var timeoutAttributeName = "validation-timeout";
+            var timeoutEventsAttributeName = "validation-timeout-events";
+            var eventAttributeName = "validation-events";
 
-          form
-              .on("change", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
-                  var element = $(e.target);
-                  self.elementHandler(element, form);
-              })
-              .on("keyup", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
-                  var element = $(e.target);
-                  var timeout = element.data("validation-timeout");
-                  if (timeout != undefined) {
-                      clearTimeout(timeout);
-                  }
+            form.find(initSelector).each(init);
 
-                  element.data("validation-timeout", setTimeout(function () {
+            textInputs.each(function () {
+                var control = $(this);
+                var timeoutEvents = determineEvents(control, timeoutEventsAttributeName, defaultValidationTimeoutEvent);
+                var events = determineEvents(control, eventAttributeName, defaultValidationEvent);
+                control
+                  .on(events, function (e) {
+                      var element = $(e.target);
                       self.elementHandler(element, form);
-                  }, options.elementTimeout));
-              })
-              .on("validation:bustCache", "input:not(:checkbox,:submit,:reset,:image,[disabled]),textarea:not([disabled])", function (e) {
-                  var element = $(e.target);
-                  var target = validation.Core.Target.forElement(element, form.attr('id'), form);
-                  self.invalidateTarget(target, mode);
-              })
-              .on("change", "input:radio:not([disabled]),input:checkbox:not([disabled]),select:not([disabled])", function (e) {
-                  var element = $(e.target);
-                  self.elementHandler(element, form);
-              })
-              .on("load", initSelector, init);
+                  })
+                  .on(timeoutEvents, function (e) {
+                      var element = $(e.target);
+                      var timeout = element.data(timeoutAttributeName);
+                      if (timeout != undefined) {
+                          clearTimeout(timeout);
+                      }
+
+                      element.data(timeoutAttributeName, setTimeout(function () {
+                          self.elementHandler(element, form);
+                      }, options.elementTimeout));
+                  });
+            });
+
+            nonTextInputs.each(function () {
+                var control = $(this);
+                var events = determineEvents(control, eventAttributeName, defaultValidationEvent);
+                control.on(events, function (e) {
+                    var element = $(e.target);
+                    self.elementHandler(element, form);
+                });
+            });
+
+            textInputs
+                .on(bustCacheEventName, function (e) {
+                    var element = $(e.target);
+                    var target = validation.Core.Target.forElement(element, form.attr('id'), form);
+                    self.invalidateTarget(target, mode);
+                })
+                .on("load", initSelector, init);
         },
         targetValidated: function (target, mode) {
             var key = this.hashFor(target, mode);

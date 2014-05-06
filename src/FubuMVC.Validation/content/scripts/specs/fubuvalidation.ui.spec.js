@@ -824,7 +824,8 @@ describe('ValidationFormController', function () {
     var theController = null;
 
     beforeEach(function () {
-        theController = new $.fubuvalidation.UI.Controller(null, null);
+        theController = new $.fubuvalidation.UI.Controller($.fubuvalidation.Core.Validator.basic(),
+            $.fubuvalidation.UI.ValidationProcessor.basic());
     });
 
     it('caches the targets by hash and mode', function () {
@@ -895,6 +896,48 @@ describe('ValidationFormController', function () {
         expect(theController.targetCache[key]).toEqual(undefined);
     });
 
+    describe('bindEvents function', function () {
+        var formTemplate =
+                '<form>' +
+                    '<input id="text1" type="text" value="Test1" />' +
+                    '<input id="text2" type="text" value="Test2" data-validation-events="" />' +
+                    '<input id="radio1" type="radio" name="radio" value="Test2" />' +
+                    '<input id="radio2" type="radio" name="radio" value="Test2" />' +
+                '</form>',
+            form;
+        beforeEach(function() {
+            form = $(formTemplate);
+            theController.elementHandler = jasmine.createSpy();
+            theController.bindEvents(form);
+        });
+
+        it('should validate on default event without attribute', function () {
+            var element = $($('#text1', form)[0]);
+            element.trigger("change");
+            expect(theController.elementHandler).toHaveBeenCalledWith(element, form);
+        });
+
+        it('should not validate on default event with no value in attribute', function () {
+            var element = $($('#text2', form)[0]);
+            element.trigger("change");
+            expect(theController.elementHandler).not.toHaveBeenCalled();
+        });
+
+        it('should validate on event given in attribute', function () {
+            var element = $($('#text2', form)[0]);
+            element.data("validation-events", "blur");
+            theController.bindEvents(form);
+            element.trigger("blur");
+            expect(theController.elementHandler).toHaveBeenCalledWith(element, form);
+        });
+
+        it('should validate on non-text inputs', function () {
+            var element = $($('#radio1', form)[0]);
+            element.trigger("change");
+            expect(theController.elementHandler).toHaveBeenCalledWith(element, form);
+        });
+
+    });
 });
 
 describe('Processing a continuation', function () {

@@ -41,7 +41,17 @@ namespace FubuValidation
 
         public FieldValidationExpression Property(Expression<Func<T, object>> property)
         {
-            return new FieldValidationExpression(this, property.ToAccessor());
+            var accessor = property.ToAccessor();
+            if (accessor.DeclaringType.IsInterface)
+            {
+                var myProperty = typeof (T).GetProperty(accessor.Name);
+                if (myProperty != null)
+                {
+                    accessor = new SingleProperty(myProperty);
+                }
+            }
+
+            return new FieldValidationExpression(this, accessor);
         }
 
         public void Register<TClassRule>() where TClassRule : IValidationRule, new()

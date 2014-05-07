@@ -136,6 +136,7 @@
   <ItemGroup>
     <Compile Include="Ajax\IntegratedAjaxEndpoint.cs" />
     <Compile Include="Ajax\IntegratedAjaxTester.cs" />
+    <Compile Include="Bugs\applicability_of_annotation_strategies_with_shared_interface_validation_rules.cs" />
     <Compile Include="LoFi\IntegratedLoFiEndpoint.cs" />
     <Compile Include="LoFi\IntegratedLoFiTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

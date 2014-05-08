@@ -18,7 +18,7 @@ namespace FubuMVC.Validation.Tests
             var chain = new BehaviorChain();
             chain.AddToEnd(call);
 
-            ValidationConvention.ApplyValidation(call, new ValidationSettings());
+            ValidationPolicy.ApplyValidation(call, new ValidationSettings());
 
             var nodes = chain.ToArray();
 			var node = nodes[0].As<IHaveValidation>();
@@ -34,7 +34,7 @@ namespace FubuMVC.Validation.Tests
             var chain = new BehaviorChain();
             chain.AddToEnd(call);
 
-            ValidationConvention.ApplyValidation(call, new ValidationSettings());
+            ValidationPolicy.ApplyValidation(call, new ValidationSettings());
 
             var nodes = chain.ToArray();
         	var node = nodes[0].As<IHaveValidation>();
@@ -57,7 +57,7 @@ namespace FubuMVC.Validation.Tests
 				x.RegisterStrategy(RenderingStrategies.Inline);
 			});
 
-			ValidationConvention.ApplyValidation(call, settings);
+			ValidationPolicy.ApplyValidation(call, settings);
 
 			chain.ValidationNode().ShouldHaveTheSameElementsAs(RenderingStrategies.Inline);
 		}
@@ -77,7 +77,7 @@ namespace FubuMVC.Validation.Tests
 				x.RegisterStrategy(RenderingStrategies.Inline);
 			});
 
-			ValidationConvention.ApplyValidation(call, settings);
+			ValidationPolicy.ApplyValidation(call, settings);
 
 			chain.ValidationNode().ShouldHaveTheSameElementsAs(RenderingStrategies.Summary, RenderingStrategies.Highlight);
 		}

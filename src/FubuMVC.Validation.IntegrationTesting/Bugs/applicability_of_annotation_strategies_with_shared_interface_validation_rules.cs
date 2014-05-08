@@ -21,9 +21,13 @@ namespace FubuMVC.Validation.IntegrationTesting.Bugs
         {
             var container = new Container(x => {
                 x.For<IValidationAnnotationStrategy>().Add<RequiredAccessibilityAttributesStrategy>();
+
             });
 
-            using (var runtime = FubuApplication.DefaultPolicies().StructureMap(container).Bootstrap())
+            var registry = new FubuRegistry();
+            registry.Policies.Local.Add<ValidationPolicy>();
+
+            using (var runtime = FubuApplication.For(registry).StructureMap(container).Bootstrap())
             {
                 var validationGraph = container.GetInstance<ValidationGraph>();
                 var query = validationGraph.Query();

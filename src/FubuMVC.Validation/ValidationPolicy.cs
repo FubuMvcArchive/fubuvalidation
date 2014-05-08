@@ -8,7 +8,7 @@ using FubuMVC.Core.Registration.Policies;
 
 namespace FubuMVC.Validation
 {
-    public class ValidationConvention : IConfigurationAction
+    public class ValidationPolicy : IConfigurationAction
     {
         public void Configure(BehaviorGraph graph)
         {

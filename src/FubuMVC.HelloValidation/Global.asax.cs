@@ -10,6 +10,7 @@ using FubuMVC.Validation.Remote;
 using FubuValidation;
 using FubuValidation.Fields;
 using StructureMap.Configuration.DSL;
+using StructureMap.Graph;
 
 namespace FubuMVC.HelloValidation
 {

@@ -25,7 +25,7 @@ end
     sln.assembly_bottle 'FubuMVC.Validation'
     #sln.ci_steps = ['run_phantom', 'st:run']
     #sln.ci_steps = ['st:run']
-    sln.defaults = [:run]
+    #sln.defaults = [:run]
 	
 	
 	sln.options[:nuget_publish_folder] = 'nupkgs'

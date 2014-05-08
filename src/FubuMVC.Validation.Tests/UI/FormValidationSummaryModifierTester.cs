@@ -32,7 +32,7 @@ namespace FubuMVC.Validation.Tests.UI
                 new ValidationSummaryTarget());
             theRequest.Attach(new StructureMapServiceLocator(Services.Container));
 
-            ValidationConvention.ApplyValidation(theRequest.Chain.FirstCall(), new ValidationSettings());
+            ValidationPolicy.ApplyValidation(theRequest.Chain.FirstCall(), new ValidationSettings());
             theRequest.Chain.ValidationNode().Clear();
             theRequest.Chain.ValidationNode().RegisterStrategy(RenderingStrategies.Summary);
 

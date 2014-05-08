@@ -22,7 +22,8 @@ namespace FubuMVC.Validation.IntegrationTesting.Ajax
         {
             theRequest = new AjaxRequest();
 
-            var registry = new FubuRegistry();            
+            var registry = new FubuRegistry();
+            registry.Policies.Local.Add<ValidationPolicy>();
             registry.Actions.IncludeType<IntegratedAjaxEndpoint>();
             registry.Import<FubuMvcValidation>();
             theRuntime = FubuApplication.For(registry).StructureMap().RunEmbeddedWithAutoPort();

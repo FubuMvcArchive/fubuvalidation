@@ -55,6 +55,7 @@ namespace FubuMVC.Validation.Tests
             {
                 x.Actions.IncludeType<FubuValidationSettingsEndpoint>();
                 x.Import<FubuMvcValidation>();
+                x.Policies.Local.Add<ValidationPolicy>();
             });
 
             var graph = BehaviorGraph.BuildFrom(registry);

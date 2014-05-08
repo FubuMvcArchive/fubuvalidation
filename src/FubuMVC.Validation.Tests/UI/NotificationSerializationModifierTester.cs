@@ -37,6 +37,7 @@ namespace FubuMVC.Validation.Tests.UI
             {
                 x.Actions.IncludeType<FormValidationModeEndpoint>();
                 x.Import<FubuMvcValidation>();
+                x.Policies.Local.Add<ValidationPolicy>();
             });
 
             theModifier = new NotificationSerializationModifier();

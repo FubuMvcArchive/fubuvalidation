@@ -19,7 +19,7 @@ namespace FubuMVC.Validation.IntegrationTesting.LoFi
             theInput = new LoFiInput();
 
             var registry = new FubuRegistry();
-
+            registry.Policies.Local.Add<ValidationPolicy>();
             registry.Actions.IncludeType<IntegratedLoFiEndpoint>();
             registry.Import<FubuMvcValidation>();
 

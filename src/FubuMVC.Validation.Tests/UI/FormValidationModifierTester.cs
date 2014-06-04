@@ -2,8 +2,6 @@
 using FubuCore;
 using FubuCore.Reflection;
 using FubuMVC.Core.Ajax;
-using FubuMVC.Core.Assets;
-using FubuMVC.Core.Http;
 using FubuMVC.Core.Http.Owin;
 using FubuMVC.Core.Registration;
 using FubuMVC.Core.Registration.Querying;
@@ -13,7 +11,6 @@ using FubuMVC.Validation.UI;
 using FubuTestingSupport;
 using HtmlTags;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace FubuMVC.Validation.Tests.UI
 {
@@ -21,14 +18,12 @@ namespace FubuMVC.Validation.Tests.UI
     public class FormValidationModifierTester
     {
         private BehaviorGraph theGraph;
-        private IAssetTagBuilder theRequirements;
         private ValidationSettings theSettings;
 
         [SetUp]
         public void SetUp()
         {
             theSettings = new ValidationSettings();
-            theRequirements = MockRepository.GenerateStub<IAssetTagBuilder>();
             theGraph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeType<FormValidationModeEndpoint>();
@@ -41,7 +36,6 @@ namespace FubuMVC.Validation.Tests.UI
         {
             var services = new InMemoryServiceLocator();
             services.Add<IChainResolver>(new ChainResolutionCache(new TypeResolver(), theGraph));
-            services.Add(theRequirements);
             services.Add<IChainUrlResolver>(new ChainUrlResolver(new OwinHttpRequest()));
             services.Add<ITypeResolver>(new TypeResolver());
             services.Add(new AccessorRules());
@@ -80,8 +74,6 @@ namespace FubuMVC.Validation.Tests.UI
             theRequest.CurrentTag.Data("validation-summary").ShouldEqual(true);
             theRequest.CurrentTag.Data("validation-highlight").ShouldEqual(true);
             theRequest.CurrentTag.HasClass("validated-form").ShouldBeTrue();
-
-            theRequirements.AssertWasNotCalled(x => x.RequireScript("ValidationActivator.js"));
         }
 
         [Test]
@@ -114,8 +106,6 @@ namespace FubuMVC.Validation.Tests.UI
             var theRequest = requestFor<AjaxTarget>();
             var modifier = new FormValidationModifier();
             modifier.Modify(theRequest);
-
-            theRequirements.AssertWasCalled(x => x.RequireScript("ValidationActivator.js"));
         }
     }
 

@@ -1,5 +1,4 @@
 ﻿using FubuCore;
-using FubuMVC.Core.Assets;
 using FubuMVC.Core.UI.Forms;
 using HtmlTags.Conventions;
 
@@ -20,12 +19,6 @@ namespace FubuMVC.Validation.UI
                 return;
             }
 
-            var filter = request.Services.GetInstance<ValidationSettings>().As<IFormActivationFilter>();
-            if (filter.ShouldActivate(request.Chain))
-            {
-                writeScriptRequirements(request);
-            }
-
             var node = validation.As<IValidationNode>();
             node.Modify(request);
 
@@ -33,11 +26,6 @@ namespace FubuMVC.Validation.UI
             request.CurrentTag.Data(ValidationOptions.Data, options);
 
             request.CurrentTag.AddClass("validated-form");
-        }
-
-        private void writeScriptRequirements(FormRequest request)
-        {
-            request.Services.GetInstance<IAssetTagBuilder>().RequireScript("ValidationActivator.js");
         }
     }
 }

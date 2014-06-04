@@ -22,7 +22,6 @@ namespace FubuMVC.Validation.Tests.UI
     public class NotificationSerializationModifierTester
     {
         private BehaviorGraph theGraph;
-        private IAssetTagBuilder theRequirements;
         private NotificationSerializationModifier theModifier;
         private Notification theNotification;
         private IFubuRequest theRequest;
@@ -32,7 +31,6 @@ namespace FubuMVC.Validation.Tests.UI
         [SetUp]
         public void SetUp()
         {
-            theRequirements = MockRepository.GenerateStub<IAssetTagBuilder>();
             theGraph = BehaviorGraph.BuildFrom(x =>
             {
                 x.Actions.IncludeType<FormValidationModeEndpoint>();
@@ -47,7 +45,6 @@ namespace FubuMVC.Validation.Tests.UI
         {
             var services = new InMemoryServiceLocator();
             services.Add<IChainResolver>(new ChainResolutionCache(new TypeResolver(), theGraph));
-            services.Add(theRequirements);
             services.Add<IChainUrlResolver>(new ChainUrlResolver(new OwinHttpRequest()));
 
             theRequest = new InMemoryFubuRequest();
@@ -96,8 +93,6 @@ namespace FubuMVC.Validation.Tests.UI
             var request = requestFor<LoFiTarget>();
             theNotification.RegisterMessage(StringToken.FromKeyString("Test", "Test"));
             theModifier.Modify(request);
-
-            theRequirements.AssertWasCalled(x => x.RequireScript("ValidationResultsActivator.js"));
         }
     }
 }

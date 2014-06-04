@@ -1,5 +1,4 @@
-﻿using FubuMVC.Core.Assets;
-using FubuMVC.Core.Runtime;
+﻿using FubuMVC.Core.Runtime;
 using FubuMVC.Core.UI.Forms;
 using FubuValidation;
 using HtmlTags.Conventions;
@@ -24,13 +23,6 @@ namespace FubuMVC.Validation.UI
 			var continuation = request.Services.GetInstance<IAjaxContinuationResolver>().Resolve(notification);
 			continuation.ValidationOrigin(ValidationOrigin.Server);
 			request.CurrentTag.Data("validation-results", continuation.ToDictionary());
-
-			writeScriptRequirements(request);
-		}
-
-		private void writeScriptRequirements(FormRequest request)
-		{
-			request.Services.GetInstance<IAssetTagBuilder>().RequireScript("ValidationResultsActivator.js");
 		}
 	}
 }

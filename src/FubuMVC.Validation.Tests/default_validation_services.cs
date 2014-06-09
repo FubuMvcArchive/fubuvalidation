@@ -77,11 +77,6 @@ namespace FubuMVC.Validation.Tests
             theDefaultServiceIs<IRuleRunner, RuleRunner>();
         }
 
-        [Test]
-        public void registers_the_remote_rule_graph_activator()
-        {
-            theBehaviorGraph.Services.ServicesFor<IActivator>().ShouldContain(def => def.Type == typeof(RemoteRuleGraphActivator));
-        }
 
         [Test]
         public void registers_the_default_field_validation_modifier()

@@ -26,8 +26,6 @@ end
 
     sln.ci_steps = ['st:run']
 
-    sln.defaults = [:run]
-
 	sln.options[:nuget_publish_folder] = 'nupkgs'
 	sln.options[:nuget_publish_url] = 'https://www.myget.org/F/fubumvc-edge/'
 end
@@ -48,20 +46,6 @@ task :mono_unit_test => :compile do
   runner.executeTests ['FubuValidation.Tests', 'FubuValidation.StructureMap.Tests', 'FubuMVC.Validation.Tests']
 end
 
-desc "Opens the Serenity Jasmine Runner in interactive mode"
-task :open do
-	serenity "jasmine interactive src/serenity.txt -b Firefox"
-end
-
-desc "Runs the Jasmine tests"
-task :run => [:compile] do
-	serenity "jasmine run --timeout 60 src/serenity.txt -b Phantom"
-end
-
-desc "Runs the Jasmine tests and outputs the results for TC"
-task :run_phantom => [:compile] do
-    serenity "jasmine run --verbose --timeout 60 src/serenity.txt -b Phantom"
-end
 
 FubuRake::Storyteller.new({
   :path => 'src/FubuMVC.Validation.StoryTeller',

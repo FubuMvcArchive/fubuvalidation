@@ -27,7 +27,7 @@ namespace FubuMVC.Validation.UI
         public void ForRule<T>(ElementRequest request, Action<T> continuation) where T : IFieldValidationRule
         {
             var graph = request.Get<ValidationGraph>();
-            graph.Query().ForRule(request.Accessor, continuation);
+            graph.Query().ForRule(request.HolderType(), request.Accessor, continuation);
         }
 
         protected abstract void modify(ElementRequest request);

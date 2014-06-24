@@ -34,8 +34,8 @@ namespace FubuMVC.Validation.Tests
         public void runs_the_registration()
         {
             var query = theGraph.Query();
-            query.HasRule<RequiredFieldRule>(ReflectionHelper.GetAccessor<RegistrationTarget>(x => x.FirstName)).ShouldBeTrue();
-            query.HasRule<EmailFieldRule>(ReflectionHelper.GetAccessor<RegistrationTarget>(x => x.Email)).ShouldBeTrue();
+            query.HasRule<RequiredFieldRule>(typeof(RegistrationTarget), ReflectionHelper.GetAccessor<RegistrationTarget>(x => x.FirstName)).ShouldBeTrue();
+            query.HasRule<EmailFieldRule>(typeof(RegistrationTarget), ReflectionHelper.GetAccessor<RegistrationTarget>(x => x.Email)).ShouldBeTrue();
         }
 
         [Test]

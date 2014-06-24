@@ -6,6 +6,7 @@ using FubuMVC.Core;
 using FubuMVC.StructureMap;
 using FubuTestingSupport;
 using FubuValidation;
+using FubuValidation.Fields;
 using NUnit.Framework;
 
 namespace FubuMVC.Validation.Tests.Bugs
@@ -25,6 +26,9 @@ namespace FubuMVC.Validation.Tests.Bugs
                 plan.FieldRules.RulesFor<MySubclass>(x => x.FirstName).Count().ShouldEqual(2);
 
                 plan.WriteDescriptionToConsole();
+
+                var query = runtime.Factory.Get<FieldValidationQuery>();
+                query.RulesFor<MySubclass>(x => x.FirstName).Count().ShouldEqual(2);
             }
         }
     }

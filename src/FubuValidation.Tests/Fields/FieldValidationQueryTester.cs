@@ -31,7 +31,7 @@ namespace FubuValidation.Tests.Fields
         public void should_have_basic_rules()
         {
             _query
-                .HasRule<RequiredFieldRule>(ReflectionHelper.GetAccessor<AddressModel>(a => a.Address1))
+                .HasRule<RequiredFieldRule>(typeof(AddressModel), ReflectionHelper.GetAccessor<AddressModel>(a => a.Address1))
                 .ShouldBeTrue();
         }
 
@@ -73,7 +73,7 @@ namespace FubuValidation.Tests.Fields
             var found = false;
             var accessor = ReflectionHelper.GetAccessor<CompositeModel>(m => m.Contact.FirstName);
             _query
-                .ForRule<RequiredFieldRule>(accessor, rule => { found = true; });
+                .ForRule<RequiredFieldRule>(typeof(CompositeModel), accessor, rule => { found = true; });
             found.ShouldBeTrue();
         }
 

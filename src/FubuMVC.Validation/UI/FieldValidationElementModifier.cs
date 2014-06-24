@@ -8,7 +8,7 @@ namespace FubuMVC.Validation.UI
     {
         protected override void modify(ElementRequest request)
         {
-            var rules = request.Get<ValidationGraph>().FieldRulesFor(request.Accessor);
+            var rules = request.Get<ValidationGraph>().FieldRulesFor(request.HolderType(), request.Accessor);
             var modifier = request.Get<IFieldValidationModifier>();
 
             rules.Each(x => modifier.ModifyFor(x, request));

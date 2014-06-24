@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FubuCore;
 using FubuCore.Reflection;
@@ -55,13 +56,13 @@ namespace FubuMVC.Validation.UI
             {
                 var accessor = new SingleProperty(property);
 
-                fillFields(options, node, services, accessor);
+                fillFields(options, node, services, accessor, request.Input == null ? property.DeclaringType : request.Input.GetType());
             });
 
             return options;
         }
 
-        private static void fillFields(ValidationOptions options, IValidationNode node, IServiceLocator services, Accessor accessor)
+        private static void fillFields(ValidationOptions options, IValidationNode node, IServiceLocator services, Accessor accessor, Type type)
         {
             var mode = node.DetermineMode(services, accessor);
             var field = new FieldOptions
@@ -71,7 +72,7 @@ namespace FubuMVC.Validation.UI
             };
 
             var graph = services.GetInstance<ValidationGraph>();
-            var rules = graph.FieldRulesFor(accessor);
+            var rules = graph.FieldRulesFor(type, accessor);
             var ruleOptions = new List<FieldRuleOptions>();
 
             rules.Each(rule =>

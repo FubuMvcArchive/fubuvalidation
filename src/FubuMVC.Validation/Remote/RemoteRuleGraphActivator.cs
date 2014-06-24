@@ -9,6 +9,7 @@ using FubuValidation;
 
 namespace FubuMVC.Validation.Remote
 {
+    // TODO -- get rid of this
     public class RemoteRuleGraphActivator : IActivator
     {
         private readonly ValidationGraph _graph;
@@ -45,7 +46,7 @@ namespace FubuMVC.Validation.Remote
                 var accessor = new SingleProperty(property);
                 var rules = _graph
                     .Query()
-                    .RulesFor(accessor)
+                    .RulesFor(input, accessor)
                     .Where(rule => _remotes.IsRemote(rule));
 
                 rules.Each(rule => _remoteGraph.RegisterRule(accessor, rule));

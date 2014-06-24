@@ -46,11 +46,12 @@ namespace FubuValidation
         /// <summary>
         /// Convenience method for querying against IFieldValidationRules.
         /// </summary>
+        /// <param name="type"></param>
         /// <param name="accessor"></param>
         /// <returns></returns>
-        public IEnumerable<IFieldValidationRule> FieldRulesFor(Accessor accessor)
+        public IEnumerable<IFieldValidationRule> FieldRulesFor(Type type, Accessor accessor)
         {
-            return Query().RulesFor(accessor);
+            return Query().RulesFor(type, accessor);
         }
 
         public void RegisterSource(IValidationSource source)

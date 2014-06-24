@@ -9,9 +9,9 @@ namespace FubuValidation.Fields
     public interface IFieldValidationQuery
     {
         IEnumerable<IFieldValidationRule> RulesFor<T>(Expression<Func<T, object>> property);
-        IEnumerable<IFieldValidationRule> RulesFor(Accessor accessor);
-        bool HasRule<T>(Accessor accessor) where T : IFieldValidationRule;
-        void ForRule<T>(Accessor accessor, Action<T> continuation) where T : IFieldValidationRule;
+        IEnumerable<IFieldValidationRule> RulesFor(Type type, Accessor accessor);
+        bool HasRule<T>(Type type, Accessor accessor) where T : IFieldValidationRule;
+        void ForRule<T>(Type type, Accessor accessor, Action<T> continuation) where T : IFieldValidationRule;
     }
 
     public class FieldValidationQuery : IFieldValidationQuery
@@ -25,15 +25,15 @@ namespace FubuValidation.Fields
 
         public IEnumerable<IFieldValidationRule> RulesFor<T>(Expression<Func<T, object>> property)
         {
-            return RulesFor(property.ToAccessor());
+            return RulesFor(typeof(T), property.ToAccessor());
         }
 
-        public IEnumerable<IFieldValidationRule> RulesFor(Accessor accessor)
+        public IEnumerable<IFieldValidationRule> RulesFor(Type type, Accessor accessor)
         {
             var chain = accessor as PropertyChain;
             if (chain == null)
             {
-                return _registry.RulesFor(accessor.OwnerType).RulesFor(accessor);
+                return _registry.RulesFor(type).RulesFor(accessor);
             }
 
             if(chainHasValidationContinuedProperties(chain))
@@ -47,31 +47,31 @@ namespace FubuValidation.Fields
 
         private bool chainHasValidationContinuedProperties(PropertyChain chain)
         {
-            var propertyValueGetters = chain.ValueGetters.OfType<PropertyValueGetter>().ToArray();
+            if (chain.ValueGetters.Any(x => !(x is PropertyValueGetter))) return false;
 
-            var accessors = propertyValueGetters
-                .Take(propertyValueGetters.Length - 1)
-                .Select(p => new SingleProperty(p.PropertyInfo))
-                .ToList();
+            var propertyValueGetters = chain.ValueGetters.OfType<PropertyValueGetter>().Reverse().Skip(1).Reverse();
 
-            return accessors.Any() && accessors.All(HasRule<ContinuationFieldRule>);
+            return propertyValueGetters.All(x => {
+                var accessor = new SingleProperty(x.PropertyInfo);
+                return HasRule<ContinuationFieldRule>(accessor.DeclaringType, accessor);
+            });
         }
 
-        public bool HasRule<T>(Accessor accessor) where T : IFieldValidationRule
+        public bool HasRule<T>(Type type, Accessor accessor) where T : IFieldValidationRule
         {
-            return getRules<T>(accessor).Any();
+            return getRules<T>(type, accessor).Any();
         }
 
-        public void ForRule<T>(Accessor accessor, Action<T> continuation) where T : IFieldValidationRule
+        public void ForRule<T>(Type type, Accessor accessor, Action<T> continuation) where T : IFieldValidationRule
         {
-            getRules<T>(accessor)
+            getRules<T>(type, accessor)
                 .Each(continuation);
         }
 
-        private IEnumerable<T> getRules<T>(Accessor accessor)
+        private IEnumerable<T> getRules<T>(Type type, Accessor accessor)
             where T : IFieldValidationRule
         {
-            return RulesFor(accessor)
+            return RulesFor(type, accessor)
                 .OfType<T>();
         }
     }

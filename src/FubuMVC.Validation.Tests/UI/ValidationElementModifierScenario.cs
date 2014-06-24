@@ -43,6 +43,7 @@ namespace FubuMVC.Validation.Tests.UI
                 Services = new InMemoryServiceLocator();
                 Modifier = new T();
                 Services.Add(ValidationGraph.BasicGraph());
+                Services.Add<ITypeResolver>(new TypeResolver());
             }
 
             public InMemoryServiceLocator Services { get; private set; }

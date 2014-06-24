@@ -36,7 +36,6 @@ namespace FubuMVC.Validation
 				x.Forms.Add(new NotificationSerializationModifier());
             });
 
-            registry.Policies.Global.Add<ValidationConvention>();
             registry.Policies.Global.Add<RegisterRemoteRuleQuery>();
 
         }

@@ -48,7 +48,7 @@ namespace FubuMVC.Validation.Tests
 
         public class CompositeChainFilterEndpoint
         {
-            public string get_something(Input1 input)
+            public string get_something(string input)
             {
                 throw new NotImplementedException();
             }
@@ -58,15 +58,12 @@ namespace FubuMVC.Validation.Tests
                 throw new NotImplementedException();
             }
 
-            public string post_something(Input3 input)
+            public string post_something(string input)
             {
                 throw new NotImplementedException();
             }
         }
 
         public class Random{}
-        public class Input1{}
-        public class Input2{}
-        public class Input3{}
     }
 }

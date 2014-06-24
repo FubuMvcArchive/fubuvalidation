@@ -36,6 +36,9 @@ add_dependency 'ripple:publish', 'st:run'
 
 #add_dependency 'ripple:publish', 'run_phantom'
 
+#add_dependency 'ripple:publish', 'st:run'
+#add_dependency 'ripple:publish', 'run_phantom'
+
 desc "Target used for the CI on mono"
 task :mono_ci => [:compile, :mono_unit_test]
 

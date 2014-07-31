@@ -215,6 +215,7 @@
 
   defineLambda('Number', function (context) {
     var value = context.target.value();
+    if (!value) return;
     var valid = /^\d+$/.test(value);
     if (!valid) {
       context.registerMessage(validationKeys.Number);

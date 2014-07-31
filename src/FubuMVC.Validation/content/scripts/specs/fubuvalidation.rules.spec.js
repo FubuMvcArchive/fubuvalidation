@@ -251,6 +251,10 @@ describe('NumberRuleTester', function () {
   it('no message when the number is valid', function () {
     expect(theHarness.messagesFor('100').length).toEqual(0);
   });
+
+  it('no message for blanks', function() {
+    expect(theHarness.messagesFor('').length).toEqual(0);
+  });
 });
 
 describe('RegularExpressionRuleTester', function () {

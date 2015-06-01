@@ -12,7 +12,7 @@
     <description>Serenity helpers for Validation</description>
     <tags>fubumvc mvc fubu validation serenity</tags>
     <dependencies>
-      <dependency id="Serenity" version="0.9.8.116" />
+      <dependency id="Serenity" version="2.1" />
 	  <dependency id="FubuMVC.Validation" version="0.8.9.640" />
     </dependencies>
   </metadata>

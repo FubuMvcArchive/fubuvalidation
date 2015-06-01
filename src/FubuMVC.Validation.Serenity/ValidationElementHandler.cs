@@ -5,7 +5,7 @@ using OpenQA.Selenium;
 using Serenity;
 using Serenity.Fixtures;
 using Serenity.Fixtures.Handlers;
-using StoryTeller.Assertions;
+using StoryTeller;
 
 namespace FubuMVC.Validation.Serenity
 {

@@ -7,7 +7,7 @@ using FubuMVC.Validation.StoryTeller.Endpoints.ValidationElementHandler;
 using OpenQA.Selenium;
 using Serenity.Fixtures;
 using Serenity.Fixtures.Handlers;
-using StoryTeller.Assertions;
+using StoryTeller;
 using StoryTeller.Engine;
 
 namespace FubuMVC.Validation.StoryTeller.Fixtures

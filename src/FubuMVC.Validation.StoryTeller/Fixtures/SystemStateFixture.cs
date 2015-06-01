@@ -1,6 +1,6 @@
 ﻿using FubuMVC.Validation.StoryTeller.Endpoints.User;
 using StoryTeller;
-using StoryTeller.Engine;
+using StoryTeller.Grammars.Tables;
 
 namespace FubuMVC.Validation.StoryTeller.Fixtures
 {
@@ -13,9 +13,9 @@ namespace FubuMVC.Validation.StoryTeller.Fixtures
             Title = "The system state is";
         }
 
-        public override void SetUp(ITestContext context)
+        public override void SetUp()
         {
-            _users = context.Retrieve<IUserService>();
+            _users = Retrieve<IUserService>();
 
             _users.Clear();
         }
@@ -28,7 +28,7 @@ namespace FubuMVC.Validation.StoryTeller.Fixtures
 
         public IGrammar TheUsersAre()
         {
-            return CreateNewObject<User>(x =>
+            return CreateNewObject<User>("The users are", x =>
             {
                 x.SetProperty(u => u.Username);
                 x.Do = user => _users.Update(user);

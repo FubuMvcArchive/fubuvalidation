@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FubuCore;
 using FubuMVC.Validation.StoryTeller.Endpoints.Ajax;
 using FubuMVC.Validation.StoryTeller.Endpoints.Integration;
 using OpenQA.Selenium;

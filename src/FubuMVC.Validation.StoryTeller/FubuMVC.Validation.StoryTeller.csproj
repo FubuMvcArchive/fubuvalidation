@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FubuMVC.Validation.StoryTeller</RootNamespace>
     <AssemblyName>FubuMVC.Validation.StoryTeller</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bottles">
@@ -42,17 +45,11 @@
     <Reference Include="FubuLocalization">
       <HintPath>..\packages\FubuLocalization\lib\FubuLocalization.dll</HintPath>
     </Reference>
-    <Reference Include="FubuMVC.Ajax">
-      <HintPath>..\packages\FubuMVC.Ajax\lib\net40\FubuMVC.Ajax.dll</HintPath>
-    </Reference>
     <Reference Include="FubuMVC.Core">
       <HintPath>..\packages\FubuMVC.Core\lib\net40\FubuMVC.Core.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.Katana">
       <HintPath>..\packages\FubuMVC.Katana\lib\net40\FubuMVC.Katana.dll</HintPath>
-    </Reference>
-    <Reference Include="FubuMVC.OwinHost">
-      <HintPath>..\packages\FubuMVC.OwinHost\lib\net40\FubuMVC.OwinHost.dll</HintPath>
     </Reference>
     <Reference Include="FubuMVC.StructureMap">
       <HintPath>..\packages\FubuMVC.StructureMap\lib\net40\FubuMVC.StructureMap.dll</HintPath>
@@ -89,10 +86,10 @@
       <HintPath>..\packages\Selenium.WebDriverBackedSelenium\lib\net40\Selenium.WebDriverBackedSelenium.dll</HintPath>
     </Reference>
     <Reference Include="Serenity">
-      <HintPath>..\packages\Serenity\lib\net40\Serenity.dll</HintPath>
+      <HintPath>..\packages\Serenity\lib\net45\Serenity.dll</HintPath>
     </Reference>
     <Reference Include="StoryTeller">
-      <HintPath>..\packages\Storyteller2\lib\net40\StoryTeller.dll</HintPath>
+      <HintPath>..\packages\Storyteller\lib\net45\StoryTeller.dll</HintPath>
     </Reference>
     <Reference Include="structuremap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
@@ -175,7 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FubuMVC.Validation.Serenity\FubuMVC.Validation.Serenity.csproj">
-      <Project>{A30EE761-C299-453A-BCB6-B03A664463CD}</Project>
+      <Project>{a30ee761-c299-453a-bcb6-b03a664463cd}</Project>
       <Name>FubuMVC.Validation.Serenity</Name>
     </ProjectReference>
     <ProjectReference Include="..\FubuMVC.Validation\FubuMVC.Validation.csproj">

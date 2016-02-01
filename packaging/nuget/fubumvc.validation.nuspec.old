@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>FubuMVC.Validation</id>
+    <version>0.0</version>
+    <authors>Joshua Arnold, et al.</authors>
+    <owners>Joshua Arnold</owners>
+    <licenseUrl>https://raw.github.com/DarthFubuMVC/fubuvalidation/master/license.txt</licenseUrl>
+    <projectUrl>http://validation.fubu-project.org</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuValidation_256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A FubuMVC implementation of FubuValidation</description>
+    <tags>fubumvc mvc fubu validation conventional</tags>
+    <dependencies>
+      <dependency id="FubuMVC.Core" version="2.0.0.1764" />
+      <dependency id="FubuMVC.Ajax" version="2.0" />
+      <dependency id="FubuValidation" />
+      <dependency id="FubuCore" version="1.4.0.282" />
+    </dependencies>
+  </metadata>
+  <files xmlns="">
+    <file src="..\..\src\FubuMVC.Validation\bin\Release\FubuMVC.Validation.*" target="lib" />
+  </files>
+</package>

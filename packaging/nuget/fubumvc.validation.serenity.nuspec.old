@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>FubuMVC.Validation.Serenity</id>
+    <version>0.0</version>
+    <authors>Joshua Arnold, et al.</authors>
+    <owners>Joshua Arnold</owners>
+    <licenseUrl>https://raw.github.com/DarthFubuMVC/fubuvalidation/master/license.txt</licenseUrl>
+    <projectUrl>http://validation.fubu-project.org</projectUrl>
+    <iconUrl>https://github.com/DarthFubuMVC/fubu-collateral/raw/master/Icons/FubuValidation_256.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Serenity helpers for Validation</description>
+    <tags>fubumvc mvc fubu validation serenity</tags>
+    <dependencies>
+      <dependency id="Serenity" version="2.1" />
+	  <dependency id="FubuMVC.Validation" version="0.8.9.640" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\src\FubuMVC.Validation.Serenity\bin\Release\FubuMVC.Validation.Serenity*" target="lib" />
+  </files>
+</package>

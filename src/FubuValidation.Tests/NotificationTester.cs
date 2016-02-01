@@ -1,4 +1,4 @@
-using System.Globalization;
+using System;
 using FubuCore.Reflection;
 using FubuLocalization;
 using FubuTestingSupport;
@@ -6,6 +6,7 @@ using FubuValidation.Tests.Models;
 using NUnit.Framework;
 using System.Linq;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace FubuValidation.Tests
 {
@@ -144,6 +145,18 @@ namespace FubuValidation.Tests
 
             var message = notification.MessagesFor(accessor).Single();
             message.GetMessage().ShouldEqual(LocalizationManager.GetText(accessor.InnerProperty));
+        }
+
+        [Test]
+        public void registering_a_message_with_a_lambda_adds_the_message_to_the_notification()
+        {
+            Expression<Func<EntityToValidate, object>> somethingGetter = x => x.Something;
+            var accessor = ReflectionHelper.GetAccessor(somethingGetter);
+            var notification = new Notification();
+            notification.RegisterMessage(somethingGetter, "a value");
+
+            var message = notification.MessagesFor(accessor).Single();
+            message.GetMessage().ShouldEqual("a value");
         }
 
         #region Nested Type: EntityToValidate

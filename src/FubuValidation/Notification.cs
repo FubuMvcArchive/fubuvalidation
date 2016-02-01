@@ -54,6 +54,14 @@ namespace FubuValidation
             return RegisterMessage(new SingleProperty(property), notificationMessage, values);
         }
 
+        public void RegisterMessage<T>(Expression<Func<T, object>> property, string message)
+        {
+            var notificationMessage = new NotificationMessage(message);
+            var accessor = property.ToAccessor();
+            notificationMessage.AddAccessor(accessor);
+            _messages.Fill(notificationMessage);
+        }
+
         public void RegisterMessage(Accessor accessor, NotificationMessage notificationMessage)
         {
             notificationMessage.AddAccessor(accessor);

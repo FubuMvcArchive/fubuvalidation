@@ -21,6 +21,10 @@ namespace FubuValidation
             _message = new Lazy<string>(() => _template.Render());
         }
 
+        public NotificationMessage(string message)
+        {
+            _message = new Lazy<string>(() => message);
+        }
 
         public StringToken StringToken { get; private set; }
 
@@ -46,6 +50,8 @@ namespace FubuValidation
 
         public NotificationMessage AddSubstitution(TemplateValue value)
         {
+            if (_template == null) throw new InvalidOperationException("This NotificationMessage has no template");
+
             _template.Values.Add(value);
             return this;
         }

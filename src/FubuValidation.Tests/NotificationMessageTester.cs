@@ -11,6 +11,13 @@ namespace FubuValidation.Tests
     public class NotificationMessageTester
     {
         [Test]
+        public void create_by_string()
+        {
+            var message = new NotificationMessage("Some message");
+            message.GetMessage().ShouldEqual("Some message");
+        }
+
+        [Test]
         public void get_message_without_subsitutions()
         {
             var message = new NotificationMessage(NotificationMessageKeys.NO_SUBSTITUTION);

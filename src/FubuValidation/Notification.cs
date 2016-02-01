@@ -108,5 +108,14 @@ namespace FubuValidation
 
             return message;
         }
+
+        public NotificationMessage RegisterMessage(string text)
+        {
+            var message = new NotificationMessage(text);
+            RegisterMessage(message);
+
+            return message;
+
+        }
     }
 }

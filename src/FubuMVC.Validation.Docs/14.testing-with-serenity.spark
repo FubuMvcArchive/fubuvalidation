@@ -1,9 +1,0 @@
-<!--Title: Testing with Serenity-->
-<!--Url: testing-with-serenity-->
-
-<markdown>
-
-Serenity comes with some built in element handlers that are great when dealing with inputs of many sorts. When you wire up FubuMVC.Validation it may take a second to validate that the input is correct. If you don't wait for those changes to complete your test may be brittle since follow on actions may depend on a completed validation. If you add the `ValdiationElementHandler` to `Serenity.Fixtures.Handlers.ElementHandlers.Handlers` then it will wrap all follow on element handlers with a wait for the validation to complete. This handler will look for the `data-validation-count` attribute of the element. It will note the number before editing, and wait for it to increment before proceeding. You will need to have the `ValidationCountStrategy` applied in the client for this hook to work.
-
-</markdown>
-

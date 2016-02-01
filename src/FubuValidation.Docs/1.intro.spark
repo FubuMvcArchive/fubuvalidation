@@ -1,5 +1,0 @@
-<!--Title: Introduction-->
-
-<p>FubuValidation is a member of the Fubu-family of frameworks -- frameworks that aim to get out of your way by providing rich semantic models with powerful convention-driven operations. It aims to provide a convention-driven approach to validation while supporting more traditional approaches when needed.</p>
-
-<blockquote>An important thing to note: FubuValidation is NOT coupled to FubuMVC. In fact, it maintains no references to the project.</blockquote>

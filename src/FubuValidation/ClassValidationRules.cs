@@ -158,6 +158,16 @@ namespace FubuValidation
                 If<IsValid>();
             }
 
+            public FieldValidationExpression Custom(Func<T, bool> condition)
+            {
+                return register(new CustomFieldValidationRule<T>(condition));
+            }
+
+            public FieldValidationExpression Custom(Func<T, bool> condition, StringToken token)
+            {
+                return register(new CustomFieldValidationRule<T>(condition, token));
+            }
+
             public FieldValidationExpression MaximumLength(int length)
             {
                 return register(new MaximumLengthRule(length));

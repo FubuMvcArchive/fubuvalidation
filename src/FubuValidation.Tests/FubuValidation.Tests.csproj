@@ -84,6 +84,7 @@
     <Compile Include="FieldEqualityRuleTester.cs" />
     <Compile Include="Fields\attribute_scanning_tester.cs" />
     <Compile Include="Fields\ConditionalFieldRuleTester.cs" />
+    <Compile Include="Fields\CustomTester.cs" />
     <Compile Include="Fields\EmailFieldRuleTester.cs" />
     <Compile Include="Fields\FieldAccessRuleRegistryTester.cs" />
     <Compile Include="Fields\FieldRulesRegistryTester.cs" />

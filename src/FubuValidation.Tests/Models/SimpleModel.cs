@@ -8,5 +8,6 @@
         public int GreaterThanZero { get; set; }
         [MaximumStringLength(10)]
         public int NoMoreThanTen { get; set; }
+        public int Number { get; set; }
     }
 }

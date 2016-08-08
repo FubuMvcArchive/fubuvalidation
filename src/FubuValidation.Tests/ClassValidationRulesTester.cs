@@ -70,6 +70,28 @@ namespace FubuValidation.Tests
         }
 
         [Test]
+        public void register_custom_rule()
+        {
+            theRules.Property(x => x.Name)
+                .Custom(x => x.Age + 1 > 12);
+
+            rulesFor(x => x.Name).Single()
+                .ShouldBeOfType<CustomFieldValidationRule<ClassValidationRulesTarget>>();
+        }
+
+        [Test]
+        public void register_custom_rule_with_token()
+        {
+            var token = StringToken.FromKeyString("Test");
+            theRules.Property(x => x.Name)
+                .Custom(x => x.Age + 1 > 12, token);
+
+            rulesFor(x => x.Name).Single()
+                .ShouldBeOfType<CustomFieldValidationRule<ClassValidationRulesTarget>>()
+                .Token.ShouldEqual(token);
+        }
+
+        [Test]
         public void register_multiple_required_rules()
         {
             theRules.Require(x => x.Name, x => x.Address1);
